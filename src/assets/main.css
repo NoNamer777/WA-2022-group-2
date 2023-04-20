@@ -6,3 +6,11 @@ html, body, #app {
 .bg-custom-primary {
     background-color: #149BFC;
 }
+
+.nav-link:focus-visible {
+    outline: auto;
+}
+
+.btn:focus-visible {
+    outline: auto;
+}

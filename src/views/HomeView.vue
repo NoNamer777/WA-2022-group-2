@@ -3,8 +3,8 @@ import mascot from '@/assets/mascot/happy_bin.png'
 </script>
 
 <template>
-    <section>
-        <h2 class="mb-4">Wat is Wasted?</h2>
+    <main>
+        <h1 class="mb-4">Wat is Wasted?</h1>
         <p class="mb-4">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est explicabo nulla perferendis! Eius ex
             illo illum optio quaerat! Expedita facere hic impedit in iste quia ratione sint suscipit. Aliquam
@@ -13,5 +13,5 @@ import mascot from '@/assets/mascot/happy_bin.png'
         </p>
         <router-link class="btn bg-custom-primary text-white" :to="{name: 'home'}">Registreer</router-link>
         <img class="w-25 float-end" :src="mascot" alt="mascot">
-    </section>
+    </main>
 </template>
