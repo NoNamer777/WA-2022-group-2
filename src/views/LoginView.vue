@@ -19,7 +19,7 @@ function login() {
             <div class="col-xl-6 col-sm-12 mb-5">
                 <h1 class="mb-5">Login</h1>
                 <form @submit.prevent="login">
-                    <InputLabel v-model:modelValue="user.username" :label="'Gebruikersnaam'" :type="'email'"
+                    <InputLabel v-model:modelValue="user.username" :label="'Gebruikersnaam'"
                                 :placeholder="'Gebruikersnaam'"/>
                     <InputLabel v-model:modelValue="user.password" :label="'Wachtwoord'" :type="'password'"
                                 :placeholder="'Wachtwoord'"/>
