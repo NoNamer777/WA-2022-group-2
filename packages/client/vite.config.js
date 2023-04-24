@@ -7,6 +7,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   // TODO: Provide via node environment variable
   base: '/',
+  cacheDir: '../../.vite',
   // TODO: Provide via node environment variable
   mode: 'development',
   plugins: [vue()],
