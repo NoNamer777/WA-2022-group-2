@@ -22,9 +22,7 @@
                 </ul>
                 <hr class="d-xl-none">
                 <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <router-link class="nav-link text-white" :to="{name: 'login'}">Inloggen</router-link>
-                    </li>
+                    <router-link class="nav-link text-white" :to="{name: 'login'}">Inloggen</router-link>
                     <router-link class="btn bg-white" :to="{name: 'register'}">Registreer</router-link>
                 </ul>
             </div>
