@@ -20,6 +20,7 @@
                         <router-link class="nav-link text-white" :to="{name: 'home'}">Info</router-link>
                     </li>
                 </ul>
+                <hr class="d-xl-none">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
                         <router-link class="nav-link text-white" :to="{name: 'login'}">Inloggen</router-link>
