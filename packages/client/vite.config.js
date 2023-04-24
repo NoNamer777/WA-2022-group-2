@@ -13,6 +13,9 @@ export default defineConfig({
     outDir: '../../dist/client'
   },
   cacheDir: '../../.vite',
+  css: {
+    devSourcemap: true
+  },
   // TODO: Provide via a node environment variable
   mode: 'development',
   plugins: [vue()],
