@@ -4,7 +4,7 @@ html,
 body,
 #app {
   height: 100%;
-  background: url('backgrounds/forest.png');
+  background: url('../images/backgrounds/forest.png');
 }
 
 .bg-custom-primary {

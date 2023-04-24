@@ -1,5 +1,5 @@
 <script setup>
-import mascot from '../assets/mascot/happy_bin.png'
+import mascot from '../assets/images/mascot/happy_bin.png'
 </script>
 
 <template>
