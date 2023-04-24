@@ -3,8 +3,12 @@ html, body, #app {
     background: url('@/assets/backgrounds/forest.png');
 }
 
-.bg-custom-primary {
-    background-color: #149BFC;
+.bg-custom-primary, .btn-custom-primary {
+    background-color: #1D73DD;
+}
+
+.btn-custom-primary:hover{
+    background-color: black !important;
 }
 
 .nav-link:focus-visible {
