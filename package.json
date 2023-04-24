@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --config packages/client/vite.config.js",
-    "build": "vite build --config packages/client/vite.config.js",
-    "preview": "vite preview --config packages/client/vite.config.js",
     "lint": "eslint . --ext .vue,.js,.html --ignore-path .gitignore",
     "format:check": "prettier -l .",
-    "format:write": "prettier -w ."
+    "format:write": "prettier -w .",
+    "client:dev": "vite --config packages/client/vite.config.js",
+    "client:build": "vite build --config packages/client/vite.config.js",
+    "client:preview": "vite preview --config packages/client/vite.config.js"
   },
   "workspaces": [
     "packages/*"
