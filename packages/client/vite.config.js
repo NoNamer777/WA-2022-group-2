@@ -21,7 +21,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('packages/client/src', import.meta.url))
+      '@wasted/client': fileURLToPath(new URL('packages/client/src', import.meta.url))
     }
   },
   // TODO: Provide via a node environment variable
