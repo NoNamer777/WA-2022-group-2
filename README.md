@@ -4,7 +4,7 @@ This project consists of 2 projects, a front-end client web application in Vue a
 Express with Sequalize, and it is maintained by the following members:
 
 | Name                | Student nr. |
-|---------------------|-------------|
+| ------------------- | ----------- |
 | Oscar Wellner       | 21144192    |
 | Ahmed Benhajar      | 21024154    |
 | Marjo Salo          | 21146942    |
@@ -22,5 +22,5 @@ npm install
 After that you can find the instructions for the different projects on how to get the projects started
 
 | Project | location                          |
-|---------|-----------------------------------|
+| ------- | --------------------------------- |
 | Client  | [Here](packages/client/README.md) |
