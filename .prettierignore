@@ -10,6 +10,7 @@
 !*.js
 !*.json
 !*.md
+!*.vue
 
 coverage
 package-lock.json
@@ -24,3 +25,4 @@ node_modules/
 ## Output directories
 dist/
 .Ds_Store
+.vite
