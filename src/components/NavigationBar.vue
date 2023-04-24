@@ -24,7 +24,7 @@
                     <li class="nav-item">
                         <router-link class="nav-link text-white" :to="{name: 'login'}">Inloggen</router-link>
                     </li>
-                    <router-link class="btn bg-white" :to="{name: 'home'}">Registreer</router-link>
+                    <router-link class="btn bg-white" :to="{name: 'register'}">Registreer</router-link>
                 </ul>
             </div>
         </div>
