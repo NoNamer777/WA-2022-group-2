@@ -17,11 +17,11 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'home' }">
-              Hoofdpagina</router-link
-            >
+              Hoofdpagina
+            </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-white" :to="{ name: 'home' }"> Quiz </router-link>
+            <router-link class="nav-link text-white" :to="{ name: 'home' }">Quiz</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'home' }">Uitdaging</router-link>
@@ -32,11 +32,9 @@
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link text-white" :to="{ name: 'home' }">Inloggen</router-link>
+            <router-link class="nav-link text-white" :to="{ name: 'login' }">Inloggen</router-link>
           </li>
-          <li>
-            <router-link class="btn bg-white" :to="{ name: 'home' }">Registreer</router-link>
-          </li>
+          <router-link class="btn bg-white" :to="{ name: 'home' }">Registreer</router-link>
         </ul>
       </div>
     </div>

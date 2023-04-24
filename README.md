@@ -50,4 +50,3 @@ errors, should the pop-up.
 
 Also make sure to check that your workspace settings are correct for auto formatting vue files with ESlint and Prettier
 https://pipo.blog/articles/20220103-eslint-prettier-vue3#vs-code-formatonsave
-
