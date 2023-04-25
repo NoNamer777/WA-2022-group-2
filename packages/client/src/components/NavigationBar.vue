@@ -1,9 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-custom-primary mt-5 p-4">
+  <nav class="navbar navbar-dark navbar-expand-lg bg-custom-primary mt-5 p-4">
     <div class="container-fluid">
       <a class="navbar-brand text-white">Wasted</a>
       <button
-        class="navbar-toggler text-white"
+        class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent"
@@ -49,5 +49,3 @@ export default {
   name: 'NavigationBar'
 }
 </script>
-
-<style scoped></style>
