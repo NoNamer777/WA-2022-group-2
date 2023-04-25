@@ -22,8 +22,12 @@
                 </ul>
                 <hr class="d-xl-none">
                 <ul class="navbar-nav mb-2 mb-lg-0">
-                    <router-link class="nav-link text-white" :to="{name: 'login'}">Inloggen</router-link>
-                    <router-link class="btn bg-white" :to="{name: 'register'}">Registreer</router-link>
+                    <li class="nav-item">
+                        <router-link class="nav-link text-white" :to="{name: 'login'}">Inloggen</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="btn bg-white" :to="{name: 'register'}">Registreer</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
