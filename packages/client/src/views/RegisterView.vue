@@ -20,32 +20,39 @@ function register() {
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Registreer</h1>
-        <form @submit.prevent="register">
+        <FormKit type="form" @submit="register" submit-label="Register">
           <InputLabel
             v-model:modelValue="user.email"
-            :label="'Email'"
+            :name="'email'"
             :type="'email'"
+            :validation="'required|email|length:5,80'"
+            :label="'Email'"
             :placeholder="'Email'"
           />
           <InputLabel
             v-model:modelValue="user.username"
+            :name="'username'"
+            :validation="'required|length:3,80'"
             :label="'Gebruikersnaam'"
             :placeholder="'Gebruikersnaam'"
           />
           <InputLabel
             v-model:modelValue="user.password"
-            :label="'Wachtwoord'"
+            :name="'password'"
             :type="'password'"
+            :validation="'required|password|length:8,40'"
+            :label="'Wachtwoord'"
             :placeholder="'Wachtwoord'"
           />
           <InputLabel
             v-model:modelValue="user.passwordRepeat"
-            :label="'Herhaal wachtwoord'"
+            :name="'password_confirm'"
             :type="'password'"
+            :validation="'required|confirm'"
+            :label="'Herhaal wachtwoord'"
             :placeholder="'Herhaal wachtwoord'"
           />
-          <button class="btn btn-custom-primary w-100 text-white mt-4">Registreer</button>
-        </form>
+        </FormKit>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
         <img class="float-end w-100" :src="mascot" alt="mascot" />
