@@ -18,19 +18,23 @@ function login() {
         <section class="row h-100 d-flex align-items-center">
             <div class="col-xl-6 col-sm-12 mb-5">
                 <h1 class="mb-5">Login</h1>
-                <form @submit.prevent="login">
-                    <InputLabel v-model:modelValue="user.username" :label="'Gebruikersnaam'"
+                <FormKit type="form" @submit="login" submit-label="Login">
+                    <InputLabel v-model:modelValue="user.username"
+                                :label="'Gebruikersnaam'"
+                                :validation="'required'"
                                 :placeholder="'Gebruikersnaam'"/>
-                    <InputLabel v-model:modelValue="user.password" :label="'Wachtwoord'" :type="'password'"
+                    <InputLabel v-model:modelValue="user.password"
+                                :validation="'required'"
+                                :type="'password'"
+                                :label="'Wachtwoord'"
                                 :placeholder="'Wachtwoord'"/>
-                    <button class="btn btn-custom-primary w-100 text-white mt-4">Login</button>
-                    <small class="d-flex">
-                        Heb je geen account?&nbsp;
-                        <router-link class="nav-link text-info" :to="{name: 'register'}">
-                            Registreer
-                        </router-link>
-                    </small>
-                </form>
+                </FormKit>
+                <small class="d-flex">
+                    Heb je geen account?&nbsp;
+                    <router-link class="nav-link text-info" :to="{name: 'register'}">
+                        Registreer
+                    </router-link>
+                </small>
             </div>
             <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
                 <img class="float-end w-100" :src="mascot" alt="mascot">

@@ -11,7 +11,7 @@ import mascot from '@/assets/mascot/happy_bin.png'
             architecto corporis cum deleniti doloribus fugiat perspiciatis, qui quis ratione repellendus! Cum
             eaque est provident rerum tempore! Beatae maiores pariatur placeat?
         </p>
-        <router-link class="btn btn-custom-primary text-white" :to="{name: 'home'}">Registreer</router-link>
+        <router-link class="btn bg-custom-primary text-white" :to="{name: 'home'}">Registreer</router-link>
         <img class="w-25 float-end" :src="mascot" alt="mascot">
     </main>
 </template>

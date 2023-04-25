@@ -1,12 +1,15 @@
 <template>
-    <div class="form-group mb-4">
-        <label v-if="label" class="form-check-label card-title">{{ label }}</label>
-        <input :type="type"
-               :placeholder="placeholder"
-               class="form-control w-100"
-               @input="$emit('update:modelValue', $event.target.value)"
-               :value="modelValue"
-               :required="required">
+    <div class="mb-4">
+        <FormKit
+                :type="type"
+                :label="label"
+                :name="name"
+                :placeholder="placeholder"
+                :validation="validation"
+                @input="(value) => $emit('update:modelValue', value)"
+                :value="modelValue"
+                :validation-visibility="validationVisibility"
+        />
     </div>
 </template>
 
@@ -31,9 +34,37 @@ export default {
             required: false,
             default: true
         },
-        modelValue : {
+        validationVisibility: {
+            type: String,
+            required: false,
+        },
+        validation: {
+            type: String,
+            required: false,
+            default: ''
+        },
+        name: {
+            type: String,
+        },
+        modelValue: {
             type: String,
         }
     }
 }
 </script>
+
+<style scoped>
+:deep([data-invalid] .formkit-inner) {
+    border-color: red;
+    box-shadow: 0 0 0 1px red;
+}
+
+:deep([data-complete] .formkit-inner) {
+    border-color: red;
+    box-shadow: 0 0 0 1px green;
+}
+
+:deep(.formkit-wrapper) {
+    max-width: unset !important;
+}
+</style>
