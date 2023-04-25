@@ -8,8 +8,6 @@ import router from './router'
 
 import '@formkit/themes/genesis'
 import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
-import './assets/styles/main.css'
 
 const app = createApp(App)
 
