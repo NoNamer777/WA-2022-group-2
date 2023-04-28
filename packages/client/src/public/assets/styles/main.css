@@ -10,12 +10,12 @@ body,
   background-repeat-y: no-repeat;
 }
 
-.bg-custom-primary, .btn-custom-primary {
-  background-color: var(--primary);
+.bg-custom-primary {
+  background-color: var(--primary) !important;
 }
 
 .btn-custom-primary:hover {
-  background-color: var(--secondary);
+  background-color: var(--secondary) !important;
 }
 
 .nav-link:focus-visible {

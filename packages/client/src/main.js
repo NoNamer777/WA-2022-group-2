@@ -1,10 +1,8 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-
-import App from './App.vue'
-import router from './router'
-
-import 'bootstrap'
+import { App, router } from './app'
 
 const app = createApp(App)
 

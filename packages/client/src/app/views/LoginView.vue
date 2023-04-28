@@ -1,7 +1,6 @@
 <script setup>
-import mascot from '../assets/images/mascot/happy_bin_login.png'
 import { ref } from 'vue'
-import InputLabel from '../components/form/InputLabel.vue'
+import { InputLabel } from '../components'
 
 const user = ref({
   username: '',
@@ -30,17 +29,17 @@ function login() {
             :type="'password'"
             :placeholder="'Wachtwoord'"
           />
-          <button class="btn btn-custom-primary w-100 text-white mt-4">Login</button>
+          <button class="btn bg-custom-primary w-100 text-white mt-4">Login</button>
           <small class="d-flex">
             Heb je geen account?&nbsp;
-            <router-link class="nav-link text-info" :to="{ name: 'register' }">
+            <router-link class="nav-link text-info" :to="{ name: 'home' }">
               Registreer
             </router-link>
           </small>
         </form>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
-        <img class="float-end w-100" :src="mascot" alt="mascot" />
+        <img class="float-end w-100" src="/assets/images/mascot/happy_bin_login.png" alt="mascot" />
       </div>
     </section>
   </main>
