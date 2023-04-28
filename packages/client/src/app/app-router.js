@@ -1,8 +1,7 @@
-import HomeView from '@wasted/client/views/HomeView.vue'
-import LoginView from '@wasted/client/views/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { HomeView, LoginView } from './views'
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -17,5 +16,3 @@ const router = createRouter({
     }
   ]
 })
-
-export default router

@@ -1,7 +1,3 @@
-<script setup>
-import mascot from '../assets/images/mascot/happy_bin.png'
-</script>
-
 <template>
   <main>
     <h1 class="mb-4">Wat is Wasted?</h1>
@@ -14,6 +10,6 @@ import mascot from '../assets/images/mascot/happy_bin.png'
     <router-link class="btn bg-custom-primary text-white" :to="{ name: 'home' }">
       Registreer
     </router-link>
-    <img class="w-25 float-end" :src="mascot" alt="mascot" />
+    <img class="w-25 float-end" src="/assets/images/mascot/happy_bin.png" alt="mascot" />
   </main>
 </template>
