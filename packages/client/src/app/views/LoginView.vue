@@ -1,5 +1,4 @@
 <script setup>
-import Mascot from '../../public/assets/images/mascot/happy_bin_login.png'
 import { ref } from 'vue'
 import { InputLabel } from '../components'
 
