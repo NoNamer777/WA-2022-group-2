@@ -1,13 +1,13 @@
 import { plugin } from '@formkit/vue'
+import formKitDefaultConfig from './formkit/index'
+
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-
-import App from './App.vue'
-import formKitDefaultConfig from './formkit/index'
-import router from './router'
+import { App, router } from './app'
 
 import '@formkit/themes/genesis'
 import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const app = createApp(App)
 

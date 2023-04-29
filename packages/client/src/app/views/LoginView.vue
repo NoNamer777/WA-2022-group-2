@@ -1,7 +1,6 @@
 <script setup>
-import mascot from '../assets/images/mascot/happy_bin_login.png'
 import { ref } from 'vue'
-import InputLabel from '../components/form/InputLabel.vue'
+import { InputLabel } from '../components'
 
 const user = ref({
   username: '',
@@ -41,7 +40,7 @@ function login() {
         </small>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
-        <img class="float-end w-100" :src="mascot" alt="mascot" />
+        <img class="float-end w-100" src="/assets/images/mascot/happy_bin_login.png" alt="mascot" />
       </div>
     </section>
   </main>
