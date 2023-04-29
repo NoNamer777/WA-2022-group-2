@@ -1,12 +1,21 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import './initial-variables.css';
+
 html,
 body,
 #app {
+  background-color: var(--secondary);
   height: 100%;
-  background: url('/assets/images/backgrounds/forest.png');
+  background-image: url('../images/backgrounds/forest.png');
+  background-repeat-y: no-repeat;
 }
 
 .bg-custom-primary {
-  background-color: #149bfc;
+  background-color: var(--primary) !important;
+}
+
+.btn-custom-primary:hover {
+  background-color: var(--secondary) !important;
 }
 
 .nav-link:focus-visible {
