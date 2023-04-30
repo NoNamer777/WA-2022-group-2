@@ -17,20 +17,21 @@ function login() {
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Login</h1>
-        <FormKit type="form" @submit="login" submit-label="Login">
+        <FormKit type="form" @submit="login" :actions="false" :incomplete-message="false">
           <InputLabel
             v-model:modelValue="user.username"
-            :label="'Gebruikersnaam'"
-            :validation="'required'"
-            :placeholder="'Gebruikersnaam'"
+            label="Gebruikersnaam"
+            validation="required"
+            placeholder="Gebruikersnaam"
           />
           <InputLabel
             v-model:modelValue="user.password"
-            :validation="'required'"
-            :type="'password'"
-            :label="'Wachtwoord'"
-            :placeholder="'Wachtwoord'"
+            validation="required"
+            type="password"
+            label="Wachtwoord"
+            placeholder="Wachtwoord"
           />
+          <InputLabel type="submit" label="Login" />
         </FormKit>
         <small class="d-flex">
           Heb je geen account?&nbsp;

@@ -51,18 +51,21 @@ export default {
 }
 </script>
 
-<style scoped>
-:deep([data-invalid] .formkit-inner) {
+<style>
+.formkit-wrapper {
+  max-width: unset !important;
+}
+
+[data-invalid] .formkit-inner {
   border-color: red;
   box-shadow: 0 0 0 1px red;
 }
 
-:deep([data-complete] .formkit-inner) {
+[data-complete] .formkit-inner {
   border-color: red;
   box-shadow: 0 0 0 1px green;
 }
-
-:deep(.formkit-wrapper) {
-  max-width: unset !important;
+.formkit-input {
+  width: 100% !important;
 }
 </style>

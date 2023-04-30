@@ -2,7 +2,7 @@ import { nl } from '@formkit/i18n'
 import { defaultConfig } from '@formkit/vue'
 import password from './rules/password'
 
-export default defaultConfig({
+export const FormKitOptions = defaultConfig({
   locales: { nl },
   locale: 'nl',
   messages: {
