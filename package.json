@@ -1,35 +1,35 @@
 {
-    "name": "wa-2023",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-        "lint": "eslint . --ext .vue,.js,.html --ignore-path .gitignore",
-        "format:check": "prettier -l .",
-        "format:write": "prettier -w .",
-        "client:dev": "vite --config packages/client/vite.config.js",
-        "client:build": "vite build --config packages/client/vite.config.js",
-        "client:preview": "vite preview --config packages/client/vite.config.js"
-    },
-    "workspaces": [
-        "packages/*"
-    ],
-    "dependencies": {
-        "@formkit/vue": "^0.16.4",
-        "bootstrap": "^5.2.3",
-        "pinia": "^2.0.32",
-        "vue": "^3.2.47",
-        "vue-router": "^4.1.6"
-    },
-    "devDependencies": {
-        "@rushstack/eslint-patch": "^1.2.0",
-        "@types/node": "~18.15.0",
-        "@vitejs/plugin-vue": "^4.0.0",
-        "eslint": "^8.39.0",
-        "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-prettier": "^4.2.0",
-        "eslint-plugin-vue": "^9.9.0",
-        "prettier": "^2.8.0",
-        "prettier-plugin-organize-imports": "^3.2.0",
-        "vite": "^4.1.4"
-    }
+  "name": "wa-2023",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --ext .vue,.js,.html --ignore-path .gitignore",
+    "format:check": "prettier -l .",
+    "format:write": "prettier -w .",
+    "client:dev": "vite --config packages/client/vite.config.js",
+    "client:build": "vite build --config packages/client/vite.config.js",
+    "client:preview": "vite preview --config packages/client/vite.config.js"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@formkit/vue": "^0.16.4",
+    "bootstrap": "^5.2.3",
+    "pinia": "^2.0.32",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@types/node": "~18.15.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "prettier": "^2.8.0",
+    "prettier-plugin-organize-imports": "^3.2.0",
+    "vite": "^4.1.4"
+  }
 }
