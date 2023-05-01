@@ -32,6 +32,14 @@ class UserRepository {
   }
 
   /**
+   * @param updatedUserData {UserEntity}
+   * @return {Promise<void>}
+   */
+  async update(updatedUserData) {
+    await this.#userModel.update(updatedUserData, { where: { id: updatedUserData.id } })
+  }
+
+  /**
    * @param userData {Omit<UserEntity, 'id'>}
    * @return {Promise<UserEntity>}
    */

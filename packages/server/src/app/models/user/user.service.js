@@ -49,6 +49,32 @@ class UserService {
   }
 
   /**
+   * @param userData {UserEntity}
+   * @return {Promise<UserEntity>}
+   */
+  async update(userData) {
+    const userId = userData.id
+
+    if (!userId) {
+      throw new BadRequestException('Could not update User. ID is not provided.')
+    }
+    if (!(await this.getById(userId, false))) {
+      throw new NotFoundException(
+        `Could not update User with ID: '${userId}' because it does not exist.`
+      )
+    }
+    if (await this.getByUsername(userData.username, false)) {
+      throw new BadRequestException(
+        `Could not update User with ID: '${userId}'. Username '${userData.username}' is already in use.`
+      )
+    }
+    // TODO: Encrypt/hash the password before storing it in the database
+
+    await (await UserRepository.instance()).update(userData)
+    return await this.getById(userId)
+  }
+
+  /**
    * @param userData {Omit<UserEntity, 'id'>}
    * @return {Promise<UserEntity>}
    */

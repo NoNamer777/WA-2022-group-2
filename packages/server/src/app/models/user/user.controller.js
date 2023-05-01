@@ -18,6 +18,7 @@ class UserController {
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
     console.info('UserController - Getting all Users data')
+
     return await UserService.instance().getAll()
   }
 
@@ -30,10 +31,34 @@ class UserController {
 
     if (!isNumber(userIdParam)) {
       throw new BadRequestException(
-        `Invalid ID format: '${userIdParam}'. Please, use whole positive number only.`
+        `Invalid ID format: '${userIdParam}'. Please, use whole positive numbers only.`
       )
     }
     return await UserService.instance().getById(parseInt(userIdParam))
+  }
+
+  /**
+   * @param userIdParam {string}
+   * @param userData {UserEntity}
+   * @return {Promise<UserEntity>}
+   */
+  async update(userIdParam, userData) {
+    console.info(`UserController - Updating User resource on path: '${userIdParam}'`)
+
+    if (!isNumber(userIdParam)) {
+      throw new BadRequestException(
+        `Invalid ID format: '${userIdParam}'. Please, use whole positive numbers only.`
+      )
+    }
+    const userId = parseInt(userData.id)
+    userIdParam = parseInt(userIdParam)
+
+    if (isNaN(userId) || userId !== userIdParam) {
+      throw new BadRequestException(
+        `Will not update User on path: '/api/user/${userIdParam}' with data from User with ID: '${userId}'.`
+      )
+    }
+    return await UserService.instance().update(userData)
   }
 
   /**
@@ -42,6 +67,7 @@ class UserController {
    */
   async create(userData) {
     console.info('UserController - Creating a new User resource')
+
     return await UserService.instance().create(userData)
   }
 
@@ -54,7 +80,7 @@ class UserController {
 
     if (!isNumber(userIdParam)) {
       return new BadRequestException(
-        `Invalid ID format: '${userIdParam}'. Please, use whole positive number only.`
+        `Invalid ID format: '${userIdParam}'. Please, use whole positive numbers only.`
       )
     }
     await UserService.instance().deleteById(parseInt(userIdParam))
@@ -67,6 +93,10 @@ router.get('/', async (_, response) => {
 
 router.get('/:userId', async (request, response) => {
   response.send(await UserController.instance().getById(request.params.userId))
+})
+
+router.put('/:userId', async (request, response) => {
+  response.send(await UserController.instance().update(request.params.userId, request.body))
 })
 
 router.post('/', async (request, response) => {
