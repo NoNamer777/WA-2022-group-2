@@ -32,10 +32,11 @@ class DatabaseService {
     this.sequelizeInstance = new Sequelize(config.database, config.username, config.password, {
       dialect: config.dialect,
       host: config.host,
-      port: config.port
+      port: config.port,
+      logging: false
     })
 
-    await this.sequelizeInstance.authenticate({ logging: false })
+    await this.sequelizeInstance.authenticate()
     console.info(
       `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
     )
