@@ -23,6 +23,14 @@ class UserRepository {
     return await this.#userModel.findAll()
   }
 
+  /**
+   * @param whereClaus {import('sequelize').WhereOptions}
+   * @return {Promise<UserEntity | null>}
+   */
+  async findOneBy(whereClaus) {
+    return await this.#userModel.findOne({ where: { ...whereClaus }, rejectOnEmpty: false })
+  }
+
   /** @return {Promise<void>} */
   async #initialize() {
     this.#userModel = UserEntity.init(UserModelDefinition, {
