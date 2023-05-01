@@ -7,7 +7,8 @@
  * - At least one special character i.e. !@#$%^&*_\-+=;:<>.?())
  */
 export default (node) => {
-    let password = node.value;
-    const strongRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/;
-    return strongRegex.test(password);
+  let password = node.value
+  const strongRegex =
+    /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/
+  return strongRegex.test(password)
 }
