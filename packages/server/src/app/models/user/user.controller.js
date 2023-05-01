@@ -4,8 +4,6 @@ const UserService = require('./user.service')
 const { BadRequestException } = require('../error.models')
 const { isNumber } = require('../../utils/validation')
 
-// TODO: Only allow Users managing their own access or allow access to the User data to Admins.
-
 class UserController {
   /** @return {UserController} */
   static instance() {
