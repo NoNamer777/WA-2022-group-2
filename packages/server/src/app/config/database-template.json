@@ -1,6 +1,6 @@
 {
   "<environment>": {
-    "type": "mysql",
+    "dialect": "mysql",
     "database": "wasted-db",
     "host": "localhost",
     "port": 3306,
