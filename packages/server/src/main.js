@@ -4,14 +4,14 @@ const app = require('./app/app')
 const http = require('http')
 
 // Get port and hostname from environment and store in Express
-const hostname = process.env.HOSTNAME || 'localhost'
-const port = normalizePort(process.env.PORT || '8080')
+const host = process.env.SERVER_HOST || 'localhost'
+const port = normalizePort(process.env.SERVER_PORT || '8080')
 app.set('port', port)
-app.set('hostname', hostname)
+app.set('hostname', host)
 
 const server = http.createServer(app)
 
-server.listen(port, hostname)
+server.listen(port, host)
 server.on('error', onError)
 server.on('listening', onListening)
 
@@ -49,10 +49,5 @@ function onError(error) {
 }
 
 function onListening() {
-  const address = server.address()
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port
-
-  console.log(address)
-
-  console.log('Listening on ' + bind)
+  console.info(`Server is Listening on http://${host}:${port}/`)
 }
