@@ -1,5 +1,6 @@
 const UserRepository = require('./user.repository')
-const { NotFoundException, BadRequestException } = require('../error.models')
+const NotFoundException = require('../errors/not-found.exception')
+const BadRequestException = require('../errors/bad-request.exception')
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 

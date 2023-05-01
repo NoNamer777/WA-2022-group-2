@@ -1,6 +1,6 @@
 const UserService = require('./user.service')
-const { BadRequestException } = require('../error.models')
 const { isNumber } = require('../../utils/validation')
+const BadRequestException = require('../errors/bad-request.exception')
 
 class UserController {
   /** @return {UserController} */
