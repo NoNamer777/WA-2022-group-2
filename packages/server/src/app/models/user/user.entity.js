@@ -1,4 +1,5 @@
 const { DataTypes, Model } = require('sequelize')
+const DatabaseService = require('../../services/database.service')
 
 class UserEntity extends Model {}
 
@@ -46,5 +47,13 @@ const UserModelDefinition = {
     }
   }
 }
+
+UserEntity.init(UserModelDefinition, {
+  sequelize: DatabaseService.instance().sequelizeInstance,
+  modelName: 'user',
+  tableName: 'user',
+  createdAt: false,
+  updatedAt: false
+})
 
 module.exports = { UserEntity, UserModelDefinition }

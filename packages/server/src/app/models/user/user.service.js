@@ -19,7 +19,7 @@ class UserService {
 
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
-    return await (await UserRepository.instance()).findAll()
+    return await UserRepository.instance().findAll()
   }
 
   /**
@@ -28,7 +28,7 @@ class UserService {
    * @return {Promise<UserEntity>}
    */
   async getById(userId, throwsError = true) {
-    const userById = await (await UserRepository.instance()).findOneBy({ id: userId })
+    const userById = await UserRepository.instance().findOneBy({ id: userId })
 
     if (!userById && throwsError) {
       throw new NotFoundException(`No User was found by ID: '${userId}'.`)
@@ -42,7 +42,7 @@ class UserService {
    * @return {Promise<UserEntity>}
    */
   async getByUsername(username, throwsError = true) {
-    const userByUsername = await (await UserRepository.instance()).findOneBy({ username: username })
+    const userByUsername = await UserRepository.instance().findOneBy({ username: username })
 
     if (!userByUsername && throwsError) {
       throw new NotFoundException(`No User was found by the username: '${username}'.`)
@@ -72,7 +72,7 @@ class UserService {
     }
     // TODO: Encrypt/hash the password before storing it in the database
 
-    await (await UserRepository.instance()).update(userData)
+    await UserRepository.instance().update(userData)
     return await this.getById(userId)
   }
 
@@ -88,7 +88,7 @@ class UserService {
     }
     // TODO: Encrypt/hash the password before storing it in the database
 
-    return await (await UserRepository.instance()).create(userData)
+    return await UserRepository.instance().create(userData)
   }
 
   /**
@@ -101,7 +101,7 @@ class UserService {
         `Could not delete User by ID: '${userId}' because it does not exist.`
       )
     }
-    await (await UserRepository.instance()).deleteById(userId)
+    await UserRepository.instance().deleteById(userId)
   }
 }
 

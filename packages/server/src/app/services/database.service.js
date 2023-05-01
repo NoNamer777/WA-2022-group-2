@@ -3,13 +3,11 @@ const path = require('path')
 const { Sequelize } = require('sequelize')
 
 class DatabaseService {
-  /** @return {Promise<DatabaseService>} */
-  static async instance() {
+  /** @return {DatabaseService} */
+  static instance() {
     if (DatabaseService.#instance) return DatabaseService.#instance
 
     DatabaseService.#instance = new DatabaseService()
-    await DatabaseService.#instance.#initialize()
-
     return this.#instance
   }
 
@@ -19,8 +17,7 @@ class DatabaseService {
   /** @type {Sequelize} */
   sequelizeInstance
 
-  /** @return {Promise<void>} */
-  async #initialize() {
+  constructor() {
     let config = fs.readFileSync(
       process.env.DATABASE_CONFIG_PATH || path.join(__dirname, '../config/database.json'),
       'utf-8'
@@ -36,10 +33,13 @@ class DatabaseService {
       logging: false
     })
 
-    await this.sequelizeInstance.authenticate()
-    console.info(
-      `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
-    )
+    this.sequelizeInstance
+      .authenticate()
+      .then(() =>
+        console.info(
+          `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
+        )
+      )
   }
 }
 
