@@ -21,15 +21,15 @@ class UserService {
   }
 
   /**
-   * @param id {number}
+   * @param userId {number}
    * @param throwsError {boolean}
    * @return {Promise<UserEntity>}
    */
-  async getById(id, throwsError = true) {
-    const userById = await (await UserRepository.instance()).findOneBy({ id: id })
+  async getById(userId, throwsError = true) {
+    const userById = await (await UserRepository.instance()).findOneBy({ id: userId })
 
     if (!userById && throwsError) {
-      throw new NotFoundException(`No User was found by ID: '${id}'.`)
+      throw new NotFoundException(`No User was found by ID: '${userId}'.`)
     }
     return userById
   }
