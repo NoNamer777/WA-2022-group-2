@@ -27,3 +27,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# Configs
+packages/server/src/config/*
+!packages/server/src/config/*-template.json
