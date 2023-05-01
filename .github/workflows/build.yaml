@@ -1,5 +1,8 @@
-name: 'Build & Test'
-on: 'push'
+name: 'Build'
+on:
+    push:
+        branches:
+            - 'main'
 jobs:
     build:
         runs-on: 'ubuntu-latest'
