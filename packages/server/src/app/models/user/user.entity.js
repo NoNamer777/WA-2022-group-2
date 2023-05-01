@@ -2,6 +2,7 @@ const { DataTypes, Model } = require('sequelize')
 
 class UserEntity extends Model {}
 
+/** @type {import('sequelize').ModelAttributes<UserEntity>} */
 const UserModelDefinition = {
   id: {
     type: DataTypes.INTEGER,
