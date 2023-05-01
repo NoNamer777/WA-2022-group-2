@@ -1,5 +1,3 @@
-const express = require('express')
-const router = express.Router()
 const UserService = require('./user.service')
 const { BadRequestException } = require('../error.models')
 const { isNumber } = require('../../utils/validation')
@@ -87,24 +85,4 @@ class UserController {
   }
 }
 
-router.get('/', async (_, response) => {
-  response.send(await UserController.instance().getAll())
-})
-
-router.get('/:userId', async (request, response) => {
-  response.send(await UserController.instance().getById(request.params.userId))
-})
-
-router.put('/:userId', async (request, response) => {
-  response.send(await UserController.instance().update(request.params.userId, request.body))
-})
-
-router.post('/', async (request, response) => {
-  response.status(201).send(await UserController.instance().create(request.body))
-})
-
-router.delete('/:userId', async (request, response) => {
-  response.send(await UserController.instance().deleteById(request.params.userId))
-})
-
-module.exports = router
+module.exports = UserController
