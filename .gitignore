@@ -29,5 +29,5 @@ coverage
 *.sw?
 
 # Configs
-packages/server/src/config/*
-!packages/server/src/config/*-template.json
+packages/server/src/app/config/*
+!packages/server/src/app/config/*-template.json

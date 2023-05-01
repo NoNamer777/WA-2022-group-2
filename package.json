@@ -9,7 +9,7 @@
     "client:dev": "vite --config packages/client/vite.config.js",
     "client:build": "vite build --config packages/client/vite.config.js",
     "client:preview": "vite preview --config packages/client/vite.config.js",
-    "server:start": "node packages/server/src/bin/www.js"
+    "server:start": "node packages/server/src/main.js"
   },
   "workspaces": [
     "packages/*"

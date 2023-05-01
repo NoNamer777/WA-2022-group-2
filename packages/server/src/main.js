@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const app = require('../app')
+const app = require('./app/app')
 const http = require('http')
 
 // Get port and hostname from environment and store in Express
