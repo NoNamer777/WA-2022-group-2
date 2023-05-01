@@ -1,8 +1,10 @@
 {
-  "type": "mysql",
-  "database": "wasted-db",
-  "host": "localhost",
-  "port": 3306,
-  "username": "wasted-db-user",
-  "password": "password"
+  "<environment>": {
+    "type": "mysql",
+    "database": "wasted-db",
+    "host": "localhost",
+    "port": 3306,
+    "username": "wasted-db-user",
+    "password": "password"
+  }
 }
