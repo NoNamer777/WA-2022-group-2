@@ -4,7 +4,7 @@ import { NavigationBar } from './components'
 </script>
 
 <template>
-  <div class="container h-100 d-flex flex-column">
+  <div class="container h-100 d-flex flex-column g-0">
     <NavigationBar />
 
     <RouterView class="box bg-white mt-5" />
