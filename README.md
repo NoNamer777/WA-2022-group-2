@@ -24,6 +24,7 @@ After that you can find the instructions for the different projects on how to ge
 | Project | location                          |
 | ------- | --------------------------------- |
 | Client  | [Here](packages/client/README.md) |
+| Server  | [Here](packages/server/README.md) |
 
 ### ESLint and Prettier
 
