@@ -1,11 +1,11 @@
 <template>
   <FormKit
+    @input="(value) => $emit('update:modelValue', value)"
     :type="type"
     :label="label"
     :name="name"
     :placeholder="placeholder"
     :validation="validation"
-    @input="(value) => $emit('update:modelValue', value)"
     :value="modelValue"
     :validation-visibility="validationVisibility"
   />
@@ -15,37 +15,32 @@
 export default {
   name: 'InputLabel',
   props: {
-    label: {
-      type: String,
-      required: false
-    },
     type: {
       type: String,
       required: false,
       default: 'text'
     },
-    placeholder: {
-      type: String
-    },
-    required: {
-      type: Boolean,
-      required: false,
-      default: true
-    },
-    validationVisibility: {
+    label: {
       type: String,
       required: false
+    },
+    name: {
+      type: String
+    },
+    placeholder: {
+      type: String
     },
     validation: {
       type: String,
       required: false,
       default: ''
     },
-    name: {
-      type: String
-    },
     modelValue: {
       type: String
+    },
+    validationVisibility: {
+      type: String,
+      required: false
     }
   }
 }

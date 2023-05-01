@@ -22,34 +22,34 @@ function register() {
         <FormKit type="form" @submit="register" :actions="false" :incomplete-message="false">
           <InputLabel
             v-model:modelValue="user.email"
-            name="email"
             type="email"
-            validation="required|email|length:5,80'"
             label="Email"
-            placeholder="Email"
+            name="email"
+            placeholder="email@example.com"
+            validation="required|email|length:5,80'"
           />
           <InputLabel
             v-model:modelValue="user.username"
-            name="username"
-            validation="required|length:3,80'"
             label="Gebruikersnaam"
-            placeholder="Gebruikersnaam"
+            name="username"
+            placeholder="johndoe"
+            validation="required|length:3,80'"
           />
           <InputLabel
             v-model:modelValue="user.password"
-            name="password"
             type="password"
-            validation="required|password|length:8,40"
             label="Wachtwoord"
-            placeholder="Wachtwoord"
+            name="password"
+            placeholder="Combinatie van hoofdletters, kleine letters, cijfers en speciale tekens."
+            validation="required|password|length:8,40"
           />
           <InputLabel
             v-model:modelValue="user.passwordRepeat"
-            name="password_confirm"
             type="password"
-            validation="required|confirm"
             label="Herhaal wachtwoord"
-            placeholder="Herhaal wachtwoord"
+            name="password_confirm"
+            placeholder="Herhaal het wachtwoord"
+            validation="required|confirm"
           />
           <InputLabel type="submit" label="Registreer" />
         </FormKit>

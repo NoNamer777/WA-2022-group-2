@@ -22,14 +22,12 @@ function login() {
             v-model:modelValue="user.username"
             label="Gebruikersnaam"
             validation="required"
-            placeholder="Gebruikersnaam"
           />
           <InputLabel
             v-model:modelValue="user.password"
-            validation="required"
             type="password"
             label="Wachtwoord"
-            placeholder="Wachtwoord"
+            validation="required"
           />
           <InputLabel type="submit" label="Login" />
         </FormKit>
