@@ -62,6 +62,19 @@ class UserService {
 
     return await (await UserRepository.instance()).create(userData)
   }
+
+  /**
+   * @param userId {number}
+   * @return {Promise<void>}
+   */
+  async deleteById(userId) {
+    if (!(await this.getById(userId, false))) {
+      throw new NotFoundException(
+        `Could not delete User by ID: '${userId}' because it does not exist.`
+      )
+    }
+    await (await UserRepository.instance()).deleteById(userId)
+  }
 }
 
 module.exports = UserService

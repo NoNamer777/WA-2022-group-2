@@ -39,6 +39,14 @@ class UserRepository {
     return this.#userModel.create(userData)
   }
 
+  /**
+   * @param userId {number}
+   * @return {Promise<void>}
+   */
+  async deleteById(userId) {
+    await this.#userModel.destroy({ where: { id: userId } })
+  }
+
   /** @return {Promise<void>} */
   async #initialize() {
     this.#userModel = UserEntity.init(UserModelDefinition, {

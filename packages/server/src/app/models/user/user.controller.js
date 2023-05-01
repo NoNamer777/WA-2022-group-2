@@ -44,6 +44,21 @@ class UserController {
     console.info('UserController - Creating a new User resource')
     return await UserService.instance().create(userData)
   }
+
+  /**
+   * @param userIdParam {string}
+   * @return {Promise<void>}
+   */
+  async deleteById(userIdParam) {
+    console.info(`UserController - Removing User resource with ID: '${userIdParam}'`)
+
+    if (!isNumber(userIdParam)) {
+      return new BadRequestException(
+        `Invalid ID format: '${userIdParam}'. Please, use whole positive number only.`
+      )
+    }
+    await UserService.instance().deleteById(parseInt(userIdParam))
+  }
 }
 
 router.get('/', async (_, response) => {
@@ -56,6 +71,10 @@ router.get('/:userId', async (request, response) => {
 
 router.post('/', async (request, response) => {
   response.status(201).send(await UserController.instance().create(request.body))
+})
+
+router.delete('/:userId', async (request, response) => {
+  response.send(await UserController.instance().deleteById(request.params.userId))
 })
 
 module.exports = router
