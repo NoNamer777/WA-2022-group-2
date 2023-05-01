@@ -17,26 +17,26 @@ This may include:
 Once you've done that, you can copy the database config template, which you can find [here](src/app/config/database-template.json).
 Rename the copy to `database.json` and provide the following contents to it:
 
-```json5
+```json
 {
-  '<environment>': {
+  "<environment>": {
     // For now, we only support MySQL databases
-    type: 'mysql',
+    "dialect": "mysql",
 
     // The name of your MySQL database/schema
-    database: 'my_db',
+    "database": "my_db",
 
     // The hostname of where your MySQL database server runs
-    host: 'localhost',
+    "host": "localhost",
 
     // The port on which your MySQL database server is accessible
-    port: 3306,
+    "port": 3306,
 
     // The database user which has access rights to the database/schema
-    username: 'db_user',
+    "username": "db_user",
 
     // The password to authenticate and authorize the database user
-    password: 'password'
+    "password": "password"
   }
 }
 ```
