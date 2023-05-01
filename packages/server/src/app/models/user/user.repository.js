@@ -31,6 +31,14 @@ class UserRepository {
     return await this.#userModel.findOne({ where: { ...whereClaus }, rejectOnEmpty: false })
   }
 
+  /**
+   * @param userData {Omit<UserEntity, 'id'>}
+   * @return {Promise<UserEntity>}
+   */
+  create(userData) {
+    return this.#userModel.create(userData)
+  }
+
   /** @return {Promise<void>} */
   async #initialize() {
     this.#userModel = UserEntity.init(UserModelDefinition, {

@@ -33,6 +33,35 @@ class UserService {
     }
     return userById
   }
+
+  /**
+   * @param username {string}
+   * @param throwsError {boolean}
+   * @return {Promise<UserEntity>}
+   */
+  async getByUsername(username, throwsError = true) {
+    const userByUsername = await (await UserRepository.instance()).findOneBy({ username: username })
+
+    if (!userByUsername && throwsError) {
+      throw new NotFoundException(`No User was found by the username: '${username}'.`)
+    }
+    return userByUsername
+  }
+
+  /**
+   * @param userData {Omit<UserEntity, 'id'>}
+   * @return {Promise<UserEntity>}
+   */
+  async create(userData) {
+    if (await this.getByUsername(userData.username, false)) {
+      throw new BadRequestException(
+        `Could not create new User. Username '${userData.username}' is already in use.`
+      )
+    }
+    // TODO: Encrypt/hash the password before storing it in the database
+
+    return await (await UserRepository.instance()).create(userData)
+  }
 }
 
 module.exports = UserService

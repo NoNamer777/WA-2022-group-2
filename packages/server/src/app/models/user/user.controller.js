@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const UserService = require('./user.service')
+const { BadRequestException } = require('../error.models')
+const { isNumber } = require('../../utils/validation')
 
 class UserController {
   /** @return {UserController} */
@@ -25,6 +27,14 @@ class UserController {
   async getById(id) {
     return await UserService.instance().getById(id)
   }
+
+  /**
+   * @param userData {Omit<UserEntity, 'id'>}
+   * @return {Promise<UserEntity>}
+   */
+  async create(userData) {
+    return await UserService.instance().create(userData)
+  }
 }
 
 router.get('/', async (_, response) => {
@@ -47,6 +57,10 @@ router.get('/:userId', async (request, response) => {
   }
   return response.send(await UserController.instance().getById(parseInt(userIdPath)))
 })
+
+router.post('/', async (request, response) => {
+  console.info('UserController - Creating a new User resource')
+  response.status(201).send(await UserController.instance().create(request.body))
 })
 
 module.exports = router
