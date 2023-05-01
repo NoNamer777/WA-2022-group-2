@@ -35,9 +35,9 @@ class DatabaseService {
       port: config.port
     })
 
-    await this.sequelizeInstance.authenticate()
+    await this.sequelizeInstance.authenticate({ logging: false })
     console.info(
-      `A database connection with a ${config.type} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
+      `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
     )
   }
 }
