@@ -17,15 +17,23 @@ class UserController {
 
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
+    console.info('UserController - Getting all Users data')
     return await UserService.instance().getAll()
   }
 
   /**
-   * @param id {number}
+   * @param userIdParam {string}
    * @return {Promise<UserEntity>}
    */
-  async getById(id) {
-    return await UserService.instance().getById(id)
+  async getById(userIdParam) {
+    console.info(`UserController - Getting data for User with ID: '${userIdParam}'`)
+
+    if (!isNumber(userIdParam)) {
+      throw new BadRequestException(
+        `Invalid ID format: '${userIdParam}'. Please, use whole positive number only.`
+      )
+    }
+    return await UserService.instance().getById(parseInt(userIdParam))
   }
 
   /**
@@ -33,33 +41,20 @@ class UserController {
    * @return {Promise<UserEntity>}
    */
   async create(userData) {
+    console.info('UserController - Creating a new User resource')
     return await UserService.instance().create(userData)
   }
 }
 
 router.get('/', async (_, response) => {
-  console.info('UserController - Getting all Users data')
   response.send(await UserController.instance().getAll())
 })
 
 router.get('/:userId', async (request, response) => {
-  const userIdPath = request.params.userId
-  console.info(`UserController - Getting data for User with ID: '${userIdPath}'`)
-
-  if (!isNumber(userIdPath)) {
-    return response
-      .status(400)
-      .send(
-        new BadRequestException(
-          `Invalid ID format: '${request.params.userId}'. Please, use whole positive number only.`
-        )
-      )
-  }
-  return response.send(await UserController.instance().getById(parseInt(userIdPath)))
+  response.send(await UserController.instance().getById(request.params.userId))
 })
 
 router.post('/', async (request, response) => {
-  console.info('UserController - Creating a new User resource')
   response.status(201).send(await UserController.instance().create(request.body))
 })
 
