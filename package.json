@@ -9,7 +9,8 @@
     "client:dev": "vite --config packages/client/vite.config.js",
     "client:build": "vite build --config packages/client/vite.config.js",
     "client:preview": "vite preview --config packages/client/vite.config.js",
-    "server:start": "node packages/server/src/main.js"
+    "server:start": "node packages/server/src/main.js",
+    "server:run-migrations": "sequelize db:migrate"
   },
   "workspaces": [
     "packages/*"
