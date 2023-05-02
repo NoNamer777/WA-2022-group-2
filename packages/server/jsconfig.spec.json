@@ -1,0 +1,10 @@
+{
+  "extends": "./jsconfig.json",
+  "compileOnSave": false,
+  "include": ["jest.config.js", "src/**/*.test.js"],
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "../../dist/out",
+    "types": ["jest", "node"]
+  }
+}

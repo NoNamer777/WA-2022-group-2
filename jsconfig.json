@@ -1,4 +1,7 @@
 {
+  "compileOnSave": false,
+  "files": [],
+  "include": [],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

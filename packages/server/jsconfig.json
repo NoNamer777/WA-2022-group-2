@@ -1,0 +1,13 @@
+{
+  "extends": "../../jsconfig.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./jsconfig.app.json"
+    },
+    {
+      "path": "./jsconfig.spec.json"
+    }
+  ]
+}
