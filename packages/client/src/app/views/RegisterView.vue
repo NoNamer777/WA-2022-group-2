@@ -26,14 +26,14 @@ function register() {
             label="Email"
             name="email"
             placeholder="email@example.com"
-            validation="required|email|length:5,80'"
+            validation="required|email|length:5,80"
           />
           <InputLabel
             v-model:modelValue="user.username"
             label="Gebruikersnaam"
             name="username"
             placeholder="johndoe"
-            validation="required|length:3,80'"
+            validation="required|length:3,80"
           />
           <InputLabel
             v-model:modelValue="user.password"
