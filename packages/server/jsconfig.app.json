@@ -1,0 +1,13 @@
+{
+  "extends": "./jsconfig.json",
+  "include": ["src/**/*.js"],
+  "exclude": ["jest.config.js", "src/**/*.test.js"],
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "outDir": "../../dist/out",
+    "target": "ES2022",
+    "types": ["node"]
+  }
+}

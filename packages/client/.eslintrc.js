@@ -2,7 +2,7 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: false,
-  extends: ['plugin:vue/vue3-essential', '../../.eslintrc.js'],
+  extends: ['plugin:vue/vue3-essential', '../../.eslintrc.json'],
   rules: {
     'vue/require-default-prop': 'off',
     'vue/html-indent': 'off',

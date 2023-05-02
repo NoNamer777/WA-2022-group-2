@@ -48,12 +48,12 @@ available. The `<environment>` field you can change to `development`.
 
 The server handles the following environment variables:
 
-| Variable             | Default value           | Description                                            |
-| -------------------- | ----------------------- | ------------------------------------------------------ |
-| SERVER_PRODUCTION    | false                   | Whether to the server in production mode.              |
-| SERVER_HOST          | localhost               | On which host to make the server available.            |
-| SERVER_PORT          | 8080                    | On which port of the host to make the server available |
-| DATABASE_CONFIG_PATH | ../config/database.json | Where to find the database configuration file          |
+| Variable             | Default value           | Values                            | Description                                            |
+| -------------------- | ----------------------- | --------------------------------- | ------------------------------------------------------ |
+| NODE_ENV             | development             | development, test, production     | Which environment the server runs in.                  |
+| SERVER_HOST          | localhost               | a valid IP address or hostname    | On which host to make the server available.            |
+| SERVER_PORT          | 8080                    | a valid port number               | On which port of the host to make the server available |
+| DATABASE_CONFIG_PATH | ../config/database.json | a valid path to the configuration | Where to find the database configuration file          |
 
 ### Sequelize
 
@@ -76,3 +76,37 @@ in the root of the repository:
 ```shell
 npm run server:start
 ```
+
+## Building
+
+Builds are made by [esbuild](https://esbuild.github.io/)
+You can make a build from the server project by running the following command in a terminal in the root of the repository:
+
+```shell
+npm run server:build
+```
+
+You can also make a build continuously, meaning it'll rebuild after file changes by running the following command:
+
+```shell
+npm run server:build:dev
+```
+
+## Testing
+
+This project is configured to run unit tests with [Jest](https://jestjs.io/docs/getting-started).  
+To do a single run of tests, run the following command in a terminal in the root of the repository:
+
+```shell
+npm run server:test
+```
+
+To run tests while your developing a feature and need to run tests automatically after having made a change, run the
+following command:
+
+```shell
+npm run server:test:dev
+```
+
+Test coverage is collected from files excluding `*.controller.js` and `*.router.js` files, these will be covered by
+e2e tests.
