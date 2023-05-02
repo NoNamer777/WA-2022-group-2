@@ -76,3 +76,22 @@ in the root of the repository:
 ```shell
 npm run server:start
 ```
+
+## Testing
+
+This project is configured to run unit tests with [Jest](https://jestjs.io/docs/getting-started).  
+To do a single run of tests, run the following command in a terminal in the root of the repository:
+
+```shell
+npm run server:test
+```
+
+To run tests while your developing a feature and need to run tests automatically after having made a change, run the
+following command:
+
+```shell
+npm run server:test:dev
+```
+
+Test coverage is collected from files excluding `*.controller.js` and `*.router.js` files, these will be covered by
+e2e tests.
