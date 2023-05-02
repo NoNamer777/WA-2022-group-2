@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.min'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import { App, FormKitOptions, router } from './app'
+import '/public/assets/styles/main.scss'
 
 const app = createApp(App)
 
