@@ -57,11 +57,11 @@ UserEntity.init(UserModelDefinition, {
   updatedAt: false
 })
 
-UserEntity.generateHash = (password) => {
+UserEntity.generateHash = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
 }
 
-UserEntity.prototype.validPassword = (password) => {
+UserEntity.prototype.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 

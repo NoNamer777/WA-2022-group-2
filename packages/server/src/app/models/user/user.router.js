@@ -1,6 +1,6 @@
 const express = require('express')
 const UserController = require('./user.controller')
-const { postValidation } = require('./user.validation')
+const { postValidation, authValidation } = require('./user.validation')
 const { matchedData } = require('express-validator')
 const router = express.Router()
 
@@ -22,6 +22,10 @@ router.post('/', postValidation, async (request, response) => {
 
 router.delete('/:userId', async (request, response) => {
   response.send(await UserController.instance().deleteById(request.params.userId))
+})
+
+router.post('/auth', authValidation, async (request, response) => {
+  response.status(200).send(await UserController.instance().auth(matchedData(request)))
 })
 
 module.exports = router

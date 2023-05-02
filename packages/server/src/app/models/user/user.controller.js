@@ -84,6 +84,22 @@ class UserController {
     }
     await UserService.instance().deleteById(parseInt(userIdParam))
   }
+
+  /**
+   * @param data
+   * @return {Promise<UserEntity>}
+   */
+  async auth(data) {
+    console.info('UserController - login user in')
+
+    const user = await UserService.instance().getByUsername(data.username)
+
+    if (!user.validPassword(data.password)) {
+      throw new BadRequestException('Invalid credentials')
+    }
+
+    return user
+  }
 }
 
 module.exports = UserController
