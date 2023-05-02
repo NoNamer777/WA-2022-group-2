@@ -6,6 +6,13 @@
     {
       "files": ["*.js"],
       "rules": {}
+    },
+    {
+      "files": ["*.test.js"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
     }
   ]
 }
