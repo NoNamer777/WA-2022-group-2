@@ -65,4 +65,11 @@ UserEntity.prototype.validPassword = (password) => {
   return bcrypt.compareSync(password, this.password)
 }
 
+UserEntity.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get())
+
+  delete values.password
+  return values
+}
+
 module.exports = { UserEntity, UserModelDefinition }
