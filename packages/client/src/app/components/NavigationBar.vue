@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-dark navbar-expand-lg bg-custom-primary mt-5 p-4">
+  <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-5 p-4">
     <div class="container-fluid">
       <a class="navbar-brand text-white">Wasted</a>
       <button

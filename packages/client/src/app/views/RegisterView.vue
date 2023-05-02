@@ -43,7 +43,7 @@ function register() {
             :type="'password'"
             :placeholder="'Herhaal wachtwoord'"
           />
-          <button class="btn bg-custom-primary w-100 text-white mt-4">Registreer</button>
+          <button class="btn btn-primary w-100 text-white mt-4">Registreer</button>
         </form>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">

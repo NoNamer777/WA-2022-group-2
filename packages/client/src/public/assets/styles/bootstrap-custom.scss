@@ -1,0 +1,24 @@
+@import '../../../../../../node_modules/bootstrap/scss/functions';
+
+$primary: #1D73DD;
+$secondary: #D4441C;
+$tertiary: #4ACC64;
+$background: #C57B68;
+$font-family-base: Geneva, Verdana, sans-serif;
+
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary,
+);
+
+$custom-colors: (
+        "tertiary": $tertiary,
+        "background": $background
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../../node_modules/bootstrap/scss/mixins";
+@import "../../../../../../node_modules/bootstrap/scss/reboot";
+@import "../../../../../../node_modules/bootstrap/scss/bootstrap";

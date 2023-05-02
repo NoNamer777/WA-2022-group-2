@@ -29,7 +29,7 @@ function login() {
             :type="'password'"
             :placeholder="'Wachtwoord'"
           />
-          <button class="btn bg-custom-primary w-100 text-white mt-4">Login</button>
+          <button class="btn btn-primary w-100 text-white mt-4">Login</button>
           <small class="d-flex">
             Heb je geen account?&nbsp;
             <router-link class="nav-link text-info" :to="{ name: 'home' }">
