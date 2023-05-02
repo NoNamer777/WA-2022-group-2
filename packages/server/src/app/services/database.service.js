@@ -24,7 +24,7 @@ class DatabaseService {
     )
     config = JSON.parse(config)
 
-    config = process.env.SERVER_PRODUCTION || false ? config.production : config.development
+    config = process.env.NODE_ENV === 'production' ? config.production : config.development
 
     this.sequelizeInstance = new Sequelize(config.database, config.username, config.password, {
       dialect: config.dialect,
