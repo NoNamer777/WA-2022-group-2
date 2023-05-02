@@ -1,21 +1,21 @@
 @import 'bootstrap/scss/functions';
 
-$primary: #1D73DD;
-$secondary: #D4441C;
-$tertiary: #4ACC64;
-$background: #C57B68;
+$primary: #1d73dd;
+$secondary: #d4441c;
+$tertiary: #4acc64;
+$background: #c57b68;
 $font-family-base: Geneva, Verdana, sans-serif;
 
 @import 'bootstrap/scss/variables';
 
 $theme-colors: (
-        "primary": $primary,
-        "secondary": $secondary,
+  'primary': $primary,
+  'secondary': $secondary
 );
 
 $custom-colors: (
-        "tertiary": $tertiary,
-        "background": $background
+  'tertiary': $tertiary,
+  'background': $background
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
