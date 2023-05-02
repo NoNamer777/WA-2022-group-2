@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator')
+
 /**
  * Checks if the provided string object only contains numbers
  * @param obj {string | number}
@@ -10,6 +12,27 @@ function isNumber(obj) {
   return typeof obj === 'string' && obj.match(/^[0-9]$/g) !== null
 }
 
+/**
+ * Checks if the provided string object only contains numbers
+ * @return {boolean}
+ * @param validations
+ */
+function validRequest(validations) {
+  return async (req, res, next) => {
+    for (let validation of validations) {
+      await validation.run(req)
+    }
+
+    const errors = validationResult(req)
+    if (errors.isEmpty()) {
+      return next()
+    }
+
+    return res.status(412).json({ errors: errors.array() })
+  }
+}
+
 module.exports = {
-  isNumber
+  isNumber,
+  validRequest
 }
