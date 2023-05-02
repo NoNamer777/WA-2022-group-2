@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "npm run server:test",
     "lint": "eslint . --ext .vue,.js,.html --ignore-path .gitignore",
     "format:check": "prettier -l .",
     "format:write": "prettier -w .",
@@ -10,6 +11,8 @@
     "client:build": "vite build --config packages/client/vite.config.js",
     "client:preview": "vite preview --config packages/client/vite.config.js",
     "server:start": "node packages/server/src/main.js",
+    "server:test": "jest --config packages/server/jest.config.js --ci",
+    "server:test:dev": "jest --config packages/server/jest.config.js --watchAll",
     "server:run-migrations": "sequelize db:migrate"
   },
   "workspaces": [
