@@ -31,9 +31,9 @@ function login() {
           />
           <InputLabel type="submit" label="Login" />
         </FormKit>
-        <small class="d-flex">
+        <small class="d-flex align-items-baseline">
           Heb je geen account?&nbsp;
-          <router-link class="nav-link text-info" :to="{ name: 'register' }">
+          <router-link class="btn btn-sm btn-link" :to="{ name: 'register' }">
             Registreer
           </router-link>
         </small>
