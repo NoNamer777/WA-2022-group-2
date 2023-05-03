@@ -1,12 +1,10 @@
+import '@formkit/themes/genesis'
 import { plugin } from '@formkit/vue'
-
+import 'bootstrap/dist/js/bootstrap.min'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import { App, FormKitOptions, router } from './app'
-
-import '@formkit/themes/genesis'
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import '/public/assets/styles/main.scss'
 
 const app = createApp(App)
 
