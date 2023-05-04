@@ -1,7 +1,8 @@
 const { check } = require('express-validator')
 
-const email = check('email')
-  .exists()
+const validEmail = check('email')
+  .not()
+  .isEmpty()
   .withMessage('Email is verplicht.')
   .bail()
   .isLength({
@@ -13,8 +14,11 @@ const email = check('email')
   .isEmail()
   .withMessage('Vul een geldig e-mailadres in.')
 
-const username = check('username')
-  .exists()
+const username = check('username').not().isEmpty().withMessage('Gebruikersnaam is verplicht.')
+
+const validUsername = check('username')
+  .not()
+  .isEmpty()
   .withMessage('Gebruikersnaam is verplicht.')
   .bail()
   .isLength({
@@ -23,24 +27,14 @@ const username = check('username')
   })
   .withMessage('Gebruikersnaam moet tussen de 80 en 3 tekens bevatten.')
 
-const password = check('password')
-  .exists()
+const password = check('password').not().isEmpty().withMessage('Wachtwoord is verplicht.')
+
+const validPassword = check('password')
+  .not()
+  .isEmpty()
   .withMessage('Wachtwoord is verplicht.')
   .bail()
-  .isStrongPassword({
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1,
-    minNumbers: 1,
-    minSymbols: 1,
-    returnScore: false,
-    pointsPerUnique: 1,
-    pointsPerRepeat: 0.5,
-    pointsForContainingLower: 10,
-    pointsForContainingUpper: 10,
-    pointsForContainingNumber: 10,
-    pointsForContainingSymbol: 10
-  })
+  .matches(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/)
   .withMessage(
     'We raden aan een combinatie te maken van hoofdletters, kleine letters, cijfers en speciale tekens.'
   )
@@ -51,16 +45,19 @@ const password = check('password')
   })
   .withMessage('Wachtwoord moet tussen de 40 en 8 tekens bevatten.')
 
-const passwordConfirm = check('password_confirm')
-  .exists()
+const validPasswordConfirm = check('password_confirm')
+  .not()
+  .isEmpty()
   .withMessage('Herhaal wachtwoord is verplicht.')
   .bail()
   .custom((value, { req }) => value === req.body.password)
   .withMessage('Herhaal wachtwoord komt niet overeen.')
 
 module.exports = {
-  email,
+  validEmail,
+  validUsername,
   username,
+  validPassword,
   password,
-  passwordConfirm
+  validPasswordConfirm
 }

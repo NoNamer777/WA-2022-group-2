@@ -93,9 +93,9 @@ class UserController {
   async auth(data) {
     console.info('UserController - login user in')
 
-    const user = await UserService.instance().getByUsername(data.username)
+    const user = await UserService.instance().getByUsername(data.username, false)
 
-    if (!user.validPassword(data.password)) {
+    if (!user || !user.validPassword(data.password)) {
       throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.')
     }
 
