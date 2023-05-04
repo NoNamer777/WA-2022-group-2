@@ -79,9 +79,7 @@ class UserService {
    */
   async create(userData) {
     if (await this.getByUsername(userData.username, false)) {
-      throw new BadRequestException(
-        `Could not create new User. Username '${userData.username}' is already in use.`
-      )
+      throw new BadRequestException(`Gebruikersnaam '${userData.username}' is al in gebruik`)
     }
     return await UserRepository.instance().create(userData)
   }
