@@ -13,7 +13,11 @@ class JwtService {
   static #instance
 
   generateToken(payload, expiresIn) {
-    return jwt.sign(payload, 'process.env.TOKEN_SECRET', { expiresIn: expiresIn })
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: expiresIn })
+  }
+
+  verifyToken(token) {
+    return jwt.verify(token, process.env.JWT_SECRET)
   }
 }
 
