@@ -1,15 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { InputLabel } from '../components'
+import { useAuthorStore } from '../stores'
+const { login } = useAuthorStore()
 
 const user = ref({
   username: '',
   password: ''
 })
-
-function login() {
-  console.log(user)
-}
 </script>
 
 <template>
@@ -17,7 +15,7 @@ function login() {
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Login</h1>
-        <FormKit type="form" @submit="login" :actions="false" :incomplete-message="false">
+        <FormKit type="form" @submit="login(user)" :actions="false" :incomplete-message="false">
           <InputLabel
             v-model:modelValue="user.username"
             label="Gebruikersnaam"

@@ -1,3 +1,9 @@
+<script setup>
+import { storeToRefs } from 'pinia'
+import { useAuthorStore } from '../stores'
+
+const { isAuthenticated } = storeToRefs(useAuthorStore())
+</script>
 <template>
   <main>
     <h1 class="mb-4">Wat is Wasted?</h1>
@@ -7,7 +13,13 @@
       suscipit. Aliquam architecto corporis cum deleniti doloribus fugiat perspiciatis, qui quis
       ratione repellendus! Cum eaque est provident rerum tempore! Beatae maiores pariatur placeat?
     </p>
-    <router-link class="btn btn-primary" :to="{ name: 'register' }"> Registreer </router-link>
+    <router-link
+      class="btn bg-custom-primary text-white"
+      :to="{ name: 'register' }"
+      v-if="isAuthenticated"
+    >
+      Registreer
+    </router-link>
     <img class="w-25 float-end" src="/assets/images/mascot/happy_bin.png" alt="mascot" />
   </main>
 </template>

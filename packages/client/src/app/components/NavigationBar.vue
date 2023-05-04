@@ -1,3 +1,11 @@
+<script setup>
+import { storeToRefs } from 'pinia'
+import { useAuthorStore } from '../stores'
+const { logout } = useAuthorStore()
+
+const { isAuthenticated } = storeToRefs(useAuthorStore())
+</script>
+
 <template>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-5 p-4">
     <div class="container-fluid">
@@ -32,20 +40,21 @@
         </ul>
         <hr class="d-xl-none" />
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link class="nav-link text-white" :to="{ name: 'login' }">Inloggen</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="btn bg-white" :to="{ name: 'register' }">Registreer</router-link>
+          <template v-if="!isAuthenticated">
+            <li class="nav-item">
+              <router-link class="nav-link text-white" :to="{ name: 'login' }"
+                >Inloggen</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link class="btn bg-white" :to="{ name: 'register' }">Registreer</router-link>
+            </li>
+          </template>
+          <li class="nav-item" v-else>
+            <button class="btn bg-white" @click="logout">Logout</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
-
-<script>
-export default {
-  name: 'NavigationBar'
-}
-</script>

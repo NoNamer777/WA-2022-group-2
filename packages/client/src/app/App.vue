@@ -1,10 +1,15 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { NavigationBar } from './components'
+import { useAuthorStore } from './stores'
+const { getLoggedInUser } = useAuthorStore()
+
+getLoggedInUser()
 </script>
 
 <template>
   <div class="container h-100 d-flex flex-column g-0">
+    <notifications :duration="5000" />
     <NavigationBar />
 
     <RouterView class="box mt-5" />

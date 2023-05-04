@@ -1,6 +1,7 @@
 const UserService = require('./user.service')
 const { isNumber } = require('../../utils/validation')
 const BadRequestException = require('../errors/bad-request.exception')
+const UnauthorizedException = require('../errors/unauthorized-exception')
 
 class UserController {
   /** @return {UserController} */
@@ -95,7 +96,7 @@ class UserController {
     const user = await UserService.instance().getByUsername(data.username)
 
     if (!user.validPassword(data.password)) {
-      throw new BadRequestException('Invalid credentials')
+      throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.')
     }
 
     return user

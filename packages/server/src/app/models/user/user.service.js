@@ -72,7 +72,10 @@ class UserService {
         `Could not update User with ID: '${userId}'. Username '${userData.username}' is already in use.`
       )
     }
-    // TODO: Encrypt/hash the password before storing it in the database
+
+    if (userData.password) {
+      userData.password = UserEntity.generateHash(userData.password)
+    }
 
     await UserRepository.instance().update(userData)
     return await this.getById(userId)

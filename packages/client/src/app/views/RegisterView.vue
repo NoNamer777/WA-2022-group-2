@@ -1,17 +1,16 @@
 <script setup>
-import { ref } from 'vue'
 import InputLabel from '../components/form/InputLabel.vue'
+
+import { ref } from 'vue'
+import { useAuthorStore } from '../stores'
+const { register } = useAuthorStore()
 
 const user = ref({
   email: '',
   username: '',
   password: '',
-  passwordRepeat: ''
+  password_confirm: ''
 })
-
-function register() {
-  console.log(user)
-}
 </script>
 
 <template>
@@ -19,7 +18,7 @@ function register() {
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Registreer</h1>
-        <FormKit type="form" @submit="register" :actions="false" :incomplete-message="false">
+        <FormKit type="form" @submit="register(user)" :actions="false" :incomplete-message="false">
           <InputLabel
             v-model:modelValue="user.email"
             type="email"
@@ -44,7 +43,7 @@ function register() {
             validation="required|password|length:8,40"
           />
           <InputLabel
-            v-model:modelValue="user.passwordRepeat"
+            v-model:modelValue="user.password_confirm"
             type="password"
             label="Herhaal wachtwoord"
             name="password_confirm"
