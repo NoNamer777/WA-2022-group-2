@@ -45,6 +45,10 @@ const UserModelDefinition = {
       notEmpty: true,
       len: [3, 124],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
+    },
+    set(password) {
+      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      this.setDataValue('password', pass)
     }
   }
 }
@@ -56,10 +60,6 @@ UserEntity.init(UserModelDefinition, {
   createdAt: false,
   updatedAt: false
 })
-
-UserEntity.generateHash = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-}
 
 UserEntity.prototype.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)

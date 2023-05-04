@@ -1,7 +1,6 @@
 const UserRepository = require('./user.repository')
 const NotFoundException = require('../errors/not-found.exception')
 const BadRequestException = require('../errors/bad-request.exception')
-const { UserEntity } = require('./user.entity')
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 
@@ -16,8 +15,6 @@ class UserService {
 
   /** @type {UserService} */
   static #instance
-
-  // TODO: Do not return user's email and password
 
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
@@ -72,11 +69,6 @@ class UserService {
         `Could not update User with ID: '${userId}'. Username '${userData.username}' is already in use.`
       )
     }
-
-    if (userData.password) {
-      userData.password = UserEntity.generateHash(userData.password)
-    }
-
     await UserRepository.instance().update(userData)
     return await this.getById(userId)
   }
@@ -91,9 +83,6 @@ class UserService {
         `Could not create new User. Username '${userData.username}' is already in use.`
       )
     }
-
-    userData.password = UserEntity.generateHash(userData.password)
-
     return await UserRepository.instance().create(userData)
   }
 
