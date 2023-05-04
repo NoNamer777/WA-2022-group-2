@@ -1,14 +1,14 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { NavigationBar } from './components'
-import { useAuthorStore } from './stores'
-const { getLoggedInUser } = useAuthorStore()
+import { useAuthStore } from './stores'
+import { storeToRefs } from 'pinia'
 
-getLoggedInUser()
+const { loading } = storeToRefs(useAuthStore())
 </script>
 
 <template>
-  <div class="container h-100 d-flex flex-column g-0">
+  <div v-if="!loading" class="container h-100 d-flex flex-column g-0">
     <notifications :duration="5000" />
     <NavigationBar />
 

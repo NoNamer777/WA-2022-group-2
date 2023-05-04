@@ -2,10 +2,11 @@ import { defineStore } from 'pinia'
 import { router } from '../app-router'
 import axios from '../axios'
 
-export const useAuthorStore = defineStore({
+export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    user: null
+    user: null,
+    loading: true
   }),
   getters: {
     isAuthenticated: (state) => state.user !== null
@@ -51,6 +52,7 @@ export const useAuthorStore = defineStore({
           this.user = res.data.user
         })
         .catch(() => (this.user = null))
+        .finally(() => (this.loading = false))
     }
   }
 })

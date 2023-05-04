@@ -2,8 +2,8 @@
 import InputLabel from '../components/form/InputLabel.vue'
 
 import { ref } from 'vue'
-import { useAuthorStore } from '../stores'
-const { register } = useAuthorStore()
+import { useAuthStore } from '../stores'
+const { register } = useAuthStore()
 
 const user = ref({
   email: '',

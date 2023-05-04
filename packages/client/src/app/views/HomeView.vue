@@ -1,8 +1,8 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { useAuthorStore } from '../stores'
+import { useAuthStore } from '../stores'
 
-const { isAuthenticated } = storeToRefs(useAuthorStore())
+const { isAuthenticated } = storeToRefs(useAuthStore())
 </script>
 <template>
   <main>

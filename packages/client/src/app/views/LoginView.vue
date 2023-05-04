@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { InputLabel } from '../components'
-import { useAuthorStore } from '../stores'
-const { login } = useAuthorStore()
+import { useAuthStore } from '../stores'
+const { login } = useAuthStore()
 
 const user = ref({
   username: '',
