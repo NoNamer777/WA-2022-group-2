@@ -1,4 +1,3 @@
-import { notify } from '@kyvg/vue3-notification'
 import { defineStore } from 'pinia'
 import { router } from '../app-router'
 import axios from '../axios'
@@ -15,39 +14,22 @@ export const useAuthorStore = defineStore({
     async register(data) {
       await axios
         .post('/user', data)
-        .then((res) => {
-          notify({
-            title: res.data.message,
-            type: 'success'
-          })
-
+        .then(() => {
           router.push({ name: 'login' })
         })
         .catch((error) => {
-          notify({
-            title: error,
-            type: 'error'
-          })
+          console.error(error)
         })
     },
     async login(data) {
       await axios
         .post('/user/auth', data)
         .then((res) => {
-          notify({
-            title: res.data.message,
-            type: 'success'
-          })
-
           this.user = res.data.user
-
           router.push({ name: 'home' })
         })
         .catch((error) => {
-          notify({
-            title: error,
-            type: 'error'
-          })
+          console.error(error)
         })
     },
     async logout() {
@@ -55,19 +37,11 @@ export const useAuthorStore = defineStore({
 
       await axios
         .post('/user/logout')
-        .then((res) => {
-          notify({
-            title: res.data.message,
-            type: 'success'
-          })
-
+        .then(() => {
           router.push({ name: 'home' })
         })
         .catch((error) => {
-          notify({
-            title: error,
-            type: 'error'
-          })
+          console.error(error)
         })
     },
     async getLoggedInUser() {
