@@ -3,7 +3,7 @@ const UserController = require('./user.controller')
 const { postValidation, authValidation } = require('./user.validation')
 const { matchedData } = require('express-validator')
 const router = express.Router()
-const jwt = require('jsonwebtoken')
+const JwtService = require('../../services/jwt.service')
 const { cookieJwtAuth } = require('../../middleware/cookie-jwt-auth')
 
 router.get('/', cookieJwtAuth, async (_, response) => {
@@ -45,10 +45,9 @@ router.delete('/:userId', cookieJwtAuth, async (request, response) => {
 router.post('/auth', authValidation, async (request, response, next) => {
   try {
     const user = await UserController.instance().auth(matchedData(request))
+    const token = JwtService.instance().generateToken(user.toJSON(), '8h')
 
-    const token = jwt.sign(user.toJSON(), 'MY_SECRET', { expiresIn: '8h' })
     const expiryDate = new Date(Date.now() + 60 * 60 * 8000) // 8 hour
-
     response.cookie('auth-token', token, { expires: expiryDate })
 
     response.status(200).send({ user, message: `Welkom terug ${user.username}! 😎` })
