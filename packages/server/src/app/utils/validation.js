@@ -23,7 +23,10 @@ function validRequest(validations) {
       await validation.run(req)
     }
 
-    const errors = validationResult(req)
+    const errors = validationResult(req).formatWith((error) => {
+      return { message: error.msg }
+    })
+
     if (errors.isEmpty()) {
       return next()
     }
