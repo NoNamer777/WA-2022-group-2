@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { InputLabel } from '../components'
+import { CustomFormKit } from '../components'
 import { useAuthStore } from '../stores'
 const { login } = useAuthStore()
 
@@ -16,18 +16,18 @@ const user = ref({
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Login</h1>
         <FormKit type="form" @submit="login(user)" :actions="false" :incomplete-message="false">
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.username"
             label="Gebruikersnaam"
             validation="required"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.password"
             type="password"
             label="Wachtwoord"
             validation="required"
           />
-          <InputLabel type="submit" label="Login" />
+          <CustomFormKit type="submit" label="Login" />
         </FormKit>
         <small class="d-flex align-items-baseline">
           Heb je geen account?&nbsp;

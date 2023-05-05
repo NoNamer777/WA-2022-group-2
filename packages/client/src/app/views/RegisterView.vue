@@ -1,5 +1,5 @@
 <script setup>
-import InputLabel from '../components/form/InputLabel.vue'
+import { CustomFormKit } from '../components'
 
 import { ref } from 'vue'
 import { useAuthStore } from '../stores'
@@ -19,7 +19,7 @@ const user = ref({
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Registreer</h1>
         <FormKit type="form" @submit="register(user)" :actions="false" :incomplete-message="false">
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.email"
             type="email"
             label="Email"
@@ -27,14 +27,14 @@ const user = ref({
             placeholder="email@example.com"
             validation="required|email|length:5,80"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.username"
             label="Gebruikersnaam"
             name="username"
             placeholder="johndoe"
             validation="required|length:3,80"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.password"
             type="password"
             label="Wachtwoord"
@@ -42,7 +42,7 @@ const user = ref({
             placeholder="Combinatie van hoofdletters, kleine letters, cijfers en speciale tekens."
             validation="required|password|length:8,40"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.password_confirm"
             type="password"
             label="Herhaal wachtwoord"
@@ -50,7 +50,7 @@ const user = ref({
             placeholder="Herhaal het wachtwoord"
             validation="required|confirm"
           />
-          <InputLabel type="submit" label="Registreer" />
+          <CustomFormKit type="submit" label="Registreer" />
         </FormKit>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
