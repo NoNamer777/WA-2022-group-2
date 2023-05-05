@@ -7,17 +7,34 @@ export const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: 'Hoofdpagina'
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: {
+        title: 'Log in'
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
+      meta: {
+        title: 'Registreer'
+      }
     }
   ]
+})
+
+router.afterEach((to, from, next) => {
+  const title = to.meta.title
+  if (title) {
+    document.title = title
+  }
+  next()
 })
