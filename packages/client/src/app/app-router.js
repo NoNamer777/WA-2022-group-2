@@ -39,6 +39,12 @@ export const router = createRouter({
   ]
 })
 
+router.beforeEach(() => {
+  window.scrollTo(0, 0)
+  const topElement = document.getElementById('top')
+  topElement.focus()
+})
+
 router.afterEach((to) => {
   const title = to.meta.title
   if (title) {

@@ -5,6 +5,7 @@ import { NavigationBar } from './components'
 
 <template>
   <div class="container h-100 d-flex flex-column g-0">
+    <div class="sr-only" id="top" tabindex="-1"></div>
     <div class="visually-hidden-focusable">
       <a href="#main"> Ga direct naar de inhoud </a>
     </div>
@@ -13,23 +14,6 @@ import { NavigationBar } from './components'
     <RouterView id="main" class="box mt-5" />
   </div>
 </template>
-
-<script>
-export default {
-  watch: {
-    $route: function () {
-      this.$nextTick(function () {
-        this.setRouteWrapperFocus()
-      })
-    }
-  },
-  methods: {
-    setRouteWrapperFocus() {
-      this.$el.focus()
-    }
-  }
-}
-</script>
 
 <style scoped>
 .box {
