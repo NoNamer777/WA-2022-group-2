@@ -1,4 +1,4 @@
-const { validRequest } = require('../../utils/validation')
+const { validRequest } = require('../../validatior/index')
 const {
   validEmail,
   validUsername,
