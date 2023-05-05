@@ -5,9 +5,14 @@ import { NavigationBar } from './components'
 
 <template>
   <div class="container h-100 d-flex flex-column g-0">
+    <ul class="visually-hidden-focusable">
+      <li>
+        <a href="#main"> Ga direct naar de inhoud </a>
+      </li>
+    </ul>
     <NavigationBar />
 
-    <RouterView class="box mt-5" />
+    <RouterView id="main" class="box mt-5" />
   </div>
 </template>
 
