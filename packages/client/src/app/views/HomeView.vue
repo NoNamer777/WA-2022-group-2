@@ -14,9 +14,9 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
       ratione repellendus! Cum eaque est provident rerum tempore! Beatae maiores pariatur placeat?
     </p>
     <router-link
+      v-if="isAuthenticated"
       class="btn bg-custom-primary text-white"
       :to="{ name: 'register' }"
-      v-if="isAuthenticated"
     >
       Registreer
     </router-link>
