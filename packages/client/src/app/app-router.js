@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { HomeView, LoginView, RegisterView } from './views'
+import { ChallengeView, HomeView, LoginView, RegisterView } from './views'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,6 +10,14 @@ export const router = createRouter({
       component: HomeView,
       meta: {
         title: 'Hoofdpagina'
+      }
+    },
+    {
+      path: '/challenge',
+      name: 'challenge',
+      component: ChallengeView,
+      meta: {
+        title: 'Uitdaging'
       }
     },
     {
@@ -31,10 +39,9 @@ export const router = createRouter({
   ]
 })
 
-router.afterEach((to, from, next) => {
+router.afterEach((to) => {
   const title = to.meta.title
   if (title) {
     document.title = title
   }
-  next()
 })
