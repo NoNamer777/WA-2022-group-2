@@ -96,7 +96,9 @@ class UserController {
     const user = await UserService.instance().getByUsername(data.username, false)
 
     if (!user || !user.validPassword(data.password)) {
-      throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.')
+      throw new UnauthorizedException(
+        'De combinatie van gebruikersnaam en wachtwoord is onjuist. 😋'
+      )
     }
 
     return user
