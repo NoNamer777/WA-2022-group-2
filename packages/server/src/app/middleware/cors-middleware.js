@@ -11,7 +11,7 @@ const corsOptions = {
   origin: allowedOrigin,
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'] // Replace with your own headers
+  allowedHeaders: ['Content-Type', 'Authorization']
 }
 
 const corsMiddleware = cors(corsOptions)
