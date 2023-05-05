@@ -79,7 +79,7 @@ class UserService {
    */
   async create(userData) {
     if (await this.getByUsername(userData.username, false)) {
-      throw new BadRequestException(`Gebruikersnaam '${userData.username}' is al in gebruik`)
+      throw new BadRequestException(`Gebruikersnaam '${userData.username}' is al in gebruik 😓`)
     }
     return await UserRepository.instance().create(userData)
   }
