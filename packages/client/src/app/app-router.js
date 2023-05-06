@@ -26,7 +26,7 @@ export const router = createRouter({
 // when user is logged in they shouldn't be able to view the register and login page
 router.beforeEach(async (to) => {
   const store = useAuthStore()
-  await store.getLoggedInUser()
+  await store.getAuthUser()
 
   if (store.isAuthenticated && (to.name === 'login' || to.name === 'register')) {
     // redirect the user to the home page

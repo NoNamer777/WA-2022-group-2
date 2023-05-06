@@ -1,6 +1,6 @@
 const { check } = require('express-validator')
 
-const validEmail = check('email')
+const email = check('email')
   .not()
   .isEmpty()
   .withMessage('Email is verplicht.')
@@ -14,9 +14,7 @@ const validEmail = check('email')
   .isEmail()
   .withMessage('Vul een geldig e-mailadres in.')
 
-const username = check('username').not().isEmpty().withMessage('Gebruikersnaam is verplicht.')
-
-const validUsername = check('username')
+const username = check('username')
   .not()
   .isEmpty()
   .withMessage('Gebruikersnaam is verplicht.')
@@ -27,9 +25,7 @@ const validUsername = check('username')
   })
   .withMessage('Gebruikersnaam moet tussen de 80 en 3 tekens bevatten.')
 
-const password = check('password').not().isEmpty().withMessage('Wachtwoord is verplicht.')
-
-const validPassword = check('password')
+const password = check('password')
   .not()
   .isEmpty()
   .withMessage('Wachtwoord is verplicht.')
@@ -45,7 +41,7 @@ const validPassword = check('password')
   })
   .withMessage('Wachtwoord moet tussen de 40 en 8 tekens bevatten.')
 
-const validPasswordConfirm = check('password_confirm')
+const passwordConfirm = check('passwordConfirm')
   .not()
   .isEmpty()
   .withMessage('Herhaal wachtwoord is verplicht.')
@@ -54,10 +50,8 @@ const validPasswordConfirm = check('password_confirm')
   .withMessage('Herhaal wachtwoord komt niet overeen.')
 
 module.exports = {
-  validEmail,
-  validUsername,
+  email,
   username,
-  validPassword,
   password,
-  validPasswordConfirm
+  passwordConfirm
 }

@@ -24,7 +24,7 @@ export const useAuthStore = defineStore({
     },
     async login(data) {
       await axios
-        .post('/user/auth', data)
+        .post('/auth', data)
         .then((res) => {
           this.user = res.data.user
           router.push({ name: 'home' })
@@ -37,7 +37,7 @@ export const useAuthStore = defineStore({
       this.user = null
 
       await axios
-        .post('/user/logout')
+        .post('/auth/logout')
         .then(() => {
           router.push({ name: 'home' })
         })
@@ -45,9 +45,9 @@ export const useAuthStore = defineStore({
           console.error(error)
         })
     },
-    async getLoggedInUser() {
+    async getAuthUser() {
       await axios
-        .get('/user/logged_in')
+        .get('/auth')
         .then((res) => {
           this.user = res.data.user
         })

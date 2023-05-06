@@ -9,7 +9,7 @@ const user = ref({
   email: '',
   username: '',
   password: '',
-  password_confirm: ''
+  passwordConfirm: ''
 })
 </script>
 
@@ -43,7 +43,7 @@ const user = ref({
             validation="required|password|length:8,40"
           />
           <CustomFormKit
-            v-model:modelValue="user.password_confirm"
+            v-model:modelValue="user.passwordConfirm"
             type="password"
             label="Herhaal wachtwoord"
             name="password_confirm"

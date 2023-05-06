@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator')
 
 /**
- * Checks if the provided string object only contains numbers
+ * Validates if the current request satisfies the specified rules
  * @return {boolean}
  * @param validations
  */

@@ -1,22 +1,6 @@
 const { validRequest } = require('../../validatior/index')
-const {
-  validEmail,
-  validUsername,
-  username,
-  validPassword,
-  password,
-  validPasswordConfirm
-} = require('./user.rule')
+const { email, username, password, passwordConfirm } = require('./user.rule')
 
-const postValidation = validRequest([
-  validEmail,
-  validUsername,
-  validPassword,
-  validPasswordConfirm
-])
-const authValidation = validRequest([username, password])
+const postValidation = validRequest([email, username, password, passwordConfirm])
 
-module.exports = {
-  postValidation,
-  authValidation
-}
+module.exports = { postValidation }

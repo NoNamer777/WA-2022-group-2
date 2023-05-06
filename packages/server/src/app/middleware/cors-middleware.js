@@ -1,4 +1,4 @@
-let cors = require('cors')
+const cors = require('cors')
 
 let allowedOrigin = ['http://localhost:5173', 'http://127.0.0.1:5173']
 

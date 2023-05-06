@@ -85,24 +85,6 @@ class UserController {
     }
     await UserService.instance().deleteById(parseInt(userIdParam))
   }
-
-  /**
-   * @param data
-   * @return {Promise<UserEntity>}
-   */
-  async auth(data) {
-    console.info('UserController - login user in')
-
-    const user = await UserService.instance().getByUsername(data.username, false)
-
-    if (!user || !user.validPassword(data.password)) {
-      throw new UnauthorizedException(
-        'De combinatie van gebruikersnaam en wachtwoord is onjuist. 😋'
-      )
-    }
-
-    return user
-  }
 }
 
 module.exports = UserController

@@ -1,6 +1,7 @@
 const dotenv = require('dotenv')
 const express = require('express')
 const usersRouter = require('./models/user/user.router')
+const authRouter = require('./models/auth/auth.router')
 const ErrorHandlerService = require('./services/error-handler.service')
 const corsMiddleware = require('./middleware/cors-middleware')
 const cookieParser = require('cookie-parser')
@@ -19,6 +20,7 @@ app.use(corsMiddleware)
 app.use(cookieParser())
 
 app.use('/api/user', usersRouter)
+app.use('/api/auth', authRouter)
 
 app.use(new ErrorHandlerService().handleError)
 

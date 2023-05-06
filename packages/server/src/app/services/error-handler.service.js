@@ -3,7 +3,7 @@ const InternalServerErrorException = require('../models/errors/internal-server.e
 class ErrorHandlerService {
   #defaultError = new InternalServerErrorException()
 
-  /* eslint-disable  no-unused-vars */
+  // eslint-disable-next-line
   handleError(error, _request, response, next) {
     if (!process.env.NODE_ENV) {
       console.error(error)
