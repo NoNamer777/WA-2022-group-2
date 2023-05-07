@@ -51,7 +51,7 @@ function register() {
             placeholder="Herhaal het wachtwoord"
             validation="required|confirm"
           />
-          <InputLabel type="submit" label="Registreer" />
+          <InputLabel type="submit" label="Registreer" input-class="form-btn-primary" />
         </FormKit>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
