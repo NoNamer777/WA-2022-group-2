@@ -43,7 +43,7 @@ export const router = createRouter({
 router.beforeEach(async (to, from) => {
   window.scrollTo(0, 0)
   const topElement = document.getElementById('top')
-  if (to.meta.title !== from.meta.title) {
+  if (topElement && to.meta.title !== from.meta.title) {
     topElement.focus()
   }
 
