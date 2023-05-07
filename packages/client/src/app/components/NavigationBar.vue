@@ -38,7 +38,9 @@
             <router-link class="nav-link text-white" :to="{ name: 'login' }">Inloggen</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="btn bg-white" :to="{ name: 'register' }">Registreer</router-link>
+            <router-link class="btn bg-white text-primary focus-auto" :to="{ name: 'register' }"
+              >Registreer</router-link
+            >
           </li>
         </ul>
       </div>
