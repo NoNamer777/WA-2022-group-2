@@ -8,3 +8,7 @@ body,
   background-image: url('../images/backgrounds/forest.png');
   background-repeat: repeat-x;
 }
+
+#top:focus {
+  outline: 0 transparent;
+}

@@ -8,11 +8,14 @@ const { loading } = storeToRefs(useAuthStore())
 </script>
 
 <template>
-  <div v-if="!loading" class="container h-100 d-flex flex-column g-0">
-    <notifications :duration="5000" />
+  <div class="container h-100 d-flex flex-column g-0">
+    <div class="sr-only" id="top" tabindex="-1"></div>
+    <div class="visually-hidden-focusable">
+      <a href="#main"> Ga direct naar de inhoud </a>
+    </div>
     <NavigationBar />
 
-    <RouterView class="box mt-5" />
+    <RouterView id="main" class="box mt-5" />
   </div>
 </template>
 
