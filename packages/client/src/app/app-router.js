@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { HomeView, LoginView, RegisterView } from './views'
+import { ChallengeView, HomeView, LoginView, RegisterView } from './views'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,17 +7,49 @@ export const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: 'Hoofdpagina'
+      }
+    },
+    {
+      path: '/challenge',
+      name: 'challenge',
+      component: ChallengeView,
+      meta: {
+        title: 'Uitdaging'
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: {
+        title: 'Log in'
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
+      meta: {
+        title: 'Registreer'
+      }
     }
   ]
+})
+
+router.beforeEach((to, from) => {
+  window.scrollTo(0, 0)
+  const topElement = document.getElementById('top')
+  if (to.meta.title !== from.meta.title) {
+    topElement.focus()
+  }
+})
+
+router.afterEach((to) => {
+  const title = to.meta.title
+  if (title) {
+    document.title = title
+  }
 })
