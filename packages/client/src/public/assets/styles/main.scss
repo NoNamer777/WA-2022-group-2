@@ -12,3 +12,11 @@ body,
 #top:focus {
   outline: 0 transparent;
 }
+
+.focus-auto:focus-visible {
+  outline: auto;
+}
+
+.form-btn-primary {
+  background-color: var(--bs-primary) !important;
+}
