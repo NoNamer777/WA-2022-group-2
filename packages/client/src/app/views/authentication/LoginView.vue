@@ -27,13 +27,11 @@ const user = ref({
             label="Wachtwoord"
             validation="required"
           />
-          <CustomFormKit type="submit" label="Login" />
+          <CustomFormKit type="submit" label="Login" input-class="form-btn-primary" />
         </FormKit>
         <small class="d-flex align-items-baseline">
           Heb je geen account?&nbsp;
-          <router-link class="btn btn-sm btn-link" :to="{ name: 'register' }">
-            Registreer
-          </router-link>
+          <router-link class="link-primary" :to="{ name: 'register' }"> Registreer </router-link>
         </small>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">

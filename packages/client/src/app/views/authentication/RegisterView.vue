@@ -50,7 +50,7 @@ const user = ref({
             placeholder="Herhaal het wachtwoord"
             validation="required|confirm"
           />
-          <CustomFormKit type="submit" label="Registreer" />
+          <CustomFormKit type="submit" label="Registreer" input-class="form-btn-primary" />
         </FormKit>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
