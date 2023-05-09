@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const { DataTypes, Model } = require('sequelize')
 const DatabaseService = require('../../services/database.service')
 
@@ -44,6 +45,10 @@ const UserModelDefinition = {
       notEmpty: true,
       len: [3, 124],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
+    },
+    set(password) {
+      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      this.setDataValue('password', pass)
     }
   }
 }
@@ -55,5 +60,18 @@ UserEntity.init(UserModelDefinition, {
   createdAt: false,
   updatedAt: false
 })
+
+UserEntity.prototype.validPassword = function (password) {
+  return bcrypt.compareSync(password, this.password)
+}
+
+UserEntity.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get())
+
+  delete values.password
+  delete values.email
+
+  return values
+}
 
 module.exports = { UserEntity, UserModelDefinition }

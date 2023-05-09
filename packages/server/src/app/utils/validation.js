@@ -10,6 +10,4 @@ function isNumber(obj) {
   return typeof obj === 'string' && obj.match(/^[0-9]$/g) !== null
 }
 
-module.exports = {
-  isNumber
-}
+module.exports = { isNumber }

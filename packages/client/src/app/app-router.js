@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from './stores'
 import { ChallengeView, HomeView, LoginView, RegisterView } from './views'
 
 export const router = createRouter({
@@ -39,11 +40,20 @@ export const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   window.scrollTo(0, 0)
   const topElement = document.getElementById('top')
-  if (to.meta.title !== from.meta.title) {
+  if (topElement && to.meta.title !== from.meta.title) {
     topElement.focus()
+  }
+
+  // when user is logged in they shouldn't be able to view the register and login page
+  const store = useAuthStore()
+  await store.getAuthUser()
+
+  if (store.isAuthenticated && (to.name === 'login' || to.name === 'register')) {
+    // redirect the user to the home page
+    return { name: 'home' }
   }
 })
 

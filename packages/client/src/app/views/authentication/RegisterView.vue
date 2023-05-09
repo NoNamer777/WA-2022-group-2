@@ -1,17 +1,16 @@
 <script setup>
+import { CustomFormKit } from '../../components'
+
 import { ref } from 'vue'
-import InputLabel from '../components/form/InputLabel.vue'
+import { useAuthStore } from '../../stores'
+const { register } = useAuthStore()
 
 const user = ref({
   email: '',
   username: '',
   password: '',
-  passwordRepeat: ''
+  passwordConfirm: ''
 })
-
-function register() {
-  console.log(user)
-}
 </script>
 
 <template>
@@ -19,23 +18,23 @@ function register() {
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Registreer</h1>
-        <FormKit type="form" @submit="register" :actions="false" :incomplete-message="false">
-          <InputLabel
+        <FormKit type="form" @submit="register(user)" :actions="false" :incomplete-message="false">
+          <CustomFormKit
             v-model:modelValue="user.email"
             type="email"
             label="Email"
             name="email"
             placeholder="email@example.com"
-            validation="required|email|length:5,80'"
+            validation="required|email|length:5,80"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.username"
             label="Gebruikersnaam"
             name="username"
             placeholder="johndoe"
-            validation="required|length:3,80'"
+            validation="required|length:3,80"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.password"
             type="password"
             label="Wachtwoord"
@@ -43,15 +42,15 @@ function register() {
             placeholder="Combinatie van hoofdletters, kleine letters, cijfers en speciale tekens."
             validation="required|password|length:8,40"
           />
-          <InputLabel
-            v-model:modelValue="user.passwordRepeat"
+          <CustomFormKit
+            v-model:modelValue="user.passwordConfirm"
             type="password"
             label="Herhaal wachtwoord"
             name="password_confirm"
             placeholder="Herhaal het wachtwoord"
             validation="required|confirm"
           />
-          <InputLabel type="submit" label="Registreer" input-class="form-btn-primary" />
+          <CustomFormKit type="submit" label="Registreer" input-class="form-btn-primary" />
         </FormKit>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">

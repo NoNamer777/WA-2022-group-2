@@ -16,8 +16,6 @@ class UserService {
   /** @type {UserService} */
   static #instance
 
-  // TODO: Do not return user's email and password
-
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
     return await UserRepository.instance().findAll()
@@ -71,8 +69,6 @@ class UserService {
         `Could not update User with ID: '${userId}'. Username '${userData.username}' is already in use.`
       )
     }
-    // TODO: Encrypt/hash the password before storing it in the database
-
     await UserRepository.instance().update(userData)
     return await this.getById(userId)
   }
@@ -83,12 +79,8 @@ class UserService {
    */
   async create(userData) {
     if (await this.getByUsername(userData.username, false)) {
-      throw new BadRequestException(
-        `Could not create new User. Username '${userData.username}' is already in use.`
-      )
+      throw new BadRequestException(`Gebruikersnaam '${userData.username}' is al in gebruik 😓`)
     }
-    // TODO: Encrypt/hash the password before storing it in the database
-
     return await UserRepository.instance().create(userData)
   }
 

@@ -10,6 +10,7 @@ class UserController {
     UserController.#instance = new UserController()
     return UserController.#instance
   }
+
   /** @type {UserController} */
   static #instance
 
