@@ -55,6 +55,8 @@ The server handles the following environment variables:
 | SERVER_PORT          | 8080                    | a valid port number               | On which port of the host to make the server available |
 | DATABASE_CONFIG_PATH | ../config/database.json | a valid path to the configuration | Where to find the database configuration file          |
 
+You also need to set up your own environment variable. To do this you have to copy the template, which you can find [here](.env.example).
+Rename the copy to `.env` and fill in the variables
 ### Sequelize
 
 Assuming you've followed the instructions in the [README in the root](../../README.md#developing) of the repository on
