@@ -32,9 +32,9 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
             <router-link class="nav-link text-white" :to="{ name: 'home' }">Quiz</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-white" :to="{ name: 'challenge' }"
-              >Uitdaging</router-link
-            >
+            <router-link class="nav-link text-white" :to="{ name: 'challenge' }">
+              Uitdaging
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'home' }">Info</router-link>
@@ -44,12 +44,14 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
         <ul class="navbar-nav mb-2 mb-lg-0">
           <template v-if="!isAuthenticated">
             <li class="nav-item">
-              <router-link class="nav-link text-white" :to="{ name: 'login' }"
-                >Inloggen</router-link
-              >
+              <router-link class="nav-link text-white" :to="{ name: 'login' }">
+                Inloggen
+              </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="btn bg-white" :to="{ name: 'register' }">Registreer</router-link>
+              <router-link class="btn bg-white text-primary focus-auto" :to="{ name: 'register' }">
+                Registreer
+              </router-link>
             </li>
           </template>
           <li class="nav-item" v-else>
