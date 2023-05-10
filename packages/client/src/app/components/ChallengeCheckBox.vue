@@ -2,11 +2,10 @@
   <div class="d-flex justify-content-center">
     <div class="check position-relative">
       <!--      <div class="border border-primary m-1 p-1 rounded">-->
-      <input :id="id" type="checkbox" :value="checked" @change="check" />
+      <input :id="id" type="checkbox" v-model="innerCheck" @change="check" />
       <label
         :for="id"
         :aria-label="`${imageName}, dag ${id}`"
-        @click="rotate"
         class="transition"
         :style="{
           transform: `rotateY(${this.deg}deg)`
@@ -26,8 +25,12 @@ export default {
   name: 'CheckBox',
   data() {
     return {
-      deg: 0
+      deg: 0,
+      innerCheck: false
     }
+  },
+  mounted() {
+    this.innerCheck = this.checked
   },
   props: {
     id: Number,
@@ -40,7 +43,14 @@ export default {
       this.deg += 180
     },
     check(event) {
-      this.$emit('update:checked', event.target.value)
+      this.innerCheck = event.target.checked
+      this.$emit('update:checked', this.innerCheck)
+    }
+  },
+  watch: {
+    checked() {
+      this.rotate()
+      this.innerCheck = this.checked
     }
   }
 }
