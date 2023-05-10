@@ -7,7 +7,7 @@ class UserEntity extends Model {}
 /** @type {import('sequelize').ModelAttributes<UserEntity>} */
 const UserModelDefinition = {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(11),
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
@@ -18,7 +18,7 @@ const UserModelDefinition = {
     }
   },
   username: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(80),
     allowNull: false,
     unique: 'unique_user_username_idx',
     validate: {
@@ -28,7 +28,7 @@ const UserModelDefinition = {
     }
   },
   email: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(80),
     allowNull: false,
     validate: {
       notNull: true,
@@ -38,7 +38,7 @@ const UserModelDefinition = {
     }
   },
   password: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(128),
     allowNull: false,
     validate: {
       notNull: true,

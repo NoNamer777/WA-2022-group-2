@@ -1,3 +1,5 @@
+'use strict'
+
 const { UserModelDefinition } = require('../../app/models/user/user.entity')
 
 /** @type {import('sequelize-cli').Migration} */
