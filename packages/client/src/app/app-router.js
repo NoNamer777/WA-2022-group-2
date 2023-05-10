@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { ChallengeView, HomeView, LoginView, RegisterView } from './views'
+import { ChallengeProgressView, HomeView, LoginView, RegisterView } from './views'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +15,7 @@ export const router = createRouter({
     {
       path: '/challenge',
       name: 'challenge',
-      component: ChallengeView,
+      component: ChallengeProgressView,
       meta: {
         title: 'Uitdaging'
       }
