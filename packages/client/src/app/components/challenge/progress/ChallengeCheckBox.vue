@@ -13,7 +13,7 @@
       />
       <!--      </div>-->
       <div class="position-absolute top-50 text-tertiary">
-        {{ checked ? '✔' : ' ' }}
+        {{ checked ? '✔' : '❌' }}
       </div>
       <div class="d-flex justify-content-center">Dag {{ id }}</div>
     </div>

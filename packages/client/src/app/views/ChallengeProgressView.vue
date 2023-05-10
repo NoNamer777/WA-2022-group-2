@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ChallengeProgress from '../components/ChallengeProgress.vue'
+import ChallengeProgress from '../components/challenge/progress/ChallengeProgress.vue'
 
 export default {
   name: 'ChallengeProgressView.vue',
