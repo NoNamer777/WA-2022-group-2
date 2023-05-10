@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex justify-content-center">
     <div class="check position-relative">
-      <!--      <div class="border border-primary m-1 p-1 rounded">-->
       <input :id="id" type="checkbox" v-model="innerCheck" @change="check" />
       <label
         :for="id"
@@ -11,9 +10,16 @@
           transform: `rotateY(${this.deg}deg)`
         }"
       />
-      <!--      </div>-->
-      <div class="position-absolute top-50 text-tertiary">
-        {{ checked ? '✔' : '❌' }}
+      <div
+        aria-hidden="true"
+        :class="
+          checked
+            ? 'position-absolute top-50 text-tertiary'
+            : 'position-absolute top-50 text-secondary'
+        "
+        aria-labelledby="id"
+      >
+        {{ checked ? '✔' : '✘' }}
       </div>
       <div class="d-flex justify-content-center">Dag {{ id }}</div>
     </div>
