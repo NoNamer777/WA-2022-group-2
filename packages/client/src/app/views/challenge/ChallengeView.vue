@@ -1,6 +1,6 @@
 <script setup>
 import { Tabs, Tab } from 'vue3-tabs-component'
-import ChallengeOverview from '../../components/challenge/ChallengeOverview.vue'
+import CardList from '../../components/card/CardList.vue'
 
 const currentPersonalChallenges = [
   {
@@ -43,14 +43,17 @@ const pastPersonalChallenges = [
           nav-item-link-active-class="active"
           panels-wrapper-class="my-4"
         >
-          <Tab name="Normaal">
-            <ChallengeOverview
-              :current="currentPersonalChallenges"
-              :past="pastPersonalChallenges"
+          <Tab name="Huidige">
+            <CardList
+              empty-state="Je hebt geen uitdagingen momenteel open staan"
+              :items="currentPersonalChallenges"
             />
           </Tab>
-          <Tab name="Groep">
-            <ChallengeOverview :current="[]" :past="[]" />
+          <Tab name="Afgerond">
+            <CardList
+              empty-state="Je hebt geen uitdagingen momenteel open staan"
+              :items="pastPersonalChallenges"
+            />
           </Tab>
         </Tabs>
       </div>
