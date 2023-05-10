@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'InputLabel',
+  name: 'CustomFormKit',
   props: {
     type: {
       type: String,

@@ -1,10 +1,14 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { NavigationBar } from './components'
+import { useAuthStore } from './stores'
+import { storeToRefs } from 'pinia'
+
+const { loading } = storeToRefs(useAuthStore())
 </script>
 
 <template>
-  <div class="container h-100 d-flex flex-column g-0">
+  <div v-if="!loading" class="container h-100 d-flex flex-column g-0">
     <div id="top" tabindex="-1" aria-labelledby="skip-link">
       <div class="visually-hidden-focusable">
         <a href="#main" id="skip-link"> Ga direct naar de inhoud </a>
