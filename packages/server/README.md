@@ -57,6 +57,7 @@ The server handles the following environment variables:
 
 You also need to set up your own environment variable. To do this you have to copy the template, which you can find [here](.env.example).
 Rename the copy to `.env` and fill in the variables
+
 ### Sequelize
 
 Assuming you've followed the instructions in the [README in the root](../../README.md#developing) of the repository on
