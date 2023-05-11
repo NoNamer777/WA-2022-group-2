@@ -15,7 +15,7 @@ router.get('/', jwtAuthHeaderValidator, async (request, response, next) => {
   }
 })
 
-router.post('/', authValidation, async (request, response, next) => {
+router.post('/login', authValidation, async (request, response, next) => {
   try {
     const user = await AuthController.instance().auth(matchedData(request))
     const token = JwtService.instance().generateToken(user.toJSON(), '8h')
