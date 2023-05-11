@@ -43,7 +43,7 @@ const UserModelDefinition = {
     validate: {
       notNull: true,
       notEmpty: true,
-      len: [3, 124],
+      len: [3, 128],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
     },
     set(password) {
@@ -51,9 +51,13 @@ const UserModelDefinition = {
       this.setDataValue('password', pass)
     }
   },
+  profile_image_path: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
   is_admin: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: true
   }
 }
 
