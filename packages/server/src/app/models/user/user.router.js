@@ -3,17 +3,17 @@ const UserController = require('./user.controller')
 const { postValidation } = require('./user.validation')
 const { matchedData } = require('express-validator')
 const router = express.Router()
-const { cookieJwtAuth } = require('../../middleware/cookie-jwt-auth')
+const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator')
 
-router.get('/', cookieJwtAuth, async (_, response) => {
+router.get('/', jwtAuthHeaderValidator, async (_, response) => {
   response.send(await UserController.instance().getAll())
 })
 
-router.get('/:userId', cookieJwtAuth, async (request, response) => {
+router.get('/:userId', jwtAuthHeaderValidator, async (request, response) => {
   response.send(await UserController.instance().getById(request.params.userId))
 })
 
-router.put('/:userId', cookieJwtAuth, async (request, response) => {
+router.put('/:userId', jwtAuthHeaderValidator, async (request, response) => {
   response.send(await UserController.instance().update(request.params.userId, request.body))
 })
 
@@ -29,7 +29,7 @@ router.post('/', postValidation, async (request, response, next) => {
   }
 })
 
-router.delete('/:userId', cookieJwtAuth, async (request, response) => {
+router.delete('/:userId', jwtAuthHeaderValidator, async (request, response) => {
   response.send(await UserController.instance().deleteById(request.params.userId))
 })
 

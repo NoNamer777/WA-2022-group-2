@@ -5,9 +5,9 @@ const { authValidation } = require('../auth/auth.validation')
 const { matchedData } = require('express-validator')
 const router = express.Router()
 const JwtService = require('../../services/jwt.service')
-const { cookieJwtAuth } = require('../../middleware/cookie-jwt-auth')
+const { jwtAuthHeaderValidator } = require('../../middleware/jwt-auth-header-validator')
 
-router.get('/', cookieJwtAuth, async (request, response, next) => {
+router.get('/', jwtAuthHeaderValidator, async (request, response, next) => {
   try {
     response.send({ user: await UserController.instance().getById(request.user.id) })
   } catch (error) {
