@@ -53,6 +53,15 @@ const EarnedBadgeModelDefinition = {
   }
 }
 
+const EarnedBadgeModelOptions = {
+  indexes: [
+    {
+      unique: true,
+      fields: ['user_id', 'badge_id']
+    }
+  ]
+}
+
 EarnedBadgeEntity.init(EarnedBadgeModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
   modelName: 'earned_badge',
@@ -61,4 +70,4 @@ EarnedBadgeEntity.init(EarnedBadgeModelDefinition, {
   updatedAt: false
 })
 
-module.exports = { EarnedBadgeEntity, EarnedBadgeModelDefinition }
+module.exports = { EarnedBadgeEntity, EarnedBadgeModelDefinition, EarnedBadgeModelOptions }
