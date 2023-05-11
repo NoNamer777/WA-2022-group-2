@@ -17,13 +17,9 @@ router.get('/', jwtAuthHeaderValidator, async (request, response, next) => {
 
 router.post('/login', authValidation, async (request, response, next) => {
   try {
-    const user = await AuthController.instance().auth(matchedData(request))
-    const token = JwtService.instance().generateToken(user.toJSON(), '8h')
+    const token = await AuthController.instance().login(matchedData(request))
 
-    const expiryDate = new Date(Date.now() + 60 * 60 * 8000) // 8 hour
-    response.cookie('auth-token', token, { expires: expiryDate })
-
-    response.status(200).send({ user, message: `Welkom terug ${user.username}! 😎` })
+    response.header('Authorization', `Bearer ${token}`).status(200).send()
   } catch (error) {
     next(error)
   }

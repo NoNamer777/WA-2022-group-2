@@ -1,4 +1,5 @@
 const AuthService = require('./auth.service')
+const JwtService = require('../../services/jwt.service')
 
 class AuthController {
   /** @return {AuthController} */
@@ -14,11 +15,12 @@ class AuthController {
 
   /**
    * @param data {{ username: string, password: string }}
-   * @return {Promise<UserEntity>}
+   * @return {Promise<string>}
    */
   async login(data) {
     console.info('AuthController - login user in')
-    return await AuthService.instance().login(data)
+    const user = await AuthService.instance().login(data)
+    return JwtService.instance().generateToken(user.toJSON())
   }
 }
 
