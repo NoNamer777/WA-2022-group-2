@@ -27,6 +27,15 @@ const UserGroupModelDefinition = {
   }
 }
 
+const UserGroupModelOptions = {
+  indexes: [
+    {
+      unique: true,
+      fields: ['user_id', 'group_id']
+    }
+  ]
+}
+
 UserGroupEntity.init(UserGroupModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
   modelName: 'user_group',
@@ -35,4 +44,4 @@ UserGroupEntity.init(UserGroupModelDefinition, {
   updatedAt: false
 })
 
-module.exports = { UserGroupEntity, UserGroupModelDefinition }
+module.exports = { UserGroupEntity, UserGroupModelDefinition, UserGroupModelOptions }
