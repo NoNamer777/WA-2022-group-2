@@ -50,6 +50,10 @@ const UserModelDefinition = {
       const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
       this.setDataValue('password', pass)
     }
+  },
+  is_admin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
   }
 }
 
