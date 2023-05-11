@@ -1,5 +1,4 @@
-const UserService = require('../user/user.service')
-const UnauthorizedException = require('../errors/unauthorized-exception')
+const AuthService = require('./auth.service')
 
 class AuthController {
   /** @return {AuthController} */
@@ -14,21 +13,12 @@ class AuthController {
   static #instance
 
   /**
-   * @param data
+   * @param data {{ username: string, password: string }}
    * @return {Promise<UserEntity>}
    */
-  async auth(data) {
+  async login(data) {
     console.info('AuthController - login user in')
-
-    const user = await UserService.instance().getByUsername(data.username, false)
-
-    if (!user || !user.validPassword(data.password)) {
-      throw new UnauthorizedException(
-        'De combinatie van gebruikersnaam en wachtwoord is onjuist. 😋'
-      )
-    }
-
-    return user
+    return await AuthService.instance().login(data)
   }
 }
 
