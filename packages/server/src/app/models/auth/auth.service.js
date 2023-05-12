@@ -16,26 +16,24 @@ class AuthService {
   static #instance
 
   /**
-   * @param data {{ username: string, password: string }}
+   * @param userData {{ username: string, password: string }}
    * @returns {Promise<UserEntity>}
    */
-  async login(data) {
+  async login(userData) {
     let user
 
     try {
-      user = await UserService.instance().getByUsername(data.username)
+      user = await UserService.instance().getByUsername(userData.username)
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new UnauthorizedException(
-          'De combinatie van gebruikersnaam en wachtwoord is onjuist. 😋'
+          'De combinatie van gebruikersnaam en wachtwoord is onjuist.'
         )
       }
       throw new InternalServerErrorException(error.message)
     }
-    if (!(await user.validatePassword(data.password))) {
-      throw new UnauthorizedException(
-        'De combinatie van gebruikersnaam en wachtwoord is onjuist. 😋'
-      )
+    if (!(await user.validatePassword(userData.password))) {
+      throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.')
     }
     return user
   }

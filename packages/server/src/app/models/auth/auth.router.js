@@ -1,18 +1,12 @@
 const express = require('express')
-const UserController = require('../user/user.controller')
-const AuthController = require('./auth.controller')
 const { authValidation } = require('../auth/auth.validation')
 const { matchedData } = require('express-validator')
-const router = express.Router()
-const { jwtAuthHeaderValidator } = require('../../middleware/jwt-auth-header-validator')
+const AuthController = require('./auth.controller')
+const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator')
 
-router.get('/', jwtAuthHeaderValidator, async (request, response, next) => {
-  try {
-    response.send({ user: await UserController.instance().getById(request.user.id) })
-  } catch (error) {
-    next(error)
+const router = express.Router()
+
   }
-})
 
 router.post('/login', authValidation, async (request, response, next) => {
   try {
@@ -24,7 +18,7 @@ router.post('/login', authValidation, async (request, response, next) => {
   }
 })
 
-router.post('/logout', (_request, _response, next) => {
+router.post('/logout', jwtAuthHeaderValidator, (_request, _response, next) => {
   next()
 })
 

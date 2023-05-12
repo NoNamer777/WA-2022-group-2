@@ -1,17 +1,30 @@
 const JwtService = require('../services/jwt.service')
 const UnauthorizedException = require('../models/errors/unauthorized-exception')
+const UserService = require('../models/user/user.service')
 
-module.exports = function jwtAuthHeaderValidator(req, res, next) {
-  const token = req.headers.authorization || null
+module.exports = async function jwtAuthHeaderValidator(request, response, next) {
+  let token = request.headers.authorization || null
 
   if (!token) {
-    return res.status(403).send(new UnauthorizedException('Unauthorized'))
+    // Header is not set on the request
+    throw new UnauthorizedException()
+  }
+  token = token.replace('Bearer ', '').trim()
+
+  if (token.length === 0) {
+    // No JWT token is provided after the Bearer
+    throw new UnauthorizedException()
   }
 
   try {
-    req.user = JwtService.instance().verifyToken(token.replace('Bearer ', ''))
+    const decodedToken = JwtService.instance().decodeToken(token)
+
+    // Validate if the User is valid by retrieving the User's data by ID.
+    await UserService.instance().getById(decodedToken.subject)
+
     next()
-  } catch (err) {
-    return res.status(403).send(new UnauthorizedException('Unauthorized'))
+  } catch (error) {
+    // Something is going wrong while decoding the token
+    throw new UnauthorizedException()
   }
 }

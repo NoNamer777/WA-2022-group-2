@@ -14,13 +14,14 @@ class AuthController {
   static #instance
 
   /**
-   * @param data {{ username: string, password: string }}
+   * @param userData {{ username: string, password: string }}
    * @return {Promise<string>}
    */
-  async login(data) {
-    console.info('AuthController - login user in')
-    const user = await AuthService.instance().login(data)
-    return JwtService.instance().generateToken(user.toJSON())
+  async login(userData) {
+    console.info('AuthController - Logging in an User')
+    const user = await AuthService.instance().login(userData)
+
+    return JwtService.instance().encodeToken(user.toJSON())
   }
 }
 

@@ -19,15 +19,18 @@ class JwtService {
    * @param payload {UserEntity}
    * @returns {string}
    */
-  generateToken(payload) {
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: `${TOKEN_VALID_DURATION}ms` })
+  encodeToken(payload) {
+    return jwt.sign(payload, process.env.JWT_SECRET, {
+      subject: payload.id,
+      expiresIn: `${TOKEN_VALID_DURATION}ms`
+    })
   }
 
   /**
    * @param token {string}
-   * @returns {UserEntity}
+   * @returns
    */
-  verifyToken(token) {
+  decodeToken(token) {
     return jwt.verify(token, process.env.JWT_SECRET)
   }
 }
