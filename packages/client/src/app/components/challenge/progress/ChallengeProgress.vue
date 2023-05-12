@@ -5,10 +5,11 @@
       <CheckBox
         v-model:checked="checked[i - 1]"
         :key="i"
-        v-for="i in checked.length"
-        :id="i"
-        image-name="parrot"
-        :image-path="`url('../assets/profile_pictures/walrus.png')`"
+        v-for="i in amountOfDays"
+        :dayNumber="i"
+        :today="today"
+        image-name="{{ imageName }}"
+        :image-path="`url('../assets/profile_pictures/${imageName}.png')`"
       ></CheckBox>
     </div>
     <div class="d-flex flex-column">
@@ -32,16 +33,20 @@ export default {
   data() {
     return {
       title: String,
+      imageName: String,
       checked: [],
-      today: Number,
       buttonText: String,
       calculation: String
     }
   },
+  props: {
+    amountOfDays: Number,
+    today: Number
+  },
   created() {
     this.title = 'Mijn voortgang'
+    this.imageName = 'narwal'
     this.checked = [true, false, false, false, false]
-    this.today = 3
     this.buttonText = 'aan'
     this.calculation = `${this.checked.filter(Boolean).length} van de ${this.checked.length}`
   },

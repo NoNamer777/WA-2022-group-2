@@ -1,7 +1,6 @@
-import ChallengeProgressView from './ChallengeProgressView.vue'
-import ChallengeView from './ChallengeView.vue'
+import ChallengeProgressView from '../components/challenge/progress/ChallengeActiveView.vue'
 import HomeView from './HomeView.vue'
 import LoginView from './authentication/LoginView.vue'
 import RegisterView from './authentication/RegisterView.vue'
 
-export { ChallengeView, ChallengeProgressView, HomeView, LoginView, RegisterView }
+export { ChallengeProgressView, HomeView, LoginView, RegisterView }

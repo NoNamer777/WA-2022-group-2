@@ -1,10 +1,16 @@
 <template>
   <div class="d-flex justify-content-center">
     <div class="check position-relative">
-      <input :id="id" type="checkbox" v-model="innerCheck" @change="check" :disabled="id > 3" />
+      <input
+        :id="dayNumber"
+        type="checkbox"
+        v-model="innerCheck"
+        @change="check"
+        :disabled="dayNumber > today"
+      />
       <label
-        :for="id"
-        :aria-label="`${imageName}, dag ${id}`"
+        :for="dayNumber"
+        :aria-label="`${imageName}, dag ${dayNumber}`"
         class="transition"
         :style="{
           transform: `rotateY(${this.deg}deg)`
@@ -19,9 +25,9 @@
         "
         aria-labelledby="id"
       >
-        {{ checked ? '✔' : id < 3 ? '✘' : ' ' }}
+        {{ checked ? '✔' : dayNumber < today ? '✘' : ' ' }}
       </div>
-      <div class="d-flex justify-content-center">Dag {{ id }}</div>
+      <div class="d-flex justify-content-center">Dag {{ dayNumber }}</div>
     </div>
   </div>
 </template>
@@ -39,7 +45,8 @@ export default {
     this.innerCheck = this.checked
   },
   props: {
-    id: Number,
+    dayNumber: Number,
+    today: Number,
     imageName: String,
     imagePath: String,
     checked: Boolean
