@@ -1,18 +1,18 @@
 const express = require('express')
-const { authValidation } = require('../auth/auth.validation')
-const { matchedData } = require('express-validator')
+const { matchedData, checkSchema } = require('express-validator')
 const AuthController = require('./auth.controller')
 const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator')
+const { loginSchema, newUserSchema } = require('../../validation/user.validator')
 
 const router = express.Router()
 
   }
 
-router.post('/login', authValidation, async (request, response, next) => {
+router.post('/login', checkSchema(loginSchema, ['body']), async (request, response, next) => {
   try {
     const token = await AuthController.instance().login(matchedData(request))
 
-    response.header('Authorization', `Bearer ${token}`).status(200).send()
+    response.header('Authorization', `Bearer ${token}`).send()
   } catch (error) {
     next(error)
   }

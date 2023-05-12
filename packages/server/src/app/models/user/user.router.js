@@ -1,36 +1,78 @@
 const express = require('express')
+const { matchedData, checkSchema } = require('express-validator')
 const UserController = require('./user.controller')
-const { postValidation } = require('./user.validation')
-const { matchedData } = require('express-validator')
-const router = express.Router()
 const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator')
+const { userSchema, newUserSchema } = require('../../validation/user.validator')
+
+const router = express.Router()
 
 router.get('/', jwtAuthHeaderValidator, async (_, response) => {
-  response.send(await UserController.instance().getAll())
+  const allUsers = await UserController.instance().getAll()
+
+  response.send(allUsers)
 })
 
-router.get('/:userId', jwtAuthHeaderValidator, async (request, response) => {
-  response.send(await UserController.instance().getById(request.params.userId))
-})
-
-router.put('/:userId', jwtAuthHeaderValidator, async (request, response) => {
-  response.send(await UserController.instance().update(request.params.userId, request.body))
-})
-
-router.post('/', postValidation, async (request, response, next) => {
-  try {
-    const user = await UserController.instance().create(matchedData(request))
-
-    response
-      .status(201)
-      .send({ user, message: `Je bent er klaar voor! Laten we een spelletje spellen! 🙌` })
-  } catch (error) {
-    next(error)
+router.get(
+  '/:userId',
+  jwtAuthHeaderValidator,
+  async (request, response, next) => {
+    const userId = request.params.userId
+    try {
+      response.send(await UserController.instance().getById(userId))
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
-router.delete('/:userId', jwtAuthHeaderValidator, async (request, response) => {
-  response.send(await UserController.instance().deleteById(request.params.userId))
-})
+router.put(
+  '/:userId',
+  jwtAuthHeaderValidator,
+  checkSchema(userSchema, ['body']),
+  async (request, response, next) => {
+    const userId = request.params.userId
+    const userData = matchedData(request)
+
+    try {
+      const updatedUser = await UserController.instance().update(userId, userData)
+
+      response.send(updatedUser)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+router.post(
+  '/',
+  jwtAuthHeaderValidator,
+  checkSchema(newUserSchema, ['body']),
+  async (request, response, next) => {
+    const userData = matchedData(request)
+
+    try {
+      const createdUser = await UserController.instance().create(userData)
+
+      response.status(201).send(createdUser)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+router.delete(
+  '/:userId',
+  jwtAuthHeaderValidator,
+  async (request, _response, next) => {
+    const userId = request.params.userId
+
+    try {
+      await UserController.instance().deleteById(userId)
+      next()
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 module.exports = router
