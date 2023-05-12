@@ -2,14 +2,14 @@
   <div class="d-flex justify-content-center">
     <div class="check position-relative">
       <input
-        :id="boxId"
+        :id="id"
         type="checkbox"
         v-model="innerCheck"
         @change="check"
         :disabled="owner ? dayNumber > today || dayNumber < today - 1 : true"
       />
       <label
-        :for="boxId"
+        :for="id"
         :aria-label="`${imageName}, dag ${dayNumber}`"
         class="transition"
         :style="{
@@ -37,22 +37,20 @@ export default {
   data() {
     return {
       deg: 0,
-      innerCheck: false,
-      boxId: String
+      innerCheck: false
     }
   },
   mounted() {
     this.innerCheck = this.checked
-    this.boxId = this.id + this.dayNumber
   },
   props: {
+    id: Number,
     dayNumber: Number,
     today: Number,
     imageName: String,
     imagePath: String,
     checked: Boolean,
-    owner: Boolean,
-    id: String
+    owner: Boolean
   },
   methods: {
     rotate() {

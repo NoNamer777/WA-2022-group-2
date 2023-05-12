@@ -1,0 +1,133 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "Jennifer"
+    },
+    {
+      "id": 2,
+      "username": "Oscar"
+    },
+    {
+      "id": 1,
+      "username": "Ahmed"
+    }
+  ],
+  "challenges": [
+    {
+      "id": 1,
+      "name": "Zelf lunch meenemen",
+      "start_date": "5/10/2023",
+      "end_date": "5/14/2023"
+    }
+  ],
+  "user_challenges": [
+    {
+      "id": 1,
+      "completed": false,
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "completed": false,
+      "user_id": 2
+    },
+    {
+      "id": 3,
+      "completed": false,
+      "user_id": 3
+    }
+  ],
+  "challenge_days": [
+    {
+      "id": 1,
+      "date": "5/10/2023",
+      "earned": true,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 2,
+      "date": "5/11/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 3,
+      "date": "5/12/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 4,
+      "date": "5/13/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 5,
+      "date": "5/14/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 6,
+      "date": "5/10/2023",
+      "earned": true,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 7,
+      "date": "5/11/2023",
+      "earned": true,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 8,
+      "date": "5/12/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 9,
+      "date": "5/13/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 10,
+      "date": "5/14/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 11,
+      "date": "5/10/2023",
+      "earned": true,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 12,
+      "date": "5/11/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 13,
+      "date": "5/12/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 14,
+      "date": "5/13/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 15,
+      "date": "5/14/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    }
+  ]
+}

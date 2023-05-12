@@ -4,22 +4,22 @@
     <div class="d-flex flex-row flex-wrap gap-5">
       <div class="d-flex flex-row flex-wrap flex-item">
         <CheckBox
-          v-model:checked="checked[i - 1]"
+          v-for="i in challengeDays.length"
+          v-model:checked="challengeDays[i - 1].earned"
           :key="i"
-          v-for="i in amountOfDays"
+          :id="challengeDays[i - 1].id"
           :dayNumber="i"
           :today="today"
           :imageName="imageName"
           :imagePath="`url('../assets/profile_pictures/${imageName}.png')`"
           :owner="owner"
-          :id="id"
         ></CheckBox>
       </div>
       <div class="d-flex flex-column">
         <p>{{ calculation }} dagen</p>
         <button
           v-if="owner"
-          :class="checked[today - 1] ? 'btn btn-secondary' : 'btn btn-primary'"
+          :class="challengeDays[today - 1].earned ? 'btn btn-secondary' : 'btn btn-primary'"
           v-on:click="check(today)"
         >
           Vink vandaag {{ buttonText }}
@@ -37,40 +37,48 @@ export default {
   components: { CheckBox },
   data() {
     return {
-      checked: [],
       buttonText: String,
       calculation: String,
-      complete: Boolean
+      complete: Boolean,
+      numberOfEarned: Number
     }
   },
   props: {
-    amountOfDays: Number,
+    userChallenge: Object,
+    challengeDays: Array,
     today: Number,
     owner: Boolean,
-    id: String,
     imageName: String,
     title: String
   },
   created() {
-    this.checked = [false, true, false, false, false]
     this.buttonText = 'aan'
-    this.calculation = `${this.checked.filter(Boolean).length} van de ${this.checked.length}`
+    this.numberOfEarned = this.challengeDays.reduce(
+      (count, day) => (day.earned ? count + 1 : count),
+      0
+    )
+    this.calculation = `${this.numberOfEarned}
+      van de ${this.challengeDays.length}`
   },
   methods: {
     check(i) {
-      this.checked[i - 1] = !this.checked[i - 1]
+      // eslint-disable-next-line vue/no-mutating-props
+      this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned
       if (i === this.today) {
-        this.buttonText = this.checked[i - 1] ? 'uit' : 'aan'
+        this.buttonText = this.challengeDays[i - 1].earned ? 'uit' : 'aan'
       }
     }
   },
   watch: {
-    checked: {
+    challengeDays: {
       handler() {
-        this.buttonText = this.checked[this.today - 1] ? 'uit' : 'aan'
-        this.calculation = `${this.checked.filter(Boolean).length} van de ${this.checked.length}`
-        this.complete = this.checked.filter(Boolean).length === this.checked.length
-        if (this.complete) {
+        this.buttonText = this.challengeDays[this.today - 1].earned ? 'uit' : 'aan'
+        this.numberOfEarned = this.challengeDays.reduce(
+          (count, day) => (day.earned ? count + 1 : count),
+          0
+        )
+        this.calculation = `${this.numberOfEarned} van de ${this.challengeDays.length}`
+        if (this.numberOfEarned === this.challengeDays.length) {
           alert('You got it!')
         }
       },
