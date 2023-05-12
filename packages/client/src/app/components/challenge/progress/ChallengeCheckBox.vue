@@ -6,7 +6,7 @@
         type="checkbox"
         v-model="innerCheck"
         @change="check"
-        :disabled="owner ? dayNumber > today : true"
+        :disabled="owner ? dayNumber > today || dayNumber < today - 1 : true"
       />
       <label
         :for="boxId"

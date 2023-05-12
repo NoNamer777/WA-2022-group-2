@@ -61,8 +61,8 @@ export default {
   methods: {
     getDays() {
       //   from challenge:
-      const startDate = new Date('May 8, 2023')
-      const endDate = new Date('May 12, 2023')
+      const startDate = new Date('May 10, 2023')
+      const endDate = new Date('May 14, 2023')
       const timeDiff = endDate.getTime() - startDate.getTime()
       const todayDiff = new Date().getTime() - startDate.getTime()
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
