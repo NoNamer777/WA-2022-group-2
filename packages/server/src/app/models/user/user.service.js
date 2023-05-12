@@ -56,9 +56,6 @@ class UserService {
   async update(userData) {
     const userId = userData.id
 
-    if (!userId) {
-      throw new BadRequestException('Could not update User. ID is not provided.')
-    }
     if (!(await this.getById(userId, false))) {
       throw new NotFoundException(
         `Could not update User with ID: '${userId}' because it does not exist.`

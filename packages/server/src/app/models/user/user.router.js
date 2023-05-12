@@ -1,6 +1,7 @@
 const express = require('express')
 const { matchedData, checkSchema } = require('express-validator')
 const UserController = require('./user.controller')
+const entityIdValidator = require('../../middleware/entity-id.validator')
 const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator')
 const { userSchema, newUserSchema } = require('../../validation/user.validator')
 
@@ -15,6 +16,7 @@ router.get('/', jwtAuthHeaderValidator, async (_, response) => {
 router.get(
   '/:userId',
   jwtAuthHeaderValidator,
+  entityIdValidator('userId', 'User'),
   async (request, response, next) => {
     const userId = request.params.userId
     try {
@@ -29,6 +31,7 @@ router.put(
   '/:userId',
   jwtAuthHeaderValidator,
   checkSchema(userSchema, ['body']),
+  entityIdValidator('userId', 'User'),
   async (request, response, next) => {
     const userId = request.params.userId
     const userData = matchedData(request)
@@ -63,6 +66,7 @@ router.post(
 router.delete(
   '/:userId',
   jwtAuthHeaderValidator,
+  entityIdValidator('userId', 'User'),
   async (request, _response, next) => {
     const userId = request.params.userId
 
