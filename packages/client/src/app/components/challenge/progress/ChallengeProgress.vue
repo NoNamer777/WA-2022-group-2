@@ -1,28 +1,30 @@
 <template>
-  <h3>{{ title }}</h3>
-  <div class="d-flex flex-row flex-wrap gap-5">
-    <div class="d-flex flex-row flex-wrap flex-item">
-      <CheckBox
-        v-model:checked="checked[i - 1]"
-        :key="i"
-        v-for="i in amountOfDays"
-        :dayNumber="i"
-        :today="today"
-        :image-name="imageName"
-        :image-path="`url('../assets/profile_pictures/${imageName}.png')`"
-        :owner="owner"
-        :id="id"
-      ></CheckBox>
-    </div>
-    <div class="d-flex flex-column">
-      {{ calculation }} dagen
-      <button
-        v-if="owner"
-        :class="checked[today - 1] ? 'btn btn-secondary mt-auto' : 'btn btn-primary mt-auto'"
-        v-on:click="check(today)"
-      >
-        Vink vandaag {{ buttonText }}
-      </button>
+  <div class="my-4">
+    <h2>{{ title }}</h2>
+    <div class="d-flex flex-row flex-wrap gap-5">
+      <div class="d-flex flex-row flex-wrap flex-item">
+        <CheckBox
+          v-model:checked="checked[i - 1]"
+          :key="i"
+          v-for="i in amountOfDays"
+          :dayNumber="i"
+          :today="today"
+          :imageName="imageName"
+          :imagePath="`url('../assets/profile_pictures/${imageName}.png')`"
+          :owner="owner"
+          :id="id"
+        ></CheckBox>
+      </div>
+      <div class="d-flex flex-column">
+        <p>{{ calculation }} dagen</p>
+        <button
+          v-if="owner"
+          :class="checked[today - 1] ? 'btn btn-secondary' : 'btn btn-primary'"
+          v-on:click="check(today)"
+        >
+          Vink vandaag {{ buttonText }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -35,23 +37,22 @@ export default {
   components: { CheckBox },
   data() {
     return {
-      title: String,
-      imageName: String,
       checked: [],
       buttonText: String,
-      calculation: String
+      calculation: String,
+      complete: Boolean
     }
   },
   props: {
     amountOfDays: Number,
     today: Number,
     owner: Boolean,
-    id: String
+    id: String,
+    imageName: String,
+    title: String
   },
   created() {
-    this.title = 'Mijn voortgang'
-    this.imageName = 'narwal'
-    this.checked = [true, false, false, false, false]
+    this.checked = [false, true, false, false, false]
     this.buttonText = 'aan'
     this.calculation = `${this.checked.filter(Boolean).length} van de ${this.checked.length}`
   },
@@ -68,6 +69,10 @@ export default {
       handler() {
         this.buttonText = this.checked[this.today - 1] ? 'uit' : 'aan'
         this.calculation = `${this.checked.filter(Boolean).length} van de ${this.checked.length}`
+        this.complete = this.checked.filter(Boolean).length === this.checked.length
+        if (this.complete) {
+          alert('You got it!')
+        }
       },
       deep: true
     }
