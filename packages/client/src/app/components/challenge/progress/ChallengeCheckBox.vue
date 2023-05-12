@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-center">
     <div class="check position-relative">
-      <input :id="id" type="checkbox" v-model="innerCheck" @change="check" />
+      <input :id="id" type="checkbox" v-model="innerCheck" @change="check" :disabled="id > 3" />
       <label
         :for="id"
         :aria-label="`${imageName}, dag ${id}`"
@@ -19,7 +19,7 @@
         "
         aria-labelledby="id"
       >
-        {{ checked ? '✔' : '✘' }}
+        {{ checked ? '✔' : id < 3 ? '✘' : ' ' }}
       </div>
       <div class="d-flex justify-content-center">Dag {{ id }}</div>
     </div>
