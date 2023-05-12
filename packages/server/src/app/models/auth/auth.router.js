@@ -24,13 +24,8 @@ router.post('/login', authValidation, async (request, response, next) => {
   }
 })
 
-router.post('/logout', async (request, response, next) => {
-  try {
-    response.clearCookie('auth-token')
-    response.send({ message: 'Tot de volgende keer! 👋' })
-  } catch (error) {
-    next(error)
-  }
+router.post('/logout', (_request, _response, next) => {
+  next()
 })
 
 module.exports = router
