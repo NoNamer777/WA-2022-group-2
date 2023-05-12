@@ -55,7 +55,7 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
             </li>
           </template>
           <li class="nav-item" v-else>
-            <button class="btn bg-white" @click="logout">Uitloggen</button>
+            <button class="btn bg-white text-primary focus-auto" @click="logout">Uitloggen</button>
           </li>
         </ul>
       </div>

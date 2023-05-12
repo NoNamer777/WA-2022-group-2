@@ -1,11 +1,21 @@
 const express = require('express')
-const UserController = require('../user/user.controller')
-const AuthController = require('./auth.controller')
-const { authValidation } = require('../auth/auth.validation')
+const limiter = require('express-rate-limit')
 const { matchedData } = require('express-validator')
-const router = express.Router()
-const JwtService = require('../../services/jwt.service')
+const AuthController = require('./auth.controller')
+const { authValidation } = require('./auth.validation')
+const UserController = require('../user/user.controller')
 const { cookieJwtAuth } = require('../../middleware/cookie-jwt-auth')
+const JwtService = require('../../services/jwt.service')
+
+const router = express.Router()
+
+// On the login and register routes, allow maximum 3 requests per 5 minutes
+const authLimiter = limiter({
+  windowMs: 5 * 60 * 1000,
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false
+})
 
 router.get('/', cookieJwtAuth, async (request, response, next) => {
   try {
@@ -15,7 +25,7 @@ router.get('/', cookieJwtAuth, async (request, response, next) => {
   }
 })
 
-router.post('/', authValidation, async (request, response, next) => {
+router.post('/', authLimiter, authValidation, async (request, response, next) => {
   try {
     const user = await AuthController.instance().auth(matchedData(request))
     const token = JwtService.instance().generateToken(user.toJSON(), '8h')
