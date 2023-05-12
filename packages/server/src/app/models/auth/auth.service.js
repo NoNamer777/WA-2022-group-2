@@ -15,6 +15,10 @@ class AuthService {
   /** @type {AuthService} */
   static #instance
 
+  async register(userData) {
+    return await UserService.instance().create(userData)
+  }
+
   /**
    * @param userData {{ username: string, password: string }}
    * @returns {Promise<UserEntity>}

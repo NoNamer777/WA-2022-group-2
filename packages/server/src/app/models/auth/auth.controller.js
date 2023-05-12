@@ -13,6 +13,11 @@ class AuthController {
   /** @type {AuthController} */
   static #instance
 
+  async register(userData) {
+    console.info('AuthController - registering a new User')
+    return await AuthService.instance().register(userData)
+  }
+
   /**
    * @param userData {{ username: string, password: string }}
    * @return {Promise<string>}
