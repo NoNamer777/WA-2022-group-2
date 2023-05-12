@@ -1,7 +1,7 @@
-const UserService = require('../user/user.service')
+const InternalServerErrorException = require('../errors/internal-server.exception')
 const NotFoundException = require('../errors/not-found.exception')
 const UnauthorizedException = require('../errors/unauthorized-exception')
-const InternalServerErrorException = require('../errors/internal-server.exception')
+const UserService = require('../user/user.service')
 
 class AuthService {
   /** @return {AuthService} */
