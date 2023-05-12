@@ -8,7 +8,7 @@
         v-for="i in checked.length"
         :id="i"
         image-name="parrot"
-        :image-path="`url('../assets/profile_pictures/parrot.png')`"
+        :image-path="`url('../assets/profile_pictures/walrus.png')`"
       ></CheckBox>
     </div>
     <div class="d-flex flex-column">
@@ -40,7 +40,7 @@ export default {
   },
   created() {
     this.title = 'Mijn voortgang'
-    this.checked = [false, false, true, false, false]
+    this.checked = [true, false, false, false, false]
     this.today = 3
     this.buttonText = 'aan'
     this.calculation = `${this.checked.filter(Boolean).length} van de ${this.checked.length}`
