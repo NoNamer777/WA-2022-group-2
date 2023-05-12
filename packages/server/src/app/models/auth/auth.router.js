@@ -4,7 +4,6 @@ const AuthController = require('./auth.controller')
 const { authValidation } = require('../auth/auth.validation')
 const { matchedData } = require('express-validator')
 const router = express.Router()
-const JwtService = require('../../services/jwt.service')
 const { jwtAuthHeaderValidator } = require('../../middleware/jwt-auth-header-validator')
 
 router.get('/', jwtAuthHeaderValidator, async (request, response, next) => {
