@@ -1,20 +1,23 @@
 <template>
   <h3>{{ title }}</h3>
   <div class="d-flex flex-row flex-wrap gap-5">
-    <div class="d-flex flex-row flex-wrap">
+    <div class="d-flex flex-row flex-wrap flex-item">
       <CheckBox
         v-model:checked="checked[i - 1]"
         :key="i"
         v-for="i in amountOfDays"
         :dayNumber="i"
         :today="today"
-        image-name="{{ imageName }}"
+        :image-name="imageName"
         :image-path="`url('../assets/profile_pictures/${imageName}.png')`"
+        :owner="owner"
+        :id="id"
       ></CheckBox>
     </div>
     <div class="d-flex flex-column">
       {{ calculation }} dagen
       <button
+        v-if="owner"
         :class="checked[today - 1] ? 'btn btn-secondary mt-auto' : 'btn btn-primary mt-auto'"
         v-on:click="check(today)"
       >
@@ -41,7 +44,9 @@ export default {
   },
   props: {
     amountOfDays: Number,
-    today: Number
+    today: Number,
+    owner: Boolean,
+    id: String
   },
   created() {
     this.title = 'Mijn voortgang'
