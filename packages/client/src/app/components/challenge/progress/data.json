@@ -2,15 +2,23 @@
   "users": [
     {
       "id": 1,
-      "username": "Jennifer"
+      "username": "Jennifer",
+      "profile_picture": "zebra"
     },
     {
       "id": 2,
-      "username": "Oscar"
+      "username": "Oscar",
+      "profile_picture": "narwal"
     },
     {
-      "id": 1,
-      "username": "Ahmed"
+      "id": 3,
+      "username": "Ahmed",
+      "profile_picture": "papegaai"
+    },
+    {
+      "id": 4,
+      "username": "Marjo",
+      "profile_picture": "kikker"
     }
   ],
   "challenges": [
@@ -108,19 +116,19 @@
     {
       "id": 12,
       "date": "5/11/2023",
-      "earned": false,
+      "earned": true,
       "user_challenge_id": 3
     },
     {
       "id": 13,
       "date": "5/12/2023",
-      "earned": false,
+      "earned": true,
       "user_challenge_id": 3
     },
     {
       "id": 14,
       "date": "5/13/2023",
-      "earned": false,
+      "earned": true,
       "user_challenge_id": 3
     },
     {

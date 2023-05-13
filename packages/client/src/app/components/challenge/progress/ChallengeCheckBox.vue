@@ -4,9 +4,9 @@
       <input
         :id="id"
         type="checkbox"
-        v-model="innerCheck"
-        @change="check"
-        :disabled="owner ? dayNumber > today || dayNumber < today - 1 : true"
+        :checked="checked"
+        @change="$emit('update:checked', $event.target.checked)"
+        :disabled="isOwner ? dayNumber > todayNumber || dayNumber < todayNumber - 1 : true"
       />
       <label
         :for="id"
@@ -24,7 +24,7 @@
             : 'position-absolute top-50 text-secondary'
         "
       >
-        {{ checked ? '✔' : dayNumber < today ? '✘' : ' ' }}
+        {{ checked ? '✔' : dayNumber < todayNumber ? '✘' : ' ' }}
       </div>
       <div class="d-flex justify-content-center">Dag {{ dayNumber }}</div>
     </div>
@@ -36,35 +36,29 @@ export default {
   name: 'CheckBox',
   data() {
     return {
-      deg: 0,
-      innerCheck: false
+      deg: Number
     }
   },
   mounted() {
-    this.innerCheck = this.checked
+    this.deg = 0
   },
   props: {
     id: Number,
     dayNumber: Number,
-    today: Number,
+    todayNumber: Number,
     imageName: String,
     imagePath: String,
     checked: Boolean,
-    owner: Boolean
+    isOwner: Boolean
   },
   methods: {
     rotate() {
       this.deg += 180
-    },
-    check(event) {
-      this.innerCheck = event.target.checked
-      this.$emit('update:checked', this.innerCheck)
     }
   },
   watch: {
     checked() {
       this.rotate()
-      this.innerCheck = this.checked
     }
   }
 }

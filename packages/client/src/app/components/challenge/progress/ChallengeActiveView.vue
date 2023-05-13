@@ -7,7 +7,7 @@
       </div>
       <p>Startdatum: {{ startDate }}</p>
     </div>
-    <p>Vandaag: Dag {{ today }}</p>
+    <p>Vandaag: Dag {{ todayNumber }}</p>
 
     <div>
       <ChallengeProgress
@@ -15,13 +15,13 @@
         :key="userChallenge.id"
         :userChallenge="userChallenge"
         :challengeDays="challengeDays.filter((day) => day.user_challenge_id === userChallenge.id)"
-        :today="today"
-        :imageName="this.profilePictures[userChallenge.id - 1]"
-        :owner="this.user.id === userChallenge.user_id"
+        :todayNumber="todayNumber"
+        :imageName="this.users.find((u) => userChallenge.user_id === u.id).profile_picture"
+        :isOwner="this.user.id === userChallenge.user_id"
         :title="
           this.user.id === userChallenge.user_id
             ? 'Mijn voortgang'
-            : `Voortgang van ${userChallenge.user_id}`
+            : `Voortgang van ${this.users.find((u) => userChallenge.user_id === u.id).username}`
         "
       />
     </div>
@@ -32,36 +32,60 @@
 import ChallengeProgress from './ChallengeProgress.vue'
 import data from './data.json'
 
+/* send in user and challenge */
+
 export default {
   name: 'ChallengeProgressView.vue',
   components: { ChallengeProgress },
   data() {
     return {
       user: Object,
+      users: [],
       challenge: Object,
       userChallenges: [],
       challengeDays: [],
       startDate: Date,
       amountOfDays: Number,
-      today: Number,
-      profilePictures: []
+      todayNumber: Number
     }
   },
   created() {
-    this.getDays()
     this.user = data.users[0]
     this.challenge = data.challenges[0]
-    this.userChallenges = data.user_challenges
+    /* make methods to fetch user_challenges and challenge_days, sort user_challenges to display current user first */
+    this.userChallenges = data.user_challenges.sort(
+      (a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id)
+    )
     this.challengeDays = data.challenge_days
-    this.profilePictures = ['papegaai', 'narwal', 'olifant']
+    this.todayNumber = this.getTodaysDayNumber()
+    this.startDate = this.getStartDate()
+    this.users = this.getUsers()
   },
   methods: {
-    getDays() {
+    getTodaysDayNumber() {
       const startDate = new Date(data.challenges[0].start_date)
       const todayDiff = new Date().getTime() - startDate.getTime()
+      return Math.ceil(todayDiff / (1000 * 60 * 60 * 24))
+    },
+    getStartDate() {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      this.startDate = startDate.toLocaleDateString('nl-NL', options)
-      this.today = Math.ceil(todayDiff / (1000 * 60 * 60 * 24))
+      return new Date(data.challenges[0].start_date).toLocaleDateString('nl-NL', options)
+    },
+    getUsers() {
+      /* placeholder to fetch users from unique id's of user_challenges = participating users */
+      /* NB include unique combination of user_id AND challenge_id, not included below */
+      let users = []
+      const ids = Array.from(
+        new Set(this.userChallenges.map((userChallenge) => userChallenge.user_id))
+      ).sort()
+      for (const user of data.users) {
+        for (const id of ids) {
+          if (user.id === id) {
+            users.push(user)
+          }
+        }
+      }
+      return users
     }
   }
 }
