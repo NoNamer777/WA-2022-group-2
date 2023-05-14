@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.html --ignore-path .gitignore",
     "format:check": "prettier -l .",
     "format:write": "prettier -w .",
-    "client:dev": "vite --config packages/client/vite.config.js",
+    "client:start": "vite --config packages/client/vite.config.js",
     "client:build": "vite build --config packages/client/vite.config.js",
     "client:preview": "vite preview --config packages/client/vite.config.js",
     "server:build": "node packages/server/build.js",
