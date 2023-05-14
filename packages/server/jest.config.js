@@ -25,6 +25,7 @@ module.exports = {
     }
   },
   displayName: 'Wasted: Server',
+  passWithNoTests: true,
   reporters: undefined,
   randomize: true,
   roots: ['<rootDir>'],
