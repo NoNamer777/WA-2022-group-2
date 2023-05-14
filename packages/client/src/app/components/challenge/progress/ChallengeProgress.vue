@@ -82,7 +82,6 @@ export default {
       return days
     },
     check(i) {
-      // eslint-disable-next-line vue/no-mutating-props
       this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned
     }
   },
