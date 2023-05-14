@@ -49,7 +49,7 @@ router.beforeEach(async (to, from) => {
 
   // when user is logged in they shouldn't be able to view the register and login page
   const store = useAuthStore()
-  await store.getAuthUser()
+  await store.getAuthenticatedUser()
 
   if (store.isAuthenticated && (to.name === 'login' || to.name === 'register')) {
     // redirect the user to the home page

@@ -13,41 +13,34 @@ export const useAuthStore = defineStore({
     isAuthenticated: (state) => state.user !== null
   },
   actions: {
-    async register(data) {
-      AuthService.instance()
-      // await axios
-      //   .post('/user', data)
-      //   .then(() => {
-      //     router.push({ name: 'login' })
-      //   })
-      //   .catch((error) => {
-      //     console.error(error)
-      //   })
+    async register(userData) {
+      try {
+        await AuthService.instance().register(userData)
+
+        router.push({ name: 'login' })
+      } catch (error) {
+        console.error(error)
+      }
     },
-    async login(data) {
-      await axios
-        .post('/auth', data)
-        .then((res) => {
-          this.user = res.data.user
-          router.push({ name: 'home' })
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+    async login(userData) {
+      try {
+        this.user = await AuthService.instance().login(userData)
+
+        router.push({ name: 'home' })
+      } catch (error) {
+        console.error(error)
+      }
     },
     async logout() {
-      this.user = null
+      try {
+        await AuthService.instance().logout()
 
-      await axios
-        .post('/auth/logout')
-        .then(() => {
-          router.push({ name: 'home' })
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+        this.user = null
+      } catch (error) {
+        console.error(error)
+      }
     },
-    async getAuthUser() {
+    async getAuthenticatedUser() {
       await axios
         .get('/auth')
         .then((res) => {
