@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { router } from '../app-router'
 import axios from '../axios'
+import { AuthService } from '../services/auth.service'
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -13,14 +14,15 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async register(data) {
-      await axios
-        .post('/user', data)
-        .then(() => {
-          router.push({ name: 'login' })
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      AuthService.instance()
+      // await axios
+      //   .post('/user', data)
+      //   .then(() => {
+      //     router.push({ name: 'login' })
+      //   })
+      //   .catch((error) => {
+      //     console.error(error)
+      //   })
     },
     async login(data) {
       await axios
