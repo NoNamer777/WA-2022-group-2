@@ -2,6 +2,25 @@ const loginSchema = {
   username: {
     notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
     isLength: {
+      options: { min: 3 },
+      errorMessage: 'Een gebruikersnaam moet minimaal 3 tekens bevatten.'
+    },
+    escape: true
+  },
+  password: {
+    notEmpty: { bail: true, errorMessage: 'Een wachtwoord is verplicht.' },
+    isLength: {
+      options: { min: 3 },
+      errorMessage: 'Het wachtwoord is te kort. Geef minimaal 3 tekens op.'
+    },
+    escape: true
+  }
+}
+
+const newUserSchema = {
+  username: {
+    notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
+    isLength: {
       options: { min: 3, max: 80 },
       errorMessage: 'Een gebruikersnaam moet tussen de 3 en 80 tekens bevatten.'
     },
@@ -20,11 +39,7 @@ const loginSchema = {
       errorMessage: 'Het wachtwoord is te lang. Gebruik maximaal 40 tekens.'
     },
     escape: true
-  }
-}
-
-const newUserSchema = {
-  ...loginSchema,
+  },
   email: {
     notEmpty: { bail: true, errorMessage: 'Een emailaddres is verplicht.' },
     isLength: {
