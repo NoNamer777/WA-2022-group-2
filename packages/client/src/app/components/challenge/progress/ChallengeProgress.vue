@@ -1,7 +1,7 @@
 <template>
   <div class="my-4">
     <h2>{{ title }}</h2>
-    <div class="d-flex flex-row flex-wrap gap-5">
+    <div class="d-flex flex-row flex-wrap gap-4">
       <div class="d-flex flex-row flex-wrap flex-item">
         <CheckBox
           v-for="i in challengeDays.length"
@@ -16,8 +16,9 @@
         ></CheckBox>
       </div>
       <div class="d-flex flex-column">
-        <p>{{ calculation }} dagen</p>
+        <p>{{ calculation }} dagen afgerond</p>
         <button
+          class="w-100"
           v-if="isOwner"
           :class="challengeDays[todayNumber - 1].earned ? 'btn btn-secondary' : 'btn btn-primary'"
           @click="check(todayNumber)"
@@ -94,7 +95,7 @@ export default {
           0
         )
         this.calculation = `${this.numberOfEarned} van de ${this.challengeDays.length}`
-        if (this.numberOfEarned === this.challengeDays.length) {
+        if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
           alert('Make alert here')
         }
       },

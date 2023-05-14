@@ -7,9 +7,9 @@
       </div>
       <p>Startdatum: {{ startDate }}</p>
     </div>
-    <p>Vandaag: Dag {{ todayNumber }}</p>
+    <p>Vandaag: Dag {{ todayNumber }}, {{ today }}</p>
 
-    <div>
+    <div class="d-flex flex-row flex-wrap justify-content-between gap-xl-4">
       <ChallengeProgress
         v-for="userChallenge in userChallenges"
         :key="userChallenge.id"
@@ -36,6 +36,7 @@ export default {
       challenge: Object,
       userChallenges: [],
       startDate: Date,
+      today: Date,
       amountOfDays: Number,
       todayNumber: Number
     }
@@ -47,18 +48,19 @@ export default {
     this.userChallenges = data.user_challenges.sort(
       (a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id)
     )
+    this.startDate = this.getDateString(data.challenges[0].start_date)
+    this.today = this.getDateString(new Date())
     this.todayNumber = this.getTodaysDayNumber()
-    this.startDate = this.getStartDate()
   },
   methods: {
+    getDateString(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('nl-NL', options)
+    },
     getTodaysDayNumber() {
       const startDate = new Date(data.challenges[0].start_date)
       const todayDiff = new Date().getTime() - startDate.getTime()
       return Math.ceil(todayDiff / (1000 * 60 * 60 * 24))
-    },
-    getStartDate() {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(data.challenges[0].start_date).toLocaleDateString('nl-NL', options)
     }
   }
 }
