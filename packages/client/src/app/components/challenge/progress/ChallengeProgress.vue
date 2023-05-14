@@ -97,7 +97,6 @@ export default {
         if (this.numberOfEarned === this.challengeDays.length) {
           alert('Make alert here')
         }
-        /* handle saving of challengeDays? */
       },
       deep: true
     }

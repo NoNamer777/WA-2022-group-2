@@ -59,6 +59,8 @@ export default {
   watch: {
     checked() {
       this.rotate()
+      /* handle saving of challengeDays by challengeDayId? */
+      console.log(this.id)
     }
   }
 }
