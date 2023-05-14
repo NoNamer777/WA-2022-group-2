@@ -9,8 +9,9 @@
     </div>
     <p>Vandaag: Dag {{ todayNumber }}, {{ today }}</p>
 
-    <div class="d-flex flex-row flex-wrap justify-content-between gap-xl-4">
+    <div class="d-flex flex-row flex-wrap justify-content-start gap-xl-2">
       <ChallengeProgress
+        :class="this.user.id === userChallenge.user_id ? 'owner' : 'shrink'"
         v-for="userChallenge in userChallenges"
         :key="userChallenge.id"
         :userChallengeId="userChallenge.id"
@@ -66,4 +67,12 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.owner {
+  flex-basis: 100%;
+}
+.shrink {
+  transform: scale(0.75);
+  transform-origin: left;
+}
+</style>
