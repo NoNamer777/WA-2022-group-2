@@ -7,13 +7,13 @@ module.exports = async function jwtAuthHeaderValidator(request, response, next) 
 
   if (!token) {
     // Header is not set on the request
-    throw new UnauthorizedException()
+    next(new UnauthorizedException())
   }
   token = token.replace('Bearer ', '').trim()
 
   if (token.length === 0) {
     // No JWT token is provided after the Bearer
-    throw new UnauthorizedException()
+    next(new UnauthorizedException())
   }
 
   try {
@@ -25,6 +25,6 @@ module.exports = async function jwtAuthHeaderValidator(request, response, next) 
     next()
   } catch (error) {
     // Something is going wrong while decoding the token
-    throw new UnauthorizedException()
+    next(new UnauthorizedException())
   }
 }
