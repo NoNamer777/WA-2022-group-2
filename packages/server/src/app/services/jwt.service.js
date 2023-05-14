@@ -21,7 +21,7 @@ class JwtService {
    */
   encodeToken(payload) {
     return jwt.sign(payload, process.env.JWT_SECRET, {
-      subject: payload.id,
+      subject: `${payload.id}`,
       expiresIn: `${TOKEN_VALID_DURATION}ms`
     })
   }
