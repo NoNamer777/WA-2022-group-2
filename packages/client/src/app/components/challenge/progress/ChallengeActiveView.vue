@@ -13,16 +13,9 @@
       <ChallengeProgress
         v-for="userChallenge in userChallenges"
         :key="userChallenge.id"
-        :userChallenge="userChallenge"
-        :challengeDays="challengeDays.filter((day) => day.user_challenge_id === userChallenge.id)"
+        :userChallengeId="userChallenge.id"
         :todayNumber="todayNumber"
-        :imageName="this.users.find((u) => userChallenge.user_id === u.id).profile_picture"
         :isOwner="this.user.id === userChallenge.user_id"
-        :title="
-          this.user.id === userChallenge.user_id
-            ? 'Mijn voortgang'
-            : `Voortgang van ${this.users.find((u) => userChallenge.user_id === u.id).username}`
-        "
       />
     </div>
   </main>
@@ -40,10 +33,8 @@ export default {
   data() {
     return {
       user: Object,
-      users: [],
       challenge: Object,
       userChallenges: [],
-      challengeDays: [],
       startDate: Date,
       amountOfDays: Number,
       todayNumber: Number
@@ -56,10 +47,8 @@ export default {
     this.userChallenges = data.user_challenges.sort(
       (a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id)
     )
-    this.challengeDays = data.challenge_days
     this.todayNumber = this.getTodaysDayNumber()
     this.startDate = this.getStartDate()
-    this.users = this.getUsers()
   },
   methods: {
     getTodaysDayNumber() {
@@ -70,22 +59,6 @@ export default {
     getStartDate() {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(data.challenges[0].start_date).toLocaleDateString('nl-NL', options)
-    },
-    getUsers() {
-      /* placeholder to fetch users from unique id's of user_challenges = participating users */
-      /* NB include unique combination of user_id AND challenge_id, not included below */
-      let users = []
-      const ids = Array.from(
-        new Set(this.userChallenges.map((userChallenge) => userChallenge.user_id))
-      ).sort()
-      for (const user of data.users) {
-        for (const id of ids) {
-          if (user.id === id) {
-            users.push(user)
-          }
-        }
-      }
-      return users
     }
   }
 }

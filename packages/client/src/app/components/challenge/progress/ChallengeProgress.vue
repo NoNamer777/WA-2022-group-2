@@ -10,8 +10,8 @@
           :id="challengeDays[i - 1].id"
           :dayNumber="i"
           :todayNumber="todayNumber"
-          :imageName="imageName"
-          :imagePath="`url('../assets/profile_pictures/${imageName}.png')`"
+          :imageName="this.user.profile_picture"
+          :imagePath="`url('../assets/profile_pictures/${this.user.profile_picture}.png')`"
           :isOwner="isOwner"
         ></CheckBox>
       </div>
@@ -31,34 +31,56 @@
 
 <script>
 import CheckBox from './ChallengeCheckBox.vue'
+import data from './data.json'
 
 export default {
   name: 'ChallengeProgress',
   components: { CheckBox },
   data() {
     return {
+      user: Object,
+      challengeDays: [],
       buttonText: String,
       calculation: String,
       numberOfEarned: Number
     }
   },
   props: {
-    title: String,
-    challengeDays: Array,
+    userChallengeId: Number,
     todayNumber: Number,
-    isOwner: Boolean,
-    imageName: String
+    isOwner: Boolean
   },
   created() {
-    this.buttonText = 'aan'
+    this.user = this.getUser()
+    this.title = this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.user.username}`
+    this.challengeDays = this.getChallengeDays()
     this.numberOfEarned = this.challengeDays.reduce(
       (count, day) => (day.earned ? count + 1 : count),
       0
     )
     this.calculation = `${this.numberOfEarned}
       van de ${this.challengeDays.length}`
+    this.imageName = this.user.profile_picture
+    this.buttonText = 'aan'
   },
   methods: {
+    getUser() {
+      const users = data.users
+      for (const user of users) {
+        if (this.userChallengeId === user.id) {
+          return user
+        }
+      }
+    },
+    getChallengeDays() {
+      const days = []
+      for (const challengeDay of data.challenge_days) {
+        if (this.userChallengeId === challengeDay.user_challenge_id) {
+          days.push(challengeDay)
+        }
+      }
+      return days
+    },
     check(i) {
       // eslint-disable-next-line vue/no-mutating-props
       this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned

@@ -56,13 +56,13 @@
     {
       "id": 2,
       "date": "5/11/2023",
-      "earned": false,
+      "earned": true,
       "user_challenge_id": 1
     },
     {
       "id": 3,
       "date": "5/12/2023",
-      "earned": false,
+      "earned": true,
       "user_challenge_id": 1
     },
     {
