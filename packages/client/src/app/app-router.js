@@ -18,7 +18,8 @@ export const router = createRouter({
       name: 'challenge',
       component: ChallengeView,
       meta: {
-        title: 'Uitdaging'
+        title: 'Uitdaging',
+        requiresAuth: true
       }
     },
     {
@@ -82,6 +83,10 @@ async function guardAuthenticatedRoutes(routeTo) {
 
   if (['register', 'login'].includes(routeTo.name) && authenticationStore.isAuthenticated) {
     return { name: 'home' }
+  }
+  // TODO: Add redirect routes
+  if (routeTo.meta.requiresAuth && !authenticationStore.isAuthenticated) {
+    return { name: 'login' }
   }
   return true
 }
