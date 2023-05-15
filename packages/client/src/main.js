@@ -11,15 +11,15 @@ import '/public/assets/styles/main.scss'
 const app = createApp(App)
 
 app.use(createPinia())
+app.use(plugin, FormKitOptions)
+app.use(Notifications)
 
 // Initialize the AuthenticationStore first so that the router will respond correctly to the
 // state of the store upon initialization of the application/browser refresh.
 const authenticationStore = useAuthStore()
 
-await authenticationStore.initialize()
+authenticationStore.initialize().then(() => {
+  app.use(router)
 
-app.use(router)
-app.use(plugin, FormKitOptions)
-app.use(Notifications)
-
-app.mount('#app')
+  app.mount('#app')
+})
