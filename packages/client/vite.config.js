@@ -15,6 +15,7 @@ export default defineConfig({
   css: {
     devSourcemap: true
   },
+  envDir: fileURLToPath(new URL('../../environment', import.meta.url)),
   // TODO: Provide via a node environment variable
   mode: 'development',
   plugins: [vue()],

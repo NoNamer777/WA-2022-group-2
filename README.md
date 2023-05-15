@@ -51,3 +51,20 @@ errors, should the pop-up.
 
 Also make sure to check that your workspace settings are correct for auto formatting vue files with ESlint and Prettier
 https://pipo.blog/articles/20220103-eslint-prettier-vue3#vs-code-formatonsave
+
+### Environment Variables
+
+The server and client both can handle a couple of the following environment variables:
+
+| Variable                    | Project | Default value                | Values                               | Description                                                                                                                              |
+| --------------------------- | ------- | ---------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| NODE_ENV                    | Both    | development                  | development, test, production        | Which environment the server runs in.                                                                                                    |
+| VITE_JWT_TOKEN              | Both    | -                            |                                      | A string used for encryption of the JWT token that is generated in the server and used in both apps to authorize and authenticate Users. |
+| SERVER_HOST                 | Server  | localhost                    | A valid IP address or hostname       | On which host to make the server available.                                                                                              |
+| SERVER_PORT                 | Server  | 8080                         | A valid port number                  | On which port of the host to make the server available.                                                                                  |
+| SERVER_DATABASE_CONFIG_PATH | Server  | ../config/database.json      | A valid path to the configuration    | Where to find the database configuration file.                                                                                           |
+| SERVER_ENVIRONMENT_PATH     | Server  | ../../../../environment/.env | A valid path to the environment file | Where the Node process can locate the file that holds the environment variables.                                                         |
+| VITE_SERVER_BASE_URL        | Client  | http://localhost:8080/       | A valid URL to the server            | The base URL of the server on which requests paths are build upon.                                                                       |
+
+You also need to set up your own environment variable. To do this you have to copy the template,
+which you can find [here](../../environment/.env.example). Rename the copy to `.env` and fill in the variables
