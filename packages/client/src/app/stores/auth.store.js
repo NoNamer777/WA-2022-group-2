@@ -17,6 +17,11 @@ export const useAuthStore = defineStore('auth', () => {
   /** @type {import('vue').ComputedRef<boolean>} */
   const isAuthenticated = computed(() => user.value !== null)
 
+  /** @return {Promise<void>} */
+  async function initialize() {
+    await populateAuthenticatedUser()
+  }
+
   /**
    * @param userData {User}
    * @return {Promise<void>}
@@ -89,5 +94,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { user, loading, isAuthenticated, register, login, logout }
+  return { user, loading, isAuthenticated, initialize, register, login, logout }
 })
