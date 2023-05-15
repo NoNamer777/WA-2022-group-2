@@ -1,4 +1,6 @@
+import { notify } from '@kyvg/vue3-notification'
 import axios from 'axios'
+import { StorageService } from './storage.service'
 
 export class HttpRequestService {
   /** @return {HttpRequestService} */
@@ -62,9 +64,52 @@ export class HttpRequestService {
 
   /** @return {void} */
   #configureInterceptor() {
-    this.#axiosInstance.interceptors.response.use(
-      (response) => response,
-      (errorResponse) => console.log(errorResponse)
+    this.#axiosInstance.interceptors.request.use(
+      (request) => this.#addAuthHeader(request),
+      (error) => console.error(error)
     )
+
+    this.#axiosInstance.interceptors.response.use((response) => this.#processAuthHeader(response))
+
+    this.#axiosInstance.interceptors.response.use(
+      (response) => (response?.data ? response.data : null),
+      (errorResponse) => this.#processHttpErrorResponse(errorResponse)
+    )
+  }
+
+  /**
+   * @param request {import('axios').InternalAxiosRequestConfig}
+   * @return {import('axios').InternalAxiosRequestConfig}
+   */
+  #addAuthHeader(request) {
+    const token = StorageService.instance().getItem('jwt-token')
+
+    if (!token) return request
+
+    request.headers.setAuthorization('Bearer ' + token)
+    return request
+  }
+
+  /**
+   * @param response {import('axios').AxiosResponse}
+   * @return {import('axios').AxiosResponse}
+   */
+  #processAuthHeader(response) {
+    if (!response.headers.hasAuthorization()) return response
+
+    const token = response.headers.getAuthorization()
+    StorageService.instance().setItem('jwt-token', token.replace('Bearer ', ''))
+  }
+
+  #processHttpErrorResponse(errorResponse) {
+    const error = !errorResponse.response
+      ? {
+          error: errorResponse.code,
+          message: errorResponse.message
+        }
+      : errorResponse.response.data
+
+    notify({ title: error.error, text: error.message, type: 'error' })
+    return Promise.reject(error)
   }
 }
