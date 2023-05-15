@@ -1,12 +1,15 @@
 import axios from 'axios'
 
 export class HttpRequestService {
+  /** @return {HttpRequestService} */
   static instance() {
     if (HttpRequestService.#instance) return HttpRequestService.#instance
 
     HttpRequestService.#instance = new HttpRequestService()
     return HttpRequestService.#instance
   }
+
+  /** @type {HttpRequestService} */
   static #instance
 
   /** @type {import('axios').AxiosInstance} */
@@ -20,22 +23,44 @@ export class HttpRequestService {
     this.#configureInterceptor()
   }
 
+  /**
+   * @template T
+   * @param path {string}
+   * @return {Promise<T>}
+   */
   async getRequest(path) {
     return await this.#axiosInstance.get(path)
   }
 
+  /**
+   * @template T
+   * @param path {string}
+   * @param data {*}
+   * @return {Promise<T>}
+   */
   async postRequest(path, data) {
     return await this.#axiosInstance.post(path, data)
   }
 
+  /**
+   @template T
+   * @param path {string}
+   * @param data {*}
+   * @return {Promise<T>}
+   */
   async putRequest(path, data) {
     return await this.#axiosInstance.put(path, data)
   }
 
+  /**
+   * @param path {string}
+   * @return {Promise<void>}
+   */
   async deleteRequest(path) {
     return await this.#axiosInstance.delete(path)
   }
 
+  /** @return {void} */
   #configureInterceptor() {
     this.#axiosInstance.interceptors.response.use(
       (response) => response,

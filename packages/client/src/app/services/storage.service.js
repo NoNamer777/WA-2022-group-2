@@ -10,17 +10,27 @@ export class StorageService {
   /** @type {StorageService} */
   static #instance
 
-  /** @return {string} */
+  /**
+   * @param key {string}
+   * @return {string}
+   */
   getItem(key) {
     return localStorage.getItem(key)
   }
 
-  /** @return {void} */
+  /**
+   * @param key {string}
+   * @param value {string}
+   * @return {void}
+   */
   setItem(key, value) {
     localStorage.setItem(key, value)
   }
 
-  /** @return {void} */
+  /**
+   * @param key {string}
+   * @return {void}
+   */
   removeItem(key) {
     localStorage.removeItem(key)
   }
