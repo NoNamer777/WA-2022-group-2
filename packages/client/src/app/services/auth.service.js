@@ -1,4 +1,5 @@
 import { HttpRequestService } from './http-request.service'
+import { StorageService } from './storage.service'
 
 export class AuthService {
   /** @return {AuthService} */
@@ -33,9 +34,9 @@ export class AuthService {
   }
 
   /**
-   * @return {Promise<void>}
+   * @return {void}
    */
-  async logout() {
-    return await HttpRequestService.instance().postRequest('/auth/logout', {})
+  logout() {
+    StorageService.instance().removeItem('jwt-token')
   }
 }
