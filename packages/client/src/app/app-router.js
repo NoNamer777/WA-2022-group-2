@@ -44,6 +44,7 @@ router.beforeEach(async (to, from) => {
   scrollToTop()
   focusTopElement(to.meta.title, from.meta.title)
 
+  return await guardAuthenticatedRoutes(to)
 })
 
 router.afterEach((to) => {
@@ -70,4 +71,17 @@ function focusTopElement(titleTo, titleFrom) {
   if (titleTo !== titleFrom) {
     topElement.focus()
   }
+}
+
+/**
+ * @param routeTo {import('vue-router').RouteLocationNormalized}
+ * @return {Promise<import('vue-router').RouteLocationNormalized | boolean>}
+ */
+async function guardAuthenticatedRoutes(routeTo) {
+  const authenticationStore = useAuthStore()
+
+  if (['register', 'login'].includes(routeTo.name) && authenticationStore.isAuthenticated) {
+    return { name: 'home' }
+  }
+  return true
 }
