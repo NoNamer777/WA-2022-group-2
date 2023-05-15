@@ -47,7 +47,7 @@ const newUserSchema = {
       options: { min: 5, max: 80 },
       errorMessage: 'Een emailaddres moet tuseen de 5 en 80 tekenes bevatten.'
     },
-    isEmail: { options: 'Het formaat van de opgegeven emailaddres is onjuist.' },
+    isEmail: { errorMessage: 'Het formaat van de opgegeven emailaddres is onjuist.' },
     escape: true
   }
 }
