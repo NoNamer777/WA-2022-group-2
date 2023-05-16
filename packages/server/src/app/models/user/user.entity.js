@@ -1,7 +1,21 @@
+const bcrypt = require('bcryptjs')
 const { DataTypes, Model } = require('sequelize')
 const DatabaseService = require('../../services/database.service')
 
-class UserEntity extends Model {}
+class UserEntity extends Model {
+  async validatePassword(password) {
+    return await bcrypt.compare(password, this.password)
+  }
+
+  toJSON() {
+    const value = super.toJSON()
+
+    delete value.password
+    delete value.email
+
+    return value
+  }
+}
 
 /** @type {import('sequelize').ModelAttributes<UserEntity>} */
 const UserModelDefinition = {
@@ -44,6 +58,10 @@ const UserModelDefinition = {
       notEmpty: true,
       len: [3, 124],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
+    },
+    set(password) {
+      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      this.setDataValue('password', pass)
     }
   }
 }

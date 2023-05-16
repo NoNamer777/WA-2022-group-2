@@ -3,10 +3,10 @@ const InternalServerErrorException = require('../models/errors/internal-server.e
 class ErrorHandlerService {
   #defaultError = new InternalServerErrorException()
 
-  handleError(error, _request, response) {
-    if (!process.env.NODE_ENV) {
-      console.error(error)
-    }
+  // eslint-disable-next-line
+  handleError(error, _request, response, next) {
+    console.error(error.timestamp, error.error, '- ' + error.message)
+
     response.status(error.status || 500).send(error || this.#defaultError)
   }
 }

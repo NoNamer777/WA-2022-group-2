@@ -1,15 +1,13 @@
 <script setup>
 import { ref } from 'vue'
-import { InputLabel } from '../components'
+import { CustomFormKit } from '../../components'
+import { useAuthStore } from '../../stores'
+const { login } = useAuthStore()
 
 const user = ref({
   username: '',
   password: ''
 })
-
-function login() {
-  console.log(user)
-}
 </script>
 
 <template>
@@ -17,25 +15,23 @@ function login() {
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Login</h1>
-        <FormKit type="form" @submit="login" :actions="false" :incomplete-message="false">
-          <InputLabel
+        <FormKit type="form" @submit="login(user)" :actions="false" :incomplete-message="false">
+          <CustomFormKit
             v-model:modelValue="user.username"
             label="Gebruikersnaam"
             validation="required"
           />
-          <InputLabel
+          <CustomFormKit
             v-model:modelValue="user.password"
             type="password"
             label="Wachtwoord"
             validation="required"
           />
-          <InputLabel type="submit" label="Login" />
+          <CustomFormKit type="submit" label="Login" input-class="form-btn-primary" />
         </FormKit>
         <small class="d-flex align-items-baseline">
           Heb je geen account?&nbsp;
-          <router-link class="btn btn-sm btn-link" :to="{ name: 'register' }">
-            Registreer
-          </router-link>
+          <router-link class="link-primary" :to="{ name: 'register' }"> Registreer </router-link>
         </small>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
