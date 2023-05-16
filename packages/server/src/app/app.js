@@ -31,7 +31,7 @@ app.use(cookieParser())
 app.use(limiter)
 
 app.use('/api/user', usersRouter)
-app.use('/api/auth', authRouter)
+app.use('/auth', authRouter)
 
 app.use(new ErrorHandlerService().handleError)
 

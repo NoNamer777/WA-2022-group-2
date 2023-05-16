@@ -5,9 +5,8 @@ class ErrorHandlerService {
 
   // eslint-disable-next-line
   handleError(error, _request, response, next) {
-    if (!process.env.NODE_ENV) {
-      console.error(error)
-    }
+    console.error(error.timestamp, error.error, '- ' + error.message)
+
     response.status(error.status || 500).send(error || this.#defaultError)
   }
 }
