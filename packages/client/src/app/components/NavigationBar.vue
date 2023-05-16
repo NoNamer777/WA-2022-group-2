@@ -27,7 +27,7 @@
             <router-link class="nav-link text-white" :to="{ name: 'home' }">Uitdaging</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-white" :to="{ name: 'home' }">Info</router-link>
+            <router-link class="nav-link text-white" :to="{ name: 'info' }">Info</router-link>
           </li>
         </ul>
         <hr class="d-xl-none" />

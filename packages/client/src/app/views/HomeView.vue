@@ -8,6 +8,10 @@
       ratione repellendus! Cum eaque est provident rerum tempore! Beatae maiores pariatur placeat?
     </p>
     <router-link class="btn btn-primary" :to="{ name: 'register' }"> Registreer </router-link>
-    <img class="w-25 float-end" src="/assets/images/mascot/happy_bin.png" alt="mascot" />
+    <router-link class="btn btn-primary" :to="{ name: 'info' }"> Plastic Problemen! </router-link>
+      <img class="w-25 float-end" src="/assets/images/mascot/happy_bin.png" alt="mascot" />
   </main>
 </template>
+<script setup>
+import InfoView from "./InfoView.vue";
+</script>
