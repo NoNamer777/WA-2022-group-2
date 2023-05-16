@@ -3,7 +3,6 @@ const limiter = require('express-rate-limit')
 const { matchedData, checkSchema } = require('express-validator')
 const AuthController = require('./auth.controller')
 const confirmPasswordValidator = require('../../middleware/confirm-password.validator')
-const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator')
 const { loginSchema, newUserSchema } = require('../../validation/user.validator')
 
 const router = express.Router()
@@ -46,9 +45,5 @@ router.post(
     }
   }
 )
-
-router.post('/logout', jwtAuthHeaderValidator, (_request, _response, next) => {
-  next()
-})
 
 module.exports = router
