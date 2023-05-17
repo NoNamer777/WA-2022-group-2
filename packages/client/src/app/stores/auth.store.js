@@ -4,7 +4,6 @@ import { computed, ref } from 'vue'
 import { router } from '../app-router'
 import { AuthService } from '../services/auth.service'
 import { JwtService } from '../services/jwt.service'
-import { StorageService } from '../services/storage.service'
 import { UserService } from '../services/user.service'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -77,7 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
    */
   async function populateAuthenticatedUser() {
     try {
-      const token = StorageService.instance().getItem('jwt-token')
+      const token = localStorage.getItem('jwt-token')
 
       if (!token) {
         user.value = null

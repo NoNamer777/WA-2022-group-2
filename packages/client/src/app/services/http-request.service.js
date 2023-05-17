@@ -1,6 +1,5 @@
 import { notify } from '@kyvg/vue3-notification'
 import axios from 'axios'
-import { StorageService } from './storage.service'
 
 export class HttpRequestService {
   /** @return {HttpRequestService} */
@@ -82,7 +81,7 @@ export class HttpRequestService {
    * @return {import('axios').InternalAxiosRequestConfig}
    */
   #addAuthHeader(request) {
-    const token = StorageService.instance().getItem('jwt-token')
+    const token = localStorage.getItem('jwt-token')
 
     if (!token) return request
 
@@ -98,7 +97,7 @@ export class HttpRequestService {
     if (!response.headers.hasAuthorization()) return response
 
     const token = response.headers.getAuthorization()
-    StorageService.instance().setItem('jwt-token', token.replace('Bearer ', ''))
+    localStorage.setItem('jwt-token', token.replace('Bearer ', ''))
   }
 
   #processHttpErrorResponse(errorResponse) {

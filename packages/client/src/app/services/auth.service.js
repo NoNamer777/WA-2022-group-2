@@ -1,5 +1,4 @@
 import { HttpRequestService } from './http-request.service'
-import { StorageService } from './storage.service'
 
 export class AuthService {
   /** @return {AuthService} */
@@ -34,6 +33,6 @@ export class AuthService {
    * @return {void}
    */
   logout() {
-    StorageService.instance().removeItem('jwt-token')
+    localStorage.removeItem('jwt-token')
   }
 }
