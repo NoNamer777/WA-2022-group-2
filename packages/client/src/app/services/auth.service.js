@@ -23,14 +23,11 @@ export class AuthService {
   }
 
   /**
-   * @param userData {Omit<User, 'id' | 'isAdmin'> & { passwordConfirm: string }}
+   * @param formData {Omit<User, 'id' | 'isAdmin'> & { passwordConfirm: string }}
    * @return {Promise<User>}
    */
-  async register(userData) {
-    if (userData.password !== userData.passwordConfirm) {
-      throw new Error('Het bevestigde wachtwoord komt niet overeen met je opgegeven wachtwoord')
-    }
-    return await HttpRequestService.instance().postRequest('/auth/register', userData)
+  async register(formData) {
+    return await HttpRequestService.instance().postRequest('/auth/register', formData)
   }
 
   /**
