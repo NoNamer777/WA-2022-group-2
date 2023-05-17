@@ -9,7 +9,7 @@ const { loading } = storeToRefs(useAuthStore())
 
 <template>
   <div v-if="!loading" class="container h-100 d-flex flex-column g-0">
-    <notifications :duration="5000" />
+    <notifications position="bottom left" :duration="5000" />
     <div id="top" tabindex="-1" aria-labelledby="skip-link">
       <div class="visually-hidden-focusable">
         <a href="#main" id="skip-link"> Ga direct naar de inhoud </a>
