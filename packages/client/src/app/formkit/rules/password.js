@@ -1,5 +1,4 @@
 /**
- *
  * This function uses a regular expression to check that the password meets the following criteria:
  * - At least one lowercase letter
  * - At least one uppercase letter

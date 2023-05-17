@@ -31,4 +31,5 @@ coverage
 # Configs
 packages/server/src/app/config/*
 !packages/server/src/app/config/*-template.json
-packages/server/.env
+environment/.env*
+!environment/.env.example

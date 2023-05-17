@@ -20,7 +20,7 @@ class JwtService {
    * @returns {string}
    */
   encodeToken(payload) {
-    return jwt.sign(payload, process.env.JWT_SECRET, {
+    return jwt.sign(payload, process.env.VITE_JWT_SECRET, {
       subject: `${payload.id}`,
       expiresIn: `${TOKEN_VALID_DURATION}ms`
     })
@@ -31,7 +31,7 @@ class JwtService {
    * @returns
    */
   decodeToken(token) {
-    return jwt.verify(token, process.env.JWT_SECRET)
+    return jwt.verify(token, process.env.VITE_JWT_SECRET)
   }
 }
 

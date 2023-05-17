@@ -18,7 +18,8 @@ export const router = createRouter({
       name: 'challenge',
       component: ChallengeView,
       meta: {
-        title: 'Uitdaging'
+        title: 'Uitdaging',
+        requiresAuth: true
       }
     },
     {
@@ -41,25 +42,51 @@ export const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-  window.scrollTo(0, 0)
-  const topElement = document.getElementById('top')
-  if (topElement && to.meta.title !== from.meta.title) {
-    topElement.focus()
-  }
+  scrollToTop()
+  focusTopElement(to.meta.title, from.meta.title)
 
-  // when user is logged in they shouldn't be able to view the register and login page
-  const store = useAuthStore()
-  await store.getAuthUser()
-
-  if (store.isAuthenticated && (to.name === 'login' || to.name === 'register')) {
-    // redirect the user to the home page
-    return { name: 'home' }
-  }
+  return await guardAuthenticatedRoutes(to)
 })
 
 router.afterEach((to) => {
   const title = to.meta.title
+
   if (title) {
     document.title = title
   }
 })
+
+/** @return {void} */
+function scrollToTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+}
+
+/**
+ * @param titleTo {string}
+ * @param titleFrom {string}
+ * @return {void}
+ */
+function focusTopElement(titleTo, titleFrom) {
+  const topElement = document.getElementById('top')
+
+  if (titleTo !== titleFrom) {
+    topElement.focus()
+  }
+}
+
+/**
+ * @param routeTo {import('vue-router').RouteLocationNormalized}
+ * @return {Promise<import('vue-router').RouteLocationNormalized | boolean>}
+ */
+async function guardAuthenticatedRoutes(routeTo) {
+  const authenticationStore = useAuthStore()
+
+  if (['register', 'login'].includes(routeTo.name) && authenticationStore.isAuthenticated) {
+    return { name: 'home' }
+  }
+  // TODO: Add redirect routes
+  if (routeTo.meta.requiresAuth && !authenticationStore.isAuthenticated) {
+    return { name: 'login' }
+  }
+  return true
+}
