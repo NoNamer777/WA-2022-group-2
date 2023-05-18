@@ -7,9 +7,9 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
 </script>
 
 <template>
-  <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-5 p-4">
+  <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-xl-5 p-4">
     <div class="container-fluid">
-      <a class="navbar-brand text-white fw-bolder">Wasted</a>
+      <a class="navbar-brand text-white fw-bolder pe-5">Wasted</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -22,7 +22,7 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-xl-4">
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'home' }">
               Hoofdpagina
@@ -40,9 +40,14 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'home' }">Info</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link text-white" :to="{ name: 'home' }"
+              >Mijn Wasted</router-link
+            >
+          </li>
         </ul>
         <hr class="d-xl-none" />
-        <ul class="navbar-nav mb-2 mb-lg-0">
+        <ul class="navbar-nav mb-2 mb-lg-0 gap-2 gap-xl-4">
           <template v-if="!isAuthenticated">
             <li class="nav-item">
               <router-link class="nav-link text-white" :to="{ name: 'login' }">
