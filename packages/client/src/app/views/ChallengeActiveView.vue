@@ -24,17 +24,22 @@
 </template>
 
 <script>
-import ChallengeProgress from '../components/challenge/progress/ChallengeProgress.vue';
-import data from '../components/challenge/progress/data.json';
+import ChallengeProgress from '../components/challenge/progress/ChallengeProgress.vue'
+import data from '../components/challenge/progress/data.json'
+import { useAuthStore } from '../stores'
 
 /* send in user and challenge */
 
 export default {
   name: 'ChallengeProgressView.vue',
   components: { ChallengeProgress },
+  setup() {
+    const authStore = useAuthStore()
+    const user = authStore.user
+    return { user }
+  },
   data() {
     return {
-      user: Object,
       challenge: Object,
       userChallenges: [],
       startDate: Date,
@@ -42,49 +47,48 @@ export default {
       todayNumber: Number,
       dayTitle: String,
       isActive: Boolean
-    };
+    }
   },
   created() {
-    this.user = data.users[0];
-    this.challenge = data.challenges[0];
-    this.userChallenges = this.getAndSortUserChallenges();
-    this.startDate = this.getDateString(data.challenges[0].start_date);
-    this.today = this.getDateString(new Date());
-    this.todayNumber = this.getTodaysDayNumber();
-    this.isActive = this.getIsActive();
-    this.dayTitle = this.getTodayTitle();
+    this.challenge = data.challenges[0]
+    this.userChallenges = this.getAndSortUserChallenges()
+    this.startDate = this.getDateString(data.challenges[0].start_date)
+    this.today = this.getDateString(new Date())
+    this.todayNumber = this.getTodaysDayNumber()
+    this.isActive = this.getIsActive()
+    this.dayTitle = this.getTodayTitle()
   },
   methods: {
     getAndSortUserChallenges() {
-      const sorted = data.user_challenges.sort((a, b) => a.username < b.username);
-      return sorted.sort((a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id));
+      const sorted = data.user_challenges.sort((a, b) => a.username < b.username)
+      return sorted.sort((a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id))
     },
     getDateString(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString('nl-NL', options);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('nl-NL', options)
     },
     getTodaysDayNumber() {
-      const startDate = new Date(data.challenges[0].start_date);
-      const todayDiff = new Date().getTime() - startDate.getTime();
-      return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
+      const startDate = new Date(data.challenges[0].start_date)
+      const todayDiff = new Date().getTime() - startDate.getTime()
+      return Math.ceil(todayDiff / (1000 * 60 * 60 * 24))
     },
     getIsActive() {
-      const startDate = new Date(data.challenges[0].start_date).getTime();
-      const endDate = new Date(data.challenges[0].end_date).getTime();
-      const today = new Date().setHours(0, 0, 0, 0);
-      return endDate >= today && startDate <= today;
+      const startDate = new Date(data.challenges[0].start_date).getTime()
+      const endDate = new Date(data.challenges[0].end_date).getTime()
+      const today = new Date().setHours(0, 0, 0, 0)
+      return endDate >= today && startDate <= today
     },
     getTodayTitle() {
-      return this.isActive ? `Dag ${this.todayNumber}, ${this.today}` : `${this.today}`;
+      return this.isActive ? `Dag ${this.todayNumber}, ${this.today}` : `${this.today}`
     },
     getIsOwner(userChallenge) {
-      return this.user.id === userChallenge.user_id;
+      return this.user.id === userChallenge.user_id
     },
     getClass(userChallenge) {
-      return this.getIsOwner(userChallenge) ? 'owner' : 'shrink';
+      return this.getIsOwner(userChallenge) ? 'owner' : 'shrink'
     }
   }
-};
+}
 </script>
 
 <style scoped>
