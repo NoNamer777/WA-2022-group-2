@@ -19,7 +19,8 @@ const limiter = rateLimit({
 })
 
 // Load environment variables from a different directory
-const envPath = path.join(__dirname, 'config', '../../../.env')
+const envPath =
+  process.env.SERVER_ENVIRONMENT_PATH ?? path.join(__dirname, '../../../../environment/.env')
 dotenv.config({ path: envPath })
 
 app.disable('x-powered-by')
@@ -31,7 +32,7 @@ app.use(cookieParser())
 app.use(limiter)
 
 app.use('/api/user', usersRouter)
-app.use('/api/auth', authRouter)
+app.use('/auth', authRouter)
 
 app.use(new ErrorHandlerService().handleError)
 

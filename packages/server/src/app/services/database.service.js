@@ -19,7 +19,7 @@ class DatabaseService {
 
   constructor() {
     let config = fs.readFileSync(
-      process.env.DATABASE_CONFIG_PATH || path.join(__dirname, '../config/database.json'),
+      process.env.SERVER_DATABASE_CONFIG_PATH || path.join(__dirname, '../config/database.json'),
       'utf-8'
     )
     config = JSON.parse(config)
