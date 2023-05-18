@@ -6,7 +6,7 @@
         type="checkbox"
         :checked="checked"
         @change="$emit('update:checked', $event.target.checked)"
-        :disabled="isOwner ? dayNumber > todayNumber || dayNumber < todayNumber - 1 : true"
+        :disabled="isDisabled"
       />
       <label
         :for="id"
@@ -16,15 +16,8 @@
           transform: `rotateY(${this.deg}deg)`
         }"
       />
-      <div
-        aria-hidden="true"
-        :class="
-          checked
-            ? 'position-absolute top-50 text-tertiary'
-            : 'position-absolute top-50 text-secondary'
-        "
-      >
-        {{ checked ? '✔' : dayNumber < todayNumber ? '✘' : ' ' }}
+      <div :aria-hidden="true" :class="getClass">
+        {{ getCheckmarks }}
       </div>
       <div class="d-flex justify-content-center">Dag {{ dayNumber }}</div>
     </div>
@@ -36,11 +29,13 @@ export default {
   name: 'CheckBox',
   data() {
     return {
-      deg: Number
+      deg: Number,
+      isDisabled: Boolean
     }
   },
-  mounted() {
+  created() {
     this.deg = 0
+    this.isDisabled = this.getIsDisabled()
   },
   props: {
     id: Number,
@@ -54,6 +49,11 @@ export default {
   methods: {
     rotate() {
       this.deg += 180
+    },
+    getIsDisabled() {
+      return this.isOwner
+        ? this.dayNumber > this.todayNumber || this.dayNumber < this.todayNumber - 1
+        : true
     }
   },
   watch: {
@@ -61,6 +61,16 @@ export default {
       this.rotate()
       /* handle saving of challengeDays by challengeDayId? */
       console.log(this.id)
+    }
+  },
+  computed: {
+    getClass() {
+      return this.checked
+        ? 'position-absolute top-50 text-tertiary'
+        : 'position-absolute top-50 text-secondary'
+    },
+    getCheckmarks() {
+      return this.checked ? '✔' : this.dayNumber < this.todayNumber ? '✘' : ' '
     }
   }
 }

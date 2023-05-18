@@ -7,16 +7,17 @@
       </div>
       <p>Startdatum: {{ startDate }}</p>
     </div>
-    <p>Vandaag: Dag {{ todayNumber }}, {{ today }}</p>
+    <p>Vandaag: {{ dayTitle }}</p>
 
     <div class="d-flex flex-row flex-wrap justify-content-start gap-xl-2">
       <ChallengeProgress
-        :class="this.user.id === userChallenge.user_id ? 'owner' : 'shrink'"
         v-for="userChallenge in userChallenges"
         :key="userChallenge.id"
         :userChallengeId="userChallenge.id"
         :todayNumber="todayNumber"
-        :isOwner="this.user.id === userChallenge.user_id"
+        :isActive="isActive"
+        :isOwner="getIsOwner(userChallenge)"
+        :class="getClass(userChallenge)"
       />
     </div>
   </main>
@@ -38,22 +39,26 @@ export default {
       userChallenges: [],
       startDate: Date,
       today: Date,
-      amountOfDays: Number,
-      todayNumber: Number
+      todayNumber: Number,
+      dayTitle: String,
+      isActive: Boolean
     }
   },
   created() {
     this.user = data.users[0]
     this.challenge = data.challenges[0]
-    /* make methods to fetch user_challenges and challenge_days, sort user_challenges to display current user first */
-    this.userChallenges = data.user_challenges.sort(
-      (a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id)
-    )
+    this.userChallenges = this.getAndSortUserChallenges()
     this.startDate = this.getDateString(data.challenges[0].start_date)
     this.today = this.getDateString(new Date())
     this.todayNumber = this.getTodaysDayNumber()
+    this.isActive = this.getIsActive()
+    this.dayTitle = this.getTodayTitle()
   },
   methods: {
+    getAndSortUserChallenges() {
+      const sorted = data.user_challenges.sort((a, b) => a.username < b.username)
+      return sorted.sort((a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id))
+    },
     getDateString(date) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(date).toLocaleDateString('nl-NL', options)
@@ -62,6 +67,21 @@ export default {
       const startDate = new Date(data.challenges[0].start_date)
       const todayDiff = new Date().getTime() - startDate.getTime()
       return Math.ceil(todayDiff / (1000 * 60 * 60 * 24))
+    },
+    getIsActive() {
+      const startDate = new Date(data.challenges[0].start_date).getTime()
+      const endDate = new Date(data.challenges[0].end_date).getTime()
+      const today = new Date().setHours(0, 0, 0, 0)
+      return endDate >= today && startDate <= today
+    },
+    getTodayTitle() {
+      return this.isActive ? `Dag ${this.todayNumber}, ${this.today}` : `${this.today}`
+    },
+    getIsOwner(userChallenge) {
+      return this.user.id === userChallenge.user_id
+    },
+    getClass(userChallenge) {
+      return this.getIsOwner(userChallenge) ? 'owner' : 'shrink'
     }
   }
 }

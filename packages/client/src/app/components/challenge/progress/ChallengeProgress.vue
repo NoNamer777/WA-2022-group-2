@@ -4,11 +4,11 @@
     <div class="d-flex flex-row flex-wrap gap-4">
       <div class="d-flex flex-row flex-wrap flex-item">
         <CheckBox
-          v-for="i in challengeDays.length"
-          v-model:checked="challengeDays[i - 1].earned"
+          v-for="(challengeDay, i) in challengeDays"
+          v-model:checked="challengeDay.earned"
           :key="i"
-          :id="challengeDays[i - 1].id"
-          :dayNumber="i"
+          :id="challengeDay.id"
+          :dayNumber="i + 1"
           :todayNumber="todayNumber"
           :imageName="this.user.profile_picture"
           :imagePath="`url('../assets/profile_pictures/${this.user.profile_picture}.png')`"
@@ -16,13 +16,8 @@
         ></CheckBox>
       </div>
       <div class="d-flex flex-column">
-        <p>{{ calculation }} dagen afgerond</p>
-        <button
-          class="w-100"
-          v-if="isOwner"
-          :class="challengeDays[todayNumber - 1].earned ? 'btn btn-secondary' : 'btn btn-primary'"
-          @click="check(todayNumber)"
-        >
+        <p>{{ earnedText }} dagen afgerond</p>
+        <button class="w-100" v-if="showButton" :class="getClass" @click="check(todayNumber)">
           Vink vandaag {{ buttonText }}
         </button>
       </div>
@@ -40,29 +35,28 @@ export default {
   data() {
     return {
       user: Object,
+      title: String,
       challengeDays: [],
+      numberOfEarned: Number,
+      earnedText: String,
       buttonText: String,
-      calculation: String,
-      numberOfEarned: Number
+      showButton: Boolean
     }
   },
   props: {
     userChallengeId: Number,
     todayNumber: Number,
+    isActive: Boolean,
     isOwner: Boolean
   },
   created() {
     this.user = this.getUser()
-    this.title = this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.user.username}`
+    this.title = this.getTitle()
     this.challengeDays = this.getChallengeDays()
-    this.numberOfEarned = this.challengeDays.reduce(
-      (count, day) => (day.earned ? count + 1 : count),
-      0
-    )
-    this.calculation = `${this.numberOfEarned}
-      van de ${this.challengeDays.length}`
+    this.numberOfEarned = this.getNumberOfEarned()
+    this.earnedText = this.getEarnedText()
     this.imageName = this.user.profile_picture
-    this.buttonText = 'aan'
+    this.showButton = this.isActive && this.isOwner
   },
   methods: {
     getUser() {
@@ -73,7 +67,11 @@ export default {
         }
       }
     },
+    getTitle() {
+      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.user.username}`
+    },
     getChallengeDays() {
+      /* fetch challengeDays based on userChallengeId */
       const days = []
       for (const challengeDay of data.challenge_days) {
         if (this.userChallengeId === challengeDay.user_challenge_id) {
@@ -82,6 +80,13 @@ export default {
       }
       return days
     },
+    getNumberOfEarned() {
+      return this.challengeDays.reduce((count, day) => (day.earned ? count + 1 : count), 0)
+    },
+    getEarnedText() {
+      return `${this.numberOfEarned}
+      van de ${this.challengeDays.length}`
+    },
     check(i) {
       this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned
     }
@@ -89,17 +94,23 @@ export default {
   watch: {
     challengeDays: {
       handler() {
-        this.buttonText = this.challengeDays[this.todayNumber - 1].earned ? 'uit' : 'aan'
-        this.numberOfEarned = this.challengeDays.reduce(
-          (count, day) => (day.earned ? count + 1 : count),
-          0
-        )
-        this.calculation = `${this.numberOfEarned} van de ${this.challengeDays.length}`
+        if (this.showButton) {
+          this.buttonText = this.challengeDays[this.todayNumber - 1].earned ? 'uit' : 'aan'
+        }
+        this.numberOfEarned = this.getNumberOfEarned()
+        this.earnedText = this.getEarnedText()
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
           alert('Make alert here')
         }
       },
       deep: true
+    }
+  },
+  computed: {
+    getClass() {
+      return this.challengeDays[this.todayNumber - 1].earned
+        ? 'btn btn-secondary'
+        : 'btn btn-primary'
     }
   }
 }
