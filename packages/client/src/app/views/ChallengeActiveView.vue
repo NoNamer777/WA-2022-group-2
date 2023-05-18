@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import ChallengeProgress from './ChallengeProgress.vue'
-import data from './data.json'
+import ChallengeProgress from '../components/challenge/progress/ChallengeProgress.vue'
+import data from '../components/challenge/progress/data.json'
 
 /* send in user and challenge */
 
