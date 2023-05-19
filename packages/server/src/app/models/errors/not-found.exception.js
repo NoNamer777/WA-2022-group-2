@@ -1,9 +1,7 @@
-const HttpException = require('./http.exception');
+import { HttpException } from './http.exception.js';
 
-class NotFoundException extends HttpException {
+export class NotFoundException extends HttpException {
   constructor(message) {
     super(404, 'Not Found', message);
   }
 }
-
-module.exports = NotFoundException;

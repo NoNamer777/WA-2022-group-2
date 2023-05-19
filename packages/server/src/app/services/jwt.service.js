@@ -1,10 +1,10 @@
-const jwt = require('jsonwebtoken');
-const ConfigService = require('./config.service');
+import jwt from 'jsonwebtoken';
+import { ConfigService } from './config.service.js';
 
 /** Token expiration time in ms. (8 hours currently). */
 const TOKEN_VALID_DURATION = 8 * 60 * 60 * 1_000;
 
-class JwtService {
+export class JwtService {
   /** @return {JwtService} */
   static instance() {
     if (JwtService.#instance) return JwtService.#instance;
@@ -35,5 +35,3 @@ class JwtService {
     return jwt.verify(token, ConfigService.instance().config.jwt.token);
   }
 }
-
-module.exports = JwtService;

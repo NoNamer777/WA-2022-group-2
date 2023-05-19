@@ -1,4 +1,4 @@
-class HttpException extends Error {
+export class HttpException extends Error {
   timestamp;
   status;
   error;
@@ -12,5 +12,3 @@ class HttpException extends Error {
     this.message = message;
   }
 }
-
-module.exports = HttpException;

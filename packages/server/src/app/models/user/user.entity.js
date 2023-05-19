@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs');
-const { DataTypes, Model } = require('sequelize');
-const DatabaseService = require('../../services/database.service');
+import bcrypt from 'bcryptjs';
+import { DataTypes, Model } from 'sequelize';
+import { DatabaseService } from '../../services/database.service.js';
 
-class UserEntity extends Model {
+export class UserEntity extends Model {
   async validatePassword(password) {
     return await bcrypt.compare(password, this.password);
   }
@@ -18,7 +18,7 @@ class UserEntity extends Model {
 }
 
 /** @type {import('sequelize').ModelAttributes<UserEntity>} */
-const UserModelDefinition = {
+export const UserModelDefinition = {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -67,7 +67,7 @@ const UserModelDefinition = {
 };
 
 /** @return {void} */
-function initializeUserEntity() {
+export function initializeUserEntity() {
   UserEntity.init(UserModelDefinition, {
     sequelize: DatabaseService.instance().sequelizeInstance,
     modelName: 'user',
@@ -76,5 +76,3 @@ function initializeUserEntity() {
     updatedAt: false
   });
 }
-
-module.exports = { UserEntity, UserModelDefinition, initializeUserEntity };

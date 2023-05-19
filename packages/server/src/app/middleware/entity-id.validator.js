@@ -1,6 +1,6 @@
-const { param } = require('express-validator');
+import { param } from 'express-validator';
 
-module.exports = (paramName, entity) =>
+export const entityIdValidator = (paramName, entity) =>
   param(paramName)
     .isInt({ min: 1 })
     .withMessage(

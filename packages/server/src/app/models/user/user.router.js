@@ -1,19 +1,19 @@
-const express = require('express');
-const { matchedData, checkSchema } = require('express-validator');
 const UserController = require('./user.controller');
-const entityIdValidator = require('../../middleware/entity-id.validator');
-const jwtAuthHeaderValidator = require('../../middleware/jwt-auth-header-validator');
-const { userSchema, newUserSchema } = require('../../validation/user.validator');
+import express from 'express';
+import { checkSchema, matchedData } from 'express-validator';
+import { entityIdValidator } from '../../middleware/entity-id.validator.js';
+import { jwtAuthHeaderValidator } from '../../middleware/jwt-auth-header-validator.js';
+import { newUserSchema, userSchema } from '../../validation/user.validator.js';
 
-const router = express.Router();
+export const userRouter = express.Router();
 
-router.get('/', jwtAuthHeaderValidator, async (_, response) => {
   const allUsers = await UserController.instance().getAll();
+userRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
 
   response.send(allUsers);
 });
 
-router.get(
+userRouter.get(
   '/:userId',
   jwtAuthHeaderValidator,
   entityIdValidator('userId', 'User'),
@@ -27,7 +27,7 @@ router.get(
   }
 );
 
-router.put(
+userRouter.put(
   '/:userId',
   jwtAuthHeaderValidator,
   checkSchema(userSchema, ['body']),
@@ -46,7 +46,7 @@ router.put(
   }
 );
 
-router.post(
+userRouter.post(
   '/',
   jwtAuthHeaderValidator,
   checkSchema(newUserSchema, ['body']),
@@ -63,7 +63,7 @@ router.post(
   }
 );
 
-router.delete(
+userRouter.delete(
   '/:userId',
   jwtAuthHeaderValidator,
   entityIdValidator('userId', 'User'),
@@ -78,5 +78,3 @@ router.delete(
     }
   }
 );
-
-module.exports = router;

@@ -1,9 +1,9 @@
-const InternalServerErrorException = require('../errors/internal-server.exception');
-const NotFoundException = require('../errors/not-found.exception');
-const UnauthorizedException = require('../errors/unauthorized-exception');
-const UserService = require('../user/user.service');
+import { InternalServerErrorException } from '../errors/internal-server.exception.js';
+import { NotFoundException } from '../errors/not-found.exception.js';
+import { UnauthorizedException } from '../errors/unauthorized-exception.js';
+import { UserService } from '../user/user.service.js';
 
-class AuthService {
+export class AuthService {
   /** @return {AuthService} */
   static instance() {
     if (AuthService.#instance) return AuthService.#instance;
@@ -42,5 +42,3 @@ class AuthService {
     return user;
   }
 }
-
-module.exports = AuthService;

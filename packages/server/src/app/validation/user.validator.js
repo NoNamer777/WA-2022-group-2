@@ -1,4 +1,4 @@
-const loginSchema = {
+export const loginSchema = {
   username: {
     notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
     isLength: {
@@ -17,7 +17,7 @@ const loginSchema = {
   }
 };
 
-const newUserSchema = {
+export const newUserSchema = {
   username: {
     notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
     isLength: {
@@ -52,7 +52,7 @@ const newUserSchema = {
   }
 };
 
-const userSchema = {
+export const userSchema = {
   ...newUserSchema,
   id: {
     exists: { bail: true, options: { values: 'falsy' }, errorMessage: 'Een ID is verplicht' },
@@ -62,10 +62,4 @@ const userSchema = {
     },
     escape: true
   }
-};
-
-module.exports = {
-  newUserSchema,
-  loginSchema,
-  userSchema
 };

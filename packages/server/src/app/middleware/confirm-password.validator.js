@@ -1,6 +1,6 @@
-const { body } = require('express-validator');
+import { body } from 'express-validator';
 
-module.exports = body('passwordConfirm')
+export const confirmPasswordValidator = body('passwordConfirm')
   .notEmpty()
   .withMessage('Je wachtwoord bevestigen is verplicht.')
   .bail()

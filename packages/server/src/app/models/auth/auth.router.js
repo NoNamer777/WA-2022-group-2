@@ -1,21 +1,23 @@
 const express = require('express');
 const limiter = require('express-rate-limit');
-const { matchedData, checkSchema } = require('express-validator');
 const AuthController = require('./auth.controller');
-const confirmPasswordValidator = require('../../middleware/confirm-password.validator');
-const { loginSchema, newUserSchema } = require('../../validation/user.validator');
+import express from 'express';
+import { rateLimit } from 'express-rate-limit';
+import { checkSchema, matchedData } from 'express-validator';
+import { confirmPasswordValidator } from '../../middleware/confirm-password.validator.js';
+import { loginSchema, newUserSchema } from '../../validation/user.validator.js';
 
-const router = express.Router();
+export const authRouter = express.Router();
 
 // On the login and register routes, allow maximum 10 requests per 5 minutes
-const authLimiter = limiter({
+const authLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 10,
   standardHeaders: true,
   legacyHeaders: false
 });
 
-router.post(
+authRouter.post(
   '/register',
   authLimiter,
   checkSchema(newUserSchema, ['body']),
@@ -31,7 +33,7 @@ router.post(
   }
 );
 
-router.post(
+authRouter.post(
   '/login',
   authLimiter,
   checkSchema(loginSchema, ['body']),
@@ -45,5 +47,3 @@ router.post(
     }
   }
 );
-
-module.exports = router;

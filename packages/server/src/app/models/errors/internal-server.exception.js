@@ -1,9 +1,7 @@
-const HttpException = require('./http.exception');
+import { HttpException } from './http.exception.js';
 
-class InternalServerErrorException extends HttpException {
+export class InternalServerErrorException extends HttpException {
   constructor(message) {
     super(500, 'Internal Server Error', message);
   }
 }
-
-module.exports = InternalServerErrorException;

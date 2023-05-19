@@ -1,7 +1,7 @@
-const cors = require('cors');
-const ConfigService = require('../services/config.service');
+import cors from 'cors';
+import { ConfigService } from '../services/config.service.js';
 
-function corsMiddleWare() {
+export function corsMiddleware() {
   const corsOptions = {
     origin: ConfigService.instance().config.server.allowedOrigins,
     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
@@ -11,5 +11,3 @@ function corsMiddleWare() {
 
   return cors(corsOptions);
 }
-
-module.exports = corsMiddleWare;

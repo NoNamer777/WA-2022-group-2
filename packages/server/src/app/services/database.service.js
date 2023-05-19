@@ -1,9 +1,8 @@
-const fs = require('fs');
-const { Sequelize } = require('sequelize');
-const util = require('util');
-const ConfigService = require('./config.service');
+import { readFile } from 'fs/promises';
+import { Sequelize } from 'sequelize';
+import { ConfigService } from './config.service.js';
 
-class DatabaseService {
+export class DatabaseService {
   /** @return {DatabaseService} */
   static instance() {
     if (DatabaseService.#instance) return DatabaseService.#instance;
@@ -38,10 +37,9 @@ class DatabaseService {
 
   /** @return {Promise<any>} */
   async #readConfig() {
-    /** @type {(path: string) => Promise<string>} */
-    const readFile$ = util.promisify(fs.readFile);
-    const databaseConfigFile = await readFile$(
-      ConfigService.instance().config.server.databaseConfigPath
+    const databaseConfigFile = await readFile(
+      ConfigService.instance().config.server.databaseConfigPath,
+      { encoding: 'utf-8' }
     );
 
     return JSON.parse(databaseConfigFile)[
@@ -49,5 +47,3 @@ class DatabaseService {
     ];
   }
 }
-
-module.exports = DatabaseService;

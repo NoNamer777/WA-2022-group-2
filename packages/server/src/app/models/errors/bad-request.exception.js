@@ -1,9 +1,7 @@
-const HttpException = require('./http.exception');
+import { HttpException } from './http.exception.js';
 
-class BadRequestException extends HttpException {
+export class BadRequestException extends HttpException {
   constructor(message) {
     super(400, 'Bad Request', message);
   }
 }
-
-module.exports = BadRequestException;

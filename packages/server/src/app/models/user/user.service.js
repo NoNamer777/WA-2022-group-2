@@ -1,10 +1,9 @@
 const UserRepository = require('./user.repository');
-const NotFoundException = require('../errors/not-found.exception');
-const BadRequestException = require('../errors/bad-request.exception');
+import { BadRequestException } from '../errors/bad-request.exception.js';
+import { NotFoundException } from '../errors/not-found.exception.js';
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.
-
-class UserService {
+export class UserService {
   /** @return {UserService} */
   static instance() {
     if (UserService.#instance) return UserService.#instance;
@@ -98,5 +97,3 @@ class UserService {
     await UserRepository.instance().deleteById(userId);
   }
 }
-
-module.exports = UserService;

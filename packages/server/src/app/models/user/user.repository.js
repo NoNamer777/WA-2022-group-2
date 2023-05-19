@@ -1,4 +1,4 @@
-const { UserEntity, initializeUserEntity } = require('./user.entity');
+import { UserEntity } from './user.entity.js';
 
 class UserRepository {
   /** @return {UserRepository} */
@@ -54,4 +54,3 @@ class UserRepository {
   }
 }
 
-module.exports = UserRepository;

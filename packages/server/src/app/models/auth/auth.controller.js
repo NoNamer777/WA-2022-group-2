@@ -1,5 +1,5 @@
-const AuthService = require('./auth.service');
-const JwtService = require('../../services/jwt.service');
+import { JwtService } from '../../services/jwt.service.js';
+import { AuthService } from './auth.service.js';
 
 class AuthController {
   /** @return {AuthController} */
@@ -30,4 +30,3 @@ class AuthController {
   }
 }
 
-module.exports = AuthController;

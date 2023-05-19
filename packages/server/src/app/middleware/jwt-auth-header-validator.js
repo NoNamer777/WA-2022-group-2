@@ -1,8 +1,8 @@
-const JwtService = require('../services/jwt.service');
-const UnauthorizedException = require('../models/errors/unauthorized-exception');
-const UserService = require('../models/user/user.service');
+import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
+import { UserService } from '../models/user/user.service.js';
+import { JwtService } from '../services/jwt.service.js';
 
-module.exports = async function jwtAuthHeaderValidator(request, response, next) {
+export async function jwtAuthHeaderValidator(request, response, next) {
   let token = request.headers.authorization || null;
 
   if (!token) {
@@ -27,4 +27,4 @@ module.exports = async function jwtAuthHeaderValidator(request, response, next) 
     // Something is going wrong while decoding the token
     next(new UnauthorizedException());
   }
-};
+}
