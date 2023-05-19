@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-const http = require('http');
-const app = require('./app/app');
-const ConfigService = require('./app/services/config.service');
+import { createServer } from 'http';
+import { ConfigService, initializeApp } from './app/index.js';
 
 (async () => {
-  const wastedApp = await app();
+  const wastedApp = await initializeApp();
 
   // Get port and hostname from the config service and store in Express
   const host = ConfigService.instance().config.server.host;
@@ -14,7 +13,7 @@ const ConfigService = require('./app/services/config.service');
   wastedApp.app.set('port', port);
   wastedApp.app.set('hostname', host);
 
-  const server = http.createServer(wastedApp.app);
+  const server = createServer(wastedApp.app);
 
   server.listen(port, host);
   server.on('listening', () => console.info(`Server is Listening on http://${host}:${port}/`));
