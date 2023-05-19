@@ -1,16 +1,16 @@
 <script setup>
-import { CustomFormKit } from '../../components'
+import { CustomFormKit } from '../../components';
 
-import { ref } from 'vue'
-import { useAuthStore } from '../../stores'
-const { register } = useAuthStore()
+import { ref } from 'vue';
+import { useAuthStore } from '../../stores';
+const { register } = useAuthStore();
 
 const user = ref({
   email: '',
   username: '',
   password: '',
   passwordConfirm: ''
-})
+});
 </script>
 
 <template>

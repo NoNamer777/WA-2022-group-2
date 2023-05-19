@@ -1,20 +1,24 @@
-const { UserEntity } = require('./user.entity')
+const { UserEntity, initializeUserEntity } = require('./user.entity');
 
 class UserRepository {
   /** @return {UserRepository} */
   static instance() {
-    if (UserRepository.#instance) return UserRepository.#instance
+    if (UserRepository.#instance) return UserRepository.#instance;
 
-    UserRepository.#instance = new UserRepository()
-    return UserRepository.#instance
+    UserRepository.#instance = new UserRepository();
+    return UserRepository.#instance;
   }
 
   /** @type {UserRepository} */
-  static #instance
+  static #instance;
+
+  constructor() {
+    initializeUserEntity();
+  }
 
   /** @return {Promise<UserEntity[]>} */
   async findAll() {
-    return await UserEntity.findAll()
+    return await UserEntity.findAll();
   }
 
   /**
@@ -22,7 +26,7 @@ class UserRepository {
    * @return {Promise<UserEntity | null>}
    */
   async findOneBy(whereClaus) {
-    return await UserEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false })
+    return await UserEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false });
   }
 
   /**
@@ -30,7 +34,7 @@ class UserRepository {
    * @return {Promise<void>}
    */
   async update(updatedUserData) {
-    await UserEntity.update(updatedUserData, { where: { id: updatedUserData.id } })
+    await UserEntity.update(updatedUserData, { where: { id: updatedUserData.id } });
   }
 
   /**
@@ -38,7 +42,7 @@ class UserRepository {
    * @return {Promise<UserEntity>}
    */
   create(userData) {
-    return UserEntity.create(userData)
+    return UserEntity.create(userData);
   }
 
   /**
@@ -46,8 +50,8 @@ class UserRepository {
    * @return {Promise<void>}
    */
   async deleteById(userId) {
-    await UserEntity.destroy({ where: { id: userId } })
+    await UserEntity.destroy({ where: { id: userId } });
   }
 }
 
-module.exports = UserRepository
+module.exports = UserRepository;

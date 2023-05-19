@@ -29,7 +29,6 @@ coverage
 *.sw?
 
 # Configs
-packages/server/src/app/config/*
-!packages/server/src/app/config/*-template.json
-environment/.env*
-!environment/.env.example
+environment/*
+!environment/*-template*
+!environment/*template
