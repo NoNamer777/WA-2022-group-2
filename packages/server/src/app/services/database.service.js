@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const { Sequelize } = require('sequelize');
 const util = require('util');
 const ConfigService = require('./config.service');
