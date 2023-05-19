@@ -58,6 +58,7 @@
 import CustomFormKit from '../components/form/CustomFormKit.vue'
 import { ref } from 'vue'
 import { useAuthStore } from '../stores'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'ChallengeCreationView.vue',
@@ -65,6 +66,7 @@ export default {
   setup() {
     const authStore = useAuthStore()
     const user = authStore.user
+    const router = useRouter()
 
     const challenge = ref({
       name: '',
@@ -83,6 +85,7 @@ export default {
        * - challenge days for the amount of days, with user challenge ids, earned false
        *
        * Route to active view */
+      router.push('/challengeTest')
     }
     return {
       challenge,
