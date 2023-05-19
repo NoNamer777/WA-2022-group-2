@@ -7,7 +7,7 @@ const authRouter = require('./models/auth/auth.router');
 const usersRouter = require('./models/user/user.router');
 const ConfigService = require('./services/config.service');
 const DatabaseService = require('./services/database.service');
-const ErrorHandlerService = require('./services/error-handler.service');
+import { errorHandler } from './middleware/error.handler.js';
 
 class App {
   /** @type {import('express').Express} */
@@ -37,13 +37,15 @@ class App {
 
     await ConfigService.instance().initialize();
 
-    this.app.use(new ErrorHandlerService().handleError);
     this.app.use(corsMiddleware());
 
     await DatabaseService.instance().initialize();
 
     this.app.use('/api/user', usersRouter);
     this.app.use('/auth', authRouter);
+
+    // Needs to be defined last in order to catch, log, and format all errors properly
+    this.app.use(errorHandler);
   }
 }
 
