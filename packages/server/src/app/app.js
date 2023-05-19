@@ -1,39 +1,55 @@
 const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const corsMiddleware = require('./middleware/cors-middleware');
 const authRouter = require('./models/auth/auth.router');
 const usersRouter = require('./models/user/user.router');
+const ConfigService = require('./services/config.service');
+const DatabaseService = require('./services/database.service');
 const ErrorHandlerService = require('./services/error-handler.service');
 
-const app = express();
+class App {
+  /** @type {import('express').Express} */
+  app = express();
 
-// On all routes, allow maximum 50 requests per minute
-const limiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 50,
-  standardHeaders: true,
-  legacyHeaders: false
-});
+  /**
+   * On all routes, allow maximum 50 requests per minute
+   * @type {import('express-rate-limit').RateLimitRequestHandler}
+   */
+  #limiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 50,
+    standardHeaders: true,
+    legacyHeaders: false
+  });
 
-// Load environment variables from a different directory
-const envPath =
-  process.env.SERVER_ENVIRONMENT_PATH ?? path.join(__dirname, '../../../../environment/.env');
-dotenv.config({ path: envPath });
+  /** @return {Promise<void>} */
+  async initialize() {
+    dotenv.config({
+      path: process.env.VITE_ENV_PATH || path.join(__dirname, '../../../../environment/.env')
+    });
 
-app.disable('x-powered-by');
+    this.app.disable('x-powered-by');
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(this.#limiter);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(corsMiddleware);
-app.use(cookieParser());
-app.use(limiter);
+    await ConfigService.instance().initialize();
 
-app.use('/api/user', usersRouter);
-app.use('/auth', authRouter);
+    this.app.use(new ErrorHandlerService().handleError);
+    this.app.use(corsMiddleware());
 
-app.use(new ErrorHandlerService().handleError);
+    await DatabaseService.instance().initialize();
 
-module.exports = app;
+    this.app.use('/api/user', usersRouter);
+    this.app.use('/auth', authRouter);
+  }
+}
+
+module.exports = async () => {
+  const app = new App();
+  await app.initialize();
+
+  return app;
+};
