@@ -1,4 +1,4 @@
-const esbuild = require('esbuild')
+const esbuild = require('esbuild');
 
 esbuild.build({
   entryPoints: ['packages/server/src/main.js'],
@@ -13,4 +13,4 @@ esbuild.build({
   treeShaking: true,
   sourcemap: true,
   write: true
-})
+});

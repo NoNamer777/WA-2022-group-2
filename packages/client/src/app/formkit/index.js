@@ -1,6 +1,6 @@
-import { nl } from '@formkit/i18n'
-import { defaultConfig } from '@formkit/vue'
-import password from './rules/password'
+import { nl } from '@formkit/i18n';
+import { defaultConfig } from '@formkit/vue';
+import password from './rules/password';
 
 export const FormKitOptions = defaultConfig({
   locales: { nl },
@@ -9,10 +9,10 @@ export const FormKitOptions = defaultConfig({
     nl: {
       validation: {
         password() {
-          return 'We raden aan een combinatie te maken van hoofdletters, kleine letters, cijfers en speciale tekens.'
+          return 'We raden aan een combinatie te maken van hoofdletters, kleine letters, cijfers en speciale tekens.';
         }
       }
     }
   },
   rules: { password }
-})
+});

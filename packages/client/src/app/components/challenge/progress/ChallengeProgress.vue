@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import CheckBox from './ChallengeCheckBox.vue'
-import data from './data.json'
+import CheckBox from './ChallengeCheckBox.vue';
+import data from './data.json';
 
 export default {
   name: 'ChallengeProgress',
@@ -41,7 +41,7 @@ export default {
       earnedText: String,
       buttonText: String,
       showButton: Boolean
-    }
+    };
   },
   props: {
     userChallengeId: Number,
@@ -50,57 +50,57 @@ export default {
     isOwner: Boolean
   },
   created() {
-    this.user = this.getUser()
-    this.title = this.getTitle()
-    this.challengeDays = this.getChallengeDays()
-    this.numberOfEarned = this.getNumberOfEarned()
-    this.earnedText = this.getEarnedText()
-    this.imageName = this.user.profile_picture
-    this.showButton = this.isActive && this.isOwner
+    this.user = this.getUser();
+    this.title = this.getTitle();
+    this.challengeDays = this.getChallengeDays();
+    this.numberOfEarned = this.getNumberOfEarned();
+    this.earnedText = this.getEarnedText();
+    this.imageName = this.user.profile_picture;
+    this.showButton = this.isActive && this.isOwner;
   },
   methods: {
     getUser() {
-      const users = data.users
+      const users = data.users;
       for (const user of users) {
         if (this.userChallengeId === user.id) {
-          return user
+          return user;
         }
       }
     },
     getTitle() {
-      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.user.username}`
+      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.user.username}`;
     },
     getChallengeDays() {
       /* fetch challengeDays based on userChallengeId */
-      const days = []
+      const days = [];
       for (const challengeDay of data.challenge_days) {
         if (this.userChallengeId === challengeDay.user_challenge_id) {
-          days.push(challengeDay)
+          days.push(challengeDay);
         }
       }
-      return days
+      return days;
     },
     getNumberOfEarned() {
-      return this.challengeDays.reduce((count, day) => (day.earned ? count + 1 : count), 0)
+      return this.challengeDays.reduce((count, day) => (day.earned ? count + 1 : count), 0);
     },
     getEarnedText() {
       return `${this.numberOfEarned}
-      van de ${this.challengeDays.length}`
+      van de ${this.challengeDays.length}`;
     },
     check(i) {
-      this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned
+      this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned;
     }
   },
   watch: {
     challengeDays: {
       handler() {
         if (this.showButton) {
-          this.buttonText = this.challengeDays[this.todayNumber - 1].earned ? 'uit' : 'aan'
+          this.buttonText = this.challengeDays[this.todayNumber - 1].earned ? 'uit' : 'aan';
         }
-        this.numberOfEarned = this.getNumberOfEarned()
-        this.earnedText = this.getEarnedText()
+        this.numberOfEarned = this.getNumberOfEarned();
+        this.earnedText = this.getEarnedText();
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
-          alert('Make alert here')
+          alert('Make alert here');
         }
       },
       deep: true
@@ -110,10 +110,10 @@ export default {
     getClass() {
       return this.challengeDays[this.todayNumber - 1].earned
         ? 'btn btn-secondary'
-        : 'btn btn-primary'
+        : 'btn btn-primary';
     }
   }
-}
+};
 </script>
 
 <style scoped></style>

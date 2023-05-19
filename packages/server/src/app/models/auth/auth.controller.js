@@ -1,21 +1,21 @@
-const AuthService = require('./auth.service')
-const JwtService = require('../../services/jwt.service')
+const AuthService = require('./auth.service');
+const JwtService = require('../../services/jwt.service');
 
 class AuthController {
   /** @return {AuthController} */
   static instance() {
-    if (AuthController.#instance) return AuthController.#instance
+    if (AuthController.#instance) return AuthController.#instance;
 
-    AuthController.#instance = new AuthController()
-    return AuthController.#instance
+    AuthController.#instance = new AuthController();
+    return AuthController.#instance;
   }
 
   /** @type {AuthController} */
-  static #instance
+  static #instance;
 
   async register(userData) {
-    console.info('AuthController - registering a new User')
-    return await AuthService.instance().register(userData)
+    console.info('AuthController - registering a new User');
+    return await AuthService.instance().register(userData);
   }
 
   /**
@@ -23,11 +23,11 @@ class AuthController {
    * @return {Promise<string>}
    */
   async login(userData) {
-    console.info('AuthController - Logging in an User')
-    const user = await AuthService.instance().login(userData)
+    console.info('AuthController - Logging in an User');
+    const user = await AuthService.instance().login(userData);
 
-    return JwtService.instance().encodeToken(user.toJSON())
+    return JwtService.instance().encodeToken(user.toJSON());
   }
 }
 
-module.exports = AuthController
+module.exports = AuthController;

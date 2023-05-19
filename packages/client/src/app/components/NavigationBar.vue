@@ -1,9 +1,9 @@
 <script setup>
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from '../stores'
-const { logout } = useAuthStore()
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '../stores';
+const { logout } = useAuthStore();
 
-const { isAuthenticated } = storeToRefs(useAuthStore())
+const { isAuthenticated } = storeToRefs(useAuthStore());
 </script>
 
 <template>

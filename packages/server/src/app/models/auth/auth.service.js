@@ -1,22 +1,22 @@
-const InternalServerErrorException = require('../errors/internal-server.exception')
-const NotFoundException = require('../errors/not-found.exception')
-const UnauthorizedException = require('../errors/unauthorized-exception')
-const UserService = require('../user/user.service')
+const InternalServerErrorException = require('../errors/internal-server.exception');
+const NotFoundException = require('../errors/not-found.exception');
+const UnauthorizedException = require('../errors/unauthorized-exception');
+const UserService = require('../user/user.service');
 
 class AuthService {
   /** @return {AuthService} */
   static instance() {
-    if (AuthService.#instance) return AuthService.#instance
+    if (AuthService.#instance) return AuthService.#instance;
 
-    AuthService.#instance = new AuthService()
-    return AuthService.#instance
+    AuthService.#instance = new AuthService();
+    return AuthService.#instance;
   }
 
   /** @type {AuthService} */
-  static #instance
+  static #instance;
 
   async register(userData) {
-    return await UserService.instance().create(userData)
+    return await UserService.instance().create(userData);
   }
 
   /**
@@ -24,23 +24,23 @@ class AuthService {
    * @returns {Promise<UserEntity>}
    */
   async login(userData) {
-    let user
+    let user;
 
     try {
-      user = await UserService.instance().getByUsername(userData.username)
+      user = await UserService.instance().getByUsername(userData.username);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new UnauthorizedException(
           'De combinatie van gebruikersnaam en wachtwoord is onjuist.'
-        )
+        );
       }
-      throw new InternalServerErrorException(error.message)
+      throw new InternalServerErrorException(error.message);
     }
     if (!(await user.validatePassword(userData.password))) {
-      throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.')
+      throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.');
     }
-    return user
+    return user;
   }
 }
 
-module.exports = AuthService
+module.exports = AuthService;

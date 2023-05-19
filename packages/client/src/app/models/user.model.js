@@ -1,19 +1,19 @@
 export class User {
   /** @type {number} */
-  id
+  id;
 
   /** @type {string} */
-  username
+  username;
 
   /** @type {string} */
-  email
+  email;
 
   /** @type {string} */
-  password
+  password;
 
   /** @type {string} */
-  profileImagePath
+  profileImagePath;
 
   /** @type {boolean} */
-  isAdmin
+  isAdmin;
 }
