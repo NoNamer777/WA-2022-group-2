@@ -1,21 +1,6 @@
 import { UserEntity } from './user.entity.js';
 
 class UserRepository {
-  /** @return {UserRepository} */
-  static instance() {
-    if (UserRepository.#instance) return UserRepository.#instance;
-
-    UserRepository.#instance = new UserRepository();
-    return UserRepository.#instance;
-  }
-
-  /** @type {UserRepository} */
-  static #instance;
-
-  constructor() {
-    initializeUserEntity();
-  }
-
   /** @return {Promise<UserEntity[]>} */
   async findAll() {
     return await UserEntity.findAll();
@@ -54,3 +39,4 @@ class UserRepository {
   }
 }
 
+export const userRepository = new UserRepository();

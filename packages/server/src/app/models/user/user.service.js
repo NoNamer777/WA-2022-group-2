@@ -1,6 +1,6 @@
-const UserRepository = require('./user.repository');
 import { BadRequestException } from '../errors/bad-request.exception.js';
 import { NotFoundException } from '../errors/not-found.exception.js';
+import { userRepository } from './user.repository.js';
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 export class UserService {
@@ -17,7 +17,7 @@ export class UserService {
 
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
-    return await UserRepository.instance().findAll();
+    return await userRepository.findAll();
   }
 
   /**
@@ -26,7 +26,7 @@ export class UserService {
    * @return {Promise<UserEntity>}
    */
   async getById(userId, throwsError = true) {
-    const userById = await UserRepository.instance().findOneBy({ id: userId });
+    const userById = await userRepository.findOneBy({ id: userId });
 
     if (!userById && throwsError) {
       throw new NotFoundException(`Er is geen gebruiker gevonden met het ID: '${userId}'.`);
@@ -40,7 +40,7 @@ export class UserService {
    * @return {Promise<UserEntity>}
    */
   async getByUsername(username, throwsError = true) {
-    const userByUsername = await UserRepository.instance().findOneBy({ username: username });
+    const userByUsername = await userRepository.findOneBy({ username: username });
 
     if (!userByUsername && throwsError) {
       throw new NotFoundException(
@@ -67,7 +67,7 @@ export class UserService {
         `Het wijzigen van gegevens voor gebruiker met ID: '${userId}' was niet succesvol. De gebruikersnaam '${userData.username}' is niet beschikbaar.`
       );
     }
-    await UserRepository.instance().update(userData);
+    await userRepository.update(userData);
     return await this.getById(userId);
   }
 
@@ -81,7 +81,7 @@ export class UserService {
         `De gebruikersnaam '${userData.username}' is niet beschikbaar.`
       );
     }
-    return await UserRepository.instance().create(userData);
+    return await userRepository.create(userData);
   }
 
   /**
@@ -94,6 +94,6 @@ export class UserService {
         `Het verwijderen van User met ID: '${userId}' is mislukt omdat het niet bestaat.`
       );
     }
-    await UserRepository.instance().deleteById(userId);
+    await userRepository.deleteById(userId);
   }
 }
