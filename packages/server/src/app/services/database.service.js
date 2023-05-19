@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const { Sequelize } = require('sequelize');
 const util = require('util');
 const ConfigService = require('./config.service');
@@ -42,7 +41,7 @@ class DatabaseService {
     /** @type {(path: string) => Promise<string>} */
     const readFile$ = util.promisify(fs.readFile);
     const databaseConfigFile = await readFile$(
-      path.join(__dirname, ConfigService.instance().config.server.databaseConfigPath)
+      ConfigService.instance().config.server.databaseConfigPath
     );
 
     return JSON.parse(databaseConfigFile)[
