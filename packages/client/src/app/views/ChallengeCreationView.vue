@@ -10,14 +10,14 @@
           :incomplete-message="false"
         >
           <CustomFormKit
-            v-model:modelValue="challenge"
+            v-model:value="challenge"
             label="Wat wil je doen?"
             name="text"
             placeholder="Fruit naar school in plaats van voorverpakte snacks!"
             validation="required|length:5,80"
           />
           <CustomFormKit
-            v-model:modelValue="challenge"
+            v-model:value="challenge"
             type="date"
             label="Startdatum"
             name="startDate"
@@ -27,7 +27,7 @@
             }"
           />
           <CustomFormKit
-            v-model:modelValue="challenge"
+            v-model:value="challenge"
             type="select"
             label="Selecteer het aantal dagen"
             placeholder="5"
@@ -36,12 +36,17 @@
             validation="required"
           />
           <CustomFormKit
-            v-model:modelValue="challenge"
+            v-model:value="challenge"
             type="select"
+            multiple
             label="Selecteer gezinsleden"
             placeholder="Selecteer gezinsleden"
             name="members"
-            :options="['Ahmed', 'Oscar', 'Jennifer']"
+            :options="[
+              { label: 'Jennifer', value: 1 },
+              { label: 'Ahmed', value: 4 },
+              { label: 'Oscar', value: 3 }
+            ]"
             validation="required"
           />
           <CustomFormKit type="submit" label="Maak aan" input-class="form-btn-primary" />
