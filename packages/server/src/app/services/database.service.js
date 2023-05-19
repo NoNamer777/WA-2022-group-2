@@ -42,7 +42,7 @@ class DatabaseService {
     /** @type {(path: string) => Promise<string>} */
     const readFile$ = util.promisify(fs.readFile);
     const databaseConfigFile = await readFile$(
-      path.join(__dirname, ConfigService.instance().config.server.databaseConfigPath)
+      ConfigService.instance().config.server.databaseConfigPath
     );
 
     return JSON.parse(databaseConfigFile)[
