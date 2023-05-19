@@ -33,4 +33,4 @@ module.exports = {
   setupFilesAfterEnv: [],
   testMatch: ['<rootDir>/src/app/**/*.test.js'],
   testPathIgnorePatterns: ['/node_modules/', '/client/']
-}
+};

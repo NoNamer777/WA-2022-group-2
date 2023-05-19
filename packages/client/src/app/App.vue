@@ -1,10 +1,10 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import { NavigationBar } from './components'
-import { useAuthStore } from './stores'
-import { storeToRefs } from 'pinia'
+import { RouterView } from 'vue-router';
+import { NavigationBar } from './components';
+import { useAuthStore } from './stores';
+import { storeToRefs } from 'pinia';
 
-const { loading } = storeToRefs(useAuthStore())
+const { loading } = storeToRefs(useAuthStore());
 </script>
 
 <template>

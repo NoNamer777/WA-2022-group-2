@@ -1,13 +1,13 @@
 <script setup>
-import { ref } from 'vue'
-import { CustomFormKit } from '../../components'
-import { useAuthStore } from '../../stores'
-const { login } = useAuthStore()
+import { ref } from 'vue';
+import { CustomFormKit } from '../../components';
+import { useAuthStore } from '../../stores';
+const { login } = useAuthStore();
 
 const user = ref({
   username: '',
   password: ''
-})
+});
 </script>
 
 <template>

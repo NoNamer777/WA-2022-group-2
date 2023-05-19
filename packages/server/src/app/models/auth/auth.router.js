@@ -1,11 +1,11 @@
-const express = require('express')
-const limiter = require('express-rate-limit')
-const { matchedData, checkSchema } = require('express-validator')
-const AuthController = require('./auth.controller')
-const confirmPasswordValidator = require('../../middleware/confirm-password.validator')
-const { loginSchema, newUserSchema } = require('../../validation/user.validator')
+const express = require('express');
+const limiter = require('express-rate-limit');
+const { matchedData, checkSchema } = require('express-validator');
+const AuthController = require('./auth.controller');
+const confirmPasswordValidator = require('../../middleware/confirm-password.validator');
+const { loginSchema, newUserSchema } = require('../../validation/user.validator');
 
-const router = express.Router()
+const router = express.Router();
 
 // On the login and register routes, allow maximum 10 requests per 5 minutes
 const authLimiter = limiter({
@@ -13,7 +13,7 @@ const authLimiter = limiter({
   max: 10,
   standardHeaders: true,
   legacyHeaders: false
-})
+});
 
 router.post(
   '/register',
@@ -22,14 +22,14 @@ router.post(
   confirmPasswordValidator,
   async (request, response, next) => {
     try {
-      const createdUser = await AuthController.instance().register(matchedData(request))
+      const createdUser = await AuthController.instance().register(matchedData(request));
 
-      response.status(201).json(createdUser)
+      response.status(201).json(createdUser);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 router.post(
   '/login',
@@ -37,13 +37,13 @@ router.post(
   checkSchema(loginSchema, ['body']),
   async (request, response, next) => {
     try {
-      const token = await AuthController.instance().login(matchedData(request))
+      const token = await AuthController.instance().login(matchedData(request));
 
-      response.header('Authorization', `Bearer ${token}`).send()
+      response.header('Authorization', `Bearer ${token}`).send();
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
-module.exports = router
+module.exports = router;

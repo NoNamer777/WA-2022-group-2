@@ -1,19 +1,19 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 /** Token expiration time in ms. (8 hours currently). */
-const TOKEN_VALID_DURATION = 8 * 60 * 60 * 1_000
+const TOKEN_VALID_DURATION = 8 * 60 * 60 * 1_000;
 
 class JwtService {
   /** @return {JwtService} */
   static instance() {
-    if (JwtService.#instance) return JwtService.#instance
+    if (JwtService.#instance) return JwtService.#instance;
 
-    JwtService.#instance = new JwtService()
-    return this.#instance
+    JwtService.#instance = new JwtService();
+    return this.#instance;
   }
 
   /** @type {JwtService} */
-  static #instance
+  static #instance;
 
   /**
    * @param payload {UserEntity}
@@ -23,7 +23,7 @@ class JwtService {
     return jwt.sign(payload, process.env.VITE_JWT_SECRET, {
       subject: `${payload.id}`,
       expiresIn: `${TOKEN_VALID_DURATION}ms`
-    })
+    });
   }
 
   /**
@@ -31,8 +31,8 @@ class JwtService {
    * @returns
    */
   decodeToken(token) {
-    return jwt.verify(token, process.env.VITE_JWT_SECRET)
+    return jwt.verify(token, process.env.VITE_JWT_SECRET);
   }
 }
 
-module.exports = JwtService
+module.exports = JwtService;

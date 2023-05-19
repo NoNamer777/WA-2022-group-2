@@ -1,10 +1,10 @@
-const cors = require('cors')
+const cors = require('cors');
 
-let allowedOrigin = ['http://localhost:5173', 'http://127.0.0.1:5173']
+let allowedOrigin = ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
 // TODO: Update origins for production
 if (process.env.NODE_ENV === 'production') {
-  allowedOrigin = ''
+  allowedOrigin = '';
 }
 
 const corsOptions = {
@@ -12,8 +12,8 @@ const corsOptions = {
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Content-Type', 'Authorization']
-}
+};
 
-const corsMiddleware = cors(corsOptions)
+const corsMiddleware = cors(corsOptions);
 
-module.exports = corsMiddleware
+module.exports = corsMiddleware;

@@ -1,16 +1,16 @@
 class HttpException extends Error {
-  timestamp
-  status
-  error
-  message
+  timestamp;
+  status;
+  error;
+  message;
 
   constructor(status, error, message) {
-    super()
-    this.timestamp = new Date()
-    this.status = status
-    this.error = error
-    this.message = message
+    super();
+    this.timestamp = new Date();
+    this.status = status;
+    this.error = error;
+    this.message = message;
   }
 }
 
-module.exports = HttpException
+module.exports = HttpException;

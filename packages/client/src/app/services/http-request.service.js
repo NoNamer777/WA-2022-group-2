@@ -1,27 +1,27 @@
-import { notify } from '@kyvg/vue3-notification'
-import axios from 'axios'
+import { notify } from '@kyvg/vue3-notification';
+import axios from 'axios';
 
 export class HttpRequestService {
   /** @return {HttpRequestService} */
   static instance() {
-    if (HttpRequestService.#instance) return HttpRequestService.#instance
+    if (HttpRequestService.#instance) return HttpRequestService.#instance;
 
-    HttpRequestService.#instance = new HttpRequestService()
-    return HttpRequestService.#instance
+    HttpRequestService.#instance = new HttpRequestService();
+    return HttpRequestService.#instance;
   }
 
   /** @type {HttpRequestService} */
-  static #instance
+  static #instance;
 
   /** @type {import('axios').AxiosInstance} */
-  #axiosInstance
+  #axiosInstance;
 
   constructor() {
     this.#axiosInstance = axios.create({
       baseURL: import.meta.env.VITE_SERVER_BASE_URL ?? 'http://localhost:8080'
-    })
+    });
 
-    this.#configureInterceptor()
+    this.#configureInterceptor();
   }
 
   /**
@@ -30,7 +30,7 @@ export class HttpRequestService {
    * @return {Promise<T>}
    */
   async getRequest(path) {
-    return await this.#axiosInstance.get(path)
+    return await this.#axiosInstance.get(path);
   }
 
   /**
@@ -40,7 +40,7 @@ export class HttpRequestService {
    * @return {Promise<T>}
    */
   async postRequest(path, data) {
-    return await this.#axiosInstance.post(path, data)
+    return await this.#axiosInstance.post(path, data);
   }
 
   /**
@@ -50,7 +50,7 @@ export class HttpRequestService {
    * @return {Promise<T>}
    */
   async putRequest(path, data) {
-    return await this.#axiosInstance.put(path, data)
+    return await this.#axiosInstance.put(path, data);
   }
 
   /**
@@ -58,7 +58,7 @@ export class HttpRequestService {
    * @return {Promise<void>}
    */
   async deleteRequest(path) {
-    return await this.#axiosInstance.delete(path)
+    return await this.#axiosInstance.delete(path);
   }
 
   /** @return {void} */
@@ -66,14 +66,14 @@ export class HttpRequestService {
     this.#axiosInstance.interceptors.request.use(
       (request) => this.#addAuthHeader(request),
       (error) => console.error(error)
-    )
+    );
 
-    this.#axiosInstance.interceptors.response.use((response) => this.#processAuthHeader(response))
+    this.#axiosInstance.interceptors.response.use((response) => this.#processAuthHeader(response));
 
     this.#axiosInstance.interceptors.response.use(
       (response) => (response?.data ? response.data : null),
       (errorResponse) => this.#processHttpErrorResponse(errorResponse)
-    )
+    );
   }
 
   /**
@@ -81,12 +81,12 @@ export class HttpRequestService {
    * @return {import('axios').InternalAxiosRequestConfig}
    */
   #addAuthHeader(request) {
-    const token = localStorage.getItem('jwt-token')
+    const token = localStorage.getItem('jwt-token');
 
-    if (!token) return request
+    if (!token) return request;
 
-    request.headers.setAuthorization('Bearer ' + token)
-    return request
+    request.headers.setAuthorization('Bearer ' + token);
+    return request;
   }
 
   /**
@@ -94,10 +94,10 @@ export class HttpRequestService {
    * @return {import('axios').AxiosResponse}
    */
   #processAuthHeader(response) {
-    if (!response.headers.hasAuthorization()) return response
+    if (!response.headers.hasAuthorization()) return response;
 
-    const token = response.headers.getAuthorization()
-    localStorage.setItem('jwt-token', token.replace('Bearer ', ''))
+    const token = response.headers.getAuthorization();
+    localStorage.setItem('jwt-token', token.replace('Bearer ', ''));
   }
 
   #processHttpErrorResponse(errorResponse) {
@@ -106,9 +106,9 @@ export class HttpRequestService {
           error: errorResponse.code,
           message: errorResponse.message
         }
-      : errorResponse.response.data
+      : errorResponse.response.data;
 
-    notify({ title: error.error, text: error.message, type: 'error' })
-    return Promise.reject(error)
+    notify({ title: error.error, text: error.message, type: 'error' });
+    return Promise.reject(error);
   }
 }

@@ -15,7 +15,7 @@ const loginSchema = {
     },
     escape: true
   }
-}
+};
 
 const newUserSchema = {
   username: {
@@ -50,7 +50,7 @@ const newUserSchema = {
     isEmail: { errorMessage: 'Het formaat van de opgegeven emailaddres is onjuist.' },
     escape: true
   }
-}
+};
 
 const userSchema = {
   ...newUserSchema,
@@ -62,10 +62,10 @@ const userSchema = {
     },
     escape: true
   }
-}
+};
 
 module.exports = {
   newUserSchema,
   loginSchema,
   userSchema
-}
+};

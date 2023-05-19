@@ -31,11 +31,11 @@ export default {
     return {
       deg: Number,
       isDisabled: Boolean
-    }
+    };
   },
   created() {
-    this.deg = 0
-    this.isDisabled = this.getIsDisabled()
+    this.deg = 0;
+    this.isDisabled = this.getIsDisabled();
   },
   props: {
     id: Number,
@@ -48,32 +48,32 @@ export default {
   },
   methods: {
     rotate() {
-      this.deg += 180
+      this.deg += 180;
     },
     getIsDisabled() {
       return this.isOwner
         ? this.dayNumber > this.todayNumber || this.dayNumber < this.todayNumber - 1
-        : true
+        : true;
     }
   },
   watch: {
     checked() {
-      this.rotate()
+      this.rotate();
       /* handle saving of challengeDays by challengeDayId? */
-      console.log(this.id)
+      console.log(this.id);
     }
   },
   computed: {
     getClass() {
       return this.checked
         ? 'position-absolute top-50 text-tertiary'
-        : 'position-absolute top-50 text-secondary'
+        : 'position-absolute top-50 text-secondary';
     },
     getCheckmarks() {
-      return this.checked ? '✔' : this.dayNumber < this.todayNumber ? '✘' : ' '
+      return this.checked ? '✔' : this.dayNumber < this.todayNumber ? '✘' : ' ';
     }
   }
-}
+};
 </script>
 
 <style scoped>
