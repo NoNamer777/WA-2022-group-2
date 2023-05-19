@@ -31,6 +31,7 @@
 
     <div class="main-story">
       <h3 class="mb-4-subtitle">Uitleg over plastic afval en het probleem!</h3>
+
       <div class="main-text">
         <p class="mb-4 text-markup">
           Op dit moment worden er veel plastic flessen weggegooid, terwijl je ze kunt recyclen voor
@@ -70,7 +71,7 @@
     </p>
 
     <div class="register">
-      <h5 class="mb-2 text-markup">Wil je meer leren? Registreer je dan!</h5>
+      <h5 class="mb-2 text-markup">Wil je meer leren? Registreer je dan en daag jezelf uit!</h5>
       <router-link class="btn btn-primary" :to="{ name: 'register' }">Registreer</router-link>
     </div>
   </main>
@@ -97,11 +98,12 @@
   align-items: flex-start;
   justify-content: left;
   background-color: transparent;
+  height: 30%;
   width: 100%;
-  height: 100%;
 }
 
 .intro-text {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -110,7 +112,9 @@
 
 .slime {
   width: 350px;
-  padding-left: 30%;
+  padding-left: 40%;
+  padding-right: 10%;
+  padding-top: 20px;
   align-items: flex-end;
 }
 
@@ -125,17 +129,20 @@
 }
 
 .thought-box-1 {
+  position: absolute;
   width: 200px;
+  height: 120px;
   border: 4px solid #1d73dd;
   background-color: #1d73dd;
-  left: 75%;
-  bottom: 60%;
+  left: 102%;
+  bottom: 135%;
+  transform: translate(-50%, 50%);
   padding: 20px;
+  margin-top: 0;
   text-align: center;
   font-weight: 900;
   color: #fff;
   font-family: 'BeaufortForLoL-Medium', sans-serif;
-  position: absolute;
   border-radius: 10px;
 }
 
@@ -157,7 +164,7 @@
   justify-content: left;
   background-color: transparent;
   width: 100%;
-  height: 100%;
+  height: 35%;
   padding-top: 5%;
 }
 
@@ -167,10 +174,11 @@
 }
 
 .slime-container-2 {
-  width: 350px;
-  height: 175px;
+  width: 340px;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 9%;
+  margin-left: -10%;
 }
 
 .thought-box-2 {
@@ -179,8 +187,9 @@
   border: 4px solid #1d73dd;
   background-color: #1d73dd;
   padding: 20px;
+  margin-top: 8%;
   top: 20%;
-  left: 8%;
+  left: 55%;
   text-align: center;
   font-weight: 900;
   color: #fff;
@@ -197,13 +206,14 @@
   border-right: 10px solid transparent;
   border-top: 10px solid transparent;
   border-bottom: 10px solid #1d73dd;
-  right: 5px;
+  right: 135px;
   top: -23px;
 }
 
 .main-text {
   display: flex;
   align-items: center;
+  margin-top: -8%;
 }
 
 .text-markup {
@@ -212,9 +222,9 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 1%;
   color: black;
   width: 75%;
+  margin-top: -11.6px;
 }
 </style>
 
