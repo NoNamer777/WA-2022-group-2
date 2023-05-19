@@ -1,17 +1,6 @@
 import { UserService } from './user.service.js';
 
 class UserController {
-  /** @return {UserController} */
-  static instance() {
-    if (UserController.#instance) return UserController.#instance;
-
-    UserController.#instance = new UserController();
-    return UserController.#instance;
-  }
-
-  /** @type {UserController} */
-  static #instance;
-
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
     console.info('UserController - Getting all Users data');
@@ -61,3 +50,4 @@ class UserController {
   }
 }
 
+export const userController = new UserController();

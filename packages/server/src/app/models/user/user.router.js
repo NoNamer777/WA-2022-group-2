@@ -1,14 +1,14 @@
-const UserController = require('./user.controller');
 import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { entityIdValidator } from '../../middleware/entity-id.validator.js';
 import { jwtAuthHeaderValidator } from '../../middleware/jwt-auth-header-validator.js';
 import { newUserSchema, userSchema } from '../../validation/user.validator.js';
+import { userController } from './user.controller.js';
 
 export const userRouter = express.Router();
 
-  const allUsers = await UserController.instance().getAll();
 userRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
+  const allUsers = await userController.getAll();
 
   response.send(allUsers);
 });
@@ -20,7 +20,7 @@ userRouter.get(
   async (request, response, next) => {
     const userId = request.params.userId;
     try {
-      response.send(await UserController.instance().getById(userId));
+      response.send(await userController.getById(userId));
     } catch (error) {
       next(error);
     }
@@ -37,7 +37,7 @@ userRouter.put(
     const userData = matchedData(request);
 
     try {
-      const updatedUser = await UserController.instance().update(userId, userData);
+      const updatedUser = await userController.update(userId, userData);
 
       response.send(updatedUser);
     } catch (error) {
@@ -54,7 +54,7 @@ userRouter.post(
     const userData = matchedData(request);
 
     try {
-      const createdUser = await UserController.instance().create(userData);
+      const createdUser = await userController.create(userData);
 
       response.status(201).send(createdUser);
     } catch (error) {
@@ -71,7 +71,7 @@ userRouter.delete(
     const userId = request.params.userId;
 
     try {
-      await UserController.instance().deleteById(userId);
+      await userController.deleteById(userId);
       next();
     } catch (error) {
       next(error);
