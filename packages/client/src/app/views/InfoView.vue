@@ -173,32 +173,6 @@
   justify-content: flex-start;
 }
 
-.sb9:before {
-  content: '';
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #00bfb6;
-  border-bottom: 10px solid transparent;
-  right: 50%;
-  bottom: -23px;
-}
-
-.sb9:after {
-  content: '';
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #fff;
-  border-bottom: 10px solid transparent;
-  right: 50%;
-  bottom: -18px;
-}
-
 .thought-box-2 {
   position: relative;
   width: 200px;
@@ -216,8 +190,8 @@
 
 .thought-box-2:before {
   content: '';
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   position: absolute;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
