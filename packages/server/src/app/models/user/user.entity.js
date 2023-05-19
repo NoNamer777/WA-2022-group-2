@@ -66,12 +66,15 @@ const UserModelDefinition = {
   }
 };
 
-UserEntity.init(UserModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'user',
-  tableName: 'user',
-  createdAt: false,
-  updatedAt: false
-});
+/** @return {void} */
+function initializeUserEntity() {
+  UserEntity.init(UserModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'user',
+    tableName: 'user',
+    createdAt: false,
+    updatedAt: false
+  });
+}
 
-module.exports = { UserEntity, UserModelDefinition };
+module.exports = { UserEntity, UserModelDefinition, initializeUserEntity };

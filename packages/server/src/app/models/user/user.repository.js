@@ -1,4 +1,4 @@
-const { UserEntity } = require('./user.entity');
+const { UserEntity, initializeUserEntity } = require('./user.entity');
 
 class UserRepository {
   /** @return {UserRepository} */
@@ -11,6 +11,10 @@ class UserRepository {
 
   /** @type {UserRepository} */
   static #instance;
+
+  constructor() {
+    initializeUserEntity();
+  }
 
   /** @return {Promise<UserEntity[]>} */
   async findAll() {
