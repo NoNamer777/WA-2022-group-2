@@ -3,7 +3,7 @@
  * https://jestjs.io/docs/configuration
  * @type {import('jest').Config}
  */
-export const config = {
+export default {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
