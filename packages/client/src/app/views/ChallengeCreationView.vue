@@ -3,40 +3,35 @@
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Daag een gezinslid uit voor een challenge!</h1>
-        <FormKit
-          type="form"
-          @submit="create(challenge)"
-          :actions="false"
-          :incomplete-message="false"
-        >
+        <FormKit type="form" @submit="create" :actions="false" :incomplete-message="false">
           <CustomFormKit
-            v-model:value="challenge"
+            v-model="challenge.name"
             label="Wat wil je doen?"
-            name="text"
+            name="name"
             placeholder="Fruit naar school in plaats van voorverpakte snacks!"
             validation="required|length:5,80"
           />
           <CustomFormKit
-            v-model:value="challenge"
+            v-model="challenge.startDate"
             type="date"
             label="Startdatum"
             name="startDate"
-            :validation="[['required'], ['date'], ['date_after', yesterday]]"
+            :validation="`[['required'], ['date'], ['date_after', yesterday]]`"
             :validation-messages="{
               date_after: 'Startdatum kan niet voor gisteren zijn.'
             }"
           />
           <CustomFormKit
-            v-model:value="challenge"
+            v-model="challenge.amountOfDays"
             type="select"
             label="Selecteer het aantal dagen"
             placeholder="5"
-            name="days"
+            name="amountOfDays"
             :options="[5, 7, 14]"
             validation="required"
           />
           <CustomFormKit
-            v-model:value="challenge"
+            v-model="challenge.members"
             type="select"
             multiple
             label="Selecteer gezinsleden"
@@ -49,7 +44,7 @@
             ]"
             validation="required"
           />
-          <CustomFormKit type="submit" label="Maak aan" input-class="form-btn-primary" />
+          <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>
       </div>
       <!--      <div class="col-xl-6 col-sm-12 d-flex justify-content-center">-->
@@ -61,10 +56,39 @@
 
 <script>
 import CustomFormKit from '../components/form/CustomFormKit.vue'
+import { ref } from 'vue'
+import { useAuthStore } from '../stores'
 
 export default {
   name: 'ChallengeCreationView.vue',
   components: { CustomFormKit },
+  setup() {
+    const authStore = useAuthStore()
+    const user = authStore.user
+
+    const challenge = ref({
+      name: '',
+      startDate: '',
+      amountOfDays: '',
+      members: []
+    })
+    const create = () => {
+      /* add user */
+      challenge.value.members.push(user.id)
+      /* output submit object */
+      console.log(JSON.stringify(challenge.value))
+      /* Make logic for the following tables (in the backend?):
+       * - challenge (group id not supported in this UI), calculate end date
+       * - user challenges with challenge id and user ids (including user's own id), completed false
+       * - challenge days for the amount of days, with user challenge ids, earned false
+       *
+       * Route to active view */
+    }
+    return {
+      challenge,
+      create
+    }
+  },
   data() {
     return {
       yesterday: Date
@@ -74,9 +98,6 @@ export default {
     this.yesterday = this.getDate(2)
   },
   methods: {
-    create(challenge) {
-      console.log(challenge)
-    },
     getDate(days) {
       let date = new Date()
       date.setDate(date.getDate() - days)

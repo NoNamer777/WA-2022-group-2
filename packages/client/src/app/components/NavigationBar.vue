@@ -34,7 +34,7 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
           </li>
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'challenge' }">
-              Uitdaging
+              Challenge
             </router-link>
           </li>
           <li class="nav-item">
