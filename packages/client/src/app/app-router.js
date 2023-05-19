@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from './stores'
-import { ChallengeProgressView, HomeView, LoginView, RegisterView } from './views'
+import { ChallengeCreationView, HomeView, LoginView, RegisterView } from './views'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,7 +16,7 @@ export const router = createRouter({
     {
       path: '/challenge',
       name: 'challenge',
-      component: ChallengeProgressView,
+      component: ChallengeCreationView,
       meta: {
         title: 'Uitdaging',
         requiresAuth: true
