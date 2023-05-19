@@ -1,11 +1,9 @@
-const express = require('express');
-const limiter = require('express-rate-limit');
-const AuthController = require('./auth.controller');
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { checkSchema, matchedData } from 'express-validator';
 import { confirmPasswordValidator } from '../../middleware/confirm-password.validator.js';
 import { loginSchema, newUserSchema } from '../../validation/user.validator.js';
+import { authController } from './auth.controller.js';
 
 export const authRouter = express.Router();
 
@@ -24,7 +22,7 @@ authRouter.post(
   confirmPasswordValidator,
   async (request, response, next) => {
     try {
-      const createdUser = await AuthController.instance().register(matchedData(request));
+      const createdUser = await authController.register(matchedData(request));
 
       response.status(201).json(createdUser);
     } catch (error) {
@@ -39,7 +37,7 @@ authRouter.post(
   checkSchema(loginSchema, ['body']),
   async (request, response, next) => {
     try {
-      const token = await AuthController.instance().login(matchedData(request));
+      const token = await authController.login(matchedData(request));
 
       response.header('Authorization', `Bearer ${token}`).send();
     } catch (error) {

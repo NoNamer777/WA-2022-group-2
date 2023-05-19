@@ -2,17 +2,6 @@ import { JwtService } from '../../services/jwt.service.js';
 import { AuthService } from './auth.service.js';
 
 class AuthController {
-  /** @return {AuthController} */
-  static instance() {
-    if (AuthController.#instance) return AuthController.#instance;
-
-    AuthController.#instance = new AuthController();
-    return AuthController.#instance;
-  }
-
-  /** @type {AuthController} */
-  static #instance;
-
   async register(userData) {
     console.info('AuthController - registering a new User');
     return await AuthService.instance().register(userData);
@@ -30,3 +19,4 @@ class AuthController {
   }
 }
 
+export const authController = new AuthController();
