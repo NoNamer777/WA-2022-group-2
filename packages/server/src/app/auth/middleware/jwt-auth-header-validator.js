@@ -1,5 +1,5 @@
+import { UserService } from '../../user/index.js';
 import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
-import { UserService } from '../models/user/user.service.js';
 import { JwtService } from '../services/jwt.service.js';
 
 export async function jwtAuthHeaderValidator(request, response, next) {

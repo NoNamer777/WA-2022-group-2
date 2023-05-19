@@ -1,5 +1,5 @@
-import { JwtService } from '../../services/jwt.service.js';
-import { AuthService } from './auth.service.js';
+import { AuthService } from './services/auth.service.js';
+import { JwtService } from './services/jwt.service.js';
 
 class AuthController {
   async register(userData) {

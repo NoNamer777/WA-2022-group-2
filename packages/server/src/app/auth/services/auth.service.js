@@ -1,7 +1,6 @@
-import { InternalServerErrorException } from '../errors/internal-server.exception.js';
-import { NotFoundException } from '../errors/not-found.exception.js';
-import { UnauthorizedException } from '../errors/unauthorized-exception.js';
-import { UserService } from '../user/user.service.js';
+import { InternalServerErrorException, NotFoundException } from '../../core/models/index.js';
+import { UserService } from '../../user/index.js';
+import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
 
 export class AuthService {
   /** @return {AuthService} */

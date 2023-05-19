@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { Sequelize } from 'sequelize';
-import { initializeUserEntity } from '../models/user/user.entity.js';
+import { initializeUserEntity } from '../../user/index.js';
 import { ConfigService } from './config.service.js';
 
 export class DatabaseService {

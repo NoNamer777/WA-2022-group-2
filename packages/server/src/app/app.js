@@ -1,12 +1,10 @@
 import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
-import { corsMiddleware } from './middleware/cors-middleware.js';
-import { errorHandler } from './middleware/error.handler.js';
-import { authRouter } from './models/auth/auth.router.js';
-import { userRouter } from './models/user/user.router.js';
-import { ConfigService } from './services/config.service.js';
-import { DatabaseService } from './services/database.service.js';
+import { authRouter } from './auth/index.js';
+import { corsMiddleware, errorHandler } from './core/middleware/index.js';
+import { ConfigService, DatabaseService } from './core/services/index.js';
+import { userRouter } from './user/index.js';
 
 class App {
   /** @type {import('express').core.Express} */

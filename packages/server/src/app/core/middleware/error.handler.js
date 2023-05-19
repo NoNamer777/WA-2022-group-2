@@ -1,4 +1,4 @@
-import { InternalServerErrorException } from '../models/errors/internal-server.exception.js';
+import { InternalServerErrorException } from '../models/index.js';
 
 const defaultError = new InternalServerErrorException();
 

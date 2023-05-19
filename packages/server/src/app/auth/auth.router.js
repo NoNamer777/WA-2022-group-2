@@ -1,9 +1,10 @@
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { checkSchema, matchedData } from 'express-validator';
-import { confirmPasswordValidator } from '../../middleware/confirm-password.validator.js';
-import { loginSchema, newUserSchema } from '../../validation/user.validator.js';
+import { newUserSchema } from '../user/index.js';
 import { authController } from './auth.controller.js';
+import { loginSchema } from './auth.validator.js';
+import { confirmPasswordValidator } from './middleware/confirm-password.validator.js';
 
 export const authRouter = express.Router();
 

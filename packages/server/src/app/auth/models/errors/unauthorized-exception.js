@@ -1,4 +1,4 @@
-import { HttpException } from './http.exception.js';
+import { HttpException } from '../../../core/models/index.js';
 
 export class UnauthorizedException extends HttpException {
   constructor(message) {

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { ConfigService } from './config.service.js';
+import { ConfigService } from '../../core/services/config.service.js';
 
 /** Token expiration time in ms. (8 hours currently). */
 const TOKEN_VALID_DURATION = 8 * 60 * 60 * 1_000;

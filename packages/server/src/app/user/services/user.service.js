@@ -1,6 +1,5 @@
-import { BadRequestException } from '../errors/bad-request.exception.js';
-import { NotFoundException } from '../errors/not-found.exception.js';
-import { userRepository } from './user.repository.js';
+import { BadRequestException, NotFoundException } from '../../core/models/index.js';
+import { userRepository } from '../user.repository.js';
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 export class UserService {

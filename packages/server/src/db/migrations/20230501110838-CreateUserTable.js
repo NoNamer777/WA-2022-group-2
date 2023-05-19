@@ -1,4 +1,4 @@
-const { UserModelDefinition } = require('../../app/models/user/user.entity');
+const { UserModelDefinition } = require('../../app/user/index.js');
 
 /**
  * @param queryInterface {import('sequelize').QueryInterface}

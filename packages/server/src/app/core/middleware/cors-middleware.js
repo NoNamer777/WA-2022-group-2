@@ -1,5 +1,5 @@
 import cors from 'cors';
-import { ConfigService } from '../services/config.service.js';
+import { ConfigService } from '../services/index.js';
 
 export function corsMiddleware() {
   const corsOptions = {

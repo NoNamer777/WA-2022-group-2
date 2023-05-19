@@ -1,10 +1,17 @@
 import bcrypt from 'bcryptjs';
 import { DataTypes, Model } from 'sequelize';
-import { DatabaseService } from '../../services/database.service.js';
+import { DatabaseService } from '../core/services/index.js';
 
 export class UserEntity extends Model {
   async validatePassword(password) {
     return await bcrypt.compare(password, this.password);
+  }
+
+  async setPassword(password) {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    this.setDataValue('password', hashedPassword);
   }
 
   toJSON() {
@@ -58,10 +65,6 @@ export const UserModelDefinition = {
       notEmpty: true,
       len: [3, 124],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
-    },
-    set(password) {
-      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-      this.setDataValue('password', pass);
     }
   }
 };

@@ -1,9 +1,9 @@
 import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
-import { entityIdValidator } from '../../middleware/entity-id.validator.js';
-import { jwtAuthHeaderValidator } from '../../middleware/jwt-auth-header-validator.js';
-import { newUserSchema, userSchema } from '../../validation/user.validator.js';
+import { jwtAuthHeaderValidator } from '../auth/index.js';
+import { entityIdValidator } from '../core/middleware/index.js';
 import { userController } from './user.controller.js';
+import { newUserSchema, userSchema } from './user.validator.js';
 
 export const userRouter = express.Router();
 

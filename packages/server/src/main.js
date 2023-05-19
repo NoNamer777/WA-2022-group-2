@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import { createServer } from 'http';
-import { initializeApp } from './app/app.js';
-import { ConfigService } from './app/services/config.service.js';
+import { ConfigService, initializeApp } from './app/index.js';
 
 (async () => {
   const wastedApp = await initializeApp();
