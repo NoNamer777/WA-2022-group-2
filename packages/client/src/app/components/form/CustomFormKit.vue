@@ -63,4 +63,7 @@ export default {
 .formkit-input {
   width: 100% !important;
 }
+.formkit-input:focus-visible {
+  outline: auto;
+}
 </style>

@@ -21,7 +21,6 @@
             type="date"
             label="Startdatum"
             name="startDate"
-            placeholder="johndoe"
             :validation="[['required'], ['date'], ['date_after', yesterday]]"
             :validation-messages="{
               date_after: 'Startdatum kan niet voor gisteren zijn.'
@@ -31,6 +30,7 @@
             v-model:modelValue="challenge"
             type="select"
             label="Selecteer het aantal dagen"
+            placeholder="5"
             name="days"
             :options="[5, 7, 14]"
             validation="required"
@@ -39,6 +39,7 @@
             v-model:modelValue="challenge"
             type="select"
             label="Selecteer gezinsleden"
+            placeholder="Selecteer gezinsleden"
             name="members"
             :options="['Ahmed', 'Oscar', 'Jennifer']"
             validation="required"
