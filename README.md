@@ -100,3 +100,75 @@ The server and client both can handle a couple of the following environment vari
 
 You also need to set up your own environment variable. To do this you have to copy the template,
 which you can find [here](../../environment/.env.example). Rename the copy to `.env` and fill in the variables
+
+### Docker
+
+For the individual projects, a docker image is available to run the applications via Docker so no other tools should be
+required to be downloaded in order to run the applications.
+
+Find the scripts in the `package.json` to create a Docker image locally of the server. For the configuration of your
+local Docker stack, create an folder where you'll keep your configuration files for the applications and add another
+file to it with the name `compose.yaml`, with the following contents:
+
+```yaml
+server:
+  image: wasted-server
+  container_name: wasted-server
+  env:
+    - SERVER_PORT=8080
+  env_file:
+    - ./.env
+  ports:
+    - '8080:8080/tcp'
+  volumes:
+    - ./config.json:/app/config.json
+    - ./database.json:/app/database.json
+```
+
+This configuration assumes a couple of things:
+
+- The provided environment variable `SERVER_PORT` and the exposed container port need to be the same as the port that
+  the server is configured to run on in the `config.json` file.
+- The `config.json`, `.env`, and the `database.json` files are in the same folder as the `compose.yaml` and the `config.json`
+  should have a `server.databaseConfigPath` attribute set to `./database.json`. This later must be done because of the way
+  how the node process runs inside the Docker container.
+- You have port `8080` available on you local machine.
+- The database container or installation is not included, so you'll need to provide that yourself.
+
+NOTE: keep in mind that Docker handles the `host` attribute for databases differently then "just" making it available
+on your local machine. If you've locally installed a database, then you can use that like normal. If you have provided
+your database instance via Docker however, you'll need to provide the name of the Docker service that you've declared
+to hold your database container/instance for the `host` of the database, instead of `localhost`. Have a MySQL database
+instance provided like below:
+
+```yaml
+db:
+  image: mysql
+  container_name: mysql_database
+```
+
+The value you'll need to provide to the `host` attribute of the database configuration for the server would be: `db`.
+
+NOTE: Not every database is instantly ready at the get go, the moment the database container is created, so it is
+heavenly advised to delay the creation of the server container (if you have a Docker application stack which includes
+this server and a database instance) after your database container is fully ready to receive connections.
+You can do this for example with health checks like so:
+
+```yaml
+server:
+  image: wasted-server
+  ...
+  depends_on:
+    db:
+      condition: service_healthy
+db:
+  image: mysql
+  ...
+  healthcheck:
+    test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+    timeout: 20s
+    retries: 10
+```
+
+This will make sure that the creation of the server application container is delayed until the mysql database is ready
+to receive connections resulting in avoidable manual restarts of the server on creation of the application stack.
