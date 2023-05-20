@@ -10,6 +10,7 @@
             name="name"
             placeholder="Fruit naar school in plaats van voorverpakte snacks!"
             validation="required|length:5,80"
+            :dataList="['Challenge 1', 'Challenge 2', 'Challenge 3']"
           />
           <CustomFormKit
             v-model="challenge.startDate"
@@ -27,13 +28,13 @@
             label="Selecteer het aantal dagen"
             placeholder="5"
             name="amountOfDays"
-            :options="[5, 7, 14]"
+            :options="[5, 7, 10]"
             validation="required"
           />
           <CustomFormKit
             v-model="challenge.members"
             type="select"
-            multiple
+            :is-multiple="true"
             label="Selecteer gezinsleden"
             placeholder="Selecteer gezinsleden"
             name="members"
@@ -47,65 +48,63 @@
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>
       </div>
-      <!--      <div class="col-xl-6 col-sm-12 d-flex justify-content-center">-->
-      <!--        <img class="float-end w-100" src="/assets/images/mascot/happy_bin_login.png" alt="mascot" />-->
-      <!--      </div>-->
+      <!-- Add image -->
     </section>
   </main>
 </template>
 
 <script>
-import CustomFormKit from '../components/form/CustomFormKit.vue'
-import { ref } from 'vue'
-import { useAuthStore } from '../stores'
-import { useRouter } from 'vue-router'
+import CustomFormKit from '../components/form/CustomFormKit.vue';
+import { ref } from 'vue';
+import { useAuthStore } from '../stores';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'ChallengeCreationView.vue',
   components: { CustomFormKit },
   setup() {
-    const authStore = useAuthStore()
-    const user = authStore.user
-    const router = useRouter()
+    const authStore = useAuthStore();
+    const user = authStore.user;
+    const router = useRouter();
 
     const challenge = ref({
       name: '',
       startDate: '',
       amountOfDays: '',
       members: []
-    })
+    });
     const create = () => {
       /* add user */
-      challenge.value.members.push(user.id)
+      challenge.value.members.push(user.id);
       /* output submit object */
-      console.log(JSON.stringify(challenge.value))
-      /* Make logic for the following tables (in the backend?):
-       * - challenge (group id not supported in this UI), calculate end date
+      console.log(JSON.stringify(challenge.value));
+      /* Make logic for the following tables (in the backend):
+       * - challenge (group id not supported yet in this UI), calculate end date
        * - user challenges with challenge id and user ids (including user's own id), completed false
        * - challenge days for the amount of days, with user challenge ids, earned false
        *
-       * Route to active view */
-      router.push('/challengeTest')
-    }
+       * Route to active view, routing to be done */
+      router.push('/challengeTest');
+    };
     return {
       challenge,
       create
-    }
+    };
   },
   data() {
     return {
       yesterday: Date
-    }
+    };
   },
   created() {
-    this.yesterday = this.getDate(2)
+    this.yesterday = this.getDate(2);
   },
   methods: {
     getDate(days) {
-      let date = new Date()
-      date.setDate(date.getDate() - days)
-      return date
+      let date = new Date();
+      date.setDate(date.getDate() - days);
+      return date;
     }
   }
-}
+};
 </script>
