@@ -16,7 +16,8 @@
     "server:start": "node packages/server/src/main.js",
     "server:test": "jest --config packages/server/jest.config.js --ci",
     "server:test:dev": "jest --config packages/server/jest.config.js --watchAll",
-    "server:run-migrations": "sequelize db:migrate"
+    "server:run-migrations": "sequelize db:migrate",
+    "server:build-docker-image": "docker build -f packages/server/Dockerfile -t wasted-server ."
   },
   "workspaces": [
     "packages/*"
