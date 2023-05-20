@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createServer } from 'http';
-import { ConfigService, initializeApp } from './app/index.js';
+import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
 
 (async () => {
   const wastedApp = await initializeApp();
@@ -16,7 +16,9 @@ import { ConfigService, initializeApp } from './app/index.js';
   const server = createServer(wastedApp.app);
 
   server.listen(port, host);
+
   server.on('listening', () => console.info(`Server is Listening on http://${host}:${port}/`));
+
   server.on('error', (error) => {
     if (error.syscall !== 'listen') throw error;
 
@@ -35,4 +37,25 @@ import { ConfigService, initializeApp } from './app/index.js';
         throw error;
     }
   });
+
+  process.on('SIGINT', async () => {
+    await shutdown();
+  });
+
+  process.on('SIGTERM', async () => {
+    await shutdown();
+  });
+
+  async function shutdown() {
+    console.info('Shutting down server...');
+    await DatabaseService.instance().sequelizeInstance.close();
+
+    server.close((error) => {
+      if (error) {
+        console.error(error);
+        process.exit(1);
+      }
+      process.exit(0);
+    });
+  }
 })();
