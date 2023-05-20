@@ -20,4 +20,8 @@ WORKDIR /app
 
 COPY --from=builder /server-app/dist/server .
 
+COPY package*.json .
+
+RUN npm ci --omit dev
+
 CMD ["node", "main"]
