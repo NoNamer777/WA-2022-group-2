@@ -25,6 +25,7 @@ module.exports = {
     }
   },
   displayName: 'Wasted: Server',
+  passWithNoTests: true,
   reporters: undefined,
   randomize: true,
   roots: ['<rootDir>'],
@@ -32,4 +33,4 @@ module.exports = {
   setupFilesAfterEnv: [],
   testMatch: ['<rootDir>/src/app/**/*.test.js'],
   testPathIgnorePatterns: ['/node_modules/', '/client/']
-}
+};

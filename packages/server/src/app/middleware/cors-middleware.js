@@ -1,19 +1,15 @@
-const cors = require('cors')
+const cors = require('cors');
+const ConfigService = require('../services/config.service');
 
-let allowedOrigin = ['http://localhost:5173', 'http://127.0.0.1:5173']
+function corsMiddleWare() {
+  const corsOptions = {
+    origin: ConfigService.instance().config.server.allowedOrigins,
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Type', 'Authorization']
+  };
 
-// @todo update origins for production
-if (process.env.NODE_ENV === 'production') {
-  allowedOrigin = ''
+  return cors(corsOptions);
 }
 
-const corsOptions = {
-  origin: allowedOrigin,
-  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
-}
-
-const corsMiddleware = cors(corsOptions)
-
-module.exports = corsMiddleware
+module.exports = corsMiddleWare;

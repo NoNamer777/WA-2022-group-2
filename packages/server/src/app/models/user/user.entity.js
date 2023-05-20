@@ -1,8 +1,21 @@
-const bcrypt = require('bcryptjs')
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const bcrypt = require('bcryptjs');
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
-class UserEntity extends Model {}
+class UserEntity extends Model {
+  async validatePassword(password) {
+    return await bcrypt.compare(password, this.password);
+  }
+
+  toJSON() {
+    const value = super.toJSON();
+
+    delete value.password;
+    delete value.email;
+
+    return value;
+  }
+}
 
 /** @type {import('sequelize').ModelAttributes<UserEntity>} */
 const UserModelDefinition = {
@@ -47,31 +60,21 @@ const UserModelDefinition = {
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
     },
     set(password) {
-      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-      this.setDataValue('password', pass)
+      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+      this.setDataValue('password', pass);
     }
   }
+};
+
+/** @return {void} */
+function initializeUserEntity() {
+  UserEntity.init(UserModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'user',
+    tableName: 'user',
+    createdAt: false,
+    updatedAt: false
+  });
 }
 
-UserEntity.init(UserModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'user',
-  tableName: 'user',
-  createdAt: false,
-  updatedAt: false
-})
-
-UserEntity.prototype.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password)
-}
-
-UserEntity.prototype.toJSON = function () {
-  const values = Object.assign({}, this.get())
-
-  delete values.password
-  delete values.email
-
-  return values
-}
-
-module.exports = { UserEntity, UserModelDefinition }
+module.exports = { UserEntity, UserModelDefinition, initializeUserEntity };

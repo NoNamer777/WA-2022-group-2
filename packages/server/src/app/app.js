@@ -1,27 +1,55 @@
-const dotenv = require('dotenv')
-const express = require('express')
-const usersRouter = require('./models/user/user.router')
-const authRouter = require('./models/auth/auth.router')
-const ErrorHandlerService = require('./services/error-handler.service')
-const corsMiddleware = require('./middleware/cors-middleware')
-const cookieParser = require('cookie-parser')
-const path = require('path')
-const app = express()
+const dotenv = require('dotenv');
+const express = require('express');
+const rateLimit = require('express-rate-limit');
+const path = require('path');
+const corsMiddleware = require('./middleware/cors-middleware');
+const authRouter = require('./models/auth/auth.router');
+const usersRouter = require('./models/user/user.router');
+const ConfigService = require('./services/config.service');
+const DatabaseService = require('./services/database.service');
+const ErrorHandlerService = require('./services/error-handler.service');
 
-// Load environment variables from a different directory
-const envPath = path.join(__dirname, 'config', '../../../.env')
-dotenv.config({ path: envPath })
+class App {
+  /** @type {import('express').Express} */
+  app = express();
 
-app.disable('x-powered-by')
+  /**
+   * On all routes, allow maximum 50 requests per minute
+   * @type {import('express-rate-limit').RateLimitRequestHandler}
+   */
+  #limiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 50,
+    standardHeaders: true,
+    legacyHeaders: false
+  });
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(corsMiddleware)
-app.use(cookieParser())
+  /** @return {Promise<void>} */
+  async initialize() {
+    dotenv.config({
+      path: process.env.VITE_ENV_PATH || path.join(__dirname, '../../../../environment/.env')
+    });
 
-app.use('/api/user', usersRouter)
-app.use('/api/auth', authRouter)
+    this.app.disable('x-powered-by');
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(this.#limiter);
 
-app.use(new ErrorHandlerService().handleError)
+    await ConfigService.instance().initialize();
 
-module.exports = app
+    this.app.use(new ErrorHandlerService().handleError);
+    this.app.use(corsMiddleware());
+
+    await DatabaseService.instance().initialize();
+
+    this.app.use('/api/user', usersRouter);
+    this.app.use('/auth', authRouter);
+  }
+}
+
+module.exports = async () => {
+  const app = new App();
+  await app.initialize();
+
+  return app;
+};

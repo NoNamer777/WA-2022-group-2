@@ -1,24 +1,24 @@
-const UserRepository = require('./user.repository')
-const NotFoundException = require('../errors/not-found.exception')
-const BadRequestException = require('../errors/bad-request.exception')
+const UserRepository = require('./user.repository');
+const NotFoundException = require('../errors/not-found.exception');
+const BadRequestException = require('../errors/bad-request.exception');
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 
 class UserService {
   /** @return {UserService} */
   static instance() {
-    if (UserService.#instance) return UserService.#instance
+    if (UserService.#instance) return UserService.#instance;
 
-    UserService.#instance = new UserService()
-    return UserService.#instance
+    UserService.#instance = new UserService();
+    return UserService.#instance;
   }
 
   /** @type {UserService} */
-  static #instance
+  static #instance;
 
   /** @return {Promise<UserEntity[]>} */
   async getAll() {
-    return await UserRepository.instance().findAll()
+    return await UserRepository.instance().findAll();
   }
 
   /**
@@ -27,12 +27,12 @@ class UserService {
    * @return {Promise<UserEntity>}
    */
   async getById(userId, throwsError = true) {
-    const userById = await UserRepository.instance().findOneBy({ id: userId })
+    const userById = await UserRepository.instance().findOneBy({ id: userId });
 
     if (!userById && throwsError) {
-      throw new NotFoundException(`No User was found by ID: '${userId}'.`)
+      throw new NotFoundException(`Er is geen gebruiker gevonden met het ID: '${userId}'.`);
     }
-    return userById
+    return userById;
   }
 
   /**
@@ -41,12 +41,14 @@ class UserService {
    * @return {Promise<UserEntity>}
    */
   async getByUsername(username, throwsError = true) {
-    const userByUsername = await UserRepository.instance().findOneBy({ username: username })
+    const userByUsername = await UserRepository.instance().findOneBy({ username: username });
 
     if (!userByUsername && throwsError) {
-      throw new NotFoundException(`No User was found by the username: '${username}'.`)
+      throw new NotFoundException(
+        `Er is geen gebruiker gevonden met de gebruikersnaam: '${username}'.`
+      );
     }
-    return userByUsername
+    return userByUsername;
   }
 
   /**
@@ -54,23 +56,20 @@ class UserService {
    * @return {Promise<UserEntity>}
    */
   async update(userData) {
-    const userId = userData.id
+    const userId = userData.id;
 
-    if (!userId) {
-      throw new BadRequestException('Could not update User. ID is not provided.')
-    }
     if (!(await this.getById(userId, false))) {
       throw new NotFoundException(
-        `Could not update User with ID: '${userId}' because it does not exist.`
-      )
+        `Het wijzigen van gegevens voor gebruiker met ID: '${userId}' was niet succesvol omdat de gebruiker niet bestaat.`
+      );
     }
     if (await this.getByUsername(userData.username, false)) {
       throw new BadRequestException(
-        `Could not update User with ID: '${userId}'. Username '${userData.username}' is already in use.`
-      )
+        `Het wijzigen van gegevens voor gebruiker met ID: '${userId}' was niet succesvol. De gebruikersnaam '${userData.username}' is niet beschikbaar.`
+      );
     }
-    await UserRepository.instance().update(userData)
-    return await this.getById(userId)
+    await UserRepository.instance().update(userData);
+    return await this.getById(userId);
   }
 
   /**
@@ -79,9 +78,11 @@ class UserService {
    */
   async create(userData) {
     if (await this.getByUsername(userData.username, false)) {
-      throw new BadRequestException(`Gebruikersnaam '${userData.username}' is al in gebruik 😓`)
+      throw new BadRequestException(
+        `De gebruikersnaam '${userData.username}' is niet beschikbaar.`
+      );
     }
-    return await UserRepository.instance().create(userData)
+    return await UserRepository.instance().create(userData);
   }
 
   /**
@@ -91,11 +92,11 @@ class UserService {
   async deleteById(userId) {
     if (!(await this.getById(userId, false))) {
       throw new NotFoundException(
-        `Could not delete User by ID: '${userId}' because it does not exist.`
-      )
+        `Het verwijderen van User met ID: '${userId}' is mislukt omdat het niet bestaat.`
+      );
     }
-    await UserRepository.instance().deleteById(userId)
+    await UserRepository.instance().deleteById(userId);
   }
 }
 
-module.exports = UserService
+module.exports = UserService;
