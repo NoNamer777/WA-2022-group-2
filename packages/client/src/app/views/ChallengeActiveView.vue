@@ -28,7 +28,7 @@ import ChallengeProgress from '../components/challenge/progress/ChallengeProgres
 import data from '../components/challenge/progress/data.json';
 import { useAuthStore } from '../stores';
 
-/* send in user and challenge */
+/* TODO: send in user and challenge, move logic to backend */
 
 export default {
   name: 'ChallengeProgressView.vue',

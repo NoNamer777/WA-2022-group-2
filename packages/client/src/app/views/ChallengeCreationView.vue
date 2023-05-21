@@ -4,6 +4,7 @@
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Daag een gezinslid uit voor een challenge!</h1>
         <FormKit type="form" @submit="create" :actions="false" :incomplete-message="false">
+          <!--  TODO: a new table in database with challenge suggestions only, fetch e.g. 5 random suggestions -->
           <CustomFormKit
             v-model="challenge.name"
             label="Wat wil je doen?"
@@ -31,6 +32,7 @@
             :options="[5, 7, 10]"
             validation="required"
           />
+          <!--  TODO: fetch users from backend -->
           <CustomFormKit
             v-model="challenge.members"
             type="select"
@@ -78,6 +80,7 @@ export default {
       challenge.value.members.push(user.id);
       /* output submit object */
       console.log(JSON.stringify(challenge.value));
+      /* TODO: */
       /* Make logic for the following tables (in the backend):
        * - challenge (group id not supported yet in this UI), calculate end date
        * - user challenges with challenge id and user ids (including user's own id), completed false

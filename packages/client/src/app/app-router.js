@@ -29,6 +29,7 @@ export const router = createRouter({
       }
     },
     {
+      /* TODO, will be replaced with a final view such as /challenge/:id */
       path: '/challengeTest',
       name: 'actieve challenge',
       component: ChallengeActiveView,
