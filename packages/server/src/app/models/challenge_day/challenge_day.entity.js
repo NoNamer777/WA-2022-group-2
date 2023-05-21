@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const DatabaseService = require('../../services/database.service');
+import { DatabaseService } from '../../core/services/index.js';
 
 class ChallengeDayEntity extends Model {}
 

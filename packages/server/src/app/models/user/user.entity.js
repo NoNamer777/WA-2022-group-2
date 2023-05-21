@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { Model } from 'sequelize';
+import { DatabaseService } from '../../core/services/index.js';
+const { DataTypes, Model } = require('sequelize');
 
 export class UserEntity extends Model {
   async validatePassword(password) {
