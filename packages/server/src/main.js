@@ -1,53 +1,61 @@
 #!/usr/bin/env node
 
-const app = require('./app/app')
-const http = require('http')
+import { createServer } from 'http';
+import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
 
-// Get port and hostname from environment and store in Express
-const host = process.env.SERVER_HOST || 'localhost'
-const port = normalizePort(process.env.SERVER_PORT || '8080')
-app.set('port', port)
-app.set('hostname', host)
+(async () => {
+  const wastedApp = await initializeApp();
 
-const server = http.createServer(app)
+  // Get port and hostname from the config service and store in Express
+  const host = ConfigService.instance().config.server.host;
+  const port = ConfigService.instance().config.server.port;
 
-server.listen(port, host)
-server.on('error', onError)
-server.on('listening', onListening)
+  wastedApp.app.set('port', port);
+  wastedApp.app.set('hostname', host);
 
-/**
- * Normalize a port into a number, string, or false.
- */
-function normalizePort(val) {
-  const port = parseInt(val, 10)
+  const server = createServer(wastedApp.app);
 
-  // named pipe
-  if (isNaN(port)) return val
+  server.listen(port, host);
 
-  // port number
-  if (port >= 0) return port
-  return false
-}
+  server.on('listening', () => console.info(`Server is Listening on http://${host}:${port}/`));
 
-function onError(error) {
-  if (error.syscall !== 'listen') throw error
+  server.on('error', (error) => {
+    if (error.syscall !== 'listen') throw error;
 
-  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
+    const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
-      process.exit(1)
-      break
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
-      process.exit(1)
-      break
-    default:
-      throw error
+    switch (error.code) {
+      case 'EACCES':
+        console.error(bind + ' requires elevated privileges');
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        console.error(bind + ' is already in use');
+        process.exit(1);
+        break;
+      default:
+        throw error;
+    }
+  });
+
+  process.on('SIGINT', async () => {
+    await shutdown();
+  });
+
+  process.on('SIGTERM', async () => {
+    await shutdown();
+  });
+
+  async function shutdown() {
+    console.info('Shutting down server...');
+    await DatabaseService.instance().sequelizeInstance.close();
+
+    server.close((error) => {
+      if (error) {
+        console.error(error);
+        process.exit(1);
+      }
+      process.exit(0);
+    });
   }
-}
-
-function onListening() {
-  console.info(`Server is Listening on http://${host}:${port}/`)
-}
+})();

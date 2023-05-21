@@ -1,27 +1,54 @@
-const dotenv = require('dotenv')
-const express = require('express')
-const usersRouter = require('./models/user/user.router')
-const authRouter = require('./models/auth/auth.router')
-const ErrorHandlerService = require('./services/error-handler.service')
-const corsMiddleware = require('./middleware/cors-middleware')
-const cookieParser = require('cookie-parser')
-const path = require('path')
-const app = express()
+import { config } from 'dotenv';
+import express from 'express';
+import { rateLimit } from 'express-rate-limit';
+import { authRouter } from './auth/index.js';
+import { corsMiddleware, errorHandler } from './core/middleware/index.js';
+import { ConfigService, DatabaseService } from './core/services/index.js';
+import { userRouter } from './models/user/index.js';
 
-// Load environment variables from a different directory
-const envPath = path.join(__dirname, 'config', '../../../.env')
-dotenv.config({ path: envPath })
+class App {
+  /** @type {import('express').core.Express} */
+  app = express();
 
-app.disable('x-powered-by')
+  /**
+   * On all routes, allow maximum 50 requests per minute
+   * @type {import('express-rate-limit').RateLimitRequestHandler}
+   */
+  #limiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 50,
+    standardHeaders: true,
+    legacyHeaders: false
+  });
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(corsMiddleware)
-app.use(cookieParser())
+  /** @return {Promise<void>} */
+  async initialize() {
+    config({
+      path: process.env.VITE_ENV_PATH || './environment/.env'
+    });
 
-app.use('/api/user', usersRouter)
-app.use('/api/auth', authRouter)
+    this.app.disable('x-powered-by');
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(this.#limiter);
 
-app.use(new ErrorHandlerService().handleError)
+    await ConfigService.instance().initialize();
 
-module.exports = app
+    this.app.use(corsMiddleware());
+
+    await DatabaseService.instance().initialize();
+
+    this.app.use('/api/user', userRouter);
+    this.app.use('/auth', authRouter);
+
+    // Needs to be defined last in order to catch, log, and format all errors properly
+    this.app.use(errorHandler);
+  }
+}
+
+export const initializeApp = async () => {
+  const app = new App();
+  await app.initialize();
+
+  return app;
+};

@@ -1,6 +1,6 @@
-import vue from '@vitejs/plugin-vue'
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,6 +15,7 @@ export default defineConfig({
   css: {
     devSourcemap: true
   },
+  envDir: fileURLToPath(new URL('../../environment', import.meta.url)),
   // TODO: Provide via a node environment variable
   mode: 'development',
   plugins: [vue()],
@@ -25,4 +26,4 @@ export default defineConfig({
   },
   // TODO: Provide via a node environment variable
   root: 'packages/client/src'
-})
+});

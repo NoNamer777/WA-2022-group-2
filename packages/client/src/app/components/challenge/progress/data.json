@@ -1,0 +1,231 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "Jennifer",
+      "profile_picture": "zebra"
+    },
+    {
+      "id": 2,
+      "username": "Marjo",
+      "profile_picture": "narwal"
+    },
+    {
+      "id": 3,
+      "username": "Oscar",
+      "profile_picture": "papegaai"
+    },
+    {
+      "id": 4,
+      "username": "Ahmed",
+      "profile_picture": "kikker"
+    }
+  ],
+  "challenges": [
+    {
+      "id": 1,
+      "name": "Zelf lunch meenemen",
+      "start_date": "5/21/2023",
+      "end_date": "5/31/2023"
+    }
+  ],
+  "user_challenges": [
+    {
+      "id": 1,
+      "completed": false,
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "completed": false,
+      "user_id": 2
+    },
+    {
+      "id": 3,
+      "completed": false,
+      "user_id": 3
+    }
+  ],
+  "challenge_days": [
+    {
+      "id": 1,
+      "date": "5/21/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 2,
+      "date": "5/22/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 3,
+      "date": "5/23/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 4,
+      "date": "5/24/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 5,
+      "date": "5/25/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 6,
+      "date": "5/26/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 7,
+      "date": "5/27/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 8,
+      "date": "5/28/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 9,
+      "date": "5/29/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 10,
+      "date": "5/30/2023",
+      "earned": false,
+      "user_challenge_id": 1
+    },
+    {
+      "id": 11,
+      "date": "5/21/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 12,
+      "date": "5/22/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 13,
+      "date": "5/23/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 14,
+      "date": "5/24/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 15,
+      "date": "5/25/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 16,
+      "date": "5/26/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 17,
+      "date": "5/27/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 18,
+      "date": "5/28/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 19,
+      "date": "5/29/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 20,
+      "date": "5/30/2023",
+      "earned": false,
+      "user_challenge_id": 2
+    },
+    {
+      "id": 21,
+      "date": "5/21/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 22,
+      "date": "5/22/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 23,
+      "date": "5/23/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 24,
+      "date": "5/24/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 25,
+      "date": "5/25/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 26,
+      "date": "5/26/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 27,
+      "date": "5/27/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 28,
+      "date": "5/28/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 29,
+      "date": "5/29/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    },
+    {
+      "id": 30,
+      "date": "5/30/2023",
+      "earned": false,
+      "user_challenge_id": 3
+    }
+  ]
+}

@@ -1,11 +1,31 @@
-const bcrypt = require('bcryptjs')
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+import bcrypt from 'bcryptjs';
+import { DataTypes, Model } from 'sequelize';
+import { DatabaseService } from '../../core/services/index.js';
 
-class UserEntity extends Model {}
+export class UserEntity extends Model {
+  async validatePassword(password) {
+    return await bcrypt.compare(password, this.password);
+  }
+
+  async setPassword(password) {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    this.setDataValue('password', hashedPassword);
+  }
+
+  toJSON() {
+    const value = super.toJSON();
+
+    delete value.password;
+    delete value.email;
+
+    return value;
+  }
+}
 
 /** @type {import('sequelize').ModelAttributes<UserEntity>} */
-const UserModelDefinition = {
+export const UserModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -45,10 +65,6 @@ const UserModelDefinition = {
       notEmpty: true,
       len: [3, 128],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
-    },
-    set(password) {
-      const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-      this.setDataValue('password', pass)
     }
   },
   profile_image_path: {
@@ -59,27 +75,15 @@ const UserModelDefinition = {
     type: DataTypes.BOOLEAN,
     allowNull: true
   }
+};
+
+/** @return {void} */
+export function initializeUserEntity() {
+  UserEntity.init(UserModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'user',
+    tableName: 'user',
+    createdAt: false,
+    updatedAt: false
+  });
 }
-
-UserEntity.init(UserModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'user',
-  tableName: 'user',
-  createdAt: false,
-  updatedAt: false
-})
-
-UserEntity.prototype.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password)
-}
-
-UserEntity.prototype.toJSON = function () {
-  const values = Object.assign({}, this.get())
-
-  delete values.password
-  delete values.email
-
-  return values
-}
-
-module.exports = { UserEntity, UserModelDefinition }

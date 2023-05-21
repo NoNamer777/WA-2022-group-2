@@ -8,7 +8,15 @@
     :validation="validation"
     :value="modelValue"
     :validation-visibility="validationVisibility"
+    :validation-messages="validationMessages"
+    :list="dataListId"
+    :options="options"
+    :multiple="isMultiple"
+    :input-class="inputClass"
   />
+  <datalist v-if="dataList" :id="dataListId">
+    <option v-for="(data, index) in dataList" :key="index">{{ data }}</option>
+  </datalist>
 </template>
 
 <script>
@@ -36,14 +44,39 @@ export default {
       default: ''
     },
     modelValue: {
-      type: String
+      type: [String, Array]
     },
     validationVisibility: {
       type: String,
       required: false
+    },
+    options: {
+      type: Array,
+      required: false
+    },
+    isMultiple: {
+      type: Boolean,
+      required: false
+    },
+    dataList: {
+      type: Array,
+      required: false
+    },
+    validationMessages: {
+      type: Object,
+      required: false
+    },
+    inputClass: {
+      type: String,
+      required: false
+    }
+  },
+  computed: {
+    dataListId() {
+      return name + '-dataList';
     }
   }
-}
+};
 </script>
 
 <style>
@@ -62,5 +95,8 @@ export default {
 }
 .formkit-input {
   width: 100% !important;
+}
+.formkit-input:focus-visible {
+  outline: auto;
 }
 </style>

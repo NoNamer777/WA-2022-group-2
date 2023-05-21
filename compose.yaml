@@ -1,0 +1,11 @@
+services:
+  server:
+    image: wasted-server
+    container_name: wasted-server
+    env_file:
+      - ./environment/.env
+    ports:
+      - '8080:8080/tcp'
+    volumes:
+      - ./environment/config.json:/app/config.json
+      - ./environment/database.json:/app/database.json
