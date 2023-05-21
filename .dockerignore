@@ -1,0 +1,23 @@
+# Editor configuration files
+.idea
+.vscode
+
+# Build outputs
+.vite
+dist
+coverage
+
+# Node packages
+node_modules
+
+# Configuration files
+environment
+.eslintrc.json
+.gitattributes
+.gitignore
+.prettierignore
+.prettierrc.json
+
+# Miscelaneous
+documentation
+.github
