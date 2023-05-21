@@ -1,6 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from './stores'
-import { ChallengeProgressView, HomeView, InfoView, LoginView, RegisterView } from './views'
+import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from './stores';
+import {
+  ChallengeActiveView,
+  ChallengeCreationView,
+  HomeView,
+  InfoView,
+  LoginView,
+  RegisterView
+} from './views';
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,9 +23,19 @@ export const router = createRouter({
     {
       path: '/challenge',
       name: 'challenge',
-      component: ChallengeProgressView,
+      component: ChallengeCreationView,
       meta: {
         title: 'Uitdaging',
+        requiresAuth: true
+      }
+    },
+    {
+      /* TODO, will be replaced with a final view such as /challenge/:id */
+      path: '/challengeTest',
+      name: 'actieve challenge',
+      component: ChallengeActiveView,
+      meta: {
+        title: 'Actieve challenge',
         requiresAuth: true
       }
     },
@@ -41,29 +58,32 @@ export const router = createRouter({
     {
       path: '/info',
       name: 'info',
-      component: InfoView
+      component: InfoView,
+      meta: {
+        title: 'Informatie'
+      }
     }
   ]
-})
+});
 
 router.beforeEach(async (to, from) => {
-  scrollToTop()
-  focusTopElement(to.meta.title, from.meta.title)
+  scrollToTop();
+  focusTopElement(to.meta.title, from.meta.title);
 
-  return await guardAuthenticatedRoutes(to)
-})
+  return await guardAuthenticatedRoutes(to);
+});
 
 router.afterEach((to) => {
-  const title = to.meta.title
+  const title = to.meta.title;
 
   if (title) {
-    document.title = title
+    document.title = title;
   }
-})
+});
 
 /** @return {void} */
 function scrollToTop() {
-  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 }
 
 /**
@@ -72,10 +92,10 @@ function scrollToTop() {
  * @return {void}
  */
 function focusTopElement(titleTo, titleFrom) {
-  const topElement = document.getElementById('top')
+  const topElement = document.getElementById('top');
 
   if (titleTo !== titleFrom) {
-    topElement.focus()
+    topElement.focus();
   }
 }
 
@@ -84,14 +104,14 @@ function focusTopElement(titleTo, titleFrom) {
  * @return {Promise<import('vue-router').RouteLocationNormalized | boolean>}
  */
 async function guardAuthenticatedRoutes(routeTo) {
-  const authenticationStore = useAuthStore()
+  const authenticationStore = useAuthStore();
 
   if (['register', 'login'].includes(routeTo.name) && authenticationStore.isAuthenticated) {
-    return { name: 'home' }
+    return { name: 'home' };
   }
   // TODO: Add redirect routes
   if (routeTo.meta.requiresAuth && !authenticationStore.isAuthenticated) {
-    return { name: 'login' }
+    return { name: 'login' };
   }
-  return true
+  return true;
 }
