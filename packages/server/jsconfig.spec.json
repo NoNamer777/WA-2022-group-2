@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "include": ["jest.config.js", "src/**/*.test.js"],
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "ES2022",
     "outDir": "../../dist/out",
     "types": ["jest", "node"]
   }

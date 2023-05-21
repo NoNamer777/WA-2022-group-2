@@ -1,16 +1,13 @@
-const dotenv = require('dotenv');
-const express = require('express');
-const rateLimit = require('express-rate-limit');
-const path = require('path');
-const corsMiddleware = require('./middleware/cors-middleware');
-const authRouter = require('./models/auth/auth.router');
-const usersRouter = require('./models/user/user.router');
-const ConfigService = require('./services/config.service');
-const DatabaseService = require('./services/database.service');
-const ErrorHandlerService = require('./services/error-handler.service');
+import { config } from 'dotenv';
+import express from 'express';
+import { rateLimit } from 'express-rate-limit';
+import { authRouter } from './auth/index.js';
+import { corsMiddleware, errorHandler } from './core/middleware/index.js';
+import { ConfigService, DatabaseService } from './core/services/index.js';
+import { userRouter } from './user/index.js';
 
 class App {
-  /** @type {import('express').Express} */
+  /** @type {import('express').core.Express} */
   app = express();
 
   /**
@@ -26,8 +23,8 @@ class App {
 
   /** @return {Promise<void>} */
   async initialize() {
-    dotenv.config({
-      path: process.env.VITE_ENV_PATH || path.join(__dirname, '../../../../environment/.env')
+    config({
+      path: process.env.VITE_ENV_PATH || './environment/.env'
     });
 
     this.app.disable('x-powered-by');
@@ -37,17 +34,19 @@ class App {
 
     await ConfigService.instance().initialize();
 
-    this.app.use(new ErrorHandlerService().handleError);
     this.app.use(corsMiddleware());
 
     await DatabaseService.instance().initialize();
 
-    this.app.use('/api/user', usersRouter);
+    this.app.use('/api/user', userRouter);
     this.app.use('/auth', authRouter);
+
+    // Needs to be defined last in order to catch, log, and format all errors properly
+    this.app.use(errorHandler);
   }
 }
 
-module.exports = async () => {
+export const initializeApp = async () => {
   const app = new App();
   await app.initialize();
 
