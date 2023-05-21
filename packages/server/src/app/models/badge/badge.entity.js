@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
 class BadgeEntity extends Model {}
 
@@ -17,7 +17,7 @@ const BadgeModelDefinition = {
   image_path: {
     type: DataTypes.STRING(255)
   }
-}
+};
 
 BadgeEntity.init(BadgeModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
@@ -25,6 +25,6 @@ BadgeEntity.init(BadgeModelDefinition, {
   tableName: 'badge',
   createdAt: false,
   updatedAt: false
-})
+});
 
-module.exports = { BadgeEntity, BadgeModelDefinition }
+module.exports = { BadgeEntity, BadgeModelDefinition };

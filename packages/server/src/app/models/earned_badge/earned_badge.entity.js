@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
 class EarnedBadgeEntity extends Model {}
 
@@ -51,7 +51,7 @@ const EarnedBadgeModelDefinition = {
     },
     onDelete: 'CASCADE'
   }
-}
+};
 
 const EarnedBadgeModelOptions = {
   indexes: [
@@ -60,7 +60,7 @@ const EarnedBadgeModelOptions = {
       fields: ['user_id', 'badge_id']
     }
   ]
-}
+};
 
 EarnedBadgeEntity.init(EarnedBadgeModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
@@ -68,6 +68,6 @@ EarnedBadgeEntity.init(EarnedBadgeModelDefinition, {
   tableName: 'earned_badge',
   createdAt: false,
   updatedAt: false
-})
+});
 
-module.exports = { EarnedBadgeEntity, EarnedBadgeModelDefinition, EarnedBadgeModelOptions }
+module.exports = { EarnedBadgeEntity, EarnedBadgeModelDefinition, EarnedBadgeModelOptions };

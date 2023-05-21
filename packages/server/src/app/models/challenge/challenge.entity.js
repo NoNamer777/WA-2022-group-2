@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
 class ChallengeEntity extends Model {}
 
@@ -32,7 +32,7 @@ const ChallengeModelDefinition = {
     },
     onDelete: 'CASCADE'
   }
-}
+};
 
 ChallengeEntity.init(ChallengeModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
@@ -40,6 +40,6 @@ ChallengeEntity.init(ChallengeModelDefinition, {
   tableName: 'challenge',
   createdAt: false,
   updatedAt: false
-})
+});
 
-module.exports = { ChallengeEntity, ChallengeModelDefinition }
+module.exports = { ChallengeEntity, ChallengeModelDefinition };

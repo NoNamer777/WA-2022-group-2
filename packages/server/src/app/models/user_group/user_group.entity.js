@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
 class UserGroupEntity extends Model {}
 
@@ -25,7 +25,7 @@ const UserGroupModelDefinition = {
     onDelete: 'CASCADE',
     allowNull: false
   }
-}
+};
 
 const UserGroupModelOptions = {
   indexes: [
@@ -34,7 +34,7 @@ const UserGroupModelOptions = {
       fields: ['user_id', 'group_id']
     }
   ]
-}
+};
 
 UserGroupEntity.init(UserGroupModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
@@ -42,6 +42,6 @@ UserGroupEntity.init(UserGroupModelDefinition, {
   tableName: 'user_group',
   createdAt: false,
   updatedAt: false
-})
+});
 
-module.exports = { UserGroupEntity, UserGroupModelDefinition, UserGroupModelOptions }
+module.exports = { UserGroupEntity, UserGroupModelDefinition, UserGroupModelOptions };

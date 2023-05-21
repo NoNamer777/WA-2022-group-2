@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
-const { EarnedBadgeModelDefinition } = require('../../app/models/earned_badge/earned_badge.entity')
+const { EarnedBadgeModelDefinition } = require('../../app/models/earned_badge/earned_badge.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.createTable('earned_badge', EarnedBadgeModelDefinition)
+    await queryInterface.createTable('earned_badge', EarnedBadgeModelDefinition);
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('earned_badge')
+    await queryInterface.dropTable('earned_badge');
   }
-}
+};

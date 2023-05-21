@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
 class QuizQuestionEntity extends Model {}
 
@@ -29,7 +29,7 @@ const QuizQuestionModelDefinition = {
     type: DataTypes.INTEGER(11),
     allowNull: true
   }
-}
+};
 
 QuizQuestionEntity.init(QuizQuestionModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
@@ -37,6 +37,6 @@ QuizQuestionEntity.init(QuizQuestionModelDefinition, {
   tableName: 'quiz_question',
   createdAt: false,
   updatedAt: false
-})
+});
 
-module.exports = { QuizQuestionEntity, QuizQuestionModelDefinition }
+module.exports = { QuizQuestionEntity, QuizQuestionModelDefinition };

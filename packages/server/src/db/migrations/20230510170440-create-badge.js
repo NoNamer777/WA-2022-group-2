@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
-const { BadgeModelDefinition } = require('../../app/models/badge/badge.entity')
+const { BadgeModelDefinition } = require('../../app/models/badge/badge.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.createTable('badge', BadgeModelDefinition)
+    await queryInterface.createTable('badge', BadgeModelDefinition);
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('badge')
+    await queryInterface.dropTable('badge');
   }
-}
+};

@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const DatabaseService = require('../../services/database.service')
+const { DataTypes, Model } = require('sequelize');
+const DatabaseService = require('../../services/database.service');
 
 class GroupEntity extends Model {}
 
@@ -14,7 +14,7 @@ const GroupModelDefinition = {
   name: {
     type: DataTypes.STRING(255)
   }
-}
+};
 
 GroupEntity.init(GroupModelDefinition, {
   sequelize: DatabaseService.instance().sequelizeInstance,
@@ -22,6 +22,6 @@ GroupEntity.init(GroupModelDefinition, {
   tableName: 'group',
   createdAt: false,
   updatedAt: false
-})
+});
 
-module.exports = { GroupEntity, GroupModelDefinition }
+module.exports = { GroupEntity, GroupModelDefinition };

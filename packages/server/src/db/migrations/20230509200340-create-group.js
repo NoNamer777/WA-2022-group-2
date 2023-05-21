@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
-const { GroupModelDefinition } = require('../../app/models/group/group.entity')
+const { GroupModelDefinition } = require('../../app/models/group/group.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.createTable('group', GroupModelDefinition)
+    await queryInterface.createTable('group', GroupModelDefinition);
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('group')
+    await queryInterface.dropTable('group');
   }
-}
+};
