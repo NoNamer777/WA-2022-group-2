@@ -1,10 +1,10 @@
 <template>
   <main>
     <div class="intro">
-      <h1 class="mb-4-title">Plastic Problemen!</h1>
+      <h1 class="mb-4-title text-primary">Plastic Problemen!</h1>
       <h3 class="mb-4-subtitle">Leer over plastic met onze Slime!</h3>
 
-      <div class="intro-text">
+      <div class="intro-text d-flex flex-row flex-wrap">
         <p class="mb-4 text-markup">
           Welkom op de website! <br />
           Misschien heb je er nooit bij stilgestaan, maar de aarde is al 4,6 miljard jaar oud!
@@ -31,7 +31,6 @@
 
     <div class="main-story">
       <h3 class="mb-4-subtitle">Uitleg over plastic afval en het probleem!</h3>
-
       <div class="main-text">
         <p class="mb-4 text-markup">
           Op dit moment worden er veel plastic flessen weggegooid, terwijl je ze kunt recyclen voor
@@ -79,14 +78,11 @@
 
 <style>
 .mb-4-title {
-  font-family: 'Beaufort-Bold', sans-serif;
   font-size: 50px;
   font-weight: bold;
-  color: #1d73dd;
 }
 
 .mb-4-subtitle {
-  font-family: 'Beaufort-Light', sans-serif;
   font-size: 30px;
   font-weight: bold;
   color: #1d73dd;
@@ -125,7 +121,6 @@
   margin: 2px 0 0 2px;
   justify-content: flex-start;
   text-align: center;
-  font-family: 'Beaufort-Light', sans-serif;
 }
 
 .thought-box-1 {
@@ -142,7 +137,6 @@
   text-align: center;
   font-weight: 900;
   color: #fff;
-  font-family: 'BeaufortForLoL-Medium', sans-serif;
   border-radius: 10px;
 }
 
@@ -193,7 +187,6 @@
   text-align: center;
   font-weight: 900;
   color: #fff;
-  font-family: 'Beaufort-Light', sans-serif;
   border-radius: 10px;
 }
 
@@ -217,7 +210,6 @@
 }
 
 .text-markup {
-  font-family: 'Beaufort-Light', sans-serif;
   font-weight: bold;
   display: flex;
   align-items: center;

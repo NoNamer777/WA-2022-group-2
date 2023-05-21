@@ -6,16 +6,6 @@ $tertiary: #4acc64;
 $background: #db8b76;
 $font-family-base: Geneva, Verdana, sans-serif;
 
-@font-face {
-  font-family: 'Beaufort-Bold';
-  src: url('./fonts/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Beaufort-Light';
-  src: url('./fonts/BeaufortForLoL-TTF/BeaufortforLOL-Light.ttf') format('truetype');
-}
-
 @import 'bootstrap/scss/variables';
 
 $theme-colors: (
