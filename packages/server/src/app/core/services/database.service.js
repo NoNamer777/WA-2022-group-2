@@ -46,7 +46,7 @@ export class DatabaseService {
     }
   }
 
-  /** @return {Promise<any>} */
+  /** @return {Promise<{ dialect: 'sqlite', storage: string } | { dialect: 'mysql', host: string, port: number, database: string, username: string, password: string }>} */
   async #readConfig() {
     try {
       const databaseConfigFile = await readFile(
