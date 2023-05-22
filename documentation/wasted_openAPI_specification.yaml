@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Wasted API - OpenAPI 3.0
+  description: API specification document of the Wasted API
+  version: 1.0.0
+servers:
+  - url: https://add-url-here/api/v1
+tags:
+  - name: Tag here
+paths:
+  /user:
+    get:
+      tags:
+        - Users
+      summary: Returns a list of users.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Users
+      summary: Creates a new user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /users/{userId}:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - Users
+      summary: Returns a user based on ID.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+        - Users
+      summary: Modifies an existing user based on ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: Edit successful
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    User:
+      properties:
+        id:
+          type: integer
+          example: 1
+          readOnly: true
+        username:
+          type: string
+          example: wasteduser
+        email:
+          type: string
+          format: email
+          example: wasteduser@email.com
+        password:
+          type: string
+          format: password
+          writeOnly: true
+          example: super secret password
+        profile_image_path:
+          type: string
+          example: zebra.png
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Code to return
+        message:
+          type: string
+          example: Information on the error
+      required:
+        - code
+        - message
+  responses:
+    NotFound:
+      description: Not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
