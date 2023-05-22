@@ -1,6 +1,6 @@
 <script setup>
-import { Tabs, Tab } from 'vue3-tabs-component'
-import CardList from '../../components/card/CardList.vue'
+import { Tabs, Tab } from 'vue3-tabs-component';
+import CardList from '../../components/card/CardList.vue';
 
 const currentPersonalChallenges = [
   {
@@ -19,13 +19,13 @@ const currentPersonalChallenges = [
     title: 'Ahmed',
     text: '1 beker per dag'
   }
-]
+];
 const pastPersonalChallenges = [
   {
     title: 'Ahmed',
     text: '1 beker per dag'
   }
-]
+];
 </script>
 
 <template>

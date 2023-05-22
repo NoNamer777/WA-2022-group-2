@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import ChallengeProgress from '../components/challenge/progress/ChallengeProgress.vue';
-import data from '../components/challenge/progress/data.json';
+import ChallengeProgress from '../../components/challenge/progress/ChallengeProgress.vue';
+import data from '../../components/challenge/progress/data.json';
 
 /* send in user and challenge */
 
 export default {
-  name: 'ChallengeProgressView.vue',
+  name: 'ChallengeProgressView',
   components: { ChallengeProgress },
   data() {
     return {
