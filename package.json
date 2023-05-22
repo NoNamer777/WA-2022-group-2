@@ -10,7 +10,7 @@
     "format:write": "prettier -w .",
     "client:start": "vite --config packages/client/vite.config.js",
     "client:build": "vite build --config packages/client/vite.config.js",
-    "client:preview": "vite preview --config packages/client/vite.config.js",
+    "client:build-docker-image": "docker build -f packages/client/Dockerfile -t wasted-vue-client .",
     "server:build": "node packages/server/build.js",
     "server:build:dev": "node packages/server/build.js --watch",
     "server:start": "node packages/server/src/main.js",
