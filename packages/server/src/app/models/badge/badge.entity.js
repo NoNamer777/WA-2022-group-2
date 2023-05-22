@@ -1,10 +1,10 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
 import { DatabaseService } from '../../core/services/index.js';
 
-class BadgeEntity extends Model {}
+export class BadgeEntity extends Model {}
 
 /** @type {import('sequelize').ModelAttributes<BadgeEntity>} */
-const BadgeModelDefinition = {
+export const BadgeModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -19,12 +19,13 @@ const BadgeModelDefinition = {
   }
 };
 
-BadgeEntity.init(BadgeModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'badge',
-  tableName: 'badge',
-  createdAt: false,
-  updatedAt: false
-});
-
-module.exports = { BadgeEntity, BadgeModelDefinition };
+/** @return {void} */
+export function initializeBadgeEntity() {
+  BadgeEntity.init(BadgeModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'badge',
+    tableName: 'badge',
+    createdAt: false,
+    updatedAt: false
+  });
+}

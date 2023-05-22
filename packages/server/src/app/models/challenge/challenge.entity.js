@@ -1,10 +1,10 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
 import { DatabaseService } from '../../core/services/index.js';
 
-class ChallengeEntity extends Model {}
+export class ChallengeEntity extends Model {}
 
 /** @type {import('sequelize').ModelAttributes<ChallengeEntity>} */
-const ChallengeModelDefinition = {
+export const ChallengeModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -34,12 +34,13 @@ const ChallengeModelDefinition = {
   }
 };
 
-ChallengeEntity.init(ChallengeModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'challenge',
-  tableName: 'challenge',
-  createdAt: false,
-  updatedAt: false
-});
-
-module.exports = { ChallengeEntity, ChallengeModelDefinition };
+/** @return {void} */
+export function initializeChallengeEntity() {
+  ChallengeEntity.init(ChallengeModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'challenge',
+    tableName: 'challenge',
+    createdAt: false,
+    updatedAt: false
+  });
+}

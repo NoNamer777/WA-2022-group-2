@@ -1,10 +1,10 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
 import { DatabaseService } from '../../core/services/index.js';
 
-class UserQuizEntity extends Model {}
+export class UserQuizEntity extends Model {}
 
 /** @type {import('sequelize').ModelAttributes<UserQuizEntity>} */
-const UserQuizModelDefinition = {
+export const UserQuizModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -39,12 +39,13 @@ const UserQuizModelDefinition = {
   }
 };
 
-UserQuizEntity.init(UserQuizModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'user_quiz',
-  tableName: 'user_quiz',
-  createdAt: false,
-  updatedAt: false
-});
-
-module.exports = { UserQuizEntity, UserQuizModelDefinition };
+/** @return {void} */
+export function initializeUserQuizEntity() {
+  UserQuizEntity.init(UserQuizModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'user_quiz',
+    tableName: 'user_quiz',
+    createdAt: false,
+    updatedAt: false
+  });
+}

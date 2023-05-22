@@ -1,10 +1,11 @@
-const { DataTypes, Model } = require('sequelize');
 import { DatabaseService } from '../../core/services/index.js';
 
-class GroupEntity extends Model {}
+import { DataTypes, Model } from 'sequelize';
+
+export class GroupEntity extends Model {}
 
 /** @type {import('sequelize').ModelAttributes<GroupEntity>} */
-const GroupModelDefinition = {
+export const GroupModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -16,12 +17,13 @@ const GroupModelDefinition = {
   }
 };
 
-GroupEntity.init(GroupModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'group',
-  tableName: 'group',
-  createdAt: false,
-  updatedAt: false
-});
-
-module.exports = { GroupEntity, GroupModelDefinition };
+/** @return {void} */
+export function initializeGroupEntity() {
+  GroupEntity.init(GroupModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'group',
+    tableName: 'group',
+    createdAt: false,
+    updatedAt: false
+  });
+}

@@ -1,10 +1,10 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
 import { DatabaseService } from '../../core/services/index.js';
 
-class EarnedBadgeEntity extends Model {}
+export class EarnedBadgeEntity extends Model {}
 
 /** @type {import('sequelize').ModelAttributes<EarnedBadgeEntity>} */
-const EarnedBadgeModelDefinition = {
+export const EarnedBadgeModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -53,7 +53,7 @@ const EarnedBadgeModelDefinition = {
   }
 };
 
-const EarnedBadgeModelOptions = {
+export const EarnedBadgeModelOptions = {
   indexes: [
     {
       unique: true,
@@ -62,12 +62,13 @@ const EarnedBadgeModelOptions = {
   ]
 };
 
-EarnedBadgeEntity.init(EarnedBadgeModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'earned_badge',
-  tableName: 'earned_badge',
-  createdAt: false,
-  updatedAt: false
-});
-
-module.exports = { EarnedBadgeEntity, EarnedBadgeModelDefinition, EarnedBadgeModelOptions };
+/** @return {void} */
+export function initializeEarnedBadgeEntity() {
+  EarnedBadgeEntity.init(EarnedBadgeModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'earned_badge',
+    tableName: 'earned_badge',
+    createdAt: false,
+    updatedAt: false
+  });
+}

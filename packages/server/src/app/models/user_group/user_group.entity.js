@@ -1,10 +1,10 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
 import { DatabaseService } from '../../core/services/index.js';
 
-class UserGroupEntity extends Model {}
+export class UserGroupEntity extends Model {}
 
 /** @type {import('sequelize').ModelAttributes<UserGroupEntity>} */
-const UserGroupModelDefinition = {
+export const UserGroupModelDefinition = {
   user_id: {
     type: DataTypes.INTEGER(11),
     primaryKey: true,
@@ -27,7 +27,7 @@ const UserGroupModelDefinition = {
   }
 };
 
-const UserGroupModelOptions = {
+export const UserGroupModelOptions = {
   indexes: [
     {
       unique: true,
@@ -36,12 +36,13 @@ const UserGroupModelOptions = {
   ]
 };
 
-UserGroupEntity.init(UserGroupModelDefinition, {
-  sequelize: DatabaseService.instance().sequelizeInstance,
-  modelName: 'user_group',
-  tableName: 'user_group',
-  createdAt: false,
-  updatedAt: false
-});
-
-module.exports = { UserGroupEntity, UserGroupModelDefinition, UserGroupModelOptions };
+/** @return {void} */
+export function initializeUserGroupEntity() {
+  UserGroupEntity.init(UserGroupModelDefinition, {
+    sequelize: DatabaseService.instance().sequelizeInstance,
+    modelName: 'user_group',
+    tableName: 'user_group',
+    createdAt: false,
+    updatedAt: false
+  });
+}
