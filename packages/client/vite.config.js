@@ -4,26 +4,24 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // TODO: Provide via a node environment variable
-  base: '/',
+  base: process.env.VITE_CLIENT_BASE_URL || '/',
   build: {
     emptyOutDir: true,
-    // TODO: Provide via a node environment variable
-    outDir: '../../../dist/client'
+    outDir: '../../../dist/client',
+    manifest: true,
+    sourcemap: process.env.NODE_ENV !== 'production'
   },
   cacheDir: '../../../.vite',
   css: {
     devSourcemap: true
   },
   envDir: fileURLToPath(new URL('../../environment', import.meta.url)),
-  // TODO: Provide via a node environment variable
-  mode: 'development',
+  mode: process.env.NODE_ENV || 'development',
   plugins: [vue()],
   resolve: {
     alias: {
       '@wasted/client': fileURLToPath(new URL('packages/client/src', import.meta.url))
     }
   },
-  // TODO: Provide via a node environment variable
   root: 'packages/client/src'
 });
