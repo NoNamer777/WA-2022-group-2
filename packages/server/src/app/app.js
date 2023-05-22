@@ -24,7 +24,7 @@ class App {
   /** @return {Promise<void>} */
   async initialize() {
     config({
-      path: process.env.VITE_ENV_PATH || './environment/.env'
+      path: process.env.ENV_PATH || './environment/.env'
     });
 
     this.app.disable('x-powered-by');
