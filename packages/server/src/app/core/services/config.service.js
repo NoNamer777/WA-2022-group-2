@@ -17,10 +17,10 @@ export class ConfigService {
 
   /** @return {Promise<void>} */
   async initialize() {
-    const configFile = await readFile(process.env.VITE_CONFIG_PATH || './environment/config.json', {
-      encoding: 'utf-8'
-    });
     try {
+      const configFile = await readFile(process.env.CONFIG_PATH || './environment/config.json', {
+        encoding: 'utf-8'
+      });
 
       this.config = JSON.parse(configFile);
     } catch (error) {
