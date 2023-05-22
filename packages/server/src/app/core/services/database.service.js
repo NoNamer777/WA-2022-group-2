@@ -22,20 +22,28 @@ export class DatabaseService {
   async initialize() {
     const config = await this.#readConfig();
 
-    this.sequelizeInstance = new Sequelize(config.database, config.username, config.password, {
-      dialect: config.dialect,
-      host: config.host,
-      port: config.port,
-      logging: false
-    });
+    try {
+      this.sequelizeInstance = new Sequelize(config.database, config.username, config.password, {
+        dialect: config.dialect,
+        host: config.host,
+        port: config.port,
+        logging: false
+      });
 
-    await this.sequelizeInstance.authenticate();
+      await this.sequelizeInstance.authenticate();
 
-    initializeUserEntity();
+      initializeUserEntity();
 
-    console.info(
-      `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
-    );
+      console.info(
+        `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
+      );
+    } catch (error) {
+      console.error(
+        'Something went wrong while establishing a connection with the database',
+        error
+      );
+      throw error;
+    }
   }
 
   /** @return {Promise<any>} */
