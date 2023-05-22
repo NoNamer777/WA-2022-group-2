@@ -11,9 +11,6 @@ FROM nginx:1.24-alpine
 
 COPY --from=builder /client-app/dist/client /usr/share/nginx/html
 
-ARG CLIENT_PORT=5173
-ENV CLIENT_PORT $CLIENT_PORT
-
-EXPOSE $CLIENT_PORT
+EXPOSE 80/tcp
 
 CMD ["nginx", "-g", "daemon off;"]
