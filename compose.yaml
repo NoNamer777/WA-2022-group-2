@@ -5,7 +5,7 @@ services:
     env_file:
       - ./environment/.env
     ports:
-      - '4004:80/tcp'
+      - '5173:80/tcp'
     depends_on:
       - server
   server:
