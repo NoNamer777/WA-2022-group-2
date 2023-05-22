@@ -48,13 +48,18 @@ export class DatabaseService {
 
   /** @return {Promise<any>} */
   async #readConfig() {
-    const databaseConfigFile = await readFile(
-      ConfigService.instance().config.server.databaseConfigPath,
-      { encoding: 'utf-8' }
-    );
+    try {
+      const databaseConfigFile = await readFile(
+        ConfigService.instance().config.server.databaseConfigPath,
+        { encoding: 'utf-8' }
+      );
 
-    return JSON.parse(databaseConfigFile)[
-      ConfigService.instance().config.production ? 'production' : 'development'
-    ];
+      return JSON.parse(databaseConfigFile)[
+        ConfigService.instance().config.production ? 'production' : 'development'
+      ];
+    } catch (error) {
+      console.error('Something went wrong while trying to read the database configuration', error);
+      throw error;
+    }
   }
 }
