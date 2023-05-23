@@ -19,18 +19,19 @@ which is opened in the project root:
 npm install
 ```
 
-### Config
+### Configuration
 
-This server and client use a config file to set up some aspects of the applications.
-You must copy the template found [here](./environment/config-template.json) and rename the copied file to `config.json`.
+This server uses a config file to set up some aspects of the application. You must copy the template
+found [here](./environment/config-template.json) and rename the copied file to `config.json`.
 Below here follows an example of what the config may look like:
 
 ```json5
 {
-  // Whether the server and client run in production mode, thus changing some values or processes
+  // Whether the server runs in production mode, thus changing some values or processes
   production: false,
   jwt: {
-    // The JWT secret, used to encode and decode JWT tokens
+    // The JWT secret, used to encode and decode JWT tokens. NOTE: This value must be identical to
+    // the environment variable `VITE_JWT_SECRET`
     token: 'My super secret token'
   },
   server: {
@@ -41,19 +42,42 @@ Below here follows an example of what the config may look like:
     port: 8080,
 
     // The location of the database config
-    databaseConfigPath: '../config/database.json',
+    databaseConfigPath: './environment/database.json',
 
     // Origins that are allowed to connect to the server via the CORS settings
-    allowedOrigins: ['http://localhost:5173', 'http://127.0.0.1:5173']
-  },
-  client: {
-    // The host address of the web client
-    host: 'localhost',
-
-    // The port on the host address on which the web client runs on
-    port: 4200
+    allowedOrigins: ['http://localhost:5173']
   }
 }
+```
+
+Besides this configuration file, the client and server applications use environment variables to
+configure its values and processes depending on the environment that the application is running in.
+By default, the client and server applications look for an `.env` file inside the `./environment`
+folder. You'll also find a template there which you can copy and rename to `.env`. An example of
+how such a file would look like is as followed:
+
+```
+# Server variables
+
+# This variables determines where the server and client can find their environment variables. This
+# is usually already passed via the cli (server) or in the Vite configuration file (client), but
+# it can't do any harm to declare it also in this file.
+ENV_PATH=./environment/.env
+
+# This variable determines where the server will look for its configuration file. This path will be
+# relative to from where the server process is run from.
+CONFIG_PATH=./environment/config.json
+
+# Client variables
+
+# This variable determine where the client sends api requests to. This address should reuse the
+# `host` and `port` values used in the server configuration
+VITE_SERVER_BASE_URL=http://localhost:8080
+
+# This variable is used to decode the received JWT token in the web application and needs to be
+# identical to the secret passed in the server configuration file (`config.json#jwt.secret`)
+VITE_JWT_SECRET=my super secret jwt secret
+
 ```
 
 After that you can find the instructions for the different projects on how to get the projects started
@@ -89,28 +113,24 @@ errors, should the pop-up.
 Also make sure to check that your workspace settings are correct for auto formatting vue files with ESlint and Prettier
 https://pipo.blog/articles/20220103-eslint-prettier-vue3#vs-code-formatonsave
 
-### Environment Variables
-
-The server and client both can handle a couple of the following environment variables:
-
-| Variable         | Project | Default value             | Values | Description                                                                            |
-| ---------------- | ------- | ------------------------- | ------ | -------------------------------------------------------------------------------------- |
-| VITE_CONFIG_PATH | Both    | ./environment/config.json |        | The path to the configuration for both the web client and server applications.         |
-| VITE_ENV_PATH    | Both    | ./environment/.env        |        | The path to the environment variables for both the web client and server applications. |
-
-You also need to set up your own environment variable. To do this you have to copy the template,
-which you can find [here](../../environment/.env.example). Rename the copy to `.env` and fill in the variables
-
 ### Docker
 
 For the individual projects, a docker image is available to run the applications via Docker so no other tools should be
 required to be downloaded in order to run the applications.
 
 Find the scripts in the `package.json` to create a Docker image locally of the server. For the configuration of your
-local Docker stack, create an folder where you'll keep your configuration files for the applications and add another
+local Docker stack, create a folder where you'll keep your configuration files for the applications and add another
 file to it with the name `compose.yaml`, with the following contents:
 
 ```yaml
+# ./compose.yaml
+client:
+  image: wasted-vue-client
+  container_name: wasted-client
+  ports:
+    - '5173:80/tcp'
+  depends_on:
+    - server
 server:
   image: wasted-server
   container_name: wasted-server
@@ -121,6 +141,21 @@ server:
   volumes:
     - ./config.json:/app/config.json
     - ./database.json:/app/database.json
+  depends_on:
+    db:
+      condition: service_healthy
+# optional database service
+db:
+  image: mysql
+  container_name: wasted-mysql-db
+  ports:
+    - '3306:3306/tcp'
+  healthcheck:
+    test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+    start_period: 20s
+    interval: 5s
+    timeout: 20s
+    retries: 3
 ```
 
 This configuration assumes a couple of things:
@@ -128,43 +163,50 @@ This configuration assumes a couple of things:
 - The `config.json`, `.env`, and the `database.json` files are in the same folder as the `compose.yaml` and the `config.json`
   should have a `server.databaseConfigPath` attribute set to `./database.json`. This later must be done because of the way
   how the node process runs inside the Docker container.
+  These configuration files will have the following contents, based on this compose configuration:
+
+```json5
+// ./database.json
+{
+  production: {
+    dialect: 'mysql',
+    host: 'db',
+    port: 3306,
+    username: 'username',
+    password: 'password'
+  }
+}
+```
+
+```json5
+// ./config.json
+{
+  production: true,
+  jwt: {
+    // This needs to be identical to the `VITE_JWT_SECRET` environment variable.
+    secret: 'secret'
+  },
+  server: {
+    // This needs to be identical to the Docker service that is declared for the server.
+    host: 'server',
+
+    // This needs to be identical to the internal port on which the server runs inside the Docker container.
+    port: 8080,
+
+    databaseConfig: './database.json',
+
+    // This needs to be identical to the external address on which the docker container is externally available.
+    allowedOrigins: ['http://localhost:4005']
+  }
+}
+```
+
+```
+# ./.env
+
+# Server environment variables
+CONFIG_PATH=./config.json
+ENV_PATH=./.env
+```
+
 - You have port `8080` available on you local machine.
-- The database container or installation is not included, so you'll need to provide that yourself.
-
-NOTE: keep in mind that Docker handles the `host` attribute for databases differently then "just" making it available
-on your local machine. If you've locally installed a database, then you can use that like normal. If you have provided
-your database instance via Docker however, you'll need to provide the name of the Docker service that you've declared
-to hold your database container/instance for the `host` of the database, instead of `localhost`. Have a MySQL database
-instance provided like below:
-
-```yaml
-db:
-  image: mysql
-  container_name: mysql_database
-```
-
-The value you'll need to provide to the `host` attribute of the database configuration for the server would be: `db`.
-
-NOTE: Not every database is instantly ready at the get go, the moment the database container is created, so it is
-heavenly advised to delay the creation of the server container (if you have a Docker application stack which includes
-this server and a database instance) after your database container is fully ready to receive connections.
-You can do this for example with health checks like so:
-
-```yaml
-server:
-  image: wasted-server
-  ...
-  depends_on:
-    db:
-      condition: service_healthy
-db:
-  image: mysql
-  ...
-  healthcheck:
-    test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-    timeout: 20s
-    retries: 10
-```
-
-This will make sure that the creation of the server application container is delayed until the mysql database is ready
-to receive connections resulting in avoidable manual restarts of the server on creation of the application stack.
