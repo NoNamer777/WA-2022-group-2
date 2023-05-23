@@ -2,9 +2,13 @@ FROM node:18-alpine AS builder
 
 WORKDIR client-app/
 
+COPY package*.json .
+
+RUN npm ci
+
 COPY . .
 
-RUN npm ci && npm run client:build
+RUN npm run client:build
 
 
 FROM nginx:1.24-alpine
