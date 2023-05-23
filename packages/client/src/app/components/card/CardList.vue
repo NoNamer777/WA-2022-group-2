@@ -1,11 +1,11 @@
 <script setup>
-import CardItem from './CardItem.vue'
+import CardItem from './CardItem.vue';
 
 const props = defineProps({
   title: String,
   emptyState: String,
   items: Array
-})
+});
 </script>
 
 <template>

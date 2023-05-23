@@ -3,7 +3,7 @@ const props = defineProps({
   clickable: Boolean,
   title: String,
   text: String
-})
+});
 </script>
 
 <template>
