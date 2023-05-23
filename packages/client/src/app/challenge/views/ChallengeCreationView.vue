@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import CustomFormKit from '../components/form/CustomFormKit.vue';
 import { ref } from 'vue';
-import { useAuthStore } from '../stores';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../../auth/index.js';
+import { CustomFormKit } from '../../shared/index.js';
 
 export default {
   name: 'ChallengeCreationView.vue',

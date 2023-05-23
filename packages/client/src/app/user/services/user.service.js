@@ -1,4 +1,4 @@
-import { HttpRequestService } from './http-request.service';
+import { HttpRequestService } from '../../core/index.js';
 
 export class UserService {
   /** @return {UserService} */

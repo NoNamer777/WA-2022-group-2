@@ -1,8 +1,8 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { useAuthStore } from '../stores';
-const { logout } = useAuthStore();
+import { useAuthStore } from '../../../auth/index.js';
 
+const { logout } = useAuthStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 </script>
 

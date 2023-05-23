@@ -1,6 +1,6 @@
 import { nl } from '@formkit/i18n';
 import { defaultConfig } from '@formkit/vue';
-import password from './rules/password';
+import password from './rules/password.js';
 
 export const FormKitOptions = defaultConfig({
   locales: { nl },

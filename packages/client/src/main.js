@@ -5,7 +5,9 @@ import 'bootstrap/dist/js/bootstrap.min';
 import Notifications from '@kyvg/vue3-notification';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
-import { App, FormKitOptions, router, useAuthStore } from './app';
+import { App, router } from './app';
+import { useAuthStore } from './app/auth/index.js';
+import { FormKitOptions } from './app/config/index.js';
 import '/public/assets/styles/main.scss';
 
 const app = createApp(App);

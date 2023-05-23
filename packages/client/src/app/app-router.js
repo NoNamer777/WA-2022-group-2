@@ -1,12 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuthStore } from './stores';
-import {
-  ChallengeActiveView,
-  ChallengeCreationView,
-  HomeView,
-  LoginView,
-  RegisterView
-} from './views';
+import { LoginView, RegisterView, useAuthStore } from './auth/index.js';
+import { ChallengeActiveView, ChallengeCreationView } from './challenge/views/index.js';
+import { HomeView } from './core/index.js';
 
 export const router = createRouter({
   history: createWebHistory(),

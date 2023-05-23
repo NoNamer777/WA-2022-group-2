@@ -1,10 +1,9 @@
 import { notify } from '@kyvg/vue3-notification';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { router } from '../app-router';
-import { AuthService } from '../services/auth.service';
-import { JwtService } from '../services/jwt.service';
-import { UserService } from '../services/user.service';
+import { router } from '../../app-router.js';
+import { UserService } from '../../user/index.js';
+import { AuthService, JwtService } from '../services/index.js';
 
 export const useAuthStore = defineStore('auth', () => {
   /** @type {import('vue').Ref<User | null>} */

@@ -1,10 +1,9 @@
 <script setup>
-import { CustomFormKit } from '../../components';
-
 import { ref } from 'vue';
-import { useAuthStore } from '../../stores';
-const { register } = useAuthStore();
+import { useAuthStore } from '../stores/auth.store.js';
+import { CustomFormKit } from '../../shared/components/index.js';
 
+const { register } = useAuthStore();
 const user = ref({
   email: '',
   username: '',

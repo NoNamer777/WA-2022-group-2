@@ -1,8 +1,8 @@
 <script setup>
 import { RouterView } from 'vue-router';
-import { NavigationBar } from './components';
-import { useAuthStore } from './stores';
+import { NavigationBar } from './shared/index.js';
 import { storeToRefs } from 'pinia';
+import { useAuthStore } from './auth/index.js';
 
 const { loading } = storeToRefs(useAuthStore());
 </script>
