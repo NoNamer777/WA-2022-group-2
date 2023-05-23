@@ -8,6 +8,12 @@ RUN npm ci
 
 COPY . .
 
+ARG SERVER_BASE_URL=http://localhost:8080
+ENV VITE_SERVER_BASE_URL $SERVER_BASE_URL
+
+ARG JWT_SECRET
+ENV VITE_JWT_SECRET $JWT_SECRET
+
 RUN npm run client:build
 
 
