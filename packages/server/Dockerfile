@@ -7,9 +7,13 @@ EXPOSE 8080
 
 WORKDIR server-app
 
+COPY package*.json .
+
+RUN npm ci
+
 COPY . .
 
-RUN npm ci && npm run server:build
+RUN npm run server:build
 
 COPY /packages/server/src/db/migrations /server-app/dist/server/migrations
 
