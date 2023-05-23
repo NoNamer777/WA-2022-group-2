@@ -1,8 +1,8 @@
 <template>
   <main>
     <div class="intro">
-      <h1 class="primary-color">{{ intro.title }}</h1>
-      <h3 class="primary-color">{{ intro.subtitle }}</h3>
+      <h1 class="text-primary">Plastic Problemen!</h1>
+      <h3 class="text-primary">Leer over plastic met onze Slime!</h3>
 
       <div class="row">
         <div class="col-lg-6">
@@ -20,9 +20,13 @@
 
         <div class="col-lg-6 d-flex justify-content-md-around">
           <div class="slime-container">
-            <img class="slime" :src="slimeNormal.src" :alt="slimeNormal.alt" />
+            <img
+              class="slime"
+              src="/assets/images/mascot/mascotte_normal.png"
+              alt="Normal Slime image"
+            />
             <div class="thought-box">
-              <p class="slime-text">{{ slimeNormal.context }}</p>
+              <p class="slime-text">Ik ben Slime! Laten we samen de wereld redden!</p>
             </div>
           </div>
         </div>
@@ -30,7 +34,7 @@
     </div>
 
     <div class="main-story">
-      <h3 class="primary-color">{{ main.subtitle }}</h3>
+      <h3 class="text-primary">Uitleg over plastic afval en het probleem!</h3>
       <div class="row">
         <div class="col-lg-6">
           <p class="text-markup">
@@ -44,11 +48,15 @@
           </p>
         </div>
 
-        <div class="col-lg-6 d-flex justify-content-start">
+        <div class="col-lg-6 d-flex justify-content-sm-start">
           <div class="slime-container align-left">
-            <img class="slime" :src="slimeDisappointed.src" :alt="slimeDisappointed.alt" />
+            <img
+              class="slime"
+              src="/assets/images/mascot/mascotte_disappointed.png"
+              alt="Disappointed Slime image"
+            />
             <div class="thought-box">
-              <p class="slime-text">{{ slimeDisappointed.context }}</p>
+              <p class="slime-text">Huh.. dat is meer dan ik dacht, wist jij dit?</p>
             </div>
           </div>
         </div>
@@ -56,7 +64,7 @@
     </div>
 
     <div class="footer">
-      <h3 class="primary-color">{{ footer.subtitle }}</h3>
+      <h3 class="text-primary">Wist je dat?</h3>
       <p class="text-markup">
         1. Als je alle plastic flessen van 1 jaar op elkaar stapelt, kun je de aarde 4 keer
         rondgaan!<br />
@@ -69,42 +77,11 @@
     </div>
 
     <div class="register">
-      <h5 class="primary-color">{{ register.subtitle }}</h5>
+      <h5 class="text-primary">Wil je meer leren? Registreer je dan en daag jezelf uit!</h5>
       <router-link class="btn btn-primary" :to="{ name: 'register' }">Registreer</router-link>
     </div>
   </main>
 </template>
-
-<script setup>
-const intro = {
-  title: 'Plastic Problemen!',
-  subtitle: 'Leer over plastic met onze Slime!'
-};
-
-const main = {
-  subtitle: 'Uitleg over plastic afval en het probleem!'
-};
-
-const footer = {
-  subtitle: 'Wist je dat?'
-};
-
-const register = {
-  subtitle: 'Wil je meer leren? Registreer je dan en daag jezelf uit!'
-};
-
-const slimeNormal = {
-  src: '/assets/images/mascot/mascotte_normal.png',
-  alt: 'Normal Slime image',
-  context: 'Ik ben Slime! Laten we samen de wereld redden!'
-};
-
-const slimeDisappointed = {
-  src: '/assets/images/mascot/mascotte_disappointed.png',
-  alt: 'Disappointed Slime image',
-  context: 'Huh.. dat is meer dan ik dacht, wist jij dit?'
-};
-</script>
 
 <style lang="scss" scoped>
 @import 'packages/client/src/public/assets/styles/bootstrap-custom.scss';
@@ -149,7 +126,6 @@ const slimeDisappointed = {
 }
 
 .thought-box {
-  position: absolute;
   width: 200px;
   height: 120px;
   border: 4px solid $primary;
@@ -177,7 +153,7 @@ const slimeDisappointed = {
 }
 
 .align-left {
-  margin-left: 55%;
+  margin-left: 40%;
 }
 
 @media (max-width: 768px) {
