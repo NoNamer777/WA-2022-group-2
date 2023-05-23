@@ -114,8 +114,6 @@ file to it with the name `compose.yaml`, with the following contents:
 server:
   image: wasted-server
   container_name: wasted-server
-  env:
-    - SERVER_PORT=8080
   env_file:
     - ./.env
   ports:
@@ -127,8 +125,6 @@ server:
 
 This configuration assumes a couple of things:
 
-- The provided environment variable `SERVER_PORT` and the exposed container port need to be the same as the port that
-  the server is configured to run on in the `config.json` file.
 - The `config.json`, `.env`, and the `database.json` files are in the same folder as the `compose.yaml` and the `config.json`
   should have a `server.databaseConfigPath` attribute set to `./database.json`. This later must be done because of the way
   how the node process runs inside the Docker container.
