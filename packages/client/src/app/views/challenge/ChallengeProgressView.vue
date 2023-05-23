@@ -26,15 +26,20 @@
 <script>
 import ChallengeProgress from '../../components/challenge/progress/ChallengeProgress.vue';
 import data from '../../components/challenge/progress/data.json';
+import { useAuthStore } from '../../stores';
 
-/* send in user and challenge */
+/* TODO: send in user and challenge, move logic to backend */
 
 export default {
   name: 'ChallengeProgressView',
   components: { ChallengeProgress },
+  setup() {
+    const authStore = useAuthStore();
+    const user = authStore.user;
+    return { user };
+  },
   data() {
     return {
-      user: Object,
       challenge: Object,
       userChallenges: [],
       startDate: Date,
@@ -45,7 +50,6 @@ export default {
     };
   },
   created() {
-    this.user = data.users[0];
     this.challenge = data.challenges[0];
     this.userChallenges = this.getAndSortUserChallenges();
     this.startDate = this.getDateString(data.challenges[0].start_date);

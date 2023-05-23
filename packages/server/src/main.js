@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-const http = require('http');
-const app = require('./app/app');
-const ConfigService = require('./app/services/config.service');
+import { createServer } from 'http';
+import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
 
 (async () => {
-  const wastedApp = await app();
+  const wastedApp = await initializeApp();
 
   // Get port and hostname from the config service and store in Express
   const host = ConfigService.instance().config.server.host;
@@ -14,10 +13,12 @@ const ConfigService = require('./app/services/config.service');
   wastedApp.app.set('port', port);
   wastedApp.app.set('hostname', host);
 
-  const server = http.createServer(wastedApp.app);
+  const server = createServer(wastedApp.app);
 
   server.listen(port, host);
+
   server.on('listening', () => console.info(`Server is Listening on http://${host}:${port}/`));
+
   server.on('error', (error) => {
     if (error.syscall !== 'listen') throw error;
 
@@ -36,4 +37,25 @@ const ConfigService = require('./app/services/config.service');
         throw error;
     }
   });
+
+  process.on('SIGINT', async () => {
+    await shutdown();
+  });
+
+  process.on('SIGTERM', async () => {
+    await shutdown();
+  });
+
+  async function shutdown() {
+    console.info('Shutting down server...');
+    await DatabaseService.instance().sequelizeInstance.close();
+
+    server.close((error) => {
+      if (error) {
+        console.error(error);
+        process.exit(1);
+      }
+      process.exit(0);
+    });
+  }
 })();
