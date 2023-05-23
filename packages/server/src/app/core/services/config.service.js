@@ -24,10 +24,7 @@ export class ConfigService {
 
       this.config = JSON.parse(configFile);
     } catch (error) {
-      console.error(
-        'Something went wrong while trying to read the server configuration file',
-        error
-      );
+      console.error('Something went wrong while trying to read the server configuration file');
       throw error;
     }
   }

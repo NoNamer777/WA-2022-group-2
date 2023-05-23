@@ -38,10 +38,7 @@ export class DatabaseService {
         `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
       );
     } catch (error) {
-      console.error(
-        'Something went wrong while establishing a connection with the database',
-        error
-      );
+      console.error('Something went wrong while establishing a connection with the database');
       throw error;
     }
   }
@@ -58,7 +55,7 @@ export class DatabaseService {
         ConfigService.instance().config.production ? 'production' : 'development'
       ];
     } catch (error) {
-      console.error('Something went wrong while trying to read the database configuration', error);
+      console.error('Something went wrong while trying to read the database configuration');
       throw error;
     }
   }
