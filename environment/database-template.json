@@ -1,10 +1,10 @@
 {
-  "<environment>": {
+  "development": {
     "dialect": "mysql",
-    "database": "wasted-db",
+    "database": "wasted_db",
     "host": "localhost",
     "port": 3306,
-    "username": "wasted-db-user",
+    "username": "wasted_db_user",
     "password": "password"
   }
 }
