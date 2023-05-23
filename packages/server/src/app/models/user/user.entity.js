@@ -7,13 +7,6 @@ export class UserEntity extends Model {
     return await bcrypt.compare(password, this.password);
   }
 
-  async setPassword(password) {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    this.setDataValue('password', hashedPassword);
-  }
-
   toJSON() {
     const value = super.toJSON();
 
@@ -65,6 +58,9 @@ export const UserModelDefinition = {
       notEmpty: true,
       len: [3, 128],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
+    },
+    set(password) {
+      this.setDataValue('password', bcrypt.hashSync(password, bcrypt.genSaltSync(15)));
     }
   },
   profile_image_path: {
