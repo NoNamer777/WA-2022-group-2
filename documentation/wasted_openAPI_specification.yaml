@@ -4,9 +4,10 @@ info:
   description: API specification document of the Wasted API
   version: 1.0.0
 servers:
-  - url: https://add-url-here/api/v1
-tags:
-  - name: Tag here
+  - url: http://localhost:8080/api
+security:
+  - bearerAuth: [] 
+
 paths:
   /user:
     get:
@@ -22,6 +23,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/ServerError'
     post:
@@ -37,11 +40,19 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/ServerError'
-  /users/{userId}:
+  /user/{userId}:
     parameters:
       - in: path
         name: userId
@@ -63,6 +74,8 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -80,19 +93,174 @@ paths:
       responses:
         '204':
           description: Edit successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        
+  /user/{userId}/challenge:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - Challenges
+      summary: Returns a list of user's challenges.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Challenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Challenges
+      summary: Creates a challenge for the user and selected participants.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+          
+  /challenge/{challengeId}:
+    parameters:
+      - in: path
+        name: challengeId
+        description: Challenge ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - Challenges
+      summary: Returns a list of challenge participant information based on challenge ID.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserChallenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /challenge/{challengeId}/days:
+    parameters:
+      - in: path
+        name: challengeId
+        description: Challenge ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - Challenge Progress
+      summary: Returns a list of challenge days based on challenge ID.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChallengeDay'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /days/{dayId}:
+    parameters:
+      - in: path
+        name: dayId
+        description: Day ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    put:
+      tags:
+        - Challenge Progress
+      summary: Modifies the progress status of a challenge day.
+      responses:
+        '204':
+          description: Edit successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChallengeDay'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
 
 components:
+  securitySchemes:
+    bearerAuth:           
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
   schemas:
     User:
       properties:
         id:
           type: integer
-          example: 1
           readOnly: true
+          example: 1
         username:
           type: string
           example: wasteduser
@@ -105,26 +273,98 @@ components:
           format: password
           writeOnly: true
           example: super secret password
-        profile_image_path:
+        profile_image:
           type: string
-          example: zebra.png
+          example: zebra
+      required: 
+        - id
+        - username
+        - email
+        - password
+    Challenge:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        name:
+          type: string
+          example: Zelfgemaakte lunch naar school
+        startDate:
+          type: string
+          format: date
+        amountOfDays: 
+          type: integer
+          example: 5
+        userIds:
+          type: array
+          items:
+            type: integer
+            example: 1
+      required:
+        - id
+        - name
+        - startDate
+        - amountOfDays
+    UserChallenge:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        username: 
+          type: string
+          example: wasteduser
+        completed: 
+          type: boolean
+          example: false
+    ChallengeDay:
+      properties:
+        id: 
+          type: integer
+          readOnly: true
+          example: 1
+        dayNumber:
+          type: integer
+          example: 1
+        earned:
+          type: boolean
+          example: true
+          
     Error:
       type: object
       properties:
-        code:
+        timestamp:
           type: string
-          example: Code to return
+          format: date-time
+        status:
+          type: integer
+          example: Status code to return
+        error:
+          type: string
+          example: Error description
         message:
           type: string
-          example: Information on the error
+          example: Additional information on the error
       required:
-        - code
-        - message
+        - timestamp
+        - status
+        - error
   responses:
-    NotFound:
-      description: Not found
     BadRequest:
       description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found
       content:
         application/json:
           schema:
