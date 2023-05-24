@@ -22,7 +22,7 @@
           <img
             class="w-75"
             src="/assets/images/mascot/mascotte_normal_textbuble.png"
-            alt="Normal Slime image"
+            alt="Normale Slime afbeelding"
           />
         </div>
       </div>
@@ -48,7 +48,7 @@
           <img
             class="w-75"
             src="/assets/images/mascot/mascotte_disappointed_textbuble.png"
-            alt="Disappointed Slime image"
+            alt="Teleurgestelde Slime afbeelding"
           />
         </div>
       </div>
@@ -71,8 +71,15 @@
 
     <section>
       <h5 class="text-primary">Wil je meer leren? Registreer je dan en daag jezelf uit!</h5>
-      <router-link class="btn btn-primary" :to="{ name: 'register' }">Registreer</router-link>
+      <router-link v-if="!isAuthenticated" class="btn btn-primary" :to="{ name: 'register' }"
+        >Registreer</router-link
+      >
     </section>
   </main>
 </template>
-<script setup></script>
+<script setup>
+import { useAuthStore } from '../stores';
+import { storeToRefs } from 'pinia';
+
+const { isAuthenticated } = storeToRefs(useAuthStore());
+</script>
