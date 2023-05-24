@@ -71,9 +71,9 @@
 
     <section>
       <h5 class="text-primary">Wil je meer leren? Registreer je dan en daag jezelf uit!</h5>
-      <router-link v-if="!isAuthenticated" class="btn btn-primary" :to="{ name: 'register' }"
-        >Registreer</router-link
-      >
+      <router-link v-if="!isAuthenticated" class="btn btn-primary" :to="{ name: 'register' }">
+        Registreer
+      </router-link>
     </section>
   </main>
 </template>
