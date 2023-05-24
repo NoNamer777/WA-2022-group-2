@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import ChallengeProgress from '../components/challenge/progress/ChallengeProgress.vue';
-import data from '../components/challenge/progress/data.json';
-import { useAuthStore } from '../stores';
+import ChallengeProgress from '../../components/challenge/progress/ChallengeProgress.vue';
+import data from '../../components/challenge/progress/data.json';
+import { useAuthStore } from '../../stores';
 
 /* TODO: send in user and challenge, move logic to backend */
 
 export default {
-  name: 'ChallengeProgressView.vue',
+  name: 'ChallengeProgressView',
   components: { ChallengeProgress },
   setup() {
     const authStore = useAuthStore();
