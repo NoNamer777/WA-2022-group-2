@@ -35,7 +35,6 @@ export class AuthService {
       }
       throw new InternalServerErrorException(error.message);
     }
-    let groups = await user.getGroups();
     if (!(await user.validatePassword(userData.password))) {
       throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.');
     }
