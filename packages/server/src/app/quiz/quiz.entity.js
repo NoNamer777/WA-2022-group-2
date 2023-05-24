@@ -1,11 +1,11 @@
-import { DatabaseService } from '../../core/services/index.js';
+import { DatabaseService } from '../core/services/index.js';
 
 import { DataTypes, Model } from 'sequelize';
 
-export class GroupEntity extends Model {}
+export class QuizEntity extends Model {}
 
-/** @type {import('sequelize').ModelAttributes<GroupEntity>} */
-export const GroupModelDefinition = {
+/** @type {import('sequelize').ModelAttributes<QuizEntity>} */
+export const QuizModelDefinition = {
   id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
@@ -18,11 +18,11 @@ export const GroupModelDefinition = {
 };
 
 /** @return {void} */
-export function initializeGroupEntity() {
-  GroupEntity.init(GroupModelDefinition, {
+export function initializeQuizEntity() {
+  QuizEntity.init(QuizModelDefinition, {
     sequelize: DatabaseService.instance().sequelizeInstance,
-    modelName: 'group',
-    tableName: 'group',
+    modelName: 'quiz',
+    tableName: 'quiz',
     createdAt: false,
     updatedAt: false
   });

@@ -3,7 +3,7 @@
 const {
   UserGroupModelDefinition,
   UserGroupModelOptions
-} = require('../../app/models/user_group/user_group.entity');
+} = require('../../app/user_group/user_group.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

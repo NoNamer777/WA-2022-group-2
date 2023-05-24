@@ -4,7 +4,7 @@ import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { ConfigService, DatabaseService } from './core/services/index.js';
-import { userRouter } from './models/user/index.js';
+import { userRouter } from './user/index.js';
 
 class App {
   /** @type {import('express').core.Express} */

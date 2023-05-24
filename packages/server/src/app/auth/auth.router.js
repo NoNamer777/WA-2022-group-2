@@ -1,7 +1,7 @@
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { checkSchema, matchedData } from 'express-validator';
-import { newUserSchema } from '../models/user/index.js';
+import { newUserSchema } from '../user/index.js';
 import { authController } from './auth.controller.js';
 import { loginSchema } from './auth.validator.js';
 import { confirmPasswordValidator } from './middleware/confirm-password.validator.js';

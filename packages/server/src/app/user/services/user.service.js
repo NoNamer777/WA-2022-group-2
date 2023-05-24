@@ -1,4 +1,4 @@
-import { BadRequestException, NotFoundException } from '../../../core/models/index.js';
+import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { userRepository } from '../user.repository.js';
 
 // TODO: Only allow Users managing their own access or allow access to the User data to Admins.

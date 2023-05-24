@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '../../core/models/index.js';
-import { UserService } from '../../models/user/index.js';
+import { UserService } from '../../user/index.js';
 import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
 
 export class AuthService {

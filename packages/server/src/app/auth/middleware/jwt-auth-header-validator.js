@@ -1,4 +1,4 @@
-import { UserService } from '../../models/user/index.js';
+import { UserService } from '../../user/index.js';
 import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
 import { JwtService } from '../services/jwt.service.js';
 

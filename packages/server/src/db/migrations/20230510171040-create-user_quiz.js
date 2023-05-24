@@ -1,6 +1,6 @@
 'use strict';
 
-const { UserQuizModelDefinition } = require('../../app/models/user_quiz/user_quiz.entity');
+const { UserQuizModelDefinition } = require('../../app/user_quiz/user_quiz.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

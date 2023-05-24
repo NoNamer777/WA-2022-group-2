@@ -1,6 +1,6 @@
 'use strict';
 
-const { GroupModelDefinition } = require('../../app/models/group/group.entity');
+const { GroupModelDefinition } = require('../../app/group/group.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

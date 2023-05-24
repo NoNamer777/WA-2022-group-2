@@ -1,6 +1,6 @@
 'use strict';
 
-const { EarnedBadgeModelDefinition } = require('../../app/models/earned_badge/earned_badge.entity');
+const { EarnedBadgeModelDefinition } = require('../../app/earned_badge/earned_badge.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

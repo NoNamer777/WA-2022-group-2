@@ -1,8 +1,6 @@
 'use strict';
 
-const {
-  ChallengeDayModelDefinition
-} = require('../../app/models/challenge_day/challenge_day.entity');
+const { ChallengeDayModelDefinition } = require('../../app/challenge_day/challenge_day.entity');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
