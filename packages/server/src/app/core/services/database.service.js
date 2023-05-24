@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises';
 import { Sequelize } from 'sequelize';
-import { initializeUserEntity } from '../../user/index.js';
 import { ConfigService } from './config.service.js';
+import { EntityService } from './entity.service.js';
 
 export class DatabaseService {
   /** @return {DatabaseService} */
@@ -31,7 +31,8 @@ export class DatabaseService {
 
     await this.sequelizeInstance.authenticate();
 
-    initializeUserEntity();
+    EntityService.instance().initializeEntities();
+    EntityService.instance().initializeEntityRelations();
 
     console.info(
       `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`

@@ -20,7 +20,7 @@ export class UserEntity extends Model {
 /** @type {import('sequelize').ModelAttributes<UserEntity>} */
 export const UserModelDefinition = {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(11),
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
@@ -31,7 +31,7 @@ export const UserModelDefinition = {
     }
   },
   username: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(80),
     allowNull: false,
     unique: 'unique_user_username_idx',
     validate: {
@@ -41,7 +41,7 @@ export const UserModelDefinition = {
     }
   },
   email: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(80),
     allowNull: false,
     validate: {
       notNull: true,
@@ -51,17 +51,25 @@ export const UserModelDefinition = {
     }
   },
   password: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(128),
     allowNull: false,
     validate: {
       notNull: true,
       notEmpty: true,
-      len: [3, 124],
+      len: [3, 128],
       is: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_\-+=;:<>.?()])[a-zA-Z0-9!@#$%^&*_\-+=;:<>.?()]+/g
     },
     set(password) {
       this.setDataValue('password', bcrypt.hashSync(password, bcrypt.genSaltSync(15)));
     }
+  },
+  profile_image_path: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  is_admin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
   }
 };
 
