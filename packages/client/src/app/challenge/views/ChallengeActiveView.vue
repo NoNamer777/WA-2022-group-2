@@ -24,15 +24,9 @@
 </template>
 
 <script>
-<<<<<<<< HEAD:packages/client/src/app/challenge/views/ChallengeActiveView.vue
 import { ChallengeProgress } from '../components/index.js';
 import data from '../data.json';
 import { useAuthStore } from '../../auth/index.js';
-========
-import ChallengeProgress from '../../components/challenge/progress/ChallengeProgress.vue';
-import data from '../../components/challenge/progress/data.json';
-import { useAuthStore } from '../../stores';
->>>>>>>> main:packages/client/src/app/views/challenge/ChallengeProgressView.vue
 
 /* TODO: send in user and challenge, move logic to backend */
 

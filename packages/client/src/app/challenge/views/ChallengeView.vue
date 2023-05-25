@@ -1,6 +1,6 @@
 <script setup>
 import { Tabs, Tab } from 'vue3-tabs-component';
-import CardList from '../../components/card/CardList.vue';
+import { CardList } from '../../shared/components/index.js';
 
 const currentPersonalChallenges = [
   {
