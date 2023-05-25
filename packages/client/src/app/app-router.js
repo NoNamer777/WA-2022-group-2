@@ -1,6 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from './stores';
-import { ChallengeProgressView, ChallengeView, HomeView, LoginView, RegisterView } from './views';
+import {
+  ChallengeProgressView,
+  ChallengeView,
+  HomeView,
+  InfoView,
+  LoginView,
+  RegisterView
+} from './views';
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +20,6 @@ export const router = createRouter({
         title: 'Hoofdpagina'
       }
     },
-
     {
       path: '/challenge',
       name: 'challenge',
@@ -47,6 +53,14 @@ export const router = createRouter({
       component: RegisterView,
       meta: {
         title: 'Registreer'
+      }
+    },
+    {
+      path: '/info',
+      name: 'info',
+      component: InfoView,
+      meta: {
+        title: 'Informatie'
       }
     }
   ]
