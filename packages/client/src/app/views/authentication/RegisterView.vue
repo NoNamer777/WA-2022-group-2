@@ -54,7 +54,7 @@ const user = ref({
         </FormKit>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">
-        <img class="float-end w-100" src="/assets/images/mascot/happy_bin_login.png" alt="mascot" />
+        <img class="float-end w-50" src="/assets/images/mascot/mascotte_happy.png" alt="mascot" />
       </div>
     </section>
   </main>
