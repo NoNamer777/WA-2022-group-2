@@ -62,7 +62,7 @@ import { useAuthStore } from '../stores';
 import { useRouter } from 'vue-router';
 
 export default {
-  name: 'ChallengeCreationView.vue',
+  name: 'ChallengeCreationView',
   components: { CustomFormKit },
   setup() {
     const authStore = useAuthStore();
