@@ -27,7 +27,7 @@
 
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
-import data from '../../data.json';
+import data from '../data.json';
 
 export default {
   name: 'ChallengeProgress',

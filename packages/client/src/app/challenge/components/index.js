@@ -1,3 +1,3 @@
-import ChallengeProgress from './challenge-progress/ChallengeProgress.vue';
+import ChallengeProgress from './ChallengeProgress.vue';
 
 export { ChallengeProgress };
