@@ -36,11 +36,6 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
           <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'info' }">Info</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link text-white" :to="{ name: 'home' }"
-              >Mijn Wasted</router-link
-            >
-          </li>
         </ul>
         <hr class="d-xl-none" />
         <ul class="navbar-nav mb-2 mb-lg-0 gap-2 gap-xl-4">
@@ -56,9 +51,19 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
               </router-link>
             </li>
           </template>
-          <li class="nav-item" v-else>
-            <button class="btn bg-white text-primary focus-auto" @click="logout">Uitloggen</button>
-          </li>
+          <template v-else>
+            <li class="nav-item">
+              <!--TODO: Provide the correct link-->
+              <router-link class="nav-link text-white" :to="{ name: 'home' }">
+                Mijn Wasted
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <button class="btn bg-white text-primary focus-auto" @click="logout">
+                Uitloggen
+              </button>
+            </li>
+          </template>
         </ul>
       </div>
     </div>
