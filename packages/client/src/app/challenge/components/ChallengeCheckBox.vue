@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-content-center">
-    <div class="check position-relative">
+    <div class="check position-relative w-100">
       <input
         :id="id"
         type="checkbox"
@@ -16,9 +16,9 @@
           transform: `rotateY(${this.deg}deg)`
         }"
       />
-      <div :aria-hidden="true" :class="getClass">
+      <p :aria-hidden="true" :class="getClass">
         {{ getCheckmarks }}
-      </div>
+      </p>
       <div class="d-flex justify-content-center">Dag {{ dayNumber }}</div>
     </div>
   </div>
@@ -83,8 +83,8 @@ export default {
 }
 
 .check input[type='checkbox'] + label {
-  width: 52px;
-  height: 52px;
+  width: 75px;
+  height: 75px;
   background-image: v-bind('imagePath');
   background-position: center;
   background-size: contain;
@@ -111,5 +111,13 @@ export default {
 .transition {
   transition: transform 0.5s;
   transform-style: preserve-3d;
+}
+
+@media only screen and (max-width: 600px) {
+  .check input[type='checkbox'] + label {
+    width: 52px;
+    height: 52px;
+    /*flex-basis: 20%;*/
+  }
 }
 </style>
