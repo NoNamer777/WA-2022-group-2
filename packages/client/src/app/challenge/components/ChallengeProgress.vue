@@ -13,6 +13,7 @@
           :imageName="this.user.profile_picture"
           :imagePath="`url('../assets/profile_pictures/${this.user.profile_picture}.png')`"
           :isOwner="isOwner"
+          :aria-hidden="hideFromScreenReader"
         ></CheckBox>
       </div>
       <div class="d-flex flex-column">
@@ -111,6 +112,9 @@ export default {
       return this.challengeDays[this.todayNumber - 1].earned
         ? 'btn btn-secondary'
         : 'btn btn-primary';
+    },
+    hideFromScreenReader() {
+      return this.isOwner ? 'false' : 'true';
     }
   }
 };
