@@ -38,8 +38,8 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        '201':
-          description: Created
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -91,14 +91,29 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        '204':
-          description: Edit successful
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Users
+      summary: Deletes the specified user.
+      responses:
+        '200':
+          description: Success
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -119,7 +134,7 @@ paths:
           example: 1
     get:
       tags:
-        - Challenges
+        - Challenge
       summary: Returns a list of user's challenges.
       responses:
         '200':
@@ -140,7 +155,7 @@ paths:
           $ref: '#/components/responses/ServerError'
     post:
       tags:
-        - Challenges
+        - Challenge
       summary: Creates a challenge for the user and selected participants.
       responses:
         '200':
@@ -155,7 +170,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/ServerError'
-          
+
   /challenge/{challengeId}:
     parameters:
       - in: path
@@ -167,7 +182,7 @@ paths:
           example: 1
     get:
       tags:
-        - Challenges
+        - Challenge
       summary: Returns a list of challenge participant information based on challenge ID.
       responses:
         '200':
@@ -186,6 +201,92 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
+    put: 
+      tags:
+        - Challenge
+      summary: Modifies an existing challenge based on challenge ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Challenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /userchallenge/{userChallengeId}:
+    parameters:
+      - in: path
+        name: userChallengeId
+        description: userChallengeId ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    put:
+      tags:
+        - Challenge Progress
+      summary: Modifies a user's challenge completion status based on userchallenge ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserChallenge'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserChallenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Challenge
+      summary: Removes a user from a challenge based on userchallenge ID.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChallengeDay'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
   /challenge/{challengeId}/days:
     parameters:
       - in: path
@@ -216,7 +317,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-  
+          
   /days/{dayId}:
     parameters:
       - in: path
@@ -318,6 +419,10 @@ components:
         completed: 
           type: boolean
           example: false
+      required:
+        - id
+        - username
+        - completed
     ChallengeDay:
       properties:
         id: 
@@ -330,7 +435,10 @@ components:
         earned:
           type: boolean
           example: true
-          
+      required:
+        - id
+        - dayNumber
+        - earned
     Error:
       type: object
       properties:
