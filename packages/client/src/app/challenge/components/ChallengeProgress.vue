@@ -1,7 +1,7 @@
 <template>
-  <div class="my-4">
+  <div class="my-2 w-100 border shadow-lg p-4 rounded">
     <h2>{{ title }}</h2>
-    <div class="d-flex flex-row flex-wrap gap-4">
+    <div class="d-flex flex-row flex-wrap justify-content-center gap-4">
       <div class="d-flex flex-row flex-wrap flex-item">
         <CheckBox
           v-for="(challengeDay, i) in challengeDays"

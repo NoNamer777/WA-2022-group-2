@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="mb-4">
+    <div class="mb-1">
       <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
         <h1>{{ challenge.name }}</h1>
         <button class="btn btn-primary h-50">Pas aan</button>
@@ -85,18 +85,8 @@ export default {
       return this.user.id === userChallenge.user_id;
     },
     getClass(userChallenge) {
-      return this.getIsOwner(userChallenge) ? 'owner' : 'shrink';
+      return this.getIsOwner(userChallenge) ? 'bg-white' : 'bg-opponent';
     }
   }
 };
 </script>
-
-<style scoped>
-.owner {
-  flex-basis: 100%;
-}
-.shrink {
-  transform: scale(0.75);
-  transform-origin: left;
-}
-</style>
