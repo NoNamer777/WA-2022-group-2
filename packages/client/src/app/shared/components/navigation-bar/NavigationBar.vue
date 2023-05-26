@@ -29,10 +29,6 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
             </router-link>
           </li>
           <li class="nav-item">
-            <!--TODO: Add correct routing-->
-            <router-link class="nav-link text-white" :to="{ name: 'home' }">Quiz</router-link>
-          </li>
-          <li class="nav-item">
             <router-link class="nav-link text-white" :to="{ name: 'challenge' }">
               Challenge
             </router-link>
