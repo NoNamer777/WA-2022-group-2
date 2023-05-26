@@ -1,0 +1,22 @@
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '../../auth/index.js';
+
+const { isAuthenticated } = storeToRefs(useAuthStore());
+</script>
+<template>
+  <main>
+    <h1 class="mb-4">Wat is Wasted?</h1>
+    <p class="mb-4">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est explicabo nulla perferendis!
+      Eius ex illo illum optio quaerat! Expedita facere hic impedit in iste quia ratione sint
+      suscipit. Aliquam architecto corporis cum deleniti doloribus fugiat perspiciatis, qui quis
+      ratione repellendus! Cum eaque est provident rerum tempore! Beatae maiores pariatur placeat?
+    </p>
+    <router-link v-if="!isAuthenticated" class="btn btn-primary me-3" :to="{ name: 'register' }">
+      Registreer
+    </router-link>
+    <router-link class="btn btn-primary" :to="{ name: 'info' }"> Plastic Afval! </router-link>
+    <img class="w-25 float-end" src="/assets/images/mascot/mascotte_happy.png" alt="mascot" />
+  </main>
+</template>

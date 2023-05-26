@@ -1,4 +1,3 @@
-import { AnswerEntity, initializeAnswerEntity } from '../../answer/answer.entity.js';
 import { BadgeEntity, initializeBadgeEntity } from '../../badge/badge.entity.js';
 import { ChallengeEntity, initializeChallengeEntity } from '../../challenge/challenge.entity.js';
 import {
@@ -10,19 +9,12 @@ import {
   initializeEarnedBadgeEntity
 } from '../../earned_badge/earned_badge.entity.js';
 import { GroupEntity, initializeGroupEntity } from '../../group/group.entity.js';
-import { QuestionEntity, initializeQuestionEntity } from '../../question/question.entity.js';
-import { QuizEntity, initializeQuizEntity } from '../../quiz/quiz.entity.js';
-import {
-  QuizQuestionEntity,
-  initializeQuizQuestionEntity
-} from '../../quiz_question/quiz_question.entity.js';
 import { UserEntity, initializeUserEntity } from '../../user/index.js';
 import {
   UserChallengeEntity,
   initializeUserChallengeEntity
 } from '../../user_challenge/user_challenge.entity.js';
 import { UserGroupEntity, initializeUserGroupEntity } from '../../user_group/user_group.entity.js';
-import { UserQuizEntity, initializeUserQuizEntity } from '../../user_quiz/user_quiz.entity.js';
 
 export class EntityService {
   /** @return {EntityService} */
@@ -44,11 +36,6 @@ export class EntityService {
     initializeBadgeEntity();
     initializeUserChallengeEntity();
     initializeChallengeDayEntity();
-    initializeQuestionEntity();
-    initializeQuizEntity();
-    initializeQuizQuestionEntity();
-    initializeUserQuizEntity();
-    initializeAnswerEntity();
     initializeEarnedBadgeEntity();
   }
 
@@ -59,7 +46,6 @@ export class EntityService {
       through: UserChallengeEntity,
       foreignKey: 'user_id'
     });
-    UserEntity.belongsToMany(QuizEntity, { through: UserQuizEntity, foreignKey: 'user_id' });
     UserEntity.belongsToMany(BadgeEntity, { through: EarnedBadgeEntity, foreignKey: 'user_id' });
 
     // Group associations
@@ -72,20 +58,6 @@ export class EntityService {
       foreignKey: 'challenge_id'
     });
 
-    // Quiz associations
-    QuizEntity.belongsToMany(QuestionEntity, {
-      through: QuizQuestionEntity,
-      foreignKey: 'quiz_id'
-    });
-    QuizEntity.belongsToMany(UserEntity, { through: UserQuizEntity, foreignKey: 'quiz_id' });
-
-    // Question associations
-    QuestionEntity.belongsToMany(QuizEntity, {
-      through: QuizQuestionEntity,
-      foreignKey: 'question_id'
-    });
-    AnswerEntity.belongsTo(QuestionEntity, { foreignKey: 'question_id' });
-
     // Badge associations
     BadgeEntity.belongsToMany(UserEntity, { through: UserChallengeEntity, foreignKey: 'badge_id' });
 
@@ -94,6 +66,5 @@ export class EntityService {
 
     // EarnedBadge associations
     EarnedBadgeEntity.belongsTo(UserChallengeEntity, { foreignKey: 'user_challenge_id' });
-    EarnedBadgeEntity.belongsTo(UserQuizEntity, { foreignKey: 'user_quiz_id' });
   }
 }

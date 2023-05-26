@@ -3,16 +3,17 @@ FROM node:18-alpine AS builder
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-ARG SERVER_PORT=8080
-ENV SERVER_PORT $SERVER_PORT
-
-EXPOSE $SERVER_PORT
+EXPOSE 8080
 
 WORKDIR server-app
 
+COPY package*.json .
+
+RUN npm ci
+
 COPY . .
 
-RUN npm ci && npm run server:build
+RUN npm run server:build
 
 COPY /packages/server/src/db/migrations /server-app/dist/server/migrations
 

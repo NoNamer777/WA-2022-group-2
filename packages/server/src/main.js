@@ -4,7 +4,15 @@ import { createServer } from 'http';
 import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
 
 (async () => {
-  const wastedApp = await initializeApp();
+  let wastedApp;
+
+  try {
+    wastedApp = await initializeApp();
+  } catch (error) {
+    console.error('Something went wrong while trying to initialize the server.', error);
+    process.exit(1);
+    return;
+  }
 
   // Get port and hostname from the config service and store in Express
   const host = ConfigService.instance().config.server.host;
@@ -39,14 +47,14 @@ import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
   });
 
   process.on('SIGINT', async () => {
-    await shutdown();
+    await shutdown(server);
   });
 
   process.on('SIGTERM', async () => {
-    await shutdown();
+    await shutdown(server);
   });
 
-  async function shutdown() {
+  async function shutdown(server) {
     console.info('Shutting down server...');
     await DatabaseService.instance().sequelizeInstance.close();
 

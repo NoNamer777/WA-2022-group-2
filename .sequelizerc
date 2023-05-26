@@ -1,6 +1,4 @@
-const path = require('path')
-
 module.exports = {
-  'config': path.resolve('packages', 'server', 'src', 'app', 'config', 'database.json'),
-  'migrations-path': path.resolve('packages', 'server', 'src', 'db', 'migrations')
+  'config': './environment/database.json',
+  'migrations-path': './packages/server/src/db/migrations',
 }
