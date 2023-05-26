@@ -62,7 +62,7 @@ import { useAuthStore } from '../../auth/index.js';
 import { CustomFormKit } from '../../shared/index.js';
 
 export default {
-  name: 'ChallengeCreationView.vue',
+  name: 'ChallengeCreationView',
   components: { CustomFormKit },
   setup() {
     const authStore = useAuthStore();

@@ -32,7 +32,9 @@ const pastPersonalChallenges = [
   <main>
     <section class="d-flex align-items-center justify-content-between">
       <h1 class="mb-4">Uitdagingen</h1>
-      <router-link class="btn btn-primary" :to="{ name: 'challenge' }"> Aanmaken </router-link>
+      <router-link class="btn btn-primary" :to="{ name: 'challenge_create' }">
+        Aanmaken
+      </router-link>
     </section>
     <section>
       <div>

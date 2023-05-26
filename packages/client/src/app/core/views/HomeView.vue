@@ -13,9 +13,10 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
       suscipit. Aliquam architecto corporis cum deleniti doloribus fugiat perspiciatis, qui quis
       ratione repellendus! Cum eaque est provident rerum tempore! Beatae maiores pariatur placeat?
     </p>
-    <router-link v-if="!isAuthenticated" class="btn btn-primary" :to="{ name: 'register' }">
+    <router-link v-if="!isAuthenticated" class="btn btn-primary me-3" :to="{ name: 'register' }">
       Registreer
     </router-link>
-    <img class="w-25 float-end" src="/assets/images/mascot/happy_bin.png" alt="mascot" />
+    <router-link class="btn btn-primary" :to="{ name: 'info' }"> Plastic Afval! </router-link>
+    <img class="w-25 float-end" src="/assets/images/mascot/mascotte_happy.png" alt="mascot" />
   </main>
 </template>
