@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from './auth';
 import { LoginView, RegisterView } from './auth/views';
-import { ChallengeView } from './challenge/views';
-import { ChallengeCreationView, ChallengeProgressView, InfoView } from './views';
+import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView, InfoView } from './core/views';
 
 export const router = createRouter({
@@ -21,7 +20,7 @@ export const router = createRouter({
       name: 'challenge',
       component: ChallengeView,
       meta: {
-        title: 'Challenge progress',
+        title: 'Challenge overzicht',
         requiresAuth: true
       }
     },
@@ -30,7 +29,7 @@ export const router = createRouter({
       name: 'challenge_progress',
       component: ChallengeProgressView,
       meta: {
-        title: 'Actieve challenge',
+        title: 'Challenge voortgang',
         requiresAuth: true
       }
     },
@@ -39,7 +38,7 @@ export const router = createRouter({
       name: 'challenge_create',
       component: ChallengeCreationView,
       meta: {
-        title: 'Actieve challenge',
+        title: 'Challenge Aanmaken',
         requiresAuth: true
       }
     },

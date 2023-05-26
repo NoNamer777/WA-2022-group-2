@@ -1,5 +1,5 @@
-import ChallengeActiveView from './ChallengeActiveView.vue';
 import ChallengeCreationView from './ChallengeCreationView.vue';
+import ChallengeProgressView from './ChallengeProgressView.vue';
 import ChallengeView from './ChallengeView.vue';
 
-export { ChallengeActiveView, ChallengeCreationView, ChallengeView };
+export { ChallengeProgressView, ChallengeCreationView, ChallengeView };
