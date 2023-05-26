@@ -1,7 +1,7 @@
 {
   "extends": "./jsconfig.json",
   "include": ["src/**/*.js"],
-  "exclude": ["jest.config.js", "src/**/*.test.js"],
+  "exclude": ["jest.config.js", "src/**/*.test.js", "src/db/**/*"],
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "module": "ES2022",

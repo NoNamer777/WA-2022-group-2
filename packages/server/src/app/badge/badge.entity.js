@@ -1,27 +1,12 @@
-import { DataTypes, Model } from 'sequelize';
+import { Model } from 'sequelize';
+import definition from '../../db/table-definitions/badge.js';
 import { DatabaseService } from '../core/services/index.js';
 
 export class BadgeEntity extends Model {}
 
-/** @type {import('sequelize').ModelAttributes<BadgeEntity>} */
-export const BadgeModelDefinition = {
-  id: {
-    type: DataTypes.INTEGER(11),
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  name: {
-    type: DataTypes.STRING(255)
-  },
-  image_path: {
-    type: DataTypes.STRING(255)
-  }
-};
-
 /** @return {void} */
 export function initializeBadgeEntity() {
-  BadgeEntity.init(BadgeModelDefinition, {
+  BadgeEntity.init(definition.badgeTableDefinition, {
     sequelize: DatabaseService.instance().sequelizeInstance,
     modelName: 'badge',
     tableName: 'badge',

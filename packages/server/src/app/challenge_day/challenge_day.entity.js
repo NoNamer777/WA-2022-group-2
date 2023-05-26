@@ -1,38 +1,12 @@
-import { DataTypes, Model } from 'sequelize';
+import { Model } from 'sequelize';
+import definition from '../../db/table-definitions/challenge-day.js';
 import { DatabaseService } from '../core/services/index.js';
 
 export class ChallengeDayEntity extends Model {}
 
-/** @type {import('sequelize').ModelAttributes<ChallengeDayEntity>} */
-export const ChallengeDayModelDefinition = {
-  id: {
-    type: DataTypes.INTEGER(11),
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  date: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
-  },
-  earned: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false
-  },
-  user_challenge_id: {
-    type: DataTypes.INTEGER(11),
-    allowNull: false,
-    references: {
-      model: 'user_challenge',
-      key: 'id'
-    },
-    onDelete: 'CASCADE'
-  }
-};
-
 /** @return {void} */
 export function initializeChallengeDayEntity() {
-  ChallengeDayEntity.init(ChallengeDayModelDefinition, {
+  ChallengeDayEntity.init(definition.challengeDayTableDefinition, {
     sequelize: DatabaseService.instance().sequelizeInstance,
     modelName: 'challenge_day',
     tableName: 'challenge_day',
