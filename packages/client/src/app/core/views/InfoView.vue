@@ -77,8 +77,9 @@
     </section>
   </main>
 </template>
+
 <script setup>
-import { useAuthStore } from '../stores';
+import { useAuthStore } from '../../auth/index.js';
 import { storeToRefs } from 'pinia';
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
