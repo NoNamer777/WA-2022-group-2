@@ -74,7 +74,7 @@ export default {
     },
     getDayClass() {
       return this.dayNumber === this.todayNumber
-        ? 'fw-bold text-decoration-underline d-flex justify-content-center'
+        ? 'fw-bold text-primary d-flex justify-content-center'
         : 'd-flex justify-content-center';
     }
   }
