@@ -27,12 +27,12 @@
           </button>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <button class="dropdown-item" role="menuitem" @click="adjustText">
+              <button class="dropdown-item small" role="menuitem" @click="adjustText">
                 Pas titel aan
               </button>
             </li>
             <li>
-              <button class="dropdown-item" role="menuitem" @click="leaveChallenge">
+              <button class="dropdown-item small" role="menuitem" @click="leaveChallenge">
                 Verlaat challenge
               </button>
             </li>
@@ -50,7 +50,7 @@
           <ul class="dropdown-menu" role="menu">
             <!-- TODO: v-if if available, for each for the amount of challenges with link-->
             <li>
-              <a class="dropdown-item" role="menuitem" href="#">
+              <a class="dropdown-item small" role="menuitem" href="#">
                 Andere challenge met een lange titel
               </a>
             </li>
