@@ -15,7 +15,7 @@
           <span class="fw-normal"> {{ dayTitle }}</span>
         </p>
       </div>
-      <div class="h-25 mb-2 d-flex">
+      <div class="h-25 mb-2 d-flex flex-wrap">
         <div class="btn-group">
           <button
             type="button"
