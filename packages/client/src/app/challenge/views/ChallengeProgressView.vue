@@ -10,8 +10,8 @@
         </div>
         <p>Vandaag: {{ dayTitle }}</p>
       </div>
-      <div class="mb-3">
-        <div class="btn-group me-3 my-3">
+      <div class="h-25 d-grid gap-3 mb-2 d-xl-flex">
+        <div class="btn-group">
           <button
             type="button"
             class="btn btn-primary dropdown-toggle"
