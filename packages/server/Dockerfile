@@ -15,7 +15,7 @@ COPY . .
 
 RUN npm run server:build
 
-COPY /packages/server/src/db/migrations /server-app/dist/server/migrations
+COPY /packages/server/src/db /server-app/dist/server/db
 
 COPY /packages/server/start.sh package*.json /server-app/dist/server/
 
