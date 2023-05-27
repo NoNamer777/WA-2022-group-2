@@ -6,15 +6,20 @@
           <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
             <h1>{{ challenge.name }}</h1>
           </div>
-          <p>Startdatum: {{ startDate }}</p>
+          <p class="fw-bold">
+            Startdatum: <span class="fw-normal">{{ startDate }}</span>
+          </p>
         </div>
-        <p>Vandaag: {{ dayTitle }}</p>
+        <p class="fw-bold">
+          Vandaag:
+          <span class="fw-normal"> {{ dayTitle }}</span>
+        </p>
       </div>
-      <div class="h-25 d-grid gap-3 mb-2 d-xl-flex">
+      <div class="h-25 mb-2 d-flex">
         <div class="btn-group">
           <button
             type="button"
-            class="btn btn-primary dropdown-toggle"
+            class="btn btn-sm btn-primary dropdown-toggle my-2 me-1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
@@ -22,28 +27,32 @@
           </button>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a class="dropdown-item" role="menuitem" @click="adjustText">Pas titel aan</a>
+              <button class="dropdown-item" role="menuitem" @click="adjustText">
+                Pas titel aan
+              </button>
             </li>
             <li>
-              <a class="dropdown-item" role="menuitem" @click="leaveChallenge">
+              <button class="dropdown-item" role="menuitem" @click="leaveChallenge">
                 Verlaat challenge
-              </a>
+              </button>
             </li>
           </ul>
         </div>
         <div class="btn-group">
           <button
             type="button"
-            class="btn btn-tertiary text-dark dropdown-toggle"
+            class="btn btn-sm btn-tertiary text-dark dropdown-toggle my-2 ms-1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             Wissel challenge
           </button>
           <ul class="dropdown-menu" role="menu">
-            <!-- TODO: for each for the amount of challenges with method-->
+            <!-- TODO: v-if if available, for each for the amount of challenges with link-->
             <li>
-              <a class="dropdown-item" role="menuitem">Andere challenge</a>
+              <a class="dropdown-item" role="menuitem" href="#">
+                Andere challenge met een lange titel
+              </a>
             </li>
           </ul>
         </div>

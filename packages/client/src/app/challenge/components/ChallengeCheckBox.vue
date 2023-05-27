@@ -16,10 +16,10 @@
           transform: `rotateY(${this.deg}deg)`
         }"
       />
-      <p :aria-hidden="true" :class="getClass">
+      <p :aria-hidden="true" :class="getButtonClass">
         {{ getCheckmarks }}
       </p>
-      <div class="d-flex justify-content-center">Dag {{ dayNumber }}</div>
+      <div :class="getDayClass">Dag {{ dayNumber }}</div>
     </div>
   </div>
 </template>
@@ -64,13 +64,18 @@ export default {
     }
   },
   computed: {
-    getClass() {
+    getButtonClass() {
       return this.checked
         ? 'position-absolute top-50 text-tertiary'
         : 'position-absolute top-50 text-secondary';
     },
     getCheckmarks() {
       return this.checked ? '✔' : this.dayNumber < this.todayNumber ? '✘' : ' ';
+    },
+    getDayClass() {
+      return this.dayNumber === this.todayNumber
+        ? 'fw-bold text-decoration-underline d-flex justify-content-center'
+        : 'd-flex justify-content-center';
     }
   }
 };
