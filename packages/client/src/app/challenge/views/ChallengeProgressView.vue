@@ -1,13 +1,54 @@
 <template>
   <main>
-    <div class="mb-1">
-      <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
-        <h1>{{ challenge.name }}</h1>
-        <button class="btn btn-primary h-50">Pas aan</button>
+    <div class="d-flex flex-row flex-wrap justify-content-between">
+      <div>
+        <div class="mb-1">
+          <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
+            <h1>{{ challenge.name }}</h1>
+          </div>
+          <p>Startdatum: {{ startDate }}</p>
+        </div>
+        <p>Vandaag: {{ dayTitle }}</p>
       </div>
-      <p>Startdatum: {{ startDate }}</p>
+      <div class="mb-3">
+        <div class="btn-group me-3 my-3">
+          <button
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Pas challenge aan
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a class="dropdown-item" role="menuitem" @click="adjustText">Pas titel aan</a>
+            </li>
+            <li>
+              <a class="dropdown-item" role="menuitem" @click="leaveChallenge">
+                Verlaat challenge
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-tertiary text-dark dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Wissel challenge
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <!-- TODO: for each for the amount of challenges with method-->
+            <li>
+              <a class="dropdown-item" role="menuitem">Andere challenge</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <p>Vandaag: {{ dayTitle }}</p>
 
     <div class="d-flex flex-row flex-wrap justify-content-start gap-xl-2">
       <ChallengeProgress
@@ -86,6 +127,14 @@ export default {
     },
     getClass(userChallenge) {
       return this.getIsOwner(userChallenge) ? 'bg-white' : 'bg-opponent';
+    },
+    adjustText() {
+      // TODO: handle edit
+      console.log('change name');
+    },
+    leaveChallenge() {
+      // TODO: handle leaving challenge
+      console.log(`${this.user.username} is leaving ${this.challenge.name}`);
     }
   }
 };
