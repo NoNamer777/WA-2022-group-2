@@ -9,6 +9,50 @@ security:
   - bearerAuth: [] 
 
 paths:
+  /auth/register:
+    post:  
+      tags:
+        - Auth
+      summary: Registers a user.
+      servers:
+        - url: http://localhost:8080
+      security: []
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /auth/login:
+    post:  
+      tags:
+        - Auth
+      summary: Logs in a user.
+      servers:
+        - url: http://localhost:8080
+      security: []
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
   /user:
     get:
       tags:
@@ -620,19 +664,30 @@ components:
         email:
           type: string
           format: email
+          writeOnly: true
           example: wasteduser@email.com
         password:
           type: string
           format: password
           writeOnly: true
-          example: super secret password
+          example: superSecretPassword1@#
         profile_image:
           type: string
+          readOnly: true
           example: zebra
       required: 
         - username
         - email
         - password
+    Login:
+      properties:
+        username:
+          type: string
+          example: wasteduser
+        password:
+          type: string
+          format: password
+          example: superSecretPassword1@#
     Challenge:
       properties:
         id:
