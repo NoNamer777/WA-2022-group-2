@@ -348,7 +348,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-          
+
   /user/{userId}/groupmember:
     parameters:
       - in: path
@@ -357,7 +357,7 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1     
+          example: 1
     get:
       tags:
         - Groups
@@ -379,7 +379,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-          
+
   /user/{userId}/group:
     parameters:
       - in: path
@@ -388,7 +388,7 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1     
+          example: 1
     get:
       tags:
         - Groups
@@ -437,7 +437,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-          
+
   /group/{groupId}/member/:
     parameters:
       - in: path
@@ -446,7 +446,7 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1     
+          example: 1
     get:
       tags:
         - Groups
@@ -468,7 +468,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-          
+
   /group/{groupId}/member/{userId}:
     parameters:
       - in: path
@@ -477,14 +477,14 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1     
+          example: 1
       - in: path
         name: userId
         description: User ID
         required: true
         schema:
           type: integer
-          example: 1     
+          example: 1
     post:
       tags:
         - Groups
@@ -500,7 +500,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-    
+
 
 components:
   securitySchemes:
@@ -598,7 +598,7 @@ components:
           type: integer
           readOnly: true
           example: 1
-        name: 
+        name:
           type: string
           example: my awesome family group
         groupCode:
