@@ -12,7 +12,7 @@ paths:
   /user:
     get:
       tags:
-        - Users
+        - User
       summary: Returns a list of users.
       responses:
         '200':
@@ -29,7 +29,7 @@ paths:
           $ref: '#/components/responses/ServerError'
     post:
       tags:
-        - Users
+        - User
       summary: Creates a new user.
       requestBody:
         required: true
@@ -48,8 +48,6 @@ paths:
                   $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/ServerError'
   /user/{userId}:
@@ -63,7 +61,7 @@ paths:
           example: 1
     get:
       tags:
-        - Users
+        - User
       summary: Returns a user based on ID.
       responses:
         '200':
@@ -82,7 +80,7 @@ paths:
           $ref: '#/components/responses/ServerError'
     put:
       tags:
-        - Users
+        - User
       summary: Modifies an existing user based on ID.
       requestBody:
         required: true
@@ -109,7 +107,7 @@ paths:
           $ref: '#/components/responses/ServerError'
     delete:
       tags:
-        - Users
+        - User
       summary: Deletes the specified user.
       responses:
         '200':
@@ -157,6 +155,12 @@ paths:
       tags:
         - Challenge
       summary: Creates a challenge for the user and selected participants.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenge'
       responses:
         '200':
           description: Success
@@ -168,6 +172,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
 
@@ -183,7 +189,7 @@ paths:
     get:
       tags:
         - Challenge
-      summary: Returns a list of challenge participant information based on challenge ID.
+      summary: Returns a list of users participating in a challenge.
       responses:
         '200':
           description: Success
@@ -348,7 +354,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-
+          
   /user/{userId}/groupmember:
     parameters:
       - in: path
@@ -357,10 +363,10 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1
+          example: 1     
     get:
       tags:
-        - Groups
+        - Group
       summary: Returns a list of user's group members.
       responses:
         '200':
@@ -379,7 +385,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-
+          
   /user/{userId}/group:
     parameters:
       - in: path
@@ -388,10 +394,10 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1
+          example: 1     
     get:
       tags:
-        - Groups
+        - Group
       summary: Returns a list of user's groups.
       responses:
         '200':
@@ -412,7 +418,7 @@ paths:
           $ref: '#/components/responses/ServerError'
     post:
       tags:
-        - Groups
+        - Group
       summary: Creates a group for the user.
       requestBody:
         required: true
@@ -437,7 +443,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-
+          
   /group/{groupId}/member/:
     parameters:
       - in: path
@@ -446,10 +452,10 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1
+          example: 1     
     get:
       tags:
-        - Groups
+        - Group
       summary: Returns a list of group's members.
       responses:
         '200':
@@ -468,7 +474,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-
+          
   /group/{groupId}/member/{userId}:
     parameters:
       - in: path
@@ -477,17 +483,17 @@ paths:
         required: true
         schema:
           type: integer
-          example: 1
+          example: 1     
       - in: path
         name: userId
         description: User ID
         required: true
         schema:
           type: integer
-          example: 1
+          example: 1     
     post:
       tags:
-        - Groups
+        - Group
       summary: Adds a member to a group.
       responses:
         '200':
@@ -500,8 +506,101 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-
-
+          
+  /user/{userId}/challenge/{challengeId}/:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1    
+      - in: path
+        name: challengeId
+        description: Challenge ID
+        required: true
+        schema:
+          type: integer
+          example: 1    
+    post:
+      tags:
+        - Badge
+      summary: Marks a challenge complete and creates a badge for the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /user/{userId}/badge:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    get:
+      tags:
+        - Badge
+      summary: Returns a list of user's earned badges.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /challenge/suggestion:
+    get:
+      tags:
+        - Challenge Suggestion
+      summary: Returns a list of suggestions for challenges.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  title: string
+                  example: Geen wegwerpkoffiebekertjes
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
 components:
   securitySchemes:
     bearerAuth:           
@@ -531,7 +630,6 @@ components:
           type: string
           example: zebra
       required: 
-        - id
         - username
         - email
         - password
@@ -547,50 +645,60 @@ components:
         startDate:
           type: string
           format: date
+        endDate:
+          type: string
+          readOnly: true
+          format: date
         amountOfDays: 
           type: integer
           example: 5
-        userIds:
+        memberIds:
           type: array
-          items:
+          items: 
             type: integer
             example: 2, 3
       required:
-        - id
         - name
         - startDate
         - amountOfDays
     UserChallenge:
       properties:
-        id:
+        id: 
           type: integer
           readOnly: true
           example: 1
-        username: 
+        userId: 
+          type: integer
+          example: 1
+        userName:
           type: string
-          example: wasteduser
+          readOnly: true
+          example: wastedUser
         completed: 
           type: boolean
-          example: false
+          example: true
       required:
-        - id
-        - username
+        - userId
+        - challengeId
         - completed
     ChallengeDay:
       properties:
         id: 
           type: integer
-          readOnly: true
           example: 1
         dayNumber:
           type: integer
+          readOnly: true
           example: 1
         earned:
           type: boolean
           example: true
+        userId:
+          type: integer
+          readOnly: true
+          example: 1
       required:
         - id
-        - dayNumber
         - earned
     Group:
       properties:
@@ -598,17 +706,36 @@ components:
           type: integer
           readOnly: true
           example: 1
-        name:
+        name: 
           type: string
           example: my awesome family group
         groupCode:
           type: string
           readOnly: true
           example: X1779Y
+    Badge:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        date: 
+          type: string
+          format: date
+        challengeId:
+          type: integer
+          example: 1
+        challengeName:
+          type: string
+          readOnly: true
+          example: Zelfgemaakte lunch naar school
+        badge:
+          type: string
+          readOnly: true
+          example: zebra
       required:
-        - id
-        - name
-        - groupCode
+        - date
+        - challengeId
     Error:
       type: object
       properties:
@@ -624,10 +751,7 @@ components:
         message:
           type: string
           example: Additional information on the error
-      required:
-        - timestamp
-        - status
-        - error
+
   responses:
     BadRequest:
       description: Bad request
