@@ -1,7 +1,7 @@
 <template>
-  <div class="my-4">
+  <div class="my-2 w-100 border shadow p-4 rounded-3">
     <h2>{{ title }}</h2>
-    <div class="d-flex flex-row flex-wrap gap-4">
+    <div class="d-flex flex-row flex-wrap justify-content-center gap-4">
       <div class="d-flex flex-row flex-wrap flex-item">
         <CheckBox
           v-for="(challengeDay, i) in challengeDays"
@@ -11,8 +11,9 @@
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
           :imageName="this.user.profile_picture"
-          :imagePath="`url('../assets/profile_pictures/${this.user.profile_picture}.png')`"
+          :imagePath="`url('/assets/profile_pictures/${this.user.profile_picture}.png')`"
           :isOwner="isOwner"
+          :aria-hidden="!isOwner"
         ></CheckBox>
       </div>
       <div class="d-flex flex-column">

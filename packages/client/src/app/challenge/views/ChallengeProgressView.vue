@@ -1,13 +1,63 @@
 <template>
   <main>
-    <div class="mb-4">
-      <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
-        <h1>{{ challenge.name }}</h1>
-        <button class="btn btn-primary h-50">Pas aan</button>
+    <div class="d-flex flex-row flex-wrap justify-content-between">
+      <div>
+        <div class="mb-1">
+          <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
+            <h1>{{ challenge.name }}</h1>
+          </div>
+          <p class="fw-bold">
+            Startdatum: <span class="fw-normal">{{ startDate }}</span>
+          </p>
+        </div>
+        <p class="fw-bold">
+          Vandaag:
+          <span class="fw-normal"> {{ dayTitle }}</span>
+        </p>
       </div>
-      <p>Startdatum: {{ startDate }}</p>
+      <div class="h-25 mb-2 d-flex flex-wrap">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-sm btn-secondary dropdown-toggle my-2 me-1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Pas challenge aan
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <button class="dropdown-item small" role="menuitem" @click="adjustText">
+                Pas titel aan
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item small" role="menuitem" @click="leaveChallenge">
+                Verlaat challenge
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-sm btn-tertiary text-dark dropdown-toggle my-2 ms-1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Wissel challenge
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <!-- TODO: v-if if available, for each for the amount of challenges with link-->
+            <li>
+              <a class="dropdown-item small" role="menuitem" href="#">
+                Andere challenge met een lange titel
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <p>Vandaag: {{ dayTitle }}</p>
 
     <div class="d-flex flex-row flex-wrap justify-content-start gap-xl-2">
       <ChallengeProgress
@@ -85,18 +135,16 @@ export default {
       return this.user.id === userChallenge.user_id;
     },
     getClass(userChallenge) {
-      return this.getIsOwner(userChallenge) ? 'owner' : 'shrink';
+      return this.getIsOwner(userChallenge) ? 'bg-white' : 'bg-opponent';
+    },
+    adjustText() {
+      // TODO: handle edit
+      console.log('change name');
+    },
+    leaveChallenge() {
+      // TODO: handle leaving challenge
+      console.log(`${this.user.username} is leaving ${this.challenge.name}`);
     }
   }
 };
 </script>
-
-<style scoped>
-.owner {
-  flex-basis: 100%;
-}
-.shrink {
-  transform: scale(0.75);
-  transform-origin: left;
-}
-</style>
