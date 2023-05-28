@@ -272,12 +272,6 @@ paths:
       responses:
         '200':
           description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChallengeDay'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -287,7 +281,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /challenge/{challengeId}/days:
+  /challenge/{challengeId}/day:
     parameters:
       - in: path
         name: challengeId
@@ -318,7 +312,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
           
-  /days/{dayId}:
+  /day/{dayId}:
     parameters:
       - in: path
         name: dayId
@@ -331,9 +325,15 @@ paths:
       tags:
         - Challenge Progress
       summary: Modifies the progress status of a challenge day.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeDay'
       responses:
-        '204':
-          description: Edit successful
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -348,6 +348,159 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
+          
+  /user/{userId}/groupmember:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    get:
+      tags:
+        - Groups
+      summary: Returns a list of user's group members.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+          
+  /user/{userId}/group:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    get:
+      tags:
+        - Groups
+      summary: Returns a list of user's groups.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Groups
+      summary: Creates a group for the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+          
+  /group/{groupId}/member/:
+    parameters:
+      - in: path
+        name: groupId
+        description: Group ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    get:
+      tags:
+        - Groups
+      summary: Returns a list of group's members.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+          
+  /group/{groupId}/member/{userId}:
+    parameters:
+      - in: path
+        name: groupId
+        description: Group ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    post:
+      tags:
+        - Groups
+      summary: Adds a member to a group.
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    
 
 components:
   securitySchemes:
@@ -401,7 +554,7 @@ components:
           type: array
           items:
             type: integer
-            example: 1
+            example: 2, 3
       required:
         - id
         - name
@@ -439,6 +592,23 @@ components:
         - id
         - dayNumber
         - earned
+    Group:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        name: 
+          type: string
+          example: my awesome family group
+        groupCode:
+          type: string
+          readOnly: true
+          example: X1779Y
+      required:
+        - id
+        - name
+        - groupCode
     Error:
       type: object
       properties:
