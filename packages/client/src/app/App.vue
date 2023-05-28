@@ -25,7 +25,7 @@ const { loading } = storeToRefs(useAuthStore());
 .box {
   padding: 2rem;
   flex: 1 1 auto;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 @media screen and (min-width: 580px) {
