@@ -48,7 +48,7 @@
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>
       </div>
-      <!-- Add image -->
+      <!-- TODO: Add image -->
     </section>
   </main>
 </template>
@@ -67,6 +67,24 @@ export default {
     const authStore = useAuthStore();
     const user = authStore.user;
     const router = useRouter();
+    const suggestions = [];
+    const yesterday = ref();
+
+    const populateSuggestions = () => {
+      ChallengeSuggestionService.instance()
+        .getSelection()
+        .then((challenges) => {
+          challenges.forEach((challenge) => {
+            suggestions.push(challenge.name);
+          });
+        });
+    };
+
+    const getDate = (days) => {
+      let date = new Date();
+      date.setDate(date.getDate() - days);
+      return date;
+    };
 
     const challenge = ref({
       name: '',
@@ -89,36 +107,17 @@ export default {
       router.push('/challenge');
     };
     return {
+      suggestions,
+      populateSuggestions,
+      yesterday,
+      getDate,
       challenge,
       create
     };
   },
-  data() {
-    return {
-      suggestions: Array,
-      yesterday: Date
-    };
-  },
-  created() {
-    this.suggestions = [];
-    this.getSuggestions();
+  mounted() {
     this.yesterday = this.getDate(2);
-  },
-  methods: {
-    getDate(days) {
-      let date = new Date();
-      date.setDate(date.getDate() - days);
-      return date;
-    },
-    getSuggestions() {
-      ChallengeSuggestionService.instance()
-        .getSelection()
-        .then((suggestions) => {
-          suggestions.forEach((suggestion) => {
-            this.suggestions.push(suggestion.name);
-          });
-        });
-    }
+    this.populateSuggestions();
   }
 };
 </script>
