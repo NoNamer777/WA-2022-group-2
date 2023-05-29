@@ -3,7 +3,7 @@
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Daag een gezinslid uit voor een challenge!</h1>
-        <FormKit type="form" @submit="create" :actions="false" :incomplete-message="false">
+        <FormKit type="form" @submit="createChallenge" :actions="false" :incomplete-message="false">
           <CustomFormKit
             v-model="challenge.name"
             label="Wat wil je doen?"
@@ -31,18 +31,16 @@
             :options="[5, 7, 10]"
             validation="required"
           />
-          <!--  TODO: fetch users from backend -->
+          <!--  TODO: fetch groups from backend -->
           <CustomFormKit
-            v-model="challenge.members"
+            v-model="challenge.group"
             type="select"
-            :is-multiple="true"
-            label="Selecteer gezinsleden"
-            placeholder="Selecteer gezinsleden"
-            name="members"
+            label="Selecteer groep"
+            placeholder="Selecteer groep"
+            name="group"
             :options="[
-              { label: 'Jennifer', value: 1 },
-              { label: 'Ahmed', value: 4 },
-              { label: 'Oscar', value: 3 }
+              { label: 'Groep 1', value: 1 },
+              { label: 'Groep 2', value: 2 }
             ]"
           />
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
@@ -56,7 +54,6 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../../auth/index.js';
 import { CustomFormKit } from '../../shared/index.js';
 import { ChallengeSuggestionService } from '../services/challenge.suggestion.service.js';
 
@@ -64,8 +61,6 @@ export default {
   name: 'ChallengeCreationView',
   components: { CustomFormKit },
   setup() {
-    const authStore = useAuthStore();
-    const user = authStore.user;
     const router = useRouter();
     const suggestions = [];
     const yesterday = ref();
@@ -90,11 +85,9 @@ export default {
       name: '',
       startDate: '',
       amountOfDays: '',
-      members: []
+      group: ''
     });
-    const create = () => {
-      /* add user */
-      challenge.value.members.push(user.id);
+    const createChallenge = () => {
       /* output submit object */
       console.log(JSON.stringify(challenge.value));
       /* TODO: */
@@ -112,7 +105,7 @@ export default {
       yesterday,
       getDate,
       challenge,
-      create
+      createChallenge
     };
   },
   mounted() {

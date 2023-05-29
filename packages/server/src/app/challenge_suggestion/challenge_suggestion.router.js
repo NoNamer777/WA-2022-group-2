@@ -1,6 +1,6 @@
 import express from 'express';
 import { jwtAuthHeaderValidator } from '../auth/index.js';
-import { challengeSuggestionController } from './challengeSuggestion.controller.js';
+import { challengeSuggestionController } from './challenge_suggestion.controller.js';
 
 export const challengeSuggestionRouter = express.Router();
 

@@ -1,4 +1,4 @@
-import { challengeSuggestionRepository } from '../challengeSuggestion.repository.js';
+import { challengeSuggestionRepository } from '../challenge_suggestion.repository.js';
 
 export class ChallengeSuggestionService {
   /** @return {ChallengeSuggestionService} */

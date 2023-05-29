@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
-import { challengeSuggestionRouter } from './challenge_suggestion/challengeSuggestion.router.js';
+import { challengeSuggestionRouter } from './challenge_suggestion/challenge_suggestion.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { DatabaseService } from './core/services/index.js';
 import { userRouter } from './user/index.js';
