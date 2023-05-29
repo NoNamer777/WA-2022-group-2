@@ -4,14 +4,13 @@
       <div class="col-xl-6 col-sm-12 mb-5">
         <h1 class="mb-5">Daag een gezinslid uit voor een challenge!</h1>
         <FormKit type="form" @submit="create" :actions="false" :incomplete-message="false">
-          <!--  TODO: a new table in database with challenge suggestions only, fetch e.g. 5 random suggestions -->
           <CustomFormKit
             v-model="challenge.name"
             label="Wat wil je doen?"
             name="name"
-            placeholder="Fruit naar school in plaats van voorverpakte snacks!"
+            placeholder="Fruit naar school in plaats van voorverpakte snacks"
             validation="required|length:5,80"
-            :dataList="['Challenge 1', 'Challenge 2', 'Challenge 3']"
+            :dataList="suggestions"
           />
           <CustomFormKit
             v-model="challenge.startDate"
@@ -27,7 +26,7 @@
             v-model="challenge.amountOfDays"
             type="select"
             label="Selecteer het aantal dagen"
-            placeholder="5"
+            placeholder="Selecteer het aantal dagen"
             name="amountOfDays"
             :options="[5, 7, 10]"
             validation="required"
@@ -59,6 +58,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../../auth/index.js';
 import { CustomFormKit } from '../../shared/index.js';
+import { ChallengeSuggestionService } from '../services/challenge.suggestion.service.js';
 
 export default {
   name: 'ChallengeCreationView',
@@ -95,10 +95,13 @@ export default {
   },
   data() {
     return {
+      suggestions: Array,
       yesterday: Date
     };
   },
   created() {
+    this.suggestions = [];
+    this.getSuggestions();
     this.yesterday = this.getDate(2);
   },
   methods: {
@@ -106,6 +109,15 @@ export default {
       let date = new Date();
       date.setDate(date.getDate() - days);
       return date;
+    },
+    getSuggestions() {
+      ChallengeSuggestionService.instance()
+        .getSelection()
+        .then((suggestions) => {
+          suggestions.forEach((suggestion) => {
+            this.suggestions.push(suggestion.name);
+          });
+        });
     }
   }
 };
