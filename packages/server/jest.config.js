@@ -8,7 +8,7 @@ export default {
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/src/app/**/*.js',
-    '!<rootDir>/src/app/**/*.controllers.js',
+    '!<rootDir>/src/app/**/*.controller.js',
     '!<rootDir>/src/app/**/*.router.js',
     '!<rootDir>/src/app/app.js'
   ],
