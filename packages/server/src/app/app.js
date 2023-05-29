@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
+import { userChallengeRouter } from './challenge/routers/challenge.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { ConfigService, DatabaseService } from './core/services/index.js';
 import { userRouter } from './user/index.js';
@@ -39,6 +40,7 @@ class App {
     await DatabaseService.instance().initialize();
 
     this.app.use('/api/user', userRouter);
+    this.app.use('/api/challenge', userChallengeRouter);
     this.app.use('/auth', authRouter);
 
     // Needs to be defined last in order to catch, log, and format all errors properly

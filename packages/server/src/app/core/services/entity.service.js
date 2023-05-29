@@ -1,20 +1,26 @@
 import { BadgeEntity, initializeBadgeEntity } from '../../badge/badge.entity.js';
-import { ChallengeEntity, initializeChallengeEntity } from '../../challenge/challenge.entity.js';
+import {
+  ChallengeEntity,
+  initializeChallengeEntity
+} from '../../challenge/entities/challenge.entity.js';
 import {
   ChallengeDayEntity,
   initializeChallengeDayEntity
-} from '../../challenge_day/challenge_day.entity.js';
+} from '../../challenge/entities/challenge_day.entity.js';
+import {
+  UserChallengeEntity,
+  initializeUserChallengeEntity
+} from '../../challenge/entities/user_challenge.entity.js';
 import {
   EarnedBadgeEntity,
   initializeEarnedBadgeEntity
 } from '../../earned_badge/earned_badge.entity.js';
-import { GroupEntity, initializeGroupEntity } from '../../group/group.entity.js';
-import { UserEntity, initializeUserEntity } from '../../user/index.js';
+import { GroupEntity, initializeGroupEntity } from '../../group/entities/group.entity.js';
 import {
-  UserChallengeEntity,
-  initializeUserChallengeEntity
-} from '../../user_challenge/user_challenge.entity.js';
-import { UserGroupEntity, initializeUserGroupEntity } from '../../user_group/user_group.entity.js';
+  UserGroupEntity,
+  initializeUserGroupEntity
+} from '../../group/entities/user_group.entity.js';
+import { UserEntity, initializeUserEntity } from '../../user/index.js';
 
 export class EntityService {
   /** @return {EntityService} */
@@ -40,31 +46,31 @@ export class EntityService {
   }
 
   initializeEntityRelations() {
-    // User associations
-    UserEntity.belongsToMany(GroupEntity, { through: UserGroupEntity, foreignKey: 'user_id' });
-    UserEntity.belongsToMany(ChallengeEntity, {
-      through: UserChallengeEntity,
-      foreignKey: 'user_id'
-    });
-    UserEntity.belongsToMany(BadgeEntity, { through: EarnedBadgeEntity, foreignKey: 'user_id' });
+    BadgeEntity.hasMany(UserChallengeEntity, { foreignKey: 'badge_id' });
+    UserChallengeEntity.belongsTo(BadgeEntity, { foreignKey: 'badge_id' });
 
-    // Group associations
-    GroupEntity.belongsToMany(UserEntity, { through: UserGroupEntity, foreignKey: 'group_id' });
-
-    // Challenge associations
+    GroupEntity.hasMany(ChallengeEntity, { foreignKey: 'group_id' });
     ChallengeEntity.belongsTo(GroupEntity, { foreignKey: 'group_id' });
-    ChallengeEntity.belongsToMany(UserEntity, {
-      through: UserChallengeEntity,
-      foreignKey: 'challenge_id'
-    });
 
-    // Badge associations
-    BadgeEntity.belongsToMany(UserEntity, { through: UserChallengeEntity, foreignKey: 'badge_id' });
+    UserEntity.hasMany(UserChallengeEntity, { foreignKey: 'user_id' });
+    UserChallengeEntity.belongsTo(UserEntity, { foreignKey: 'user_id' });
 
-    // ChallengeDay associations
+    ChallengeEntity.hasMany(UserChallengeEntity, { foreignKey: 'challenge_id' });
+    UserChallengeEntity.belongsTo(ChallengeEntity, { foreignKey: 'challenge_id' });
+
+    UserChallengeEntity.hasMany(ChallengeDayEntity, { foreignKey: 'user_challenge_id' });
     ChallengeDayEntity.belongsTo(UserChallengeEntity, { foreignKey: 'user_challenge_id' });
 
-    // EarnedBadge associations
+    UserEntity.hasMany(EarnedBadgeEntity, { foreignKey: 'user_id' });
+    EarnedBadgeEntity.belongsTo(UserEntity, { foreignKey: 'user_id' });
+
+    BadgeEntity.hasMany(EarnedBadgeEntity, { foreignKey: 'badge_id' });
+    EarnedBadgeEntity.belongsTo(BadgeEntity, { foreignKey: 'badge_id' });
+
+    UserChallengeEntity.hasMany(EarnedBadgeEntity, { foreignKey: 'user_challenge_id' });
     EarnedBadgeEntity.belongsTo(UserChallengeEntity, { foreignKey: 'user_challenge_id' });
+
+    UserEntity.belongsToMany(GroupEntity, { through: UserGroupEntity, foreignKey: 'user_id' });
+    GroupEntity.belongsToMany(UserEntity, { through: UserGroupEntity, foreignKey: 'group_id' });
   }
 }
