@@ -1,6 +1,5 @@
 import { readFile } from 'fs/promises';
 import { Sequelize } from 'sequelize';
-import { ConfigService } from './config.service.js';
 import { EntityService } from './entity.service.js';
 
 export class DatabaseService {
@@ -48,13 +47,13 @@ export class DatabaseService {
   async #readConfig() {
     try {
       const databaseConfigFile = await readFile(
-        ConfigService.instance().config.server.databaseConfigPath,
-        { encoding: 'utf-8' }
+        process.env.DATABASE_CONFIG_PATH || './environment/database.json',
+        {
+          encoding: 'utf-8'
+        }
       );
 
-      return JSON.parse(databaseConfigFile)[
-        ConfigService.instance().config.production ? 'production' : 'development'
-      ];
+      return JSON.parse(databaseConfigFile)[process.env.NODE_ENV || 'development'];
     } catch (error) {
       console.error('Something went wrong while trying to read the database configuration');
       throw error;

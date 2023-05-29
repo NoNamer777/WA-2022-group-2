@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-content-center">
-    <div class="check position-relative">
+    <div class="check position-relative w-100">
       <input
         :id="id"
         type="checkbox"
@@ -16,10 +16,10 @@
           transform: `rotateY(${this.deg}deg)`
         }"
       />
-      <div :aria-hidden="true" :class="getClass">
+      <p class="position-absolute top-50" :class="getButtonClass" :aria-hidden="true">
         {{ getCheckmarks }}
-      </div>
-      <div class="d-flex justify-content-center">Dag {{ dayNumber }}</div>
+      </p>
+      <div class="d-flex justify-content-center" :class="getDayClass">Dag {{ dayNumber }}</div>
     </div>
   </div>
 </template>
@@ -64,13 +64,14 @@ export default {
     }
   },
   computed: {
-    getClass() {
-      return this.checked
-        ? 'position-absolute top-50 text-tertiary'
-        : 'position-absolute top-50 text-secondary';
+    getButtonClass() {
+      return this.checked ? 'text-tertiary' : 'text-secondary';
     },
     getCheckmarks() {
       return this.checked ? '✔' : this.dayNumber < this.todayNumber ? '✘' : ' ';
+    },
+    getDayClass() {
+      return this.dayNumber === this.todayNumber ? 'fw-bold text-primary' : '';
     }
   }
 };
@@ -83,8 +84,8 @@ export default {
 }
 
 .check input[type='checkbox'] + label {
-  width: 52px;
-  height: 52px;
+  width: 75px;
+  height: 75px;
   background-image: v-bind('imagePath');
   background-position: center;
   background-size: contain;
@@ -111,5 +112,13 @@ export default {
 .transition {
   transition: transform 0.5s;
   transform-style: preserve-3d;
+}
+
+@media only screen and (max-width: 600px) {
+  .check input[type='checkbox'] + label {
+    width: 52px;
+    height: 52px;
+    /*flex-basis: 20%;*/
+  }
 }
 </style>

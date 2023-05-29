@@ -57,6 +57,15 @@ folder. You'll also find a template there which you can copy and rename to `.env
 how such a file would look like is as followed:
 
 ```
+# Shared variables
+
+# This variable is used to decode the received JWT token in the web application and needs to be
+# identical to the secret passed in the server configuration file (`config.json#jwt.secret`)
+VITE_JWT_SECRET=my super secret jwt secret
+
+NODE_ENV=development
+
+
 # Server variables
 
 # This variables determines where the server and client can find their environment variables. This
@@ -66,18 +75,16 @@ ENV_PATH=./environment/.env
 
 # This variable determines where the server will look for its configuration file. This path will be
 # relative to from where the server process is run from.
-CONFIG_PATH=./environment/config.json
+DATABASE_CONFIG_PATH=./environment/database.json
+
+ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.7:5173
+
 
 # Client variables
 
 # This variable determine where the client sends api requests to. This address should reuse the
 # `host` and `port` values used in the server configuration
 VITE_SERVER_BASE_URL=http://localhost:8080
-
-# This variable is used to decode the received JWT token in the web application and needs to be
-# identical to the secret passed in the server configuration file (`config.json#jwt.secret`)
-VITE_JWT_SECRET=my super secret jwt secret
-
 ```
 
 After that you can find the instructions for the different projects on how to get the projects started
@@ -178,35 +185,22 @@ This configuration assumes a couple of things:
 }
 ```
 
-```json5
-// ./config.json
-{
-  production: true,
-  jwt: {
-    // This needs to be identical to the `VITE_JWT_SECRET` environment variable.
-    secret: 'secret'
-  },
-  server: {
-    // This needs to be identical to the Docker service that is declared for the server.
-    host: 'server',
-
-    // This needs to be identical to the internal port on which the server runs inside the Docker container.
-    port: 8080,
-
-    databaseConfig: './database.json',
-
-    // This needs to be identical to the external address on which the docker container is externally available.
-    allowedOrigins: ['http://localhost:4005']
-  }
-}
-```
-
 ```
 # ./.env
 
-# Server environment variables
-CONFIG_PATH=./config.json
+# Shared variables
+VITE_JWT_SECRET=my super secret jwt secret
+NODE_ENV=production
+
+
+# Server variables
 ENV_PATH=./.env
+DATABASE_CONFIG_PATH=./database.json
+ALLOWED_ORIGINS=http://localhost:5173
+
+
+# Client variables
+VITE_SERVER_BASE_URL=http://localhost:8080
 ```
 
 - You have port `8080` available on you local machine.

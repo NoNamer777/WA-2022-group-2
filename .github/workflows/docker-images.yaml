@@ -1,0 +1,12 @@
+name: Wasted Docker images
+on:
+  push:
+    branches: main
+permissions:
+  contents: read
+  packages: write
+jobs:
+  build-client-docker-image:
+    uses: ./.github/workflows/client-docker-image.yaml
+  build-server-docker-image:
+    uses: ./.github/workflows/server-docker-image.yaml
