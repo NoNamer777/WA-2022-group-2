@@ -2,8 +2,6 @@ services:
   client:
     image: wasted-vue-client
     container_name: wasted-client
-    env_file:
-      - ./environment/.env
     ports:
       - '5173:80/tcp'
     depends_on:

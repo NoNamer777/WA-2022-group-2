@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createServer } from 'http';
-import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
+import { DatabaseService, initializeApp } from './app/index.js';
 
 (async () => {
   let wastedApp;
@@ -14,12 +14,11 @@ import { ConfigService, DatabaseService, initializeApp } from './app/index.js';
     return;
   }
 
-  // Get port and hostname from the config service and store in Express
-  const host = ConfigService.instance().config.server.host;
-  const port = ConfigService.instance().config.server.port;
+  const host = '0.0.0.0';
+  const port = 8080;
 
-  wastedApp.app.set('port', port);
   wastedApp.app.set('hostname', host);
+  wastedApp.app.set('port', port);
 
   const server = createServer(wastedApp.app);
 

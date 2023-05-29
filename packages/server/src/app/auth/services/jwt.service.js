@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { ConfigService } from '../../core/services/index.js';
 
 /** Token expiration time in ms. (8 hours currently). */
 const TOKEN_VALID_DURATION = 8 * 60 * 60 * 1_000;
@@ -21,7 +20,7 @@ export class JwtService {
    * @returns {string}
    */
   encodeToken(payload) {
-    return jwt.sign(payload, ConfigService.instance().config.jwt.token, {
+    return jwt.sign(payload, process.env.VITE_JWT_SECRET || '', {
       subject: `${payload.id}`,
       expiresIn: `${TOKEN_VALID_DURATION}ms`
     });
@@ -32,6 +31,6 @@ export class JwtService {
    * @returns
    */
   decodeToken(token) {
-    return jwt.verify(token, ConfigService.instance().config.jwt.token);
+    return jwt.verify(token, process.env.VITE_JWT_SECRET || '');
   }
 }
