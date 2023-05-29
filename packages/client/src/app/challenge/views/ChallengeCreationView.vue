@@ -17,7 +17,7 @@
             type="date"
             label="Startdatum"
             name="startDate"
-            :validation="`[['required'], ['date'], ['date_after', yesterday]]`"
+            :validation="[['required'], ['date'], ['date_after', yesterday]]"
             :validation-messages="{
               date_after: 'Startdatum kan niet voor gisteren zijn.'
             }"
@@ -86,7 +86,7 @@ export default {
        * - challenge days for the amount of days, with user challenge ids, earned false
        *
        * Route to active view, routing to be done */
-      router.push('/challengeTest');
+      router.push('/challenge');
     };
     return {
       challenge,
