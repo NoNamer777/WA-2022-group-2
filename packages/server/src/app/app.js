@@ -3,7 +3,7 @@ import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
-import { ConfigService, DatabaseService } from './core/services/index.js';
+import { DatabaseService } from './core/services/index.js';
 import { userRouter } from './user/index.js';
 
 class App {
@@ -31,8 +31,6 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(this.#limiter);
-
-    await ConfigService.instance().initialize();
 
     this.app.use(corsMiddleware());
 
