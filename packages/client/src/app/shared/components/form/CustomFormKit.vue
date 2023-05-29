@@ -11,7 +11,6 @@
     :validation-messages="validationMessages"
     :list="dataListId"
     :options="options"
-    :multiple="isMultiple"
     :input-class="inputClass"
   />
   <datalist v-if="dataList" :id="dataListId">
@@ -39,12 +38,12 @@ export default {
       type: String
     },
     validation: {
-      type: String,
+      type: [String, Array],
       required: false,
       default: ''
     },
     modelValue: {
-      type: [String, Array]
+      type: [String, Number, Array]
     },
     validationVisibility: {
       type: String,
@@ -52,10 +51,6 @@ export default {
     },
     options: {
       type: Array,
-      required: false
-    },
-    isMultiple: {
-      type: Boolean,
       required: false
     },
     dataList: {

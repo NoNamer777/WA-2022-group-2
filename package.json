@@ -17,6 +17,7 @@
     "server:test": "jest --config packages/server/jest.config.js --ci",
     "server:test:dev": "jest --config packages/server/jest.config.js --watchAll",
     "server:run-migrations": "sequelize db:migrate",
+    "server:run-seeders": "sequelize db:seed:all",
     "server:build-docker-image": "docker build -f packages/server/Dockerfile -t wasted-server ."
   },
   "workspaces": [
