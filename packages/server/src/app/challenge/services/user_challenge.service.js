@@ -1,4 +1,5 @@
-import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
+import { Op } from 'sequelize';
+import { ChallengeEntity } from '../entities/challenge.entity.js';
 import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
 
 export class UserChallengeService {
@@ -18,10 +19,12 @@ export class UserChallengeService {
     const currentDate = new Date();
 
     return await userChallengeRepository.findAllBy(
-      {},
+      { user_id: userId },
       {
-        model: UserChallengeEntity,
-        where: { user_id: userId }
+        model: ChallengeEntity,
+        where: retrievePast
+          ? { start_date: { [Op.lt]: currentDate } }
+          : { start_date: { [Op.gte]: currentDate } }
       }
     );
   }
