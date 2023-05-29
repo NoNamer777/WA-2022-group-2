@@ -45,7 +45,6 @@
               { label: 'Ahmed', value: 4 },
               { label: 'Oscar', value: 3 }
             ]"
-            validation="required"
           />
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>

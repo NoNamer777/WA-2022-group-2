@@ -1,11 +1,11 @@
 <template>
   <main>
     <section class="mb-5">
-      <h1 class="text-primary">Plastic Problemen!</h1>
+      <h1>Plastic Problemen!</h1>
 
       <div class="row">
         <article class="col-xl-6 col-sm-12">
-          <h3 class="text-primary">Leer over plastic met onze Slime!</h3>
+          <h3>Leer over plastic met onze Slime!</h3>
           <p>
             Welkom op de website!<br />
             Misschien heb je er nooit bij stilgestaan, maar de aarde is al 4,6 miljard jaar oud!
@@ -31,7 +31,7 @@
     <section class="mb-5">
       <div class="row">
         <article class="col-xl-6 col-sm-12">
-          <h3 class="text-primary">Uitleg over plastic afval en het probleem!</h3>
+          <h3>Uitleg over plastic afval en het probleem!</h3>
 
           <p>
             Op dit moment worden er veel plastic flessen weggegooid, terwijl je ze kunt recyclen
@@ -56,7 +56,7 @@
 
     <section>
       <article>
-        <h3 class="text-primary">Wist je dat?</h3>
+        <h3>Wist je dat?</h3>
         <p>
           1. Als je alle plastic flessen van 1 jaar op elkaar stapelt, kun je de aarde 4 keer
           rondgaan!<br />
@@ -70,7 +70,7 @@
     </section>
 
     <section>
-      <h5 class="text-primary">Wil je meer leren? Registreer je dan en daag jezelf uit!</h5>
+      <h5>Wil je meer leren? Registreer je dan en daag jezelf uit!</h5>
       <router-link v-if="!isAuthenticated" class="btn btn-primary" :to="{ name: 'register' }">
         Registreer
       </router-link>
