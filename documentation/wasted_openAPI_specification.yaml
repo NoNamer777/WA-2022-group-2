@@ -399,37 +399,6 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
           
-  /user/{userId}/groupmember:
-    parameters:
-      - in: path
-        name: userId
-        description: User ID
-        required: true
-        schema:
-          type: integer
-          example: 1     
-    get:
-      tags:
-        - Group
-      summary: Returns a list of user's group members.
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
-          
   /user/{userId}/group:
     parameters:
       - in: path
