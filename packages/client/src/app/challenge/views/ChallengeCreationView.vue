@@ -2,7 +2,7 @@
   <main class="container">
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
-        <h1 class="mb-5">Daag een gezinslid uit voor een challenge!</h1>
+        <h1 class="mb-5">Daag je gezinsleden uit voor een challenge!</h1>
         <FormKit type="form" @submit="createChallenge" :actions="false" :incomplete-message="false">
           <CustomFormKit
             v-model="challenge.name"
@@ -40,8 +40,10 @@
             name="group"
             :options="[
               { label: 'Groep 1', value: 1 },
-              { label: 'Groep 2', value: 2 }
+              { label: 'Groep 2', value: 2 },
+              { label: 'Alleen ik', value: null }
             ]"
+            help="Zie je geen groepen? Maak er een aan op Mijn Wasted!"
           />
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>
