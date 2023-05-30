@@ -1,14 +1,13 @@
-import { ChallengeEntity } from '../entities/challenge.entity.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 
 class UserChallengeRepository {
   /**
    * @param whereClaus {import('sequelize').WhereOptions}
    * @param includeClause {{model: ChallengeEntity, where: ({start_date: {}}|{start_date: {}})}}
-   * @return {Promise<UserChallengeEntity[]>}
+   * @return {Promise<UserChallengeEntity>}
    */
   async findAllBy(whereClaus, includeClause) {
-    return await ChallengeEntity.findOne({
+    return await UserChallengeEntity.findOne({
       include: [includeClause],
       where: { ...whereClaus },
       rejectOnEmpty: false
