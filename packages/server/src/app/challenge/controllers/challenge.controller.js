@@ -2,19 +2,13 @@ import { UserChallengeService } from '../services/user_challenge.service.js';
 
 class UserChallengeController {
   /** @return {Promise<{pastChallenges: UserChallengeEntity[], currentChallenges: UserChallengeEntity[]}>} */
-  async getForUser(userIdParam) {
-    console.info(`UserChallengeController - Getting data for User with ID: '${userIdParam}'`);
+  async getForUser(userId) {
+    console.info(`UserChallengeController - Getting data for User with ID: '${userId}'`);
 
-    const currentChallenges = await UserChallengeService.instance().getForUser(
-      parseInt(userIdParam)
-    );
-
-    const pastChallenges = await UserChallengeService.instance().getForUser(
-      parseInt(userIdParam),
-      true
-    );
-
-    return { currentChallenges, pastChallenges };
+    return {
+      currentChallenges: await UserChallengeService.instance().getForUser(userId),
+      pastChallenges: await UserChallengeService.instance().getForUser(userId, true)
+    };
   }
 }
 

@@ -4,10 +4,10 @@ class UserChallengeRepository {
   /**
    * @param whereClaus {import('sequelize').WhereOptions}
    * @param includeClause {{model: ChallengeEntity, where: ({start_date: {}}|{start_date: {}})}}
-   * @return {Promise<UserChallengeEntity>}
+   * @return {Promise<UserChallengeEntity[]>}
    */
   async findAllBy(whereClaus, includeClause) {
-    return await UserChallengeEntity.findOne({
+    return await UserChallengeEntity.findAll({
       include: [includeClause],
       where: { ...whereClaus },
       rejectOnEmpty: false
