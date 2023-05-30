@@ -39,9 +39,9 @@
             placeholder="Selecteer groep"
             name="group"
             :options="[
+              { label: 'Alleen ik', value: null },
               { label: 'Groep 1', value: 1 },
-              { label: 'Groep 2', value: 2 },
-              { label: 'Alleen ik', value: null }
+              { label: 'Groep 2', value: 2 }
             ]"
             help="Zie je geen groepen? Maak er een aan op Mijn Wasted!"
           />
