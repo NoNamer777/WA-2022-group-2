@@ -21,6 +21,8 @@ FROM nginx:1.24-alpine
 
 COPY --from=builder /client-app/dist/client /usr/share/nginx/html
 
+COPY packages/client/default.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80/tcp
 
 CMD ["nginx", "-g", "daemon off;"]
