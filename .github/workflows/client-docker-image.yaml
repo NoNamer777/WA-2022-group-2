@@ -38,6 +38,9 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                   context: .
+                  build-args: |
+                    VITE_SERVER_BASE_URL=${{ secrets.SERVER_BASE_URL }}
+                    VITE_JWT_SECRET=${{ secrets.JWT_SECRET }}
                   file: packages/client/Dockerfile
                   push: true
                   labels: ${{ steps.meta.outputs.labels }}
