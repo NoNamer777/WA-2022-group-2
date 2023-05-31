@@ -7,7 +7,7 @@ import {
   ChallengeDayEntity,
   initializeChallengeDayEntity
 } from '../../challenge/entities/challenge_day.entity.js';
-import { initializeChallengeSuggestionEntity } from '../../challenge_suggestion/challenge_suggestion.entity.js';
+import { initializeChallengeSuggestionEntity } from '../../challenge/entities/challenge_suggestion.entity.js';
 import {
   UserChallengeEntity,
   initializeUserChallengeEntity
