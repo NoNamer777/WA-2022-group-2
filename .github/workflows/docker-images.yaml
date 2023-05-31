@@ -7,5 +7,9 @@ permissions:
 jobs:
   build-client-docker-image:
     uses: ./.github/workflows/client-docker-image.yaml
+    with:
+      platforms: linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
   build-server-docker-image:
     uses: ./.github/workflows/server-docker-image.yaml
+    with:
+      platforms: linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64

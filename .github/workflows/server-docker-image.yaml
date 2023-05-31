@@ -1,6 +1,11 @@
 name: Dnd-Mapp server Docker image
 on:
     workflow_call:
+      inputs:
+        platforms:
+          description: 'The platforms the Docker container supports.'
+          required: true
+          type: string
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: nonamer777/wasted-express-server
