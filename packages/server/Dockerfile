@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM node:18-alpine AS builder
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-EXPOSE 8080
+RUN apk --no-cache --virtual build-dependencies add python3 make g++
 
 WORKDIR server-app
 
@@ -21,10 +21,16 @@ COPY /packages/server/start.sh package*.json /server-app/dist/server/
 
 FROM node:18-alpine
 
+RUN apk --no-cache --virtual build-dependencies add python3 make g++
+
 WORKDIR /app
 
 COPY --from=builder /server-app/dist/server .
 
 RUN npm ci --omit dev
+
+RUN apk del build-dependencies
+
+EXPOSE 8080
 
 CMD ["sh", "start.sh"]
