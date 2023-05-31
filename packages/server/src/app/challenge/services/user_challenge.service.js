@@ -1,31 +1,29 @@
 import { Op } from 'sequelize';
-import { ChallengeEntity } from '../entities/challenge.entity.js';
-import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
+import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
+import { challengeRepository } from '../repositories/user_challenge.repository.js';
 
-export class UserChallengeService {
-  /** @return {UserChallengeService} */
+export class ChallengeService {
+  /** @return {ChallengeService} */
   static instance() {
-    if (UserChallengeService.#instance) return UserChallengeService.#instance;
+    if (ChallengeService.#instance) return ChallengeService.#instance;
 
-    UserChallengeService.#instance = new UserChallengeService();
-    return UserChallengeService.#instance;
+    ChallengeService.#instance = new ChallengeService();
+    return ChallengeService.#instance;
   }
 
-  /** @type {UserChallengeService} */
+  /** @type {ChallengeService} */
   static #instance;
 
-  /** @return {Promise<UserChallengeEntity[]>} */
+  /** @return {Promise<ChallengeEntity[]>} */
   async getForUser(userId, retrievePast = false) {
     const currentDate = new Date();
+    const whereClause = retrievePast
+      ? { end_date: { [Op.lt]: currentDate } }
+      : { end_date: { [Op.gte]: currentDate } };
 
-    return await userChallengeRepository.findAllBy(
-      { user_id: userId },
-      {
-        model: ChallengeEntity,
-        where: retrievePast
-          ? { start_date: { [Op.lt]: currentDate } }
-          : { start_date: { [Op.gte]: currentDate } }
-      }
-    );
+    return await challengeRepository.findAllBy(whereClause, {
+      model: UserChallengeEntity,
+      where: { user_id: userId }
+    });
   }
 }
