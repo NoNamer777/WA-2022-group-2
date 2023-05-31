@@ -1,13 +1,17 @@
-import { UserChallengeService } from '../services/user_challenge.service.js';
+import { cardResource } from '../resource/card.resource.js';
+import { ChallengeService } from '../services/user_challenge.service.js';
 
 class UserChallengeController {
   /** @return {Promise<{pastChallenges: UserChallengeEntity[], currentChallenges: UserChallengeEntity[]}>} */
   async getForUser(userId) {
-    console.info(`UserChallengeController - Getting data for User with ID: '${userId}'`);
+    console.info(`UserChallengeController - Getting challenges for User with ID: '${userId}'`);
+
+    const currentChallenges = await ChallengeService.instance().getForUser(userId);
+    const pastChallenges = await ChallengeService.instance().getForUser(userId, true);
 
     return {
-      currentChallenges: await UserChallengeService.instance().getForUser(userId),
-      pastChallenges: await UserChallengeService.instance().getForUser(userId, true)
+      currentChallenges: cardResource(currentChallenges),
+      pastChallenges: cardResource(pastChallenges)
     };
   }
 }
