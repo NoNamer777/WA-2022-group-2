@@ -1,31 +1,16 @@
 <script setup>
 import { Tabs, Tab } from 'vue3-tabs-component';
 import { CardList } from '../../shared/components/index.js';
+import { useChallengeStore } from '../stores/challenge.store.js';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
-const currentPersonalChallenges = [
-  {
-    title: 'Ahmed',
-    text: '1 beker per dag'
-  },
-  {
-    title: 'Ahmed',
-    text: '1 beker per dag'
-  },
-  {
-    title: 'Ahmed',
-    text: '1 beker per dag'
-  },
-  {
-    title: 'Ahmed',
-    text: '1 beker per dag'
-  }
-];
-const pastPersonalChallenges = [
-  {
-    title: 'Ahmed',
-    text: '1 beker per dag'
-  }
-];
+const { loading, challenges } = storeToRefs(useChallengeStore());
+const { getChallenges } = useChallengeStore();
+
+onMounted(async () => {
+  await getChallenges();
+});
 </script>
 
 <template>
@@ -39,6 +24,7 @@ const pastPersonalChallenges = [
     <section>
       <div>
         <Tabs
+          v-if="!loading"
           nav-class="nav nav-tabs"
           nav-item-class="nav-item"
           nav-item-link-class="nav-link"
@@ -48,13 +34,13 @@ const pastPersonalChallenges = [
           <Tab name="Huidige">
             <CardList
               empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="currentPersonalChallenges"
+              :items="challenges.currentChallenges"
             />
           </Tab>
           <Tab name="Afgerond">
             <CardList
               empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="pastPersonalChallenges"
+              :items="challenges.pastChallenges"
             />
           </Tab>
         </Tabs>
