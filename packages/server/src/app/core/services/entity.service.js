@@ -7,6 +7,7 @@ import {
   ChallengeDayEntity,
   initializeChallengeDayEntity
 } from '../../challenge/entities/challenge_day.entity.js';
+import { initializeChallengeSuggestionEntity } from '../../challenge_suggestion/challenge_suggestion.entity.js';
 import {
   UserChallengeEntity,
   initializeUserChallengeEntity
@@ -43,6 +44,7 @@ export class EntityService {
     initializeUserChallengeEntity();
     initializeChallengeDayEntity();
     initializeEarnedBadgeEntity();
+    initializeChallengeSuggestionEntity();
   }
 
   initializeEntityRelations() {

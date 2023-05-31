@@ -11,8 +11,8 @@
     :validation-messages="validationMessages"
     :list="dataListId"
     :options="options"
-    :multiple="isMultiple"
     :input-class="inputClass"
+    :help="help"
   />
   <datalist v-if="dataList" :id="dataListId">
     <option v-for="(data, index) in dataList" :key="index">{{ data }}</option>
@@ -39,12 +39,12 @@ export default {
       type: String
     },
     validation: {
-      type: String,
+      type: [String, Array],
       required: false,
       default: ''
     },
     modelValue: {
-      type: [String, Array]
+      type: [String, Number, Array]
     },
     validationVisibility: {
       type: String,
@@ -52,10 +52,6 @@ export default {
     },
     options: {
       type: Array,
-      required: false
-    },
-    isMultiple: {
-      type: Boolean,
       required: false
     },
     dataList: {
@@ -67,6 +63,10 @@ export default {
       required: false
     },
     inputClass: {
+      type: String,
+      required: false
+    },
+    help: {
       type: String,
       required: false
     }
