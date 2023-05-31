@@ -74,5 +74,8 @@ export class EntityService {
 
     UserEntity.belongsToMany(GroupEntity, { through: UserGroupEntity, foreignKey: 'user_id' });
     GroupEntity.belongsToMany(UserEntity, { through: UserGroupEntity, foreignKey: 'group_id' });
+
+    GroupEntity.hasMany(UserGroupEntity, { foreignKey: 'group_id' });
+    UserEntity.hasMany(UserGroupEntity, { foreignKey: 'user_id' });
   }
 }
