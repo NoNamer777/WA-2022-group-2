@@ -1,4 +1,5 @@
 module.exports = {
   'config': './environment/database.json',
   'migrations-path': './packages/server/src/db/migrations',
+  'seeders-path': './packages/server/src/db/seeders'
 }
