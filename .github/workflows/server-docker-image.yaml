@@ -20,16 +20,13 @@ jobs:
               uses: actions/checkout@v3
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v2
+              with:
+                platforms: arm,arm64
             - name: Set up Docker Buildx
+              id: docker-buildx
               uses: docker/setup-buildx-action@v2
               with:
-                platforms: |
-                  linux/amd64
-                  linux/arm/v5
-                  linux/arm/v6
-                  linux/arm/v7
-                  linux/arm64/v8
-                  windows/amd64
+                platforms: ${{ inputs.platforms }}
             - name: Log in to the Container registry
               uses: docker/login-action@v2
               with:
@@ -55,5 +52,6 @@ jobs:
                   push: true
                   labels: ${{ steps.meta.outputs.labels }}
                   tags: ${{ steps.meta.outputs.tags }}
+                  platforms: ${{ steps.docker-buildx.outputs.platforms }}
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
