@@ -27,7 +27,7 @@ export class ChallengeService {
       {
         model: UserChallengeEntity,
         where: { user_id: userId },
-        include: [{ model: UserEntity }]
+        include: { model: UserEntity }
       },
       {
         model: GroupEntity

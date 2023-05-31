@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { ChallengeService } from '../services/index.js';
 
 export const useChallengeStore = defineStore('challenge', () => {
-  /** @type {import('vue').Ref<Challenge | null>} */
+  /** @type {Array} */
   const challenges = ref(null);
 
   /** @type {import('vue').Ref<boolean>} */

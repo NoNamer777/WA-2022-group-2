@@ -13,7 +13,7 @@ export class ChallengeService {
   static #instance;
 
   /**
-   * @return {Promise<Challenge>}
+   * @return {Promise<Array>}
    */
   async getChallenges() {
     return await HttpRequestService.instance().getRequest('/api/challenge');

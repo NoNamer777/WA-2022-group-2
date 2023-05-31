@@ -13,7 +13,4 @@ export class Challenge {
 
   /** @type {string} */
   group_id;
-
-  /** @type {boolean} */
-  isAdmin;
 }

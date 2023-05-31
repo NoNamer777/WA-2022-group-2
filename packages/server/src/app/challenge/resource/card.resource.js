@@ -1,6 +1,6 @@
 /**
  * @param challenges {Array}
- * @returns {*}
+ * @returns {Array}
  */
 export function cardResource(challenges) {
   return challenges.map((challenge) => {
