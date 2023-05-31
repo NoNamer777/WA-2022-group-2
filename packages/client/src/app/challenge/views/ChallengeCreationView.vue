@@ -38,13 +38,10 @@
             label="Selecteer groep"
             placeholder="Selecteer groep"
             name="group"
-            :options="[
-              { label: 'Alleen ik', value: null },
-              { label: 'Groep 1', value: 1 },
-              { label: 'Groep 2', value: 2 }
-            ]"
+            :options="groups"
             help="Zie je geen groepen? Maak er een aan op Mijn Wasted!"
           />
+          <!--  TODO: Add "alleen ik" -->
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>
       </div>
@@ -58,21 +55,26 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { CustomFormKit } from '../../shared/index.js';
 import { ChallengeSuggestionService } from '../services/challenge.suggestion.service.js';
+import { useAuthStore } from '../../auth/index.js';
+import { GroupService } from '../../group/services/group.service.js';
 
 export default {
   name: 'ChallengeCreationView',
   components: { CustomFormKit },
   setup() {
+    const authStore = useAuthStore();
+    const user = authStore.user;
     const router = useRouter();
-    const suggestions = [];
+    const suggestions = ref([]);
     const yesterday = ref();
+    const groups = ref([]);
 
     const populateSuggestions = () => {
       ChallengeSuggestionService.instance()
         .getSelection()
         .then((challenges) => {
           challenges.forEach((challenge) => {
-            suggestions.push(challenge.name);
+            suggestions.value.push(challenge.name);
           });
         });
     };
@@ -81,6 +83,23 @@ export default {
       let date = new Date();
       date.setDate(date.getDate() - days);
       return date;
+    };
+
+    const populateGroups = () => {
+      GroupService.instance()
+        .getAllForUser(user.id)
+        .then((groupItems) => {
+          groups.value.push({
+            label: 'Alleen ik',
+            value: null
+          });
+          groupItems.forEach((group) => {
+            groups.value.push({
+              label: group.name,
+              value: group.id
+            });
+          });
+        });
     };
 
     const challenge = ref({
@@ -106,6 +125,8 @@ export default {
       populateSuggestions,
       yesterday,
       getDate,
+      groups,
+      populateGroups,
       challenge,
       createChallenge
     };
@@ -113,6 +134,8 @@ export default {
   mounted() {
     this.yesterday = this.getDate(2);
     this.populateSuggestions();
+    this.populateGroups();
+    console.log(this.groups);
   }
 };
 </script>

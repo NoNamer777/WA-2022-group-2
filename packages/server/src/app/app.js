@@ -40,7 +40,7 @@ class App {
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge/suggestion', challengeSuggestionRouter);
-    this.app.use('/api/', groupRouter);
+    this.app.use('/api/', groupRouter); // TODO: adjust route
     this.app.use('/auth', authRouter);
 
     // Needs to be defined last in order to catch, log, and format all errors properly
