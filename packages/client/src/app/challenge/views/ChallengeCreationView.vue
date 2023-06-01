@@ -31,7 +31,6 @@
             :options="[5, 7, 10]"
             validation="required"
           />
-          <!--  TODO: fetch groups from backend -->
           <CustomFormKit
             v-model="challenge.group"
             type="select"
@@ -41,7 +40,6 @@
             :options="groups"
             help="Zie je geen groepen? Maak er een aan op Mijn Wasted!"
           />
-          <!--  TODO: Add "alleen ik" -->
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
         </FormKit>
       </div>
@@ -69,15 +67,13 @@ export default {
     const yesterday = ref();
     const groups = ref([{ label: 'Alleen ik', value: null }]);
 
-    const populateSuggestions = () => {
-      ChallengeSuggestionService.instance()
-        .getSelection()
-        .then((challenges) => {
-          challenges.forEach((challenge) => {
-            suggestions.value.push(challenge.name);
-          });
-        })
-        .catch((error) => console.error(error));
+    const populateSuggestions = async () => {
+      try {
+        const suggestionData = await ChallengeSuggestionService.instance().getSelection();
+        suggestionData.forEach((suggestion) => suggestions.value.push(suggestion.name));
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const getDate = (days) => {
@@ -89,7 +85,6 @@ export default {
     const populateGroups = async () => {
       try {
         const groupData = await GroupService.instance().getAllForUser(user.id);
-
         groupData.forEach(
           (group) => (groups.value = [...groups.value, { label: group.name, value: group.id }])
         );
@@ -104,6 +99,7 @@ export default {
       amountOfDays: '',
       group: ''
     });
+
     const createChallenge = () => {
       /* output submit object */
       console.log(JSON.stringify(challenge.value));
@@ -116,6 +112,7 @@ export default {
        * Route to active view, routing to be done */
       router.push('/challenge');
     };
+
     return {
       suggestions,
       populateSuggestions,
@@ -127,11 +124,11 @@ export default {
       createChallenge
     };
   },
+
   mounted() {
     this.yesterday = this.getDate(2);
     this.populateSuggestions();
     this.populateGroups();
-    console.log(this.groups);
   }
 };
 </script>
