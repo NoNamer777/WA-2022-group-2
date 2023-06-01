@@ -55,7 +55,7 @@ export default {
       required: false
     },
     dataList: {
-      type: Array,
+      type: [String, Array],
       required: false
     },
     validationMessages: {

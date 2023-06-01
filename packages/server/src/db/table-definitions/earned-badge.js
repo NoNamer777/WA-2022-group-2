@@ -31,7 +31,7 @@ module.exports = {
     },
     user_challenge_id: {
       type: DataTypes.INTEGER(11),
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'user_challenge',
         key: 'id'

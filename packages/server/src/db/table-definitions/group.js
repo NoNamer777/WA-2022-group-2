@@ -9,6 +9,11 @@ module.exports = {
     },
     name: {
       type: DataTypes.STRING(255)
+    },
+    code: {
+      type: DataTypes.STRING(32),
+      allowNull: false,
+      unique: true
     }
   }
 };
