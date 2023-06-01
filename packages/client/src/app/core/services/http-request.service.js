@@ -111,7 +111,7 @@ export class HttpRequestService {
     if (error.error === 'ERR_NETWORK') {
       error.error = error.message;
       error.message =
-        'Er is iets mis gegaan met het versturen van je request.\nProbeer het later nog eens.';
+        'Er is iets mis gegaan met de communicatie naar de server.\nProbeer het later nog eens.';
     }
     notify({ title: error.error, text: error.message, type: 'error' });
     return Promise.reject(error);
