@@ -10,12 +10,12 @@ export const useChallengeStore = defineStore('challenge', () => {
   const loading = ref(true);
 
   /**
-   * @private
+   * @param userId {number}
    * @return {Promise<void>}
    */
-  async function getChallenges() {
+  async function getChallenges(userId) {
     try {
-      challenges.value = await ChallengeService.instance().getChallenges();
+      challenges.value = await ChallengeService.instance().getChallenges(userId);
     } catch (error) {
       console.error(error);
       challenges.value = null;

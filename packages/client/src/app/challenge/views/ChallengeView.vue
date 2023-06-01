@@ -4,12 +4,14 @@ import { CardList } from '../../shared/components/index.js';
 import { useChallengeStore } from '../stores/challenge.store.js';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
+import { useAuthStore } from '../../auth/index.js';
 
 const { loading, challenges } = storeToRefs(useChallengeStore());
 const { getChallenges } = useChallengeStore();
 
 onMounted(async () => {
-  await getChallenges();
+  const { user } = storeToRefs(useAuthStore());
+  await getChallenges(user.value.id);
 });
 </script>
 

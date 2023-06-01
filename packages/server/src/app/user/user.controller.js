@@ -1,3 +1,5 @@
+import { cardResource } from '../challenge/resource/card.resource.js';
+import { ChallengeService } from '../challenge/services/challenge.service.js';
 import { UserService } from './services/user.service.js';
 
 class UserController {
@@ -47,6 +49,19 @@ class UserController {
     console.info(`UserController - Removing User resource with ID: '${userIdParam}'`);
 
     await UserService.instance().deleteById(parseInt(userIdParam));
+  }
+
+  /** @return {Promise<{pastChallenges: Array, currentChallenges: Array}>} */
+  async getForUser(userId) {
+    console.info(`UserController - Getting challenges for User with ID: '${userId}'`);
+
+    const currentChallenges = await ChallengeService.instance().getForUser(userId);
+    const pastChallenges = await ChallengeService.instance().getForUser(userId, true);
+
+    return {
+      currentChallenges: cardResource(currentChallenges),
+      pastChallenges: cardResource(pastChallenges)
+    };
   }
 }
 

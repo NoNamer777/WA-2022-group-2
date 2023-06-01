@@ -16,7 +16,7 @@ const props = defineProps({
         v-for="(item, index) in props.items"
         class="col-xl-4 text-black text-decoration-none"
         :key="index"
-        :to="{ name: 'challenge_progress', params: { id: item.id } }"
+        :to="{ name: 'challenge_progress', params: { userId: item.id } }"
       >
         <CardItem :title="item.title" :text="item.text" :clickable="true" />
       </router-link>
