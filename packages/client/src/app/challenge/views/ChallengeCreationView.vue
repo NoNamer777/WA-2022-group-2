@@ -67,7 +67,7 @@ export default {
     const router = useRouter();
     const suggestions = ref([]);
     const yesterday = ref();
-    const groups = ref([]);
+    const groups = ref([{ label: 'Alleen ik', value: null }]);
 
     const populateSuggestions = () => {
       ChallengeSuggestionService.instance()
@@ -76,7 +76,8 @@ export default {
           challenges.forEach((challenge) => {
             suggestions.value.push(challenge.name);
           });
-        });
+        })
+        .catch((error) => console.error(error));
     };
 
     const getDate = (days) => {
@@ -89,17 +90,26 @@ export default {
       GroupService.instance()
         .getAllForUser(user.id)
         .then((groupItems) => {
-          groups.value.push({
-            label: 'Alleen ik',
-            value: null
-          });
           groupItems.forEach((group) => {
             groups.value.push({
               label: group.name,
               value: group.id
             });
           });
-        });
+        })
+        .catch((error) => console.error(error));
+
+      //
+      // const populateGroups = async () => {
+      //   try {
+      //     const groups = await GroupService.instance().getAllForUser(user.id);
+      //
+      //     groups.forEach(
+      //       (group) => (groups.value = [...groups.value, { label: group.name, value: group.id }])
+      //     );
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
     };
 
     const challenge = ref({
