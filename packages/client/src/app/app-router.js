@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from './auth';
-import { LoginView, RegisterView } from './auth/views';
+import { LoginView, RegisterView, ResetPasswordView } from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView, InfoView } from './core/views';
 
@@ -64,6 +64,14 @@ export const router = createRouter({
       component: InfoView,
       meta: {
         title: 'Informatie'
+      }
+    },
+    {
+      path: '/reset-password',
+      name: 'reset password',
+      component: ResetPasswordView,
+      meta: {
+        title: 'Password resetten'
       }
     }
   ]

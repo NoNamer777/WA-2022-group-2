@@ -30,6 +30,16 @@ export class AuthService {
   }
 
   /**
+   * @param emailAddress {string}
+   * @return {Promise<void>}
+   */
+  async requestPasswordReset(emailAddress) {
+    return await HttpRequestService.instance().postRequest('/auth/request-password-reset', {
+      email: emailAddress
+    });
+  }
+
+  /**
    * @return {void}
    */
   logout() {
