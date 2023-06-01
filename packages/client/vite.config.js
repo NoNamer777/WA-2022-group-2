@@ -37,6 +37,9 @@ export default defineConfig(({ mode }) => {
     css: {
       devSourcemap: true
     },
-    mode: mode
+    mode: mode,
+    server: {
+      hmr: false
+    }
   };
 });
