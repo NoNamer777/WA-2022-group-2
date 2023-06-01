@@ -28,6 +28,7 @@ class ChallengeController {
       `ChallengeController - Updating Challenge resource on path: '${challengeIdParam}'`
     );
 
+    // @todo implement updating challenge
     return await ChallengeService.instance().update(challengeData);
   }
 
@@ -38,6 +39,7 @@ class ChallengeController {
   async create(challengeData) {
     console.info('ChallengeController - Creating a new Challenge resource');
 
+    // @todo implement creating challenge
     return await ChallengeService.instance().create(challengeData);
   }
 
