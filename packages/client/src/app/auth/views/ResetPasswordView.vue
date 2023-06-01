@@ -2,7 +2,7 @@
   <main class="container d-flex justify-content-center">
     <section class="col-12 col-sm-10 col-lg-7" :class="{ 'd-none': done }">
       <h1>Reset Password</h1>
-      <p>Wat is het email addres wat je gekoppeld hebt aan je account?</p>
+      <p>Welke gebruikersnaam gebruik je tijdens het inloggen?</p>
       <FormKit
         type="form"
         :actions="false"
@@ -10,11 +10,11 @@
         #default="{ state: { valid } }"
       >
         <CustomFormKit
-          name="email"
-          label="Email addres"
-          placeholder="voorbeeld@host.nl"
-          validation="required|email"
-          v-model:model-value="email"
+          name="username"
+          label="Gebruikersnaam"
+          placeholder="Bob123"
+          validation="required"
+          v-model:model-value="username"
         />
         <CustomFormKit
           type="submit"
@@ -32,18 +32,24 @@ import { CustomFormKit } from '../../shared/components';
 import { ref } from 'vue';
 import { AuthService } from '../services/index.js';
 
+/** @type {AuthService} */
 const authService = AuthService.instance();
 
 /** @type {import('vue').Ref<string>} */
-const email = ref();
+const username = ref();
+
+/** @type {import('vue').Ref<boolean>} */
 const loading = ref(false);
+
+/** @type {import('vue').Ref<boolean>} */
 const done = ref(false);
 
+/** @return {Promise<void>} */
 async function sendResetPasswordRequest() {
   try {
     loading.value = true;
 
-    await authService.requestPasswordReset(email.value);
+    await authService.requestPasswordReset(username.value);
 
     done.value = true;
   } catch (error) {
