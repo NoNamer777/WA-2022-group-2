@@ -49,11 +49,7 @@ module.exports = {
     },
     profile_image_path: {
       type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    is_admin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
+      allowNull: false
     }
   }
 };
