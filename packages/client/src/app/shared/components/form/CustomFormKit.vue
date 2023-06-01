@@ -13,6 +13,7 @@
     :options="options"
     :input-class="inputClass"
     :help="help"
+    :disabled="disabled"
   />
   <datalist v-if="dataList" :id="dataListId">
     <option v-for="(data, index) in dataList" :key="index">{{ data }}</option>
@@ -90,6 +91,10 @@ export default {
     },
     help: {
       type: String,
+      required: false
+    },
+    disabled: {
+      type: Boolean,
       required: false
     }
   },
