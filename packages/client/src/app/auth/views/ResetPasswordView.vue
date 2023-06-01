@@ -31,7 +31,6 @@
 import { CustomFormKit } from '../../shared/components';
 import { ref } from 'vue';
 import { AuthService } from '../services/index.js';
-import { notify } from '@kyvg/vue3-notification';
 
 const authService = AuthService.instance();
 
