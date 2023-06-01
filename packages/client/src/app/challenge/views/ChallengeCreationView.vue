@@ -86,30 +86,16 @@ export default {
       return date;
     };
 
-    const populateGroups = () => {
-      GroupService.instance()
-        .getAllForUser(user.id)
-        .then((groupItems) => {
-          groupItems.forEach((group) => {
-            groups.value.push({
-              label: group.name,
-              value: group.id
-            });
-          });
-        })
-        .catch((error) => console.error(error));
+    const populateGroups = async () => {
+      try {
+        const groupData = await GroupService.instance().getAllForUser(user.id);
 
-      //
-      // const populateGroups = async () => {
-      //   try {
-      //     const groups = await GroupService.instance().getAllForUser(user.id);
-      //
-      //     groups.forEach(
-      //       (group) => (groups.value = [...groups.value, { label: group.name, value: group.id }])
-      //     );
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
+        groupData.forEach(
+          (group) => (groups.value = [...groups.value, { label: group.name, value: group.id }])
+        );
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const challenge = ref({
