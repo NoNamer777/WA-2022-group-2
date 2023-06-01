@@ -1,6 +1,6 @@
 <template>
   <main class="container d-flex justify-content-center">
-    <section class="col-12 col-sm-10 col-lg-7" :class="{ 'd-none': done$ }">
+    <section class="col-12 col-sm-10 col-lg-7" :class="{ 'd-none': done }">
       <h1>Reset Password</h1>
       <p>Wat is het email addres wat je gekoppeld hebt aan je account?</p>
       <FormKit
@@ -14,7 +14,7 @@
           label="Email addres"
           placeholder="voorbeeld@host.nl"
           validation="required|email"
-          v-model:model-value="email$"
+          v-model:model-value="email"
         />
         <CustomFormKit
           type="submit"
@@ -35,21 +35,21 @@ import { AuthService } from '../services/index.js';
 const authService = AuthService.instance();
 
 /** @type {import('vue').Ref<string>} */
-const email$ = ref();
-const loading$ = ref(false);
-const done$ = ref(false);
+const email = ref();
+const loading = ref(false);
+const done = ref(false);
 
 async function sendResetPasswordRequest() {
   try {
-    loading$.value = true;
+    loading.value = true;
 
-    await authService.requestPasswordReset(email$.value);
+    await authService.requestPasswordReset(email.value);
 
-    done$.value = true;
+    done.value = true;
   } catch (error) {
     console.error('Something went wrong while sending a request to reset your password', error);
   } finally {
-    loading$.value = false;
+    loading.value = false;
   }
 }
 </script>
