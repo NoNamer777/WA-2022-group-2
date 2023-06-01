@@ -19,6 +19,28 @@
   </datalist>
 </template>
 
+<style>
+.formkit-wrapper {
+  max-width: unset !important;
+}
+
+[data-invalid] .formkit-inner {
+  border-color: red;
+  box-shadow: 0 0 0 1px red;
+}
+
+[data-complete] .formkit-inner {
+  border-color: red;
+  box-shadow: 0 0 0 1px green;
+}
+.formkit-input {
+  width: 100% !important;
+}
+.formkit-input:focus-visible {
+  outline: auto;
+}
+</style>
+
 <script>
 export default {
   name: 'CustomFormKit',
@@ -73,30 +95,8 @@ export default {
   },
   computed: {
     dataListId() {
-      return name + '-dataList';
+      return this.dataList ? name + '-dataList' : '';
     }
   }
 };
 </script>
-
-<style>
-.formkit-wrapper {
-  max-width: unset !important;
-}
-
-[data-invalid] .formkit-inner {
-  border-color: red;
-  box-shadow: 0 0 0 1px red;
-}
-
-[data-complete] .formkit-inner {
-  border-color: red;
-  box-shadow: 0 0 0 1px green;
-}
-.formkit-input {
-  width: 100% !important;
-}
-.formkit-input:focus-visible {
-  outline: auto;
-}
-</style>
