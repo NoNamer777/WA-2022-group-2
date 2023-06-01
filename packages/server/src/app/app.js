@@ -5,6 +5,7 @@ import { authRouter } from './auth/index.js';
 import { challengeSuggestionRouter } from './challenge_suggestion/challenge_suggestion.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { DatabaseService } from './core/services/index.js';
+import { MailService } from './core/services/mail.service.js';
 import { userRouter } from './user/index.js';
 
 class App {
@@ -36,6 +37,7 @@ class App {
     this.app.use(corsMiddleware());
 
     await DatabaseService.instance().initialize();
+    MailService.instance().initialize();
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge/suggestion', challengeSuggestionRouter);

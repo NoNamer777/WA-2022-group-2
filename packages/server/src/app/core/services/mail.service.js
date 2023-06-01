@@ -20,7 +20,13 @@ export class MailService {
   /** @type {import('thymeleaf').TemplateEngine } */
   #thymeleafEngine;
 
-  constructor() {
+  initialize() {
+    const mailServerEmailAddress = process.env.MAIL_SERVER_EMAIL_ADDRESS;
+    const mailServerPassword = process.env.MAIL_SERVER_PASSWORD;
+
+    if (!mailServerPassword || !mailServerEmailAddress) {
+      throw Error('Email address and password for sending emails are not defined.');
+    }
     this.#mailTransporter = createTransport({
       host: 'smtp.gmail.com',
       secure: true,
