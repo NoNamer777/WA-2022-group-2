@@ -12,9 +12,10 @@ challengeRouter.use('/suggestion', challengeSuggestionRouter);
 
 challengeRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
   const allChallenges = await challengeController.getAll();
-
   response.send(allChallenges);
 });
+
+challengeRouter.use('/suggestion', challengeSuggestionRouter);
 
 challengeRouter.get(
   '/:challengeId',
