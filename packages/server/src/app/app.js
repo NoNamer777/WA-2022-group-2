@@ -4,8 +4,7 @@ import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
 import { challengeSuggestionRouter } from './challenge_suggestion/challenge_suggestion.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
-import { DatabaseService } from './core/services/index.js';
-import { MailService } from './core/services/mail.service.js';
+import { DatabaseService, MailService } from './core/services/index.js';
 import { userRouter } from './user/index.js';
 
 class App {
