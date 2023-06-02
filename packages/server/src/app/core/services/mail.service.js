@@ -1,5 +1,5 @@
 import { createTransport } from 'nodemailer';
-import * as hbs from 'nodemailer-express-handlebars';
+import hbs from 'nodemailer-express-handlebars';
 
 export class MailService {
   /** @return {MailService} */
