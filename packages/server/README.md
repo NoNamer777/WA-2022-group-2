@@ -25,14 +25,14 @@ Rename the copy to `database.json` and provide the following contents to it:
     // For now, we only support MySQL databases
     dialect: 'mysql',
 
-    // The name of your MySQL database/schema
-    database: 'my_db',
-
     // The hostname of where your MySQL database server runs
     host: 'localhost',
 
     // The port on which your MySQL database server is accessible
     port: 3306,
+
+    // The name of your MySQL database/schema
+    database: 'my_db',
 
     // The database user which has access rights to the database/schema
     username: 'db_user',
