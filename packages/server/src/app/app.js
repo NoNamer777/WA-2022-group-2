@@ -35,6 +35,8 @@ class App {
 
     this.app.use(corsMiddleware());
 
+    this.app.use(express.static('packages/server/src/public'));
+
     await DatabaseService.instance().initialize();
 
     this.app.use('/api/user', userRouter);
