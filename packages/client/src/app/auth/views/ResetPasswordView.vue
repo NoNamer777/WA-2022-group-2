@@ -12,7 +12,7 @@
         <CustomFormKit
           name="username"
           label="Gebruikersnaam"
-          placeholder="Bob123"
+          placeholder="johndoe"
           validation="required"
           v-model:model-value="username"
         />
