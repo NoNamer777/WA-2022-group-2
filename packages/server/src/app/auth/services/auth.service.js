@@ -48,18 +48,26 @@ export class AuthService {
    * @return {Promise<void>}
    */
   async requestPasswordReset(username) {
-    const user = await UserService.instance().getByUsername(username);
-    const jwtToken = JwtService.instance().encodeToken(user);
+    try {
+      const user = await UserService.instance().getByUsername(username);
 
-    await MailService.instance().sendEmail({
-      to: user.email,
-      subject: 'Aanvraag wachtwoord resetten',
-      templatePath: './assets/email-templates/reset-password.html',
-      templateContext: {
-        user: user,
-        passwordResetFormLink:
-          process.env.CLIENT_BASE_URL + '/reset-password/step-2?token=' + jwtToken
-      }
-    });
+      // Generate a JWT that is valid for 10 minutes.
+      const jwtToken = JwtService.instance().encodeToken(user.toJSON(), 10 * 60 * 1000);
+
+      await MailService.instance().sendEmail({
+        to: user.email,
+        subject: 'Aanvraag wachtwoord herstellen',
+        template: 'reset-password',
+        context: {
+          username: user.username,
+          link: process.env.CLIENT_BASE_URL + '/reset-password/step-2?token=' + jwtToken
+        }
+      });
+    } catch (error) {
+      console.error(
+        `Something went wrong while sending a request to reset a user's password`,
+        error
+      );
+    }
   }
 }
