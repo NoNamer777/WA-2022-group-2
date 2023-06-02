@@ -23,7 +23,7 @@ export class MailService {
       defaultLayout: false
     },
     viewPath: process.env.EMAIL_TEMPLATES_PATH,
-    extName: 'template'
+    extName: '.template.html'
   };
 
   /** @return {void} */
