@@ -21,71 +21,10 @@ npm install
 
 ### Configuration
 
-This server uses a config file to set up some aspects of the application. You must copy the template
-found [here](./environment/config-template.json) and rename the copied file to `config.json`.
-Below here follows an example of what the config may look like:
-
-```json5
-{
-  // Whether the server runs in production mode, thus changing some values or processes
-  production: false,
-  jwt: {
-    // The JWT secret, used to encode and decode JWT tokens. NOTE: This value must be identical to
-    // the environment variable `VITE_JWT_SECRET`
-    token: 'My super secret token'
-  },
-  server: {
-    // The host address of the server
-    host: 'localhost',
-
-    // The port on the host on which the server runs on
-    port: 8080,
-
-    // The location of the database config
-    databaseConfigPath: './environment/database.json',
-
-    // Origins that are allowed to connect to the server via the CORS settings
-    allowedOrigins: ['http://localhost:5173']
-  }
-}
-```
-
-Besides this configuration file, the client and server applications use environment variables to
+The client and server applications use environment variables to
 configure its values and processes depending on the environment that the application is running in.
 By default, the client and server applications look for an `.env` file inside the `./environment`
-folder. You'll also find a template there which you can copy and rename to `.env`. An example of
-how such a file would look like is as followed:
-
-```
-# Shared variables
-
-# This variable is used to decode the received JWT token in the web application and needs to be
-# identical to the secret passed in the server configuration file (`config.json#jwt.secret`)
-VITE_JWT_SECRET=my super secret jwt secret
-
-NODE_ENV=development
-
-
-# Server variables
-
-# This variables determines where the server and client can find their environment variables. This
-# is usually already passed via the cli (server) or in the Vite configuration file (client), but
-# it can't do any harm to declare it also in this file.
-ENV_PATH=./environment/.env
-
-# This variable determines where the server will look for its configuration file. This path will be
-# relative to from where the server process is run from.
-DATABASE_CONFIG_PATH=./environment/database.json
-
-ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.7:5173
-
-
-# Client variables
-
-# This variable determine where the client sends api requests to. This address should reuse the
-# `host` and `port` values used in the server configuration
-VITE_SERVER_BASE_URL=http://localhost:8080
-```
+folder. You'll also find a template there which you can copy and rename to `.env`.
 
 After that you can find the instructions for the different projects on how to get the projects started
 
