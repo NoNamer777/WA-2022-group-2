@@ -733,7 +733,7 @@ components:
         name: 
           type: string
           example: my awesome family group
-        groupCode:
+        code:
           type: string
           readOnly: true
           example: X1779Y
