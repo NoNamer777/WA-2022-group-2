@@ -2,8 +2,23 @@
   <main>
     <div class="d-flex flex-row flex-wrap justify-content-between">
       <div>
-        <div class="mb-1">
-          <div class="d-flex flex-row flex-wrap w-100 justify-content-between">
+        <div class="mb-1 w-100">
+          <div v-if="isEditing" tabindex="-1" ref="input">
+            <FormKit type="form" @submit="saveText" :actions="false" :incomplete-message="false">
+              <CustomFormKit
+                @submit="saveText"
+                v-model="challenge.name"
+                label="Challenge naam"
+                name="name"
+                :placeholder="challenge.name"
+                validation="required|length:5,80"
+              />
+              <div>
+                <CustomFormKit type="submit" label="Sla op" input-class="form-btn-tertiary" />
+              </div>
+            </FormKit>
+          </div>
+          <div v-else class="d-flex flex-row flex-wrap w-100 mr-auto justify-content-between">
             <h1>{{ challenge.name }}</h1>
           </div>
           <p class="fw-bold">
@@ -15,7 +30,7 @@
           <span class="fw-normal"> {{ dayTitle }}</span>
         </p>
       </div>
-      <div class="h-25 mb-2 d-flex flex-wrap">
+      <div v-if="!isEditing" class="h-25 mb-2 d-flex flex-wrap">
         <div class="btn-group">
           <button
             type="button"
@@ -77,12 +92,14 @@
 import { ChallengeProgress } from '../components/index.js';
 import data from '../data.json';
 import { useAuthStore } from '../../auth/index.js';
+import CustomFormKit from '../../shared/components/form/CustomFormKit.vue';
+import { nextTick } from 'vue';
 
-/* TODO: send in user and challenge, move logic to backend */
+/* TODO: send in user and challenge, move logic to backend, refactor to composition API */
 
 export default {
   name: 'ChallengeProgressView',
-  components: { ChallengeProgress },
+  components: { CustomFormKit, ChallengeProgress },
   setup() {
     const authStore = useAuthStore();
     const user = authStore.user;
@@ -96,7 +113,8 @@ export default {
       today: Date,
       todayNumber: Number,
       dayTitle: String,
-      isActive: Boolean
+      isActive: Boolean,
+      isEditing: Boolean
     };
   },
   created() {
@@ -107,6 +125,7 @@ export default {
     this.todayNumber = this.getTodaysDayNumber();
     this.isActive = this.getIsActive();
     this.dayTitle = this.getTodayTitle();
+    this.isEditing = false;
   },
   methods: {
     getAndSortUserChallenges() {
@@ -138,8 +157,14 @@ export default {
       return this.getIsOwner(userChallenge) ? 'bg-white' : 'bg-opponent';
     },
     adjustText() {
-      // TODO: handle edit
-      console.log('change name');
+      this.isEditing = true;
+      nextTick(() => {
+        this.$refs.input.focus();
+      });
+    },
+    saveText() {
+      // TODO: Save challenge name
+      this.isEditing = false;
     },
     leaveChallenge() {
       // TODO: handle leaving challenge

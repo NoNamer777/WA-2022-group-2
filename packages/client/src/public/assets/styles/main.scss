@@ -21,3 +21,8 @@ body,
 .form-btn-primary {
   background-color: var(--bs-primary) !important;
 }
+
+.form-btn-tertiary {
+  background-color: var(--bs-tertiary) !important;
+  color: var(--bs-text) !important;
+}
