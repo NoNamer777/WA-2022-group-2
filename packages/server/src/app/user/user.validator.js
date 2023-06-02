@@ -22,13 +22,13 @@ export const newUserSchema = {
     escape: true
   },
   email: {
-    notEmpty: { bail: true, errorMessage: 'Een emailaddres is verplicht.' },
+    notEmpty: { bail: true, errorMessage: 'Een email addres is verplicht.' },
     isLength: {
       bail: true,
       options: { min: 5, max: 80 },
-      errorMessage: 'Een emailaddres moet tuseen de 5 en 80 tekenes bevatten.'
+      errorMessage: 'Een email addres moet tussen de 5 en 80 tekenes bevatten.'
     },
-    isEmail: { errorMessage: 'Het formaat van de opgegeven emailaddres is onjuist.' },
+    isEmail: { errorMessage: 'Het formaat van de opgegeven email addres is onjuist.' },
     escape: true
   }
 };

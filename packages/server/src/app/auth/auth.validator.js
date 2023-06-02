@@ -1,12 +1,14 @@
-export const loginSchema = {
-  username: {
-    notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
-    isLength: {
-      options: { min: 3 },
-      errorMessage: 'Een gebruikersnaam moet minimaal 3 tekens bevatten.'
-    },
-    escape: true
+const usernameValidator = {
+  notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
+  isLength: {
+    options: { min: 3 },
+    errorMessage: 'Een gebruikersnaam moet minimaal 3 tekens bevatten.'
   },
+  escape: true
+};
+
+export const loginSchema = {
+  username: usernameValidator,
   password: {
     notEmpty: { bail: true, errorMessage: 'Een wachtwoord is verplicht.' },
     isLength: {
@@ -15,4 +17,8 @@ export const loginSchema = {
     },
     escape: true
   }
+};
+
+export const usernameSchema = {
+  username: usernameValidator
 };

@@ -3,7 +3,7 @@ import { rateLimit } from 'express-rate-limit';
 import { checkSchema, matchedData } from 'express-validator';
 import { newUserSchema } from '../user/index.js';
 import { authController } from './auth.controller.js';
-import { loginSchema } from './auth.validator.js';
+import { loginSchema, usernameSchema } from './auth.validator.js';
 import { confirmPasswordValidator } from './middleware/confirm-password.validator.js';
 
 export const authRouter = express.Router();
@@ -41,6 +41,21 @@ authRouter.post(
       const token = await authController.login(matchedData(request));
 
       response.header('Authorization', `Bearer ${token}`).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+authRouter.post(
+  '/request-password-reset',
+  authLimiter,
+  checkSchema(usernameSchema, ['body']),
+  async (request, response, next) => {
+    try {
+      await authController.requestPasswordReset(request.body.username);
+
+      response.end();
     } catch (error) {
       next(error);
     }
