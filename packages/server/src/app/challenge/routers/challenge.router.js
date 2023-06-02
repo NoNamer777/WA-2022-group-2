@@ -60,6 +60,14 @@ challengeRouter.post(
     try {
       const createdChallenge = await challengeController.create(challengeData);
 
+      /*
+        ToDo
+        - if group: fetch members from user_group by createdChallenge.group_id -> response
+        - else: use user id only
+        - combine members and challenge in user_challenge table with user_id & challenge_id -> response
+        - make challenge_days for all dates
+*/
+
       response.status(201).send(createdChallenge);
     } catch (error) {
       next(error);
