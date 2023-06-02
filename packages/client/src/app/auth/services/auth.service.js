@@ -30,6 +30,16 @@ export class AuthService {
   }
 
   /**
+   * @param username {string}
+   * @return {Promise<void>}
+   */
+  async requestPasswordReset(username) {
+    return await HttpRequestService.instance().postRequest('/auth/request-password-reset', {
+      username: username
+    });
+  }
+
+  /**
    * @return {void}
    */
   logout() {

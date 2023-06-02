@@ -108,6 +108,11 @@ export class HttpRequestService {
         }
       : errorResponse.response.data;
 
+    if (error.error === 'ERR_NETWORK') {
+      error.error = error.message;
+      error.message =
+        'Er is iets mis gegaan met de communicatie naar de server.\nProbeer het later nog eens.';
+    }
     notify({ title: error.error, text: error.message, type: 'error' });
     return Promise.reject(error);
   }
