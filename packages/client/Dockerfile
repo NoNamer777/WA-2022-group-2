@@ -1,4 +1,6 @@
-FROM node:18-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:18-alpine AS builder
+
+RUN apk --no-cache --virtual build-dependencies add python3 make g++
 
 WORKDIR client-app/
 
@@ -17,7 +19,7 @@ ENV VITE_JWT_SECRET $VITE_JWT_SECRET
 RUN npm run client:build
 
 
-FROM nginx:1.24-alpine
+FROM nginx:alpine
 
 COPY --from=builder /client-app/dist/client /usr/share/nginx/html
 

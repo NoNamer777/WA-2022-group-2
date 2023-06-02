@@ -2,10 +2,9 @@ import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
-import { challengeSuggestionRouter } from './challenge_suggestion/challenge_suggestion.router.js';
+import { challengeRouter } from './challenge/routers/challenge.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
-import { DatabaseService } from './core/services/index.js';
-import { MailService } from './core/services/mail.service.js';
+import { DatabaseService, MailService } from './core/services/index.js';
 import { userRouter } from './user/index.js';
 
 class App {
@@ -40,7 +39,7 @@ class App {
     MailService.instance().initialize();
 
     this.app.use('/api/user', userRouter);
-    this.app.use('/api/challenge/suggestion', challengeSuggestionRouter);
+    this.app.use('/api/challenge', challengeRouter);
     this.app.use('/auth', authRouter);
 
     // Needs to be defined last in order to catch, log, and format all errors properly

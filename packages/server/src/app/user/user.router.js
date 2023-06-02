@@ -1,7 +1,9 @@
 import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../auth/index.js';
+import { UnauthorizedException } from '../auth/models/errors/unauthorized-exception.js';
 import { entityIdValidator } from '../core/middleware/index.js';
+import { groupController } from '../group/group.controller.js';
 import { userController } from './user.controller.js';
 import { newUserSchema, userSchema } from './user.validator.js';
 
@@ -26,6 +28,32 @@ userRouter.get(
     }
   }
 );
+
+userRouter.get(
+  '/:userId/group',
+  jwtAuthHeaderValidator,
+  entityIdValidator('userId', 'User'),
+  async (request, response, next) => {
+    try {
+      const groups = await groupController.getAll(request.params.userId);
+      response.send(groups);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userRouter.get('/:userId/challenges', jwtAuthHeaderValidator, async (request, response) => {
+  const userId = parseInt(request.params.userId);
+
+  if (request.userId !== userId) {
+    throw new UnauthorizedException();
+  }
+
+  const challenges = await userController.getForUser(userId);
+
+  response.send(challenges);
+});
 
 userRouter.put(
   '/:userId',

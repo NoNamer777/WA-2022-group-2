@@ -1,3 +1,4 @@
+import { ChallengeService } from '../challenge/services/challenge.service.js';
 import { UserService } from './services/user.service.js';
 
 class UserController {
@@ -34,7 +35,7 @@ class UserController {
    * @return {Promise<UserEntity>}
    */
   async create(userData) {
-    console.info('UserController - Creating a new User resource');
+    console.info('UserController - Creating a new User resources');
 
     return await UserService.instance().create(userData);
   }
@@ -47,6 +48,16 @@ class UserController {
     console.info(`UserController - Removing User resource with ID: '${userIdParam}'`);
 
     await UserService.instance().deleteById(parseInt(userIdParam));
+  }
+
+  /** @return {Promise<{pastChallenges: Array, currentChallenges: Array}>} */
+  async getForUser(userId) {
+    console.info(`UserController - Getting challenges for User with ID: '${userId}'`);
+
+    return {
+      currentChallenges: await ChallengeService.instance().getForUser(userId),
+      pastChallenges: await ChallengeService.instance().getForUser(userId, true)
+    };
   }
 }
 

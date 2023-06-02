@@ -1,5 +1,5 @@
 import { createTransport } from 'nodemailer';
-import { TemplateEngine } from 'thymeleaf';
+import hbs from 'nodemailer-express-handlebars';
 
 export class MailService {
   /** @return {MailService} */
@@ -17,15 +17,25 @@ export class MailService {
   /** @type {import('nodemailer').Mailer} */
   #mailTransporter;
 
-  /** @type {import('thymeleaf').TemplateEngine } */
-  #thymeleafEngine;
+  #handlebarOptions = {
+    viewEngine: {
+      partialsDir: process.env.EMAIL_TEMPLATES_PATH,
+      defaultLayout: false
+    },
+    viewPath: process.env.EMAIL_TEMPLATES_PATH,
+    extName: 'template'
+  };
 
+  /** @return {void} */
   initialize() {
     const mailServerEmailAddress = process.env.MAIL_SERVER_EMAIL_ADDRESS;
     const mailServerPassword = process.env.MAIL_SERVER_PASSWORD;
+    const emailTemplatesPath = process.env.EMAIL_TEMPLATES_PATH;
 
-    if (!mailServerPassword || !mailServerEmailAddress) {
-      throw Error('Email address and password for sending emails are not defined.');
+    if (!mailServerPassword || !mailServerEmailAddress || !emailTemplatesPath) {
+      throw Error(
+        'Email address, password, and the path for the email templates for sending emails are not defined.'
+      );
     }
     this.#mailTransporter = createTransport({
       host: 'smtp.gmail.com',
@@ -36,22 +46,17 @@ export class MailService {
         pass: process.env.MAIL_SERVER_PASSWORD
       }
     });
-    this.#thymeleafEngine = new TemplateEngine();
+
+    this.#mailTransporter.use('compile', hbs(this.#handlebarOptions));
   }
 
   /**
-   * @param options {{ to: string, subject: string, templatePath: string, templateContext: Record<string, any> }}
+   * @param options {{ to: string, subject: string, template: string, context: Record<string, any> }}
    * @return {Promise<void>}
    */
   async sendEmail(options) {
-    const html = await this.#thymeleafEngine.processFile(
-      options.templatePath,
-      options.templateContext
-    );
-
     await this.#mailTransporter.sendMail({
-      from: 'info@wasted.nl.eu.org',
-      html: html,
+      from: '"Wasted" <info@wasted.nl.eu.org>',
       ...options
     });
   }

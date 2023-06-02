@@ -31,18 +31,13 @@
             :options="[5, 7, 10]"
             validation="required"
           />
-          <!--  TODO: fetch groups from backend -->
           <CustomFormKit
             v-model="challenge.group"
             type="select"
             label="Selecteer groep"
             placeholder="Selecteer groep"
             name="group"
-            :options="[
-              { label: 'Alleen ik', value: null },
-              { label: 'Groep 1', value: 1 },
-              { label: 'Groep 2', value: 2 }
-            ]"
+            :options="groups"
             help="Zie je geen groepen? Maak er een aan op Mijn Wasted!"
           />
           <CustomFormKit type="submit" label="Maak challenge aan" input-class="form-btn-primary" />
@@ -58,23 +53,27 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { CustomFormKit } from '../../shared/index.js';
 import { ChallengeSuggestionService } from '../services/challenge.suggestion.service.js';
+import { useAuthStore } from '../../auth/index.js';
+import { GroupService } from '../../group/services/group.service.js';
 
 export default {
   name: 'ChallengeCreationView',
   components: { CustomFormKit },
   setup() {
+    const authStore = useAuthStore();
+    const user = authStore.user;
     const router = useRouter();
-    const suggestions = [];
+    const suggestions = ref([]);
     const yesterday = ref();
+    const groups = ref([{ label: 'Alleen ik', value: null }]);
 
-    const populateSuggestions = () => {
-      ChallengeSuggestionService.instance()
-        .getSelection()
-        .then((challenges) => {
-          challenges.forEach((challenge) => {
-            suggestions.push(challenge.name);
-          });
-        });
+    const populateSuggestions = async () => {
+      try {
+        const suggestionData = await ChallengeSuggestionService.instance().getSelection();
+        suggestionData.forEach((suggestion) => suggestions.value.push(suggestion.name));
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const getDate = (days) => {
@@ -83,12 +82,24 @@ export default {
       return date;
     };
 
+    const populateGroups = async () => {
+      try {
+        const groupData = await GroupService.instance().getAllForUser(user.id);
+        groupData.forEach(
+          (group) => (groups.value = [...groups.value, { label: group.name, value: group.id }])
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const challenge = ref({
       name: '',
       startDate: '',
       amountOfDays: '',
       group: ''
     });
+
     const createChallenge = () => {
       /* output submit object */
       console.log(JSON.stringify(challenge.value));
@@ -101,18 +112,23 @@ export default {
        * Route to active view, routing to be done */
       router.push('/challenge');
     };
+
     return {
       suggestions,
       populateSuggestions,
       yesterday,
       getDate,
+      groups,
+      populateGroups,
       challenge,
       createChallenge
     };
   },
+
   mounted() {
     this.yesterday = this.getDate(2);
     this.populateSuggestions();
+    this.populateGroups();
   }
 };
 </script>
