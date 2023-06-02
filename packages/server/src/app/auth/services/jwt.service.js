@@ -17,12 +17,13 @@ export class JwtService {
 
   /**
    * @param payload {UserEntity}
+   * @param expirationTime {number}
    * @returns {string}
    */
-  encodeToken(payload) {
+  encodeToken(payload, expirationTime = TOKEN_VALID_DURATION) {
     return jwt.sign(payload, process.env.VITE_JWT_SECRET || '', {
       subject: `${payload.id}`,
-      expiresIn: `${TOKEN_VALID_DURATION}ms`
+      expiresIn: `${expirationTime}ms`
     });
   }
 
