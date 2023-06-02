@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="card border shadow" :class="{ 'card-clickable': props.clickable }">
+  <div class="card border shadow h-100" :class="{ 'card-clickable': props.clickable }">
     <div class="card-body">
       <h5 class="card-title fw-bold">{{ props.title }}</h5>
       <p class="card-text">{{ props.text }}</p>
