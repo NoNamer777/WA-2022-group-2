@@ -2,6 +2,7 @@ import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../auth/index.js';
 import { UnauthorizedException } from '../auth/models/errors/unauthorized-exception.js';
+import { challengeRouter } from '../challenge/routers/challenge.router.js';
 import { entityIdValidator } from '../core/middleware/index.js';
 import { groupController } from '../group/group.controller.js';
 import { userController } from './user.controller.js';
@@ -106,3 +107,5 @@ userRouter.delete(
     }
   }
 );
+
+userRouter.use('/:userId/challenge', challengeRouter);
