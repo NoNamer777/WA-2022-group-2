@@ -48,9 +48,6 @@ export class EntityService {
   }
 
   initializeEntityRelations() {
-    BadgeEntity.hasMany(UserChallengeEntity, { foreignKey: 'badge_id' });
-    UserChallengeEntity.belongsTo(BadgeEntity, { foreignKey: 'badge_id' });
-
     GroupEntity.hasMany(ChallengeEntity, { foreignKey: 'group_id' });
     ChallengeEntity.belongsTo(GroupEntity, { foreignKey: 'group_id' });
 
