@@ -16,20 +16,6 @@ userRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
 });
 
 userRouter.get(
-  '/:userId',
-  jwtAuthHeaderValidator,
-  entityIdValidator('userId', 'User'),
-  async (request, response, next) => {
-    const userId = request.params.userId;
-    try {
-      response.send(await userController.getById(userId));
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-userRouter.get(
   '/:userId/group',
   jwtAuthHeaderValidator,
   entityIdValidator('userId', 'User'),
@@ -54,6 +40,20 @@ userRouter.get('/:userId/challenges', jwtAuthHeaderValidator, async (request, re
 
   response.send(challenges);
 });
+
+userRouter.get(
+  '/:userId',
+  jwtAuthHeaderValidator,
+  entityIdValidator('userId', 'User'),
+  async (request, response, next) => {
+    const userId = request.params.userId;
+    try {
+      response.send(await userController.getById(userId));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 userRouter.put(
   '/:userId',
