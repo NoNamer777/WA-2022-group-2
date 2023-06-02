@@ -68,6 +68,18 @@ in the root of the repository:
 npm run server:start
 ```
 
+### Nodemailer
+
+This server uses [Nodemailer](https://nodemailer.com/about/) to be able to send emails to users about various authentication
+topics. It is currently only possible to provide gmail credentials. You provide your gmail account details through the
+`.env` file. Look at the template for which variables you'll need to set up. You can also find more info about setting
+up your Google account so that this server application is allowed to send emails through your email address
+[here](https://support.google.com/accounts/answer/185833?hl=en).
+
+With Nodemailer we use [express-handlebars](https://github.com/express-handlebars/express-handlebars) to send HTML via
+emails. We set up templates for those emails under the [assets/email-templates](src/assets/email-templates) directory.
+They need to have the following format in their file name `<template-name>.template.html` in order to picked up correctly.
+
 ## Building
 
 Builds are made by [esbuild](https://esbuild.github.io/)
