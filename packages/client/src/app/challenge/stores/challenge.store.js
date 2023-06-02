@@ -1,21 +1,29 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { cardResource } from '../resources/card.resource.js';
 import { ChallengeService } from '../services/index.js';
 
 export const useChallengeStore = defineStore('challenge', () => {
-  /** @type {Array} */
-  const challenges = ref(null);
+  /** @type {Object} */
+  let challenges = ref({});
 
   /** @type {import('vue').Ref<boolean>} */
   const loading = ref(true);
 
   /**
    * @param userId {number}
-   * @return {Promise<void>}
+   * @return {void}
    */
   async function getChallenges(userId) {
     try {
-      challenges.value = await ChallengeService.instance().getChallenges(userId);
+      await ChallengeService.instance()
+        .getChallenges(userId)
+        .then((data) => {
+          challenges.value = {
+            currentChallenges: cardResource(data.currentChallenges),
+            pastChallenges: cardResource(data.pastChallenges)
+          };
+        });
     } catch (error) {
       console.error(error);
       challenges.value = null;

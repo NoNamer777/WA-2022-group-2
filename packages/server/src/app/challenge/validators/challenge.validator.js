@@ -29,7 +29,7 @@ export const challengeSchema = {
     exists: { bail: true, options: { values: 'falsy' }, errorMessage: 'Een ID is verplicht' },
     isInt: {
       options: { min: 1 },
-      errorMessage: 'Een ID moet een heel cijfer zijn wat niet kleiner dan 1 mag zijn.'
+      optional: { values: null }
     },
     escape: true
   }

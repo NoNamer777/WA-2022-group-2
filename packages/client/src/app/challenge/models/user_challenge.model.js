@@ -10,7 +10,4 @@ export class UserChallenge {
 
   /** @type {number} */
   challenge_id;
-
-  /** @type {number} */
-  badge_id;
 }
