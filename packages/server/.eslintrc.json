@@ -1,6 +1,7 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
+  "plugins": ["html"],
   "root": false,
   "env": {
     "node": true,
@@ -20,6 +21,10 @@
       "env": {
         "jest": true
       },
+      "rules": {}
+    },
+    {
+      "files": ["*.html"],
       "rules": {}
     }
   ]
