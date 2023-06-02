@@ -1,6 +1,5 @@
 import { notify } from '@kyvg/vue3-notification';
 import axios from 'axios';
-import { inject } from 'vue';
 
 export class HttpRequestService {
   /** @return {HttpRequestService} */
@@ -18,7 +17,9 @@ export class HttpRequestService {
   #axiosInstance;
 
   constructor() {
-    this.#axiosInstance = axios.create({ baseURL: inject('serverBaseUrl') });
+    this.#axiosInstance = axios.create({
+      baseURL: import.meta.env.VITE_SERVER_BASE_URL || 'http://localhost:8080'
+    });
 
     this.#configureInterceptor();
   }
