@@ -19,7 +19,7 @@ export async function jwtAuthHeaderValidator(request, response, next) {
     const decodedToken = JwtService.instance().decodeToken(token);
 
     // Validate if the User is valid by retrieving the User's data by ID.
-    await UserService.instance().getById(parseInt(decodedToken.sub));
+    request.userId = (await UserService.instance().getById(parseInt(decodedToken.sub))).id;
 
     next();
   } catch (error) {

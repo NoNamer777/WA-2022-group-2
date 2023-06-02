@@ -1,21 +1,27 @@
 import { BadgeEntity, initializeBadgeEntity } from '../../badge/badge.entity.js';
-import { ChallengeEntity, initializeChallengeEntity } from '../../challenge/challenge.entity.js';
+import {
+  ChallengeEntity,
+  initializeChallengeEntity
+} from '../../challenge/entities/challenge.entity.js';
 import {
   ChallengeDayEntity,
   initializeChallengeDayEntity
-} from '../../challenge_day/challenge_day.entity.js';
-import { initializeChallengeSuggestionEntity } from '../../challenge_suggestion/challenge_suggestion.entity.js';
+} from '../../challenge/entities/challenge_day.entity.js';
+import { initializeChallengeSuggestionEntity } from '../../challenge/entities/challenge_suggestion.entity.js';
+import {
+  UserChallengeEntity,
+  initializeUserChallengeEntity
+} from '../../challenge/entities/user_challenge.entity.js';
 import {
   EarnedBadgeEntity,
   initializeEarnedBadgeEntity
 } from '../../earned_badge/earned_badge.entity.js';
-import { GroupEntity, initializeGroupEntity } from '../../group/group.entity.js';
-import { UserEntity, initializeUserEntity } from '../../user/index.js';
+import { GroupEntity, initializeGroupEntity } from '../../group/entities/group.entity.js';
 import {
-  UserChallengeEntity,
-  initializeUserChallengeEntity
-} from '../../user_challenge/user_challenge.entity.js';
-import { UserGroupEntity, initializeUserGroupEntity } from '../../user_group/user_group.entity.js';
+  UserGroupEntity,
+  initializeUserGroupEntity
+} from '../../group/entities/user_group.entity.js';
+import { UserEntity, initializeUserEntity } from '../../user/index.js';
 
 export class EntityService {
   /** @return {EntityService} */
@@ -42,9 +48,6 @@ export class EntityService {
   }
 
   initializeEntityRelations() {
-    BadgeEntity.hasMany(UserChallengeEntity, { foreignKey: 'badge_id' });
-    UserChallengeEntity.belongsTo(BadgeEntity, { foreignKey: 'badge_id' });
-
     GroupEntity.hasMany(ChallengeEntity, { foreignKey: 'group_id' });
     ChallengeEntity.belongsTo(GroupEntity, { foreignKey: 'group_id' });
 

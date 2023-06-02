@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { ChallengeSuggestionEntity } from './challenge_suggestion.entity.js';
+import { ChallengeSuggestionEntity } from '../entities/challenge_suggestion.entity.js';
 
 class ChallengeSuggestionRepository {
   /** @return {Promise<ChallengeSuggestionEntity[]>} */
