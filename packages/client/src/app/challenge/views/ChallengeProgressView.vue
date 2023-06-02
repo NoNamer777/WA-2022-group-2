@@ -34,6 +34,7 @@
         <div class="btn-group">
           <button
             type="button"
+            ref="editButton"
             class="btn btn-sm btn-secondary dropdown-toggle my-2 me-1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -165,6 +166,9 @@ export default {
     saveText() {
       // TODO: Save challenge name
       this.isEditing = false;
+      nextTick(() => {
+        this.$refs.editButton.focus();
+      });
     },
     leaveChallenge() {
       // TODO: handle leaving challenge
