@@ -68,6 +68,12 @@ export class AuthService {
         `Something went wrong while sending a request to reset a user's password`,
         error
       );
+
+      if (error instanceof NotFoundException) {
+        // Do nothing with errors that indicate that the user does not exist.
+        return;
+      }
+      throw error;
     }
   }
 }
