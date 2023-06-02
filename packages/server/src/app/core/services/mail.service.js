@@ -30,9 +30,12 @@ export class MailService {
   initialize() {
     const mailServerEmailAddress = process.env.MAIL_SERVER_EMAIL_ADDRESS;
     const mailServerPassword = process.env.MAIL_SERVER_PASSWORD;
+    const emailTemplatesPath = process.env.EMAIL_TEMPLATES_PATH;
 
-    if (!mailServerPassword || !mailServerEmailAddress) {
-      throw Error('Email address and password for sending emails are not defined.');
+    if (!mailServerPassword || !mailServerEmailAddress || !emailTemplatesPath) {
+      throw Error(
+        'Email address, password, and the path for the email templates for sending emails are not defined.'
+      );
     }
     this.#mailTransporter = createTransport({
       host: 'smtp.gmail.com',
