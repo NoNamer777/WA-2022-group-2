@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
-import { UserGroupEntity } from '../user_group/user_group.entity.js';
-import { GroupEntity } from './group.entity.js';
+import { GroupEntity } from './entities/group.entity.js';
+import { UserGroupEntity } from './entities/user_group.entity.js';
 
 class GroupRepository {
   /**
