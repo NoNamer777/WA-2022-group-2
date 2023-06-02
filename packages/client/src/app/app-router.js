@@ -71,7 +71,7 @@ export const router = createRouter({
       name: 'reset password',
       component: ResetPasswordView,
       meta: {
-        title: 'Password resetten'
+        title: 'Password herstellen'
       }
     }
   ]

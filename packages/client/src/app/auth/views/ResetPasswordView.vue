@@ -1,7 +1,7 @@
 <template>
   <main class="container d-flex justify-content-center">
     <section class="col-12 col-sm-10 col-lg-7" :class="{ 'd-none': done }">
-      <h1>Reset Password</h1>
+      <h1>Wachtwoord herstellen</h1>
       <p>Welke gebruikersnaam gebruik je tijdens het inloggen?</p>
       <FormKit
         type="form"
