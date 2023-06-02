@@ -10,9 +10,10 @@ export const challengeRouter = express.Router();
 
 challengeRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
   const allChallenges = await challengeController.getAll();
-
   response.send(allChallenges);
 });
+
+challengeRouter.use('/suggestion', challengeSuggestionRouter);
 
 challengeRouter.get(
   '/:challengeId',
@@ -79,5 +80,3 @@ challengeRouter.delete(
     }
   }
 );
-
-challengeRouter.use('/suggestion', challengeSuggestionRouter);
