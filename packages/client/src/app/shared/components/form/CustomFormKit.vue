@@ -13,11 +13,34 @@
     :options="options"
     :input-class="inputClass"
     :help="help"
+    :disabled="disabled"
   />
   <datalist v-if="dataList" :id="dataListId">
     <option v-for="(data, index) in dataList" :key="index">{{ data }}</option>
   </datalist>
 </template>
+
+<style>
+.formkit-wrapper {
+  max-width: unset !important;
+}
+
+[data-invalid] .formkit-inner {
+  border-color: red;
+  box-shadow: 0 0 0 1px red;
+}
+
+[data-complete] .formkit-inner {
+  border-color: red;
+  box-shadow: 0 0 0 1px green;
+}
+.formkit-input {
+  width: 100% !important;
+}
+.formkit-input:focus-visible {
+  outline: auto;
+}
+</style>
 
 <script>
 export default {
@@ -69,34 +92,16 @@ export default {
     help: {
       type: String,
       required: false
+    },
+    disabled: {
+      type: Boolean,
+      required: false
     }
   },
   computed: {
     dataListId() {
-      return name + '-dataList';
+      return this.dataList ? name + '-dataList' : '';
     }
   }
 };
 </script>
-
-<style>
-.formkit-wrapper {
-  max-width: unset !important;
-}
-
-[data-invalid] .formkit-inner {
-  border-color: red;
-  box-shadow: 0 0 0 1px red;
-}
-
-[data-complete] .formkit-inner {
-  border-color: red;
-  box-shadow: 0 0 0 1px green;
-}
-.formkit-input {
-  width: 100% !important;
-}
-.formkit-input:focus-visible {
-  outline: auto;
-}
-</style>

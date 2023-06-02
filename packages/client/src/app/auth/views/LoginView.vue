@@ -29,9 +29,15 @@ const user = ref({
           />
           <CustomFormKit type="submit" label="Login" input-class="form-btn-primary" />
         </FormKit>
-        <small class="d-flex align-items-baseline">
+        <small class="d-flex">
           Heb je geen account?&nbsp;
           <router-link class="link-primary" :to="{ name: 'register' }"> Registreer </router-link>
+        </small>
+        <small class="d-flex">
+          Ben je je wachtwoord of gebruikersnaam vergeten?&nbsp;
+          <router-link class="link-primary" :to="{ name: 'reset password' }">
+            Reset je wachtwoord hier.
+          </router-link>
         </small>
       </div>
       <div class="col-xl-6 col-sm-12 d-flex justify-content-center">

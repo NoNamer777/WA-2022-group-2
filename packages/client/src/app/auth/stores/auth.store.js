@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
         text: 'Je hebt successvol een account geregistreerd!'
       });
 
-      router.push({ name: 'login' });
+      await router.push({ name: 'login' });
     } catch (error) {
       console.error(error);
     }
@@ -56,17 +56,19 @@ export const useAuthStore = defineStore('auth', () => {
         text: 'Je bent successvol ingelogt!'
       });
 
-      router.push({ name: 'home' });
+      await router.push({ name: 'home' });
     } catch (error) {
       console.error(error);
     }
   }
 
-  /** @return {void} */
-  function logout() {
+  /** @return {Promise<void>} */
+  async function logout() {
     AuthService.instance().logout();
 
     user.value = null;
+
+    await router.push({ name: 'home' });
   }
 
   /**
