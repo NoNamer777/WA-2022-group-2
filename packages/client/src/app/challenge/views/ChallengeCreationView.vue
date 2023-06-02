@@ -13,7 +13,7 @@
             :dataList="suggestions"
           />
           <CustomFormKit
-            v-model="challenge.startDate"
+            v-model="challenge.start_date"
             type="date"
             label="Startdatum"
             name="startDate"
@@ -23,7 +23,7 @@
             }"
           />
           <CustomFormKit
-            v-model="challenge.amountOfDays"
+            v-model="challenge.amount_of_days"
             type="select"
             label="Selecteer het aantal dagen"
             placeholder="Selecteer het aantal dagen"
@@ -32,7 +32,7 @@
             validation="required"
           />
           <CustomFormKit
-            v-model="challenge.group"
+            v-model="challenge.group_id"
             type="select"
             label="Selecteer groep"
             placeholder="Selecteer groep"
@@ -55,6 +55,7 @@ import { CustomFormKit } from '../../shared/index.js';
 import { ChallengeSuggestionService } from '../services/challenge.suggestion.service.js';
 import { useAuthStore } from '../../auth/index.js';
 import { GroupService } from '../../group/services/group.service.js';
+import { ChallengeService } from '../services/index.js';
 
 export default {
   name: 'ChallengeCreationView',
@@ -86,7 +87,8 @@ export default {
       try {
         const groupData = await GroupService.instance().getAllForUser(user.id);
         groupData.forEach(
-          (group) => (groups.value = [...groups.value, { label: group.name, value: group.id }])
+          (group) =>
+            (groups.value = [...groups.value, { label: group.name, value: group.id.toString() }])
         );
       } catch (error) {
         console.error(error);
@@ -95,21 +97,38 @@ export default {
 
     const challenge = ref({
       name: '',
-      startDate: '',
-      amountOfDays: '',
-      group: ''
+      start_date: '',
+      end_date: '',
+      amount_of_days: '',
+      group_id: ''
     });
 
     const createChallenge = () => {
       /* output submit object */
-      console.log(JSON.stringify(challenge.value));
+      const start = new Date(challenge.value.start_date);
+      const end = new Date(
+        start.setDate(start.getDate() + parseInt(challenge.value.amount_of_days))
+      );
+      challenge.value.end_date = end.toISOString().split('T')[0];
+      delete challenge.value.amount_of_days;
+
+      try {
+        const challengeResponse = ChallengeService.instance().postChallenge(
+          user.id,
+          challenge.value
+        );
+        console.log(challengeResponse);
+      } catch (error) {
+        console.error(error);
+      }
+
       /* TODO: */
       /* Make logic for the following tables (in the backend):
-       * - challenge (group id not supported yet in this UI), calculate end date
        * - user challenges with challenge id and user ids (including user's own id), completed false
        * - challenge days for the amount of days, with user challenge ids, earned false
        *
        * Route to active view, routing to be done */
+
       router.push('/challenge');
     };
 

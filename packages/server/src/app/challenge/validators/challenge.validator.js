@@ -17,7 +17,7 @@ export const newChallengeSchema = {
     isDate: { bail: true, errorMessage: 'Een einddatum moet een geldige datum zijn' },
     escape: true
   },
-  groups: {
+  group_id: {
     notEmpty: { bail: true, errorMessage: 'Een groep is verplicht.' },
     escape: true
   }
