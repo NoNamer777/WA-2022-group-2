@@ -20,6 +20,7 @@
           type="submit"
           label="Stuur request"
           name="submit"
+          input-class="form-btn-primary"
           :disabled="!valid"
         ></CustomFormKit>
       </FormKit>
