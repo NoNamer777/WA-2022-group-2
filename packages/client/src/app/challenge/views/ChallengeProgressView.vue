@@ -79,7 +79,7 @@
       <ChallengeProgress
         v-for="userChallenge in userChallenges"
         :key="userChallenge.id"
-        :userChallengeId="userChallenge.id"
+        :userChallenge="userChallenge"
         :todayNumber="todayNumber"
         :isActive="isActive"
         :isOwner="getIsOwner(userChallenge)"
