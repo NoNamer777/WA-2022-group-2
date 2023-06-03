@@ -107,7 +107,7 @@ export default {
       /* output submit object */
       const start = new Date(challenge.value.start_date);
       const end = new Date(
-        start.setDate(start.getDate() + parseInt(challenge.value.amount_of_days))
+        start.setDate(start.getDate() + parseInt(challenge.value.amount_of_days) - 1)
       );
       challenge.value.end_date = end.toISOString().split('T')[0];
       delete challenge.value.amount_of_days;
