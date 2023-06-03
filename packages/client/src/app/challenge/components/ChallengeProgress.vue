@@ -10,8 +10,8 @@
           :id="challengeDay.id"
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
-          :imageName="this.user.profile_picture"
-          :imagePath="`url('/assets/profile_pictures/${this.user.profile_picture}.png')`"
+          :imageName="this.userChallenge.user.profile_image_path"
+          :imagePath="`url('/assets/profile_pictures/${this.userChallenge.user.profile_image_path}.png')`"
           :isOwner="isOwner"
           :aria-hidden="!isOwner"
         ></CheckBox>
@@ -28,17 +28,11 @@
 
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
-import data from '../data.json';
-import { useAuthStore } from '../../auth/index.js';
+import { UserChallenge } from '../models/user_challenge.model.js';
 
 export default {
   name: 'ChallengeProgress',
   components: { CheckBox },
-  setup() {
-    const authStore = useAuthStore();
-    const user = authStore.user;
-    return { user };
-  },
   data() {
     return {
       user: Object,
@@ -51,33 +45,22 @@ export default {
     };
   },
   props: {
-    userChallengeId: Number,
+    userChallenge: UserChallenge,
     todayNumber: Number,
     isActive: Boolean,
     isOwner: Boolean
   },
   created() {
     this.title = this.getTitle();
-    this.challengeDays = this.getChallengeDays();
+    this.challengeDays = this.userChallenge.challenge_days;
     this.numberOfEarned = this.getNumberOfEarned();
     this.earnedText = this.getEarnedText();
-    this.imageName = this.user.profile_picture;
+    this.imageName = this.userChallenge.user.profile_image_path;
     this.showButton = this.isActive && this.isOwner;
   },
   methods: {
     getTitle() {
-      // TODO: fetch username
-      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.userChallengeId}`;
-    },
-    getChallengeDays() {
-      /* fetch challengeDays based on userChallengeId */
-      const days = [];
-      for (const challengeDay of data.challenge_days) {
-        if (this.userChallengeId === challengeDay.user_challenge_id) {
-          days.push(challengeDay);
-        }
-      }
-      return days;
+      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.userChallenge.user.username}`;
     },
     getNumberOfEarned() {
       return this.challengeDays.reduce((count, day) => (day.earned ? count + 1 : count), 0);
@@ -107,10 +90,9 @@ export default {
   },
   computed: {
     getClass() {
-      return 'btn btn-secondary';
-      // return this.challengeDays[this.todayNumber - 1].earned
-      //   ? 'btn btn-secondary'
-      //   : 'btn btn-primary';
+      return this.challengeDays[this.todayNumber - 1].earned
+        ? 'btn btn-secondary'
+        : 'btn btn-primary';
     }
   }
 };

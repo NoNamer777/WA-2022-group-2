@@ -1,4 +1,6 @@
 import { Op } from 'sequelize';
+import { UserEntity } from '../../user/index.js';
+import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 
 class UserChallengeRepository {
@@ -21,7 +23,15 @@ class UserChallengeRepository {
         challenge_id: {
           [Op.eq]: challengeId.id
         }
-      }
+      },
+      include: [
+        {
+          model: ChallengeDayEntity
+        },
+        {
+          model: UserEntity
+        }
+      ]
     });
   }
 }
