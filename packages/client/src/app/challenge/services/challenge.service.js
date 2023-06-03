@@ -20,6 +20,18 @@ export class ChallengeService {
     return await HttpRequestService.instance().getRequest(`/api/user/${userId}/challenges`);
   }
 
+  /**
+   * @param challengeId {number}
+   * @return {Promise<{Challenge}>}
+   */
+  async getChallengeById(challengeId) {
+    return await HttpRequestService.instance().getRequest(`/api/challenge/${challengeId}`);
+  }
+
+  /**
+   * @param userId {number}
+   * @param challengeData
+   */
   async postChallenge(userId, challengeData) {
     return await HttpRequestService.instance().postRequest(
       `/api/user/${userId}/challenge`,
