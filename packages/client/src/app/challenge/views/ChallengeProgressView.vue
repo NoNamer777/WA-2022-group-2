@@ -95,8 +95,7 @@ import data from '../data.json';
 import { useAuthStore } from '../../auth/index.js';
 import CustomFormKit from '../../shared/components/form/CustomFormKit.vue';
 import { nextTick } from 'vue';
-
-/* TODO: send in user and challenge, move logic to backend, refactor to composition API */
+import { ChallengeService } from '../services/index.js';
 
 export default {
   name: 'ChallengeProgressView',
@@ -119,16 +118,24 @@ export default {
     };
   },
   created() {
-    this.challenge = data.challenges[0];
+    this.getChallenge();
     this.userChallenges = this.getAndSortUserChallenges();
-    this.startDate = this.getDateString(data.challenges[0].start_date);
     this.today = this.getDateString(new Date());
-    this.todayNumber = this.getTodaysDayNumber();
-    this.isActive = this.getIsActive();
-    this.dayTitle = this.getTodayTitle();
     this.isEditing = false;
   },
   methods: {
+    async getChallenge() {
+      try {
+        // TODO: populate correct challenge id
+        this.challenge = await ChallengeService.instance().getChallengeById(2);
+        this.startDate = this.getDateString(this.challenge.start_date);
+        this.todayNumber = this.getTodaysDayNumber(this.challenge.start_date);
+        this.isActive = this.getIsActive(this.challenge.start_date, this.challenge.end_date);
+        this.dayTitle = this.getTodayTitle();
+      } catch (error) {
+        console.error(error);
+      }
+    },
     getAndSortUserChallenges() {
       const sorted = data.user_challenges.sort((a, b) => a.username < b.username);
       return sorted.sort((a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id));
@@ -137,16 +144,15 @@ export default {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(date).toLocaleDateString('nl-NL', options);
     },
-    getTodaysDayNumber() {
-      const startDate = new Date(data.challenges[0].start_date);
-      const todayDiff = new Date().getTime() - startDate.getTime();
+    getTodaysDayNumber(date) {
+      const todayDiff = new Date().getTime() - new Date(date).getTime();
       return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
     },
-    getIsActive() {
-      const startDate = new Date(data.challenges[0].start_date).getTime();
-      const endDate = new Date(data.challenges[0].end_date).getTime();
+    getIsActive(startDate, endDate) {
+      const start = new Date(startDate).getTime();
+      const end = new Date(endDate).getTime();
       const today = new Date().setHours(0, 0, 0, 0);
-      return endDate >= today && startDate <= today;
+      return end >= today && start <= today;
     },
     getTodayTitle() {
       return this.isActive ? `Dag ${this.todayNumber}, ${this.today}` : `${this.today}`;

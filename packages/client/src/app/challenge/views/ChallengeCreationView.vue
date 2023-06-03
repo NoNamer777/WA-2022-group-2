@@ -122,14 +122,8 @@ export default {
         console.error(error);
       }
 
-      /* TODO: */
-      /* Make logic for the following tables (in the backend):
-       * - user challenges with challenge id and user ids (including user's own id), completed false
-       * - challenge days for the amount of days, with user challenge ids, earned false
-       *
-       * Route to active view, routing to be done */
-
-      router.push('/challenge');
+      /* TODO: Route to active view, routing to be done */
+      router.push('/challenge/8/progress');
     };
 
     return {
