@@ -14,8 +14,7 @@ class GroupRepository {
           user_id: {
             [Op.eq]: userId
           }
-        },
-        attributes: []
+        }
       }
     });
   }

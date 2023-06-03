@@ -108,4 +108,4 @@ userRouter.delete(
   }
 );
 
-userRouter.use('/:userId/challenge', challengeRouter);
+userRouter.use('/', challengeRouter);
