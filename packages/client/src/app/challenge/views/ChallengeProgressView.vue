@@ -91,11 +91,11 @@
 
 <script>
 import { ChallengeProgress } from '../components/index.js';
-import data from '../data.json';
 import { useAuthStore } from '../../auth/index.js';
 import CustomFormKit from '../../shared/components/form/CustomFormKit.vue';
 import { nextTick } from 'vue';
 import { ChallengeService } from '../services/index.js';
+import { UserChallengeService } from '../services/user_challenge.service.js';
 
 export default {
   name: 'ChallengeProgressView',
@@ -119,7 +119,7 @@ export default {
   },
   created() {
     this.getChallenge();
-    this.userChallenges = this.getAndSortUserChallenges();
+    this.getUserChallenges();
     this.today = this.getDateString(new Date());
     this.isEditing = false;
   },
@@ -127,7 +127,7 @@ export default {
     async getChallenge() {
       try {
         // TODO: populate correct challenge id
-        this.challenge = await ChallengeService.instance().getChallengeById(2);
+        this.challenge = await ChallengeService.instance().getChallengeById(66);
         this.startDate = this.getDateString(this.challenge.start_date);
         this.todayNumber = this.getTodaysDayNumber(this.challenge.start_date);
         this.isActive = this.getIsActive(this.challenge.start_date, this.challenge.end_date);
@@ -136,8 +136,14 @@ export default {
         console.error(error);
       }
     },
-    getAndSortUserChallenges() {
-      const sorted = data.user_challenges.sort((a, b) => a.username < b.username);
+    async getUserChallenges() {
+      // TODO: populate correct challenge id
+      this.userChallenges = await UserChallengeService.instance().getUserChallengesById(66);
+      this.userChallenges = this.getAndSortUserChallenges(this.userChallenges);
+      console.log(this.userChallenges);
+    },
+    getAndSortUserChallenges(challenges) {
+      const sorted = challenges.sort((a, b) => a.username < b.username);
       return sorted.sort((a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id));
     },
     getDateString(date) {

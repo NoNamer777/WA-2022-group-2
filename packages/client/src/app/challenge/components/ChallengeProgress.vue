@@ -29,10 +29,16 @@
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
 import data from '../data.json';
+import { useAuthStore } from '../../auth/index.js';
 
 export default {
   name: 'ChallengeProgress',
   components: { CheckBox },
+  setup() {
+    const authStore = useAuthStore();
+    const user = authStore.user;
+    return { user };
+  },
   data() {
     return {
       user: Object,
@@ -51,7 +57,6 @@ export default {
     isOwner: Boolean
   },
   created() {
-    this.user = this.getUser();
     this.title = this.getTitle();
     this.challengeDays = this.getChallengeDays();
     this.numberOfEarned = this.getNumberOfEarned();
@@ -60,16 +65,9 @@ export default {
     this.showButton = this.isActive && this.isOwner;
   },
   methods: {
-    getUser() {
-      const users = data.users;
-      for (const user of users) {
-        if (this.userChallengeId === user.id) {
-          return user;
-        }
-      }
-    },
     getTitle() {
-      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.user.username}`;
+      // TODO: fetch username
+      return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.userChallengeId}`;
     },
     getChallengeDays() {
       /* fetch challengeDays based on userChallengeId */
@@ -109,9 +107,10 @@ export default {
   },
   computed: {
     getClass() {
-      return this.challengeDays[this.todayNumber - 1].earned
-        ? 'btn btn-secondary'
-        : 'btn btn-primary';
+      return 'btn btn-secondary';
+      // return this.challengeDays[this.todayNumber - 1].earned
+      //   ? 'btn btn-secondary'
+      //   : 'btn btn-primary';
     }
   }
 };

@@ -1,4 +1,4 @@
-import { userChallengeRepository } from '../user_challenge.repository.js';
+import { HttpRequestService } from '../../core/index.js';
 
 export class UserChallengeService {
   /** @return {UserChallengeService} */
@@ -11,11 +11,12 @@ export class UserChallengeService {
 
   /** @type {UserChallengeService} */
   static #instance;
+
   /**
-   * @param userChallengeData {Omit<UserChallengeEntity, 'id'>}
-   * @return {Promise<UserChallengeEntity>}
+   * @param challengeId {number}
+   * @return {Promise<{pastChallenges: Array, currentChallenges: Array}>}
    */
-  async create(userChallengeData) {
-    return await userChallengeRepository.create(userChallengeData);
+  async getUserChallengesById(challengeId) {
+    return await HttpRequestService.instance().getRequest(`/api/challenge/${challengeId}/members`);
   }
 }
