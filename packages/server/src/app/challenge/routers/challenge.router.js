@@ -4,6 +4,7 @@ import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
 import { userGroupController } from '../../group/user_group.controller.js';
 import { challengeController } from '../controllers/challenge.controller.js';
+import { userChallengeController } from '../controllers/user_challenge.controller.js';
 import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 import { challengeSchema, newChallengeSchema } from '../validators/challenge.validator.js';
@@ -26,6 +27,20 @@ challengeRouter.get(
     const challengeId = request.params.challengeId;
     try {
       response.send(await challengeController.getById(challengeId));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+challengeRouter.get(
+  '/:challengeId/members',
+  jwtAuthHeaderValidator,
+  entityIdValidator('challengeId', 'Challenge'),
+  async (request, response, next) => {
+    const challengeId = request.params.challengeId;
+    try {
+      response.send(await userChallengeController.getAllById(challengeId));
     } catch (error) {
       next(error);
     }

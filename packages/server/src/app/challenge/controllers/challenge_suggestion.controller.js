@@ -1,4 +1,4 @@
-import { ChallengeSuggestionService } from '../../challenge_suggestion/services/challenge_suggestion.service.js';
+import { ChallengeSuggestionService } from '../services/challenge_suggestion.service.js';
 
 class ChallengeSuggestionController {
   /** @return {Promise<ChallengeSuggestionEntity[]>} */
