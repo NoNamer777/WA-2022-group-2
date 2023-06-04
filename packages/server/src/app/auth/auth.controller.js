@@ -17,6 +17,18 @@ class AuthController {
 
     return JwtService.instance().encodeToken(user.toJSON());
   }
+
+  /**
+   * @param username {string}
+   * @return {Promise<void>}
+   */
+  async requestPasswordReset(username) {
+    console.info(
+      `AuthController - Requesting password reset for user with username: '${username}'.`
+    );
+
+    await AuthService.instance().requestPasswordReset(username);
+  }
 }
 
 export const authController = new AuthController();

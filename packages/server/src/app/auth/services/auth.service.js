@@ -1,6 +1,8 @@
 import { InternalServerErrorException, NotFoundException } from '../../core/models/index.js';
+import { MailService } from '../../core/services/mail.service.js';
 import { UserService } from '../../user/index.js';
 import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
+import { JwtService } from './jwt.service.js';
 
 export class AuthService {
   /** @return {AuthService} */
@@ -39,5 +41,39 @@ export class AuthService {
       throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.');
     }
     return user;
+  }
+
+  /**
+   * @param username {string}
+   * @return {Promise<void>}
+   */
+  async requestPasswordReset(username) {
+    try {
+      const user = await UserService.instance().getByUsername(username);
+
+      // Generate a JWT that is valid for 30 minutes.
+      const jwtToken = JwtService.instance().encodeToken(user.toJSON(), 30 * 60 * 1000);
+
+      await MailService.instance().sendEmail({
+        to: user.email,
+        subject: 'Aanvraag wachtwoord herstellen',
+        template: 'reset-password',
+        context: {
+          username: user.username,
+          link: process.env.CLIENT_BASE_URL + '/reset-password/step-2?token=' + jwtToken
+        }
+      });
+    } catch (error) {
+      console.error(
+        `Something went wrong while sending a request to reset a user's password`,
+        error
+      );
+
+      if (error instanceof NotFoundException) {
+        // Do nothing with errors that indicate that the user does not exist.
+        return;
+      }
+      throw error;
+    }
   }
 }
