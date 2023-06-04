@@ -124,7 +124,7 @@ export default {
     const currentChallenges = ref([]);
     const userChallenges = ref([]);
     const startDate = ref();
-    const today = ref();
+    const today = ref(1);
     const todayNumber = ref(0);
     const isActive = ref(true);
     const dayTitle = ref('');

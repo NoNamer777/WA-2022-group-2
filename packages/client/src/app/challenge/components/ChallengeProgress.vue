@@ -23,15 +23,18 @@
         </button>
       </div>
     </div>
+    <CompletedModal :badgeName="badgeName" :badgeImagePath="badgeImagePath"></CompletedModal>
   </div>
 </template>
 
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
+import CompletedModal from '../../shared/modals/CompletedModal.vue';
+// import { Modal } from 'bootstrap';
 
 export default {
   name: 'ChallengeProgress',
-  components: { CheckBox },
+  components: { CompletedModal, CheckBox },
   data() {
     return {
       user: Object,
@@ -40,7 +43,10 @@ export default {
       numberOfEarned: Number,
       earnedText: String,
       buttonText: String,
-      showButton: Boolean
+      showButton: Boolean,
+
+      badgeName: String,
+      badgeImagePath: String
     };
   },
   props: {
@@ -56,6 +62,10 @@ export default {
     this.earnedText = this.getEarnedText();
     this.imageName = this.userChallenge.user.profile_image_path;
     this.showButton = this.isActive && this.isOwner;
+
+    // Testing badges:
+    this.badgeName = 'paard';
+    this.badgeImagePath = '/assets/badges/paard.png';
   },
   methods: {
     getTitle() {
@@ -81,7 +91,9 @@ export default {
         this.numberOfEarned = this.getNumberOfEarned();
         this.earnedText = this.getEarnedText();
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
-          alert('Make alert here');
+          // TODO: modal interferes with dropdown buttons, how to solve?
+          // const myModal = new Modal(document.getElementById('completedModal'));
+          // myModal.toggle();
         }
       },
       deep: true
