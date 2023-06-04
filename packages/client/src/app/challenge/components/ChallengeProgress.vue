@@ -28,7 +28,6 @@
 
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
-import { UserChallenge } from '../models/user_challenge.model.js';
 
 export default {
   name: 'ChallengeProgress',
@@ -45,7 +44,7 @@ export default {
     };
   },
   props: {
-    userChallenge: UserChallenge,
+    userChallenge: Object,
     todayNumber: Number,
     isActive: Boolean,
     isOwner: Boolean

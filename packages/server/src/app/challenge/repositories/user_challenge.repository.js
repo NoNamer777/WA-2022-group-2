@@ -29,7 +29,8 @@ class UserChallengeRepository {
           model: ChallengeDayEntity
         },
         {
-          model: UserEntity
+          model: UserEntity,
+          attributes: ['username', 'profile_image_path']
         }
       ]
     });
