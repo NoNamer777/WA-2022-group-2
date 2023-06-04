@@ -22,13 +22,14 @@
               date_after: 'Startdatum kan niet voor gisteren zijn.'
             }"
           />
+          <!-- TODO: Remove challenge for one and two days (for dev purposes) -->
           <CustomFormKit
             v-model="challenge.amount_of_days"
             type="select"
             label="Selecteer het aantal dagen"
             placeholder="Selecteer het aantal dagen"
             name="amountOfDays"
-            :options="[5, 7, 10]"
+            :options="[1, 2, 5, 7, 10]"
             validation="required"
           />
           <CustomFormKit

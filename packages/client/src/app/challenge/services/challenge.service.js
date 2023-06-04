@@ -21,7 +21,7 @@ export class ChallengeService {
   }
 
   /**
-   * @param challengeId {number}
+   * @param challengeId {string | RouteParamValue[]}
    * @return {Promise<{Challenge}>}
    */
   async getChallengeById(challengeId) {

@@ -25,6 +25,7 @@ export const router = createRouter({
       }
     },
     {
+      //  TODO: check, shouldn't this be challengeId?
       path: '/challenge/:userId/progress',
       name: 'challenge_progress',
       component: ChallengeProgressView,

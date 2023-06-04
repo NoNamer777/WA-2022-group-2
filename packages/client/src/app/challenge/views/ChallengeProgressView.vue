@@ -93,9 +93,10 @@
 import { ChallengeProgress } from '../components/index.js';
 import { useAuthStore } from '../../auth/index.js';
 import CustomFormKit from '../../shared/components/form/CustomFormKit.vue';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 import { ChallengeService } from '../services/index.js';
 import { UserChallengeService } from '../services/user_challenge.service.js';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'ChallengeProgressView',
@@ -103,66 +104,82 @@ export default {
   setup() {
     const authStore = useAuthStore();
     const user = authStore.user;
-    return { user };
-  },
-  data() {
-    return {
-      challenge: Object,
-      userChallenges: [],
-      startDate: Date,
-      today: Date,
-      todayNumber: Number,
-      dayTitle: String,
-      isActive: Boolean,
-      isEditing: Boolean
-    };
-  },
-  created() {
-    this.getChallenge();
-    this.getUserChallenges();
-    this.today = this.getDateString(new Date());
-    this.isEditing = false;
-  },
-  methods: {
-    async getChallenge() {
+    const route = useRoute();
+    let challenge = ref('');
+    let userChallenges = ref([]);
+    let startDate = ref(new Date());
+    let today = ref(new Date());
+    let todayNumber = ref();
+    let isActive = ref(true);
+    let dayTitle = ref('');
+    const isEditing = ref(false);
+
+    const getChallenge = async () => {
       try {
-        // TODO: populate correct challenge id
-        this.challenge = await ChallengeService.instance().getChallengeById(66);
-        this.startDate = this.getDateString(this.challenge.start_date);
-        this.todayNumber = this.getTodaysDayNumber(this.challenge.start_date);
-        this.isActive = this.getIsActive(this.challenge.start_date, this.challenge.end_date);
-        this.dayTitle = this.getTodayTitle();
+        challenge.value = await ChallengeService.instance().getChallengeById(route.params.userId);
+        startDate.value = getDateString(challenge.value.start_date);
+        todayNumber.value = getTodaysDayNumber(challenge.value.start_date);
+        isActive.value = getIsActive(challenge.value.start_date, challenge.value.end_date);
+        dayTitle.value = getTodayTitle();
       } catch (error) {
         console.error(error);
       }
-    },
-    async getUserChallenges() {
-      // TODO: populate correct challenge id
-      this.userChallenges = await UserChallengeService.instance().getUserChallengesById(66);
-      this.userChallenges = this.getAndSortUserChallenges(this.userChallenges);
-      console.log(this.userChallenges);
-    },
-    getAndSortUserChallenges(challenges) {
+    };
+
+    const getUserChallenges = async () => {
+      // TODO: sort userchallenges in backend?
+      userChallenges.value = await UserChallengeService.instance().getUserChallengesById(
+        route.params.userId
+      );
+      userChallenges.value = getAndSortUserChallenges(userChallenges.value);
+    };
+
+    const getAndSortUserChallenges = (challenges) => {
       const sorted = challenges.sort((a, b) => a.username < b.username);
-      return sorted.sort((a, b) => (b.user_id === this.user.id) - (a.user_id === this.user.id));
-    },
-    getDateString(date) {
+      return sorted.sort((a, b) => (b.user_id === user.id) - (a.user_id === user.id));
+    };
+
+    const getDateString = (date) => {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(date).toLocaleDateString('nl-NL', options);
-    },
-    getTodaysDayNumber(date) {
+    };
+    const getTodaysDayNumber = (date) => {
       const todayDiff = new Date().getTime() - new Date(date).getTime();
       return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
-    },
-    getIsActive(startDate, endDate) {
+    };
+    const getIsActive = (startDate, endDate) => {
       const start = new Date(startDate).getTime();
-      const end = new Date(endDate).getTime();
-      const today = new Date().setHours(0, 0, 0, 0);
+      let end = new Date(endDate).setHours(23, 59, 59);
+      end = new Date(end).getTime();
+      const today = new Date().getTime();
       return end >= today && start <= today;
-    },
-    getTodayTitle() {
-      return this.isActive ? `Dag ${this.todayNumber}, ${this.today}` : `${this.today}`;
-    },
+    };
+    const getTodayTitle = () => {
+      today.value = getDateString(new Date());
+      return isActive.value ? `Dag ${todayNumber.value}, ${today.value}` : `${today.value}`;
+    };
+
+    return {
+      user,
+      challenge,
+      getChallenge,
+      userChallenges,
+      getUserChallenges,
+      startDate,
+      getDateString,
+      todayNumber,
+      today,
+      dayTitle,
+      isActive,
+      isEditing
+    };
+  },
+  mounted() {
+    this.getChallenge();
+    this.getUserChallenges();
+    this.isEditing = false;
+  },
+  methods: {
     getIsOwner(userChallenge) {
       return this.user.id === userChallenge.user_id;
     },
