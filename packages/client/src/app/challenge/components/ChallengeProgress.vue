@@ -30,7 +30,7 @@
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
 import CompletedModal from '../../shared/modals/CompletedModal.vue';
-// import { Modal } from 'bootstrap';
+import Modal from 'bootstrap/js/dist/modal';
 
 export default {
   name: 'ChallengeProgress',
@@ -91,9 +91,8 @@ export default {
         this.numberOfEarned = this.getNumberOfEarned();
         this.earnedText = this.getEarnedText();
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
-          // TODO: modal interferes with dropdown buttons, how to solve?
-          // const myModal = new Modal(document.getElementById('completedModal'));
-          // myModal.toggle();
+          const myModal = new Modal(document.getElementById('completedModal'));
+          myModal.toggle();
         }
       },
       deep: true
