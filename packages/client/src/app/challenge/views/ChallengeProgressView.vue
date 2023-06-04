@@ -3,23 +3,23 @@
     <div class="d-flex flex-row flex-wrap justify-content-between">
       <div>
         <div class="mb-1 w-100">
-          <div v-if="isEditing" tabindex="-1" ref="input">
-            <FormKit type="form" @submit="saveText" :actions="false" :incomplete-message="false">
-              <CustomFormKit
-                @submit="saveText"
-                v-model="challenge.name"
-                label="Challenge naam"
-                name="name"
-                :placeholder="challenge.name"
-                validation="required|length:5,80"
-              />
-              <div>
-                <CustomFormKit type="submit" label="Sla op" input-class="form-btn-tertiary" />
-              </div>
-            </FormKit>
-          </div>
-          <div v-else class="d-flex flex-row flex-wrap w-100 mr-auto justify-content-between">
-            <h1>{{ challenge.name }}</h1>
+          <div class="d-flex flex-row flex-wrap w-100 mr-auto justify-content-between">
+            <div v-if="isEditing" tabindex="-1" ref="input">
+              <FormKit type="form" @submit="saveText" :actions="false" :incomplete-message="false">
+                <CustomFormKit
+                  @submit="saveText"
+                  v-model="challenge.name"
+                  label="Challenge naam"
+                  name="name"
+                  :placeholder="challenge.name"
+                  validation="required|length:5,80"
+                />
+                <div>
+                  <CustomFormKit type="submit" label="Sla op" input-class="form-btn-tertiary" />
+                </div>
+              </FormKit>
+            </div>
+            <h1 v-else>{{ challenge.name }}</h1>
           </div>
           <p class="fw-bold">
             Startdatum: <span class="fw-normal">{{ startDate }}</span>
@@ -35,8 +35,9 @@
           <button
             type="button"
             ref="editButton"
-            class="btn btn-sm btn-secondary dropdown-toggle my-2 me-1"
+            class="btn btn-sm btn-primary dropdown-toggle my-2 me-1"
             data-bs-toggle="dropdown"
+            aria-haspopup="true"
             aria-expanded="false"
           >
             Pas challenge aan
@@ -47,8 +48,13 @@
                 Pas titel aan
               </button>
             </li>
+            <li class="dropdown-divider" />
             <li>
-              <button class="dropdown-item small" role="menuitem" @click="leaveChallenge">
+              <button
+                class="dropdown-item small text-secondary"
+                role="menuitem"
+                @click="leaveChallenge"
+              >
                 Verlaat challenge
               </button>
             </li>
@@ -64,10 +70,19 @@
             Wissel challenge
           </button>
           <ul class="dropdown-menu" role="menu">
-            <!-- TODO: v-if if available, for each for the amount of challenges with link-->
             <li>
-              <a class="dropdown-item small" role="menuitem" href="#">
-                Andere challenge met een lange titel
+              <a class="dropdown-item small" role="menuitem" :href="'/challenge/create'">
+                Maak nieuwe challenge aan
+              </a>
+            </li>
+            <li class="dropdown-divider" />
+            <li v-for="challenge in currentChallenges" :key="challenge.id">
+              <a
+                class="dropdown-item small"
+                role="menuitem"
+                :href="`/challenge/${challenge.id}/progress`"
+              >
+                {{ challenge.name }}
               </a>
             </li>
           </ul>
@@ -105,13 +120,14 @@ export default {
     const authStore = useAuthStore();
     const user = authStore.user;
     const route = useRoute();
-    let challenge = ref('');
-    let userChallenges = ref([]);
-    let startDate = ref(new Date());
-    let today = ref(new Date());
-    let todayNumber = ref();
-    let isActive = ref(true);
-    let dayTitle = ref('');
+    const challenge = ref('');
+    const currentChallenges = ref([]);
+    const userChallenges = ref([]);
+    const startDate = ref();
+    const today = ref();
+    const todayNumber = ref(0);
+    const isActive = ref(true);
+    const dayTitle = ref('');
     const isEditing = ref(false);
 
     const getChallenge = async () => {
@@ -121,6 +137,15 @@ export default {
         todayNumber.value = getTodaysDayNumber(challenge.value.start_date);
         isActive.value = getIsActive(challenge.value.start_date, challenge.value.end_date);
         dayTitle.value = getTodayTitle();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const getAllChallenges = async () => {
+      try {
+        const challenges = await ChallengeService.instance().getChallenges(user.id);
+        currentChallenges.value = challenges.currentChallenges;
       } catch (error) {
         console.error(error);
       }
@@ -163,6 +188,8 @@ export default {
       user,
       challenge,
       getChallenge,
+      currentChallenges,
+      getAllChallenges,
       userChallenges,
       getUserChallenges,
       startDate,
@@ -176,8 +203,8 @@ export default {
   },
   mounted() {
     this.getChallenge();
+    this.getAllChallenges();
     this.getUserChallenges();
-    this.isEditing = false;
   },
   methods: {
     getIsOwner(userChallenge) {

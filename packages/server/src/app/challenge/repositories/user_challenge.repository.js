@@ -17,7 +17,6 @@ class UserChallengeRepository {
    * @param challengeId
    */
   async findAllBy(challengeId) {
-    console.log(challengeId);
     return await UserChallengeEntity.findAll({
       where: {
         challenge_id: {
