@@ -29,8 +29,8 @@
 
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
-import CompletedModal from '../../shared/modals/CompletedModal.vue';
 import Modal from 'bootstrap/js/dist/modal';
+import CompletedModal from './CompletedModal.vue';
 
 export default {
   name: 'ChallengeProgress',
@@ -91,8 +91,8 @@ export default {
         this.numberOfEarned = this.getNumberOfEarned();
         this.earnedText = this.getEarnedText();
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
-          const myModal = new Modal(document.getElementById('completedModal'));
-          myModal.toggle();
+          const completedModal = new Modal(document.getElementById('completedModal'));
+          completedModal.toggle();
         }
       },
       deep: true

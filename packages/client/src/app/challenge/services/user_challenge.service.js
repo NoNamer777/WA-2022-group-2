@@ -19,4 +19,13 @@ export class UserChallengeService {
   async getUserChallengesById(challengeId) {
     return await HttpRequestService.instance().getRequest(`/api/challenge/${challengeId}/members`);
   }
+
+  /**
+   * @param userChallengeId {number}
+   */
+  async deleteUserChallenge(userChallengeId) {
+    return await HttpRequestService.instance().deleteRequest(
+      `/api/userchallenge/${userChallengeId}`
+    );
+  }
 }

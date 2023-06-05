@@ -52,8 +52,10 @@
             <li>
               <button
                 class="dropdown-item small text-secondary"
+                type="button"
                 role="menuitem"
-                @click="leaveChallenge"
+                data-bs-toggle="modal"
+                data-bs-target="#alertModal"
               >
                 Verlaat challenge
               </button>
@@ -101,6 +103,14 @@
         :class="getClass(userChallenge)"
       />
     </div>
+    <AlertModal
+      :key="user.id"
+      :title="alertTitle"
+      :content="alertBody"
+      :cancellation="cancellation"
+      :confirmation="confirmation"
+      @confirm="leaveChallenge"
+    ></AlertModal>
   </main>
 </template>
 
@@ -112,10 +122,12 @@ import { nextTick, ref } from 'vue';
 import { ChallengeService } from '../services/index.js';
 import { UserChallengeService } from '../services/user_challenge.service.js';
 import { useRoute } from 'vue-router';
+import { router } from '../../app-router.js';
+import AlertModal from '../../shared/components/modal/AlertModal.vue';
 
 export default {
   name: 'ChallengeProgressView',
-  components: { CustomFormKit, ChallengeProgress },
+  components: { AlertModal, CustomFormKit, ChallengeProgress },
   setup() {
     const authStore = useAuthStore();
     const user = authStore.user;
@@ -129,6 +141,11 @@ export default {
     const isActive = ref(true);
     const dayTitle = ref('');
     const isEditing = ref(false);
+
+    const alertTitle = 'Challenge verlaten';
+    const alertBody = 'Weet je zeker dat je deze challenge wilt verlaten?';
+    const cancellation = 'Nee, breng me terug!';
+    const confirmation = 'Ja, ik weet het zeker';
 
     const getChallenge = async () => {
       try {
@@ -198,7 +215,11 @@ export default {
       today,
       dayTitle,
       isActive,
-      isEditing
+      isEditing,
+      alertTitle,
+      alertBody,
+      cancellation,
+      confirmation
     };
   },
   mounted() {
@@ -226,9 +247,9 @@ export default {
         this.$refs.editButton.focus();
       });
     },
-    leaveChallenge() {
-      // TODO: handle leaving challenge
-      console.log(`${this.user.username} is leaving ${this.challenge.name}`);
+    async leaveChallenge() {
+      await UserChallengeService.instance().deleteUserChallenge(this.userChallenges[0].id);
+      await router.push({ name: 'challenge' });
     }
   }
 };

@@ -13,6 +13,14 @@ class UserChallengeRepository {
   }
 
   /**
+   * @param whereClaus {import('sequelize').WhereOptions}
+   * @return {Promise<UserChallengeEntity | null>}
+   */
+  async findOneBy(whereClaus) {
+    return await UserChallengeEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false });
+  }
+
+  /**
    * @return {Promise<UserChallengeEntity[]>}
    * @param challengeId
    */
@@ -33,6 +41,14 @@ class UserChallengeRepository {
         }
       ]
     });
+  }
+
+  /**
+   * @param userChallengeId {number}
+   * @return {Promise<void>}
+   */
+  async deleteById(userChallengeId) {
+    await UserChallengeEntity.destroy({ where: { id: userChallengeId } });
   }
 }
 export const userChallengeRepository = new UserChallengeRepository();
