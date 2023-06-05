@@ -51,23 +51,16 @@ const authService = AuthService.instance();
 const username = ref();
 
 /** @type {import('vue').Ref<boolean>} */
-const loading = ref(false);
-
-/** @type {import('vue').Ref<boolean>} */
 const done = ref(false);
 
 /** @return {Promise<void>} */
 async function sendResetPasswordRequest() {
   try {
-    loading.value = true;
-
     await authService.requestPasswordReset(username.value);
 
     done.value = true;
   } catch (error) {
     console.error('Something went wrong while sending a request to reset your password', error);
-  } finally {
-    loading.value = false;
   }
 }
 </script>
