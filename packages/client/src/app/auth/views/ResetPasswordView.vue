@@ -6,7 +6,9 @@
         <p>
           Je wachtwoord is successvol veranderd.
           <br /><br />
-          Log nu snel in om verder te gaan met je challenges.
+          <RouterLink :to="{ name: 'login' }">
+            Log nu snel in om verder te gaan met je challenges.
+          </RouterLink>
         </p>
       </template>
       <template v-else>
