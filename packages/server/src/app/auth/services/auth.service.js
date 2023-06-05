@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '../../core/models/index.js';
-import { MailService } from '../../core/services/mail.service.js';
+import { MailService } from '../../core/services/index.js';
 import { UserService } from '../../user/index.js';
 import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
 import { JwtService } from './jwt.service.js';
