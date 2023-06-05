@@ -17,24 +17,16 @@ export class MailService {
   /** @type {import('nodemailer').Mailer} */
   #mailTransporter;
 
-  #handlebarOptions = {
-    viewEngine: {
-      partialsDir: process.env.EMAIL_TEMPLATES_PATH,
-      defaultLayout: false
-    },
-    viewPath: process.env.EMAIL_TEMPLATES_PATH,
-    extName: '.template.html'
-  };
-
   /** @return {void} */
   initialize() {
     const mailServerEmailAddress = process.env.MAIL_SERVER_EMAIL_ADDRESS;
     const mailServerPassword = process.env.MAIL_SERVER_PASSWORD;
-    const emailTemplatesPath = process.env.EMAIL_TEMPLATES_PATH;
+    const emailTemplatesPath =
+      process.env.EMAIL_TEMPLATES_PATH || './packages/server/src/assets/email-templates';
 
-    if (!mailServerPassword || !mailServerEmailAddress || !emailTemplatesPath) {
+    if (!mailServerPassword || !mailServerEmailAddress) {
       throw Error(
-        'Email address, password, and the path for the email templates for sending emails are not defined.'
+        'Email address, or email application password for sending emails is not defined.'
       );
     }
     this.#mailTransporter = createTransport({
@@ -42,12 +34,22 @@ export class MailService {
       secure: true,
       port: 465,
       auth: {
-        user: process.env.MAIL_SERVER_EMAIL_ADDRESS,
-        pass: process.env.MAIL_SERVER_PASSWORD
+        user: mailServerEmailAddress,
+        pass: mailServerPassword
       }
     });
 
-    this.#mailTransporter.use('compile', hbs(this.#handlebarOptions));
+    this.#mailTransporter.use(
+      'compile',
+      hbs({
+        viewEngine: {
+          partialsDir: emailTemplatesPath,
+          defaultLayout: false
+        },
+        viewPath: emailTemplatesPath,
+        extName: '.template.html'
+      })
+    );
   }
 
   /**
