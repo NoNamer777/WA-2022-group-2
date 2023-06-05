@@ -76,4 +76,17 @@ export class AuthService {
       throw error;
     }
   }
+
+  /**
+   * @param userId {number}
+   * @param newPassword {string}
+   * @return {Promise<void>}
+   */
+  async resetPassword(userId, newPassword) {
+    const user = await UserService.instance().getById(userId);
+
+    user.password = newPassword;
+
+    await UserService.instance().update(user);
+  }
 }
