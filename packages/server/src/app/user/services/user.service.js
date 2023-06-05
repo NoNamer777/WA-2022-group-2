@@ -61,7 +61,9 @@ export class UserService {
         `Het wijzigen van gegevens voor gebruiker met ID: '${userId}' was niet succesvol omdat de gebruiker niet bestaat.`
       );
     }
-    if (await this.getByUsername(userData.username, false)) {
+    const userByUsername = await this.getByUsername(userData.username, false);
+
+    if (userByUsername && userByUsername.id !== userId) {
       throw new BadRequestException(
         `Het wijzigen van gegevens voor gebruiker met ID: '${userId}' was niet succesvol. De gebruikersnaam '${userData.username}' is niet beschikbaar.`
       );
