@@ -74,5 +74,8 @@ export class EntityService {
 
     GroupEntity.hasMany(UserGroupEntity, { foreignKey: 'group_id' });
     UserEntity.hasMany(UserGroupEntity, { foreignKey: 'user_id' });
+
+    UserEntity.belongsToMany(BadgeEntity, { through: EarnedBadgeEntity, foreignKey: 'user_id' });
+    BadgeEntity.belongsToMany(UserEntity, { through: EarnedBadgeEntity, foreignKey: 'badge_id' });
   }
 }

@@ -37,19 +37,6 @@ class BadgeRepository {
   async deleteById(badgeId) {
     await BadgeEntity.destroy({ where: { id: badgeId } });
   }
-
-  /**
-   * @param whereClaus
-   * @param includeClause
-   * @return {Promise<BadgeEntity[]>}
-   */
-  async findAllBy(whereClaus, includeClause) {
-    return await BadgeEntity.findAll({
-      include: includeClause,
-      where: { ...whereClaus },
-      rejectOnEmpty: false
-    });
-  }
 }
 
 export const badgeRepository = new BadgeRepository();

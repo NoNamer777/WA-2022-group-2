@@ -1,4 +1,4 @@
-import { BadgeService } from '../badge/services/badge.service.js';
+import { EarnedBadgeService } from '../badge/services/earned_badge.service.js';
 import { ChallengeService } from '../challenge/services/challenge.service.js';
 import { UserService } from './services/user.service.js';
 
@@ -63,10 +63,10 @@ class UserController {
 
   /** @return {Promise<{badges: Array}>} */
   async getBadgesForUser(userId) {
-    console.info(`UserController - Getting challenges for User with ID: '${userId}'`);
+    console.info(`UserController - Getting badges for User with ID: '${userId}'`);
 
     return {
-      badges: await BadgeService.instance().getForUser(userId)
+      badges: await EarnedBadgeService.instance().getForUser(userId)
     };
   }
 }
