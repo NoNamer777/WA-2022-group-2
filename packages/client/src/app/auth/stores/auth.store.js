@@ -85,6 +85,10 @@ export const useAuthStore = defineStore('auth', () => {
       }
       const decodedToken = JwtService.instance().decodeToken(token);
 
+      if (decodedToken.tokenType !== 'Full') {
+        user.value = null;
+        return;
+      }
       user.value = await UserService.instance().getById(parseInt(decodedToken.sub));
     } catch (error) {
       console.error(error);
@@ -93,6 +97,5 @@ export const useAuthStore = defineStore('auth', () => {
       loading.value = false;
     }
   }
-
   return { user, loading, isAuthenticated, initialize, register, login, logout };
 });

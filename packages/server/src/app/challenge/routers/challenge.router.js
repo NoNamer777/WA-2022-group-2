@@ -15,7 +15,7 @@ export const challengeRouter = express.Router();
 
 challengeRouter.use('/suggestion', challengeSuggestionRouter);
 
-challengeRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
+challengeRouter.get('/', jwtAuthHeaderValidator(), async (_, response) => {
   const allChallenges = await challengeController.getAll();
   response.send(allChallenges);
 });
@@ -24,7 +24,7 @@ challengeRouter.use('/suggestion', challengeSuggestionRouter);
 
 challengeRouter.get(
   '/:challengeId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('challengeId', 'Challenge'),
   async (request, response, next) => {
     const challengeId = request.params.challengeId;
@@ -52,7 +52,7 @@ challengeRouter.get(
 
 challengeRouter.put(
   '/:challengeId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   checkSchema(challengeSchema, ['body']),
   entityIdValidator('challengeId', 'Challenge'),
   async (request, response, next) => {
@@ -96,7 +96,7 @@ challengeRouter.put(
 
 challengeRouter.post(
   '/:userId/challenge',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   checkSchema(newChallengeSchema, ['body']),
   async (request, response, next) => {
     const challengeData = matchedData(request);
@@ -152,7 +152,7 @@ challengeRouter.post(
 
 challengeRouter.delete(
   '/:challengeId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('challengeId', 'Challenge'),
   async (request, _response, next) => {
     const challengeId = request.params.challengeId;

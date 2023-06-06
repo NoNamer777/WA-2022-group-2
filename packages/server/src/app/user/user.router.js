@@ -10,7 +10,7 @@ import { newUserSchema, userSchema } from './user.validator.js';
 
 export const userRouter = express.Router();
 
-userRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
+userRouter.get('/', jwtAuthHeaderValidator(), async (_, response) => {
   const allUsers = await userController.getAll();
 
   response.send(allUsers);
@@ -18,7 +18,7 @@ userRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
 
 userRouter.get(
   '/:userId/group',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('userId', 'User'),
   async (request, response, next) => {
     try {
@@ -30,7 +30,7 @@ userRouter.get(
   }
 );
 
-userRouter.get('/:userId/challenges', jwtAuthHeaderValidator, async (request, response) => {
+userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, response) => {
   const userId = parseInt(request.params.userId);
 
   if (request.userId !== userId) {
@@ -44,7 +44,7 @@ userRouter.get('/:userId/challenges', jwtAuthHeaderValidator, async (request, re
 
 userRouter.get(
   '/:userId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('userId', 'User'),
   async (request, response, next) => {
     const userId = request.params.userId;
@@ -58,7 +58,7 @@ userRouter.get(
 
 userRouter.put(
   '/:userId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   checkSchema(userSchema, ['body']),
   entityIdValidator('userId', 'User'),
   async (request, response, next) => {
@@ -77,7 +77,7 @@ userRouter.put(
 
 userRouter.post(
   '/',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   checkSchema(newUserSchema, ['body']),
   async (request, response, next) => {
     const userData = matchedData(request);
@@ -94,7 +94,7 @@ userRouter.post(
 
 userRouter.delete(
   '/:userId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('userId', 'User'),
   async (request, _response, next) => {
     const userId = request.params.userId;

@@ -3,22 +3,22 @@
     {
       "id": 1,
       "username": "Jennifer",
-      "profile_picture": "kikker"
+      "profile_picture": "/assets/images/profile_pictures/kikker.png"
     },
     {
       "id": 2,
       "username": "Marjo",
-      "profile_picture": "kuiken"
+      "profile_picture": "/assets/images/profile_pictures/kuiken.png"
     },
     {
       "id": 3,
       "username": "Oscar",
-      "profile_picture": "papegaai"
+      "profile_picture": "/assets/images/profile_pictures/papegaai.png"
     },
     {
       "id": 4,
       "username": "Ahmed",
-      "profile_picture": "narwal"
+      "profile_picture": "/assets/images/profile_pictures/narwal.png"
     }
   ],
   "challenges": [

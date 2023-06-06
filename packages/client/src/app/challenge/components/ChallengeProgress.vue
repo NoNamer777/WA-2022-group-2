@@ -11,7 +11,7 @@
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
           :imageName="this.userChallenge.user.profile_image_path"
-          :imagePath="`url('/assets/profile_pictures/${this.userChallenge.user.profile_image_path}.png')`"
+          :imagePath="`url(${inject('serverBaseUrl')}${this.user.profile_picture})`"
           :isOwner="isOwner"
           :aria-hidden="!isOwner"
         ></CheckBox>
@@ -31,6 +31,7 @@
 import CheckBox from './ChallengeCheckBox.vue';
 import Modal from 'bootstrap/js/dist/modal';
 import CompletedModal from './CompletedModal.vue';
+import { inject } from 'vue';
 
 export default {
   name: 'ChallengeProgress',
@@ -68,6 +69,7 @@ export default {
     this.badgeImagePath = '/assets/badges/paard.png';
   },
   methods: {
+    inject,
     getTitle() {
       return this.isOwner ? 'Mijn voortgang' : `Voortgang van ${this.userChallenge.user.username}`;
     },

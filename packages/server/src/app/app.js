@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
+import { JwtService } from './auth/services/jwt.service.js';
 import { challengeRouter } from './challenge/routers/challenge.router.js';
 import { userChallengeRouter } from './challenge/routers/user_challenge.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
@@ -36,8 +37,11 @@ class App {
 
     this.app.use(corsMiddleware());
 
+    this.app.use(express.static('packages/server/src/public'));
+
     await DatabaseService.instance().initialize();
     MailService.instance().initialize();
+    JwtService.instance().initialize();
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
