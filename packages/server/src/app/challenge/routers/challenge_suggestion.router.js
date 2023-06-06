@@ -4,7 +4,7 @@ import { challengeSuggestionController } from '../controllers/challenge_suggesti
 
 export const challengeSuggestionRouter = express.Router();
 
-challengeSuggestionRouter.get('/', jwtAuthHeaderValidator, async (_, response) => {
+challengeSuggestionRouter.get('/', jwtAuthHeaderValidator(), async (_, response) => {
   const allSuggestions = await challengeSuggestionController.getAll();
 
   response.send(allSuggestions);

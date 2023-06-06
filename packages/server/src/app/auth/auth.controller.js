@@ -15,7 +15,7 @@ class AuthController {
     console.info('AuthController - Logging in an User');
     const user = await AuthService.instance().login(userData);
 
-    return JwtService.instance().encodeToken(user.toJSON());
+    return JwtService.instance().encodeToken({ userId: user.id, tokenType: 'Full' });
   }
 
   /**
