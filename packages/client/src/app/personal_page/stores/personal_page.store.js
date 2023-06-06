@@ -4,7 +4,7 @@ import { BadgeService } from '../services/index.js';
 
 export const useBadgeStore = defineStore('badges', () => {
   /** @type {Object} */
-  let badges = ref({});
+  let earnedBadges = ref({});
 
   /** @type {import('vue').Ref<boolean>} */
   const loading = ref(true);
@@ -13,20 +13,20 @@ export const useBadgeStore = defineStore('badges', () => {
    * @param userId {number}
    * @return {void}
    */
-  async function getBadges(userId) {
+  async function getEarnedBadges(userId) {
     try {
       await BadgeService.instance()
         .getBadges(userId)
         .then((data) => {
-          badges.value = data.badges;
+          earnedBadges.value = data.earnedBadges;
         });
     } catch (error) {
       console.error(error);
-      badges.value = null;
+      earnedBadges.value = null;
     } finally {
       loading.value = false;
     }
   }
 
-  return { badges, loading, getBadges };
+  return { earnedBadges, loading, getEarnedBadges };
 });

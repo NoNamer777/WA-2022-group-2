@@ -66,7 +66,7 @@ class UserController {
     console.info(`UserController - Getting badges for User with ID: '${userId}'`);
 
     return {
-      badges: await EarnedBadgeService.instance().getForUser(userId)
+      earnedBadges: await EarnedBadgeService.instance().getForUser(userId)
     };
   }
 }
