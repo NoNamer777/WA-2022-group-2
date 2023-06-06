@@ -2,6 +2,9 @@ on:
   push:
     branches:
       - main
+env:
+  USERNAME: NoNamer777
+  TOKEN: ${{ secrets.PAT }}
 jobs:
   pushToRemote:
     name: Push to HHS Repository
@@ -12,10 +15,10 @@ jobs:
       - name: Set Git credentials
         run: |
           git config user.email "oscar.wellner@gmail.com"
-          git config user.name "NoNamer777"
+          git config user.name "$USERNAME"
       - name: Clone to HHS
         run: |
-          git remote add hhs https://github.com/The-Hague-University/WA-2022-group-2
+          git remote add hhs https://$USERNAME:$TOKEN@github.com/The-Hague-University/WA-2022-group-2
           git rm -r .github/*
           git add .
           git commit -m "Remove workflow files before cloning repo"
