@@ -36,9 +36,20 @@ userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, 
     throw new UnauthorizedException();
   }
 
-  const challenges = await userController.getForUser(userId);
+  const challenges = await userController.getChallengesForUser(userId);
 
   response.send(challenges);
+});
+userRouter.get('/:userId/badges', jwtAuthHeaderValidator(), async (request, response) => {
+  const userId = parseInt(request.params.userId);
+
+  if (request.userId !== userId) {
+    throw new UnauthorizedException();
+  }
+
+  const badges = await userController.getBadgesForUser(userId);
+
+  response.send(badges);
 });
 
 userRouter.get(

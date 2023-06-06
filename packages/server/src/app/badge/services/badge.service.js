@@ -1,4 +1,6 @@
 import { NotFoundException } from '../../core/models/index.js';
+import { UserEntity } from '../../user/index.js';
+import { EarnedBadgeEntity } from '../entities/earned_badge.entity.js';
 import { badgeRepository } from '../repositories/badge.repository.js';
 
 export class BadgeService {
@@ -67,5 +69,16 @@ export class BadgeService {
       );
     }
     await badgeRepository.deleteById(badgeId);
+  }
+
+  /** @return {Promise<BadgeEntity[]>} */
+  async getForUser(userId) {
+    return await badgeRepository.findAllBy({}, [
+      {
+        model: EarnedBadgeEntity,
+        where: { user_id: userId },
+        include: { model: UserEntity }
+      }
+    ]);
   }
 }

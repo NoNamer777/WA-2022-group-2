@@ -1,3 +1,4 @@
+import { BadgeService } from '../badge/services/badge.service.js';
 import { ChallengeService } from '../challenge/services/challenge.service.js';
 import { UserService } from './services/user.service.js';
 
@@ -51,12 +52,21 @@ class UserController {
   }
 
   /** @return {Promise<{pastChallenges: Array, currentChallenges: Array}>} */
-  async getForUser(userId) {
+  async getChallengesForUser(userId) {
     console.info(`UserController - Getting challenges for User with ID: '${userId}'`);
 
     return {
       currentChallenges: await ChallengeService.instance().getForUser(userId),
       pastChallenges: await ChallengeService.instance().getForUser(userId, true)
+    };
+  }
+
+  /** @return {Promise<{badges: Array}>} */
+  async getBadgesForUser(userId) {
+    console.info(`UserController - Getting challenges for User with ID: '${userId}'`);
+
+    return {
+      badges: await BadgeService.instance().getForUser(userId)
     };
   }
 }
