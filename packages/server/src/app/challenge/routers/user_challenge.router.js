@@ -7,7 +7,7 @@ export const userChallengeRouter = express.Router();
 
 userChallengeRouter.delete(
   '/:userChallengeId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('userChallengeId', 'UserChallenge'),
   async (request, response, next) => {
     const userChallengeId = request.params.userChallengeId;

@@ -17,7 +17,7 @@
           ></button>
         </div>
         <div class="modal-body w-100 text-center">
-          <img class="mb-4" :src="badgeImagePath" :alt="badgeName" />
+          <img class="mb-4" :src="`${inject('serverBaseUrl')}${badgeImagePath}`" :alt="badgeName" />
           <h4 id="modalLabel">Goed gedaan!</h4>
           <h5>Je hebt een {{ badgeName }} verdiend!</h5>
         </div>
@@ -30,8 +30,11 @@
 </template>
 
 <script>
+import { inject } from 'vue';
+
 export default {
   name: 'CompletedModal',
+  methods: { inject },
   props: {
     badgeImagePath: String,
     badgeName: String

@@ -10,8 +10,10 @@
           :challengeDay="challengeDay"
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
-          :imageName="this.userChallenge.user.profile_image_path"
-          :imagePath="`url(${inject('serverBaseUrl')}${this.user.profile_picture})`"
+          :imageName="imageName"
+          :imagePath="`url(${inject('serverBaseUrl')}${
+            this.userChallenge.user.profile_image_path
+          })`"
           :isOwner="isOwner"
           :aria-hidden="!isOwner"
         ></CheckBox>
@@ -45,6 +47,7 @@ export default {
       earnedText: String,
       buttonText: String,
       showButton: Boolean,
+      imageName: String,
 
       badgeName: String,
       badgeImagePath: String
@@ -61,12 +64,12 @@ export default {
     this.challengeDays = this.userChallenge.challenge_days;
     this.numberOfEarned = this.getNumberOfEarned();
     this.earnedText = this.getEarnedText();
-    this.imageName = this.userChallenge.user.profile_image_path;
     this.showButton = this.isActive && this.isOwner;
+    this.imageName = this.getImageName();
 
     // Testing badges:
     this.badgeName = 'paard';
-    this.badgeImagePath = '/assets/badges/paard.png';
+    this.badgeImagePath = '/assets/images/badges/paard.png';
   },
   methods: {
     inject,
@@ -82,6 +85,11 @@ export default {
     },
     check(i) {
       this.challengeDays[i - 1].earned = !this.challengeDays[i - 1].earned;
+    },
+    getImageName() {
+      const path = this.userChallenge.user.profile_image_path;
+      const image = path.substring(path.lastIndexOf('/') + 1);
+      return image.substring(0, image.lastIndexOf('.'));
     }
   },
   watch: {

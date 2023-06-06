@@ -38,7 +38,7 @@ challengeRouter.get(
 
 challengeRouter.get(
   '/:challengeId/members',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('challengeId', 'Challenge'),
   async (request, response, next) => {
     const challengeId = request.params.challengeId;
@@ -73,7 +73,7 @@ challengeRouter.put(
 // TODO: do we need a validator here?
 challengeRouter.put(
   '/day/:dayId',
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator(),
   entityIdValidator('challengeDayId', 'ChallengeDay'),
   async (request, response, next) => {
     const challengeDayId = request.params.dayId;
