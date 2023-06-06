@@ -66,6 +66,14 @@ export class UserChallengeService {
     const challengeId = userChallengeById.dataValues.challenge_id;
 
     const remainingUserChallenges = await this.getAllById(challengeId);
+
+    /*  TODO: check if name can be updated in challenge view after last opponent has left challenge, otherwise remove commented lines:
+      if (remainingUserChallenges.length === 1) {
+      const challenge = await challengeRepository.findOneBy(challengeId);
+      challenge.dataValues.group_id = null;
+      await challengeRepository.update(challenge);
+    }*/
+
     if (remainingUserChallenges.length === 0) {
       console.log(`Deleting orphan challenge with ID: '${userChallengeId}'.`);
       await challengeRepository.deleteById(challengeId);
