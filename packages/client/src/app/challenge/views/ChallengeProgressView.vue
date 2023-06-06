@@ -7,7 +7,6 @@
             <div v-if="isEditing" tabindex="-1" ref="input">
               <FormKit type="form" @submit="saveText" :actions="false" :incomplete-message="false">
                 <CustomFormKit
-                  @submit="saveText"
                   v-model="challenge.name"
                   label="Challenge naam"
                   name="name"
@@ -242,8 +241,8 @@ export default {
         this.$refs.input.focus();
       });
     },
-    saveText() {
-      // TODO: Save challenge name
+    async saveText() {
+      await ChallengeService.instance().updateChallenge(this.challenge.id, this.challenge);
       this.isEditing = false;
       nextTick(() => {
         this.$refs.editButton.focus();

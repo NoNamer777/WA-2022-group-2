@@ -1,9 +1,11 @@
 import { Op } from 'sequelize';
-import { NotFoundException } from '../../core/models/index.js';
+import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
+import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { GroupEntity } from '../../group/entities/group.entity.js';
 import { UserEntity } from '../../user/index.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
+import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
 
 export class ChallengeService {
   /** @return {ChallengeService} */
@@ -34,16 +36,28 @@ export class ChallengeService {
   }
 
   /**
+   * @param challengeIdParam {number}
    * @param challengeData {ChallengeEntity}
+   * @param userId {number}
+   * @param throwsError
    * @return {Promise<ChallengeEntity>}
    */
-  async update(challengeData) {
+  async update(challengeIdParam, challengeData, userId, throwsError = true) {
     const challengeId = challengeData.id;
+    if (challengeIdParam !== parseInt(challengeId)) {
+      throw new BadRequestException(`Unable to update challenge with requested data`);
+    }
 
+    const userChallengeById = await userChallengeRepository.findOneBy({
+      user_id: userId,
+      challenge_id: challengeId
+    });
     if (!(await this.getById(challengeId, false))) {
-      throw new NotFoundException(
-        `Het wijzigen van challenge met ID: '${challengeId}' was niet succesvol omdat de challenge niet bestaat.`
-      );
+      throw new NotFoundException(`Challenge with ID: '${challengeId}' not found.`);
+    }
+
+    if (!userChallengeById && throwsError) {
+      throw new UnauthorizedException(`Failed updating challenge with ID: '${challengeId}'.`);
     }
     await challengeRepository.update(challengeData);
     return await this.getById(challengeId);

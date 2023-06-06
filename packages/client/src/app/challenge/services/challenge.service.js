@@ -38,4 +38,15 @@ export class ChallengeService {
       challengeData
     );
   }
+
+  /**
+   * @param challengeId {number}
+   * @param challengeData
+   */
+  async updateChallenge(challengeId, challengeData) {
+    return await HttpRequestService.instance().putRequest(
+      `/api/challenge/${challengeId}`,
+      challengeData
+    );
+  }
 }

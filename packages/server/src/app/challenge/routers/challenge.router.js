@@ -57,9 +57,10 @@ challengeRouter.put(
   async (request, response, next) => {
     const challengeId = request.params.challengeId;
     const challengeData = matchedData(request);
+    const userId = request.userId;
 
     try {
-      const updatedChallenge = await challengeController.update(challengeId, challengeData);
+      const updatedChallenge = await challengeController.update(challengeId, challengeData, userId);
 
       response.send(updatedChallenge);
     } catch (error) {

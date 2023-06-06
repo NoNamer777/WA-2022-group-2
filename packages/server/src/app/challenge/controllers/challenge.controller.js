@@ -21,15 +21,19 @@ class ChallengeController {
   /**
    * @param challengeIdParam {string}
    * @param challengeData {ChallengeEntity}
+   * @param userId {number}
    * @return {Promise<ChallengeEntity>}
    */
-  async update(challengeIdParam, challengeData) {
+  async update(challengeIdParam, challengeData, userId) {
     console.info(
       `ChallengeController - Updating Challenge resource on path: '${challengeIdParam}'`
     );
 
-    // @todo implement updating challenge
-    return await ChallengeService.instance().update(challengeData);
+    return await ChallengeService.instance().update(
+      parseInt(challengeIdParam),
+      challengeData,
+      userId
+    );
   }
 
   /**
