@@ -54,7 +54,7 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
           <template v-else>
             <li class="nav-item">
               <!--TODO: Provide the correct link-->
-              <router-link class="nav-link text-white" :to="{ name: 'home' }">
+              <router-link class="nav-link text-white" :to="{ name: 'my-wasted' }">
                 Mijn Wasted
               </router-link>
             </li>

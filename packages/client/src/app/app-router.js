@@ -3,6 +3,7 @@ import { useAuthStore } from './auth';
 import { LoginView, RegisterView, ResetPasswordView } from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView, InfoView } from './core/views';
+import PersonalPageView from './personal_page/views/PersonalPageView.vue';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -72,6 +73,14 @@ export const router = createRouter({
       component: ResetPasswordView,
       meta: {
         title: 'Password herstellen'
+      }
+    },
+    {
+      path: '/my-wasted',
+      name: 'my-wasted',
+      component: PersonalPageView,
+      meta: {
+        title: 'Mijn Wasted'
       }
     }
   ]
