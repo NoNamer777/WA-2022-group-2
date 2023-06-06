@@ -52,7 +52,10 @@ export class AuthService {
       const user = await UserService.instance().getByUsername(username);
 
       // Generate a JWT that is valid for 30 minutes.
-      const jwtToken = JwtService.instance().encodeToken(user.toJSON(), 30 * 60 * 1000);
+      const jwtToken = JwtService.instance().encodeToken(
+        { userId: user.id, tokenType: 'PasswordReset' },
+        30 * 60 * 1000
+      );
 
       await MailService.instance().sendEmail({
         to: user.email,
