@@ -1,5 +1,18 @@
 <script setup>
 import { Tab, Tabs } from 'vue3-tabs-component';
+import { storeToRefs } from 'pinia';
+import { useChallengeStore } from '../../challenge/stores/challenge.store.js';
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../auth/index.js';
+import { useBadgeStore } from '../stores/personal_page.store.js';
+
+const { loading, badges } = storeToRefs(useBadgeStore());
+const { getBadges } = useBadgeStore();
+
+onMounted(async () => {
+  const { user } = storeToRefs(useAuthStore());
+  await getBadges(user.value.id);
+});
 </script>
 
 <template>
@@ -11,6 +24,7 @@ import { Tab, Tabs } from 'vue3-tabs-component';
     <section>
       <div>
         <Tabs
+          v-if="!loading"
           nav-class="nav nav-tabs"
           nav-item-class="nav-item"
           nav-item-link-class="nav-link"
