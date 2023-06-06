@@ -16,6 +16,9 @@ export class ChallengeService {
     return ChallengeService.#instance;
   }
 
+  /** @type {ChallengeService} */
+  static #instance;
+
   /** @return {Promise<ChallengeEntity[]>} */
   async getAll() {
     return await challengeRepository.findAll();
@@ -83,9 +86,6 @@ export class ChallengeService {
     }
     await challengeRepository.deleteById(challengeId);
   }
-
-  /** @type {ChallengeService} */
-  static #instance;
 
   /** @return {Promise<ChallengeEntity[]>} */
   async getForUser(userId, retrievePast = false) {

@@ -4,6 +4,7 @@ import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
 import { userGroupController } from '../../group/user_group.controller.js';
 import { challengeController } from '../controllers/challenge.controller.js';
+import { challengeDayController } from '../controllers/challenge_day.controller.js';
 import { userChallengeController } from '../controllers/user_challenge.controller.js';
 import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
@@ -61,6 +62,30 @@ challengeRouter.put(
 
     try {
       const updatedChallenge = await challengeController.update(challengeId, challengeData, userId);
+
+      response.send(updatedChallenge);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// TODO: do we need a validator here?
+challengeRouter.put(
+  '/day/:dayId',
+  jwtAuthHeaderValidator,
+  entityIdValidator('challengeDayId', 'ChallengeDay'),
+  async (request, response, next) => {
+    const challengeDayId = request.params.dayId;
+    const challengeDayData = request.body;
+    const userId = request.userId;
+
+    try {
+      const updatedChallenge = await challengeDayController.update(
+        challengeDayId,
+        challengeDayData,
+        userId
+      );
 
       response.send(updatedChallenge);
     } catch (error) {

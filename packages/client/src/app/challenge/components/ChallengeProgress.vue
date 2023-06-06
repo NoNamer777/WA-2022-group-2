@@ -7,7 +7,7 @@
           v-for="(challengeDay, i) in challengeDays"
           v-model:checked="challengeDay.earned"
           :key="i"
-          :id="challengeDay.id"
+          :challengeDay="challengeDay"
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
           :imageName="this.userChallenge.user.profile_image_path"

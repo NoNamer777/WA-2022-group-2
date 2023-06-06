@@ -2,14 +2,14 @@
   <div class="d-flex justify-content-center">
     <div class="check position-relative w-100">
       <input
-        :id="id"
+        :id="challengeDay.id"
         type="checkbox"
         :checked="checked"
         @change="$emit('update:checked', $event.target.checked)"
         :disabled="isDisabled"
       />
       <label
-        :for="id"
+        :for="challengeDay.id"
         :aria-label="`${imageName}, dag ${dayNumber}`"
         class="transition"
         :style="{
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { ChallengeDayService } from '../services/challenge_day.service.js';
+
 export default {
   name: 'CheckBox',
   data() {
@@ -38,7 +40,7 @@ export default {
     this.isDisabled = this.getIsDisabled();
   },
   props: {
-    id: Number,
+    challengeDay: Object,
     dayNumber: Number,
     todayNumber: Number,
     imageName: String,
@@ -57,10 +59,12 @@ export default {
     }
   },
   watch: {
-    checked() {
+    async checked() {
       this.rotate();
-      /* handle saving of challengeDays by challengeDayId? */
-      console.log(this.id);
+      await ChallengeDayService.instance().updateChallengeDay(
+        this.challengeDay.id,
+        this.challengeDay
+      );
     }
   },
   computed: {
