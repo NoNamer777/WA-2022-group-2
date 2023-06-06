@@ -66,7 +66,7 @@ authRouter.post(
 authRouter.post(
   '/reset-password',
   authLimiter,
-  jwtAuthHeaderValidator,
+  jwtAuthHeaderValidator({ expectedTokenType: 'PasswordReset' }),
   checkSchema(resetPasswordSchema, ['body']),
   confirmPasswordValidator,
   async (request, response, next) => {
