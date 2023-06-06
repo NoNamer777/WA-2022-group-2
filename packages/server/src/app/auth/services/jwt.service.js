@@ -15,16 +15,30 @@ export class JwtService {
   /** @type {JwtService} */
   static #instance;
 
+  #jwtSecret = process.env.VITE_JWT_SECRET;
+
+  initialize() {
+    if (this.#jwtSecret) return;
+
+    throw new Error(`Environment variable 'VITE_JWT_SECRET' is not defined.`);
+  }
+
   /**
    * @param payload {UserEntity}
    * @param expirationTime {number}
    * @returns {string}
    */
   encodeToken(payload, expirationTime = TOKEN_VALID_DURATION) {
-    return jwt.sign(payload, process.env.VITE_JWT_SECRET || '', {
-      subject: `${payload.id}`,
-      expiresIn: `${expirationTime}ms`
-    });
+    return jwt.sign(
+      {
+        ...payload
+      },
+      this.#jwtSecret,
+      {
+        subject: `${payload.id}`,
+        expiresIn: `${expirationTime}ms`
+      }
+    );
   }
 
   /**
@@ -32,6 +46,6 @@ export class JwtService {
    * @returns
    */
   decodeToken(token) {
-    return jwt.verify(token, process.env.VITE_JWT_SECRET || '');
+    return jwt.verify(token, this.#jwtSecret || '');
   }
 }
