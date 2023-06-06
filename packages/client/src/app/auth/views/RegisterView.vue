@@ -8,8 +8,7 @@ const user = ref({
   email: '',
   username: '',
   password: '',
-  passwordConfirm: '',
-  profile_image_path: 'To be filled with random value'
+  passwordConfirm: ''
 });
 </script>
 

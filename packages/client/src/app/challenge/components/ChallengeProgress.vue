@@ -11,7 +11,7 @@
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
           :imageName="this.user.profile_picture"
-          :imagePath="`url('/assets/profile_pictures/${this.user.profile_picture}.png')`"
+          :imagePath="`url(${inject('serverBaseUrl')}${this.user.profile_picture})`"
           :isOwner="isOwner"
           :aria-hidden="!isOwner"
         ></CheckBox>
@@ -29,6 +29,7 @@
 <script>
 import CheckBox from './ChallengeCheckBox.vue';
 import data from '../data.json';
+import { inject } from 'vue';
 
 export default {
   name: 'ChallengeProgress',
@@ -60,6 +61,7 @@ export default {
     this.showButton = this.isActive && this.isOwner;
   },
   methods: {
+    inject,
     getUser() {
       const users = data.users;
       for (const user of users) {
