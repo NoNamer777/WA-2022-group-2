@@ -4,7 +4,7 @@ export const passwordValidator = {
     bail: true,
     options: { minLength: 8, minLowercase: 1, minNumbers: 1, minSymbols: 1, minUppercase: 1 },
     errorMessage:
-      'We raden aan om een combinatie te gebruiken van minimaal 1 hoofdletters, 1 kleine letters, 1 symbool, 1 cijfer en een minimaal lengte van 8 tekens.'
+      'Een wachtwoord moet minimaal een combinatie van 1 hoofdletter, 1 kleine letter, 1 symbool, 1 cijfer, en in totaal minimaal 8 tekens bevatten.'
   },
   isLength: {
     options: { max: 40 },
