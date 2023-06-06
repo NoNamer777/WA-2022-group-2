@@ -1,4 +1,8 @@
-import { BadgeEntity, initializeBadgeEntity } from '../../badge/badge.entity.js';
+import { BadgeEntity, initializeBadgeEntity } from '../../badge/entities/badge.entity.js';
+import {
+  EarnedBadgeEntity,
+  initializeEarnedBadgeEntity
+} from '../../badge/entities/earned_badge.entity.js';
 import {
   ChallengeEntity,
   initializeChallengeEntity
@@ -12,10 +16,6 @@ import {
   UserChallengeEntity,
   initializeUserChallengeEntity
 } from '../../challenge/entities/user_challenge.entity.js';
-import {
-  EarnedBadgeEntity,
-  initializeEarnedBadgeEntity
-} from '../../earned_badge/earned_badge.entity.js';
 import { GroupEntity, initializeGroupEntity } from '../../group/entities/group.entity.js';
 import {
   UserGroupEntity,
