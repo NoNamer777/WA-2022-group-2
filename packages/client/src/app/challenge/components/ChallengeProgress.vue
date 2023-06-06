@@ -11,9 +11,7 @@
           :dayNumber="i + 1"
           :todayNumber="todayNumber"
           :imageName="this.user.profile_picture"
-          :imagePath="`url(${inject('serverBaseUrl')}'/assets/profile_pictures/${
-            this.user.profile_picture
-          }.png')`"
+          :imagePath="`url(${inject('serverBaseUrl')}${this.user.profile_picture})`"
           :isOwner="isOwner"
           :aria-hidden="!isOwner"
         ></CheckBox>
