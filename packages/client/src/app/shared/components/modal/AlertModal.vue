@@ -18,7 +18,7 @@
           ></button>
         </div>
         <div class="modal-body">{{ content }}</div>
-        <div class="modal-footer mx-sm-auto">
+        <div class="modal-footer gap-4">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             {{ cancellation }}
           </button>

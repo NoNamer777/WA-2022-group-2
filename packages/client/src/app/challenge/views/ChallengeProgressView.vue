@@ -137,7 +137,7 @@ export default {
     const userChallenges = ref([]);
     const startDate = ref();
     const today = ref(1);
-    const todayNumber = ref(0);
+    const todayNumber = ref(1);
     const isActive = ref(true);
     const dayTitle = ref('');
     const isEditing = ref(false);
@@ -149,7 +149,9 @@ export default {
 
     const getChallenge = async () => {
       try {
-        challenge.value = await ChallengeService.instance().getChallengeById(route.params.userId);
+        challenge.value = await ChallengeService.instance().getChallengeById(
+          route.params.challengeId
+        );
         startDate.value = getDateString(challenge.value.start_date);
         todayNumber.value = getTodaysDayNumber(challenge.value.start_date);
         isActive.value = getIsActive(challenge.value.start_date, challenge.value.end_date);
@@ -171,7 +173,7 @@ export default {
     const getUserChallenges = async () => {
       // TODO: sort userchallenges in backend?
       userChallenges.value = await UserChallengeService.instance().getUserChallengesById(
-        route.params.userId
+        route.params.challengeId
       );
       userChallenges.value = getAndSortUserChallenges(userChallenges.value);
     };

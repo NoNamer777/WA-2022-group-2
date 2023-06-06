@@ -104,7 +104,7 @@ export default {
       group_id: ''
     });
 
-    const createChallenge = () => {
+    const createChallenge = async () => {
       /* output submit object */
       const start = new Date(challenge.value.start_date);
       const end = new Date(
@@ -114,17 +114,17 @@ export default {
       delete challenge.value.amount_of_days;
 
       try {
-        const challengeResponse = ChallengeService.instance().postChallenge(
+        const challengeResponse = await ChallengeService.instance().postChallenge(
           user.id,
           challenge.value
         );
-        console.log(challengeResponse);
+        await router.push({
+          name: 'challenge_progress',
+          params: { challengeId: challengeResponse.id }
+        });
       } catch (error) {
         console.error(error);
       }
-
-      /* TODO: Route to active view, routing to be done */
-      router.push('/challenge/8/progress');
     };
 
     return {
