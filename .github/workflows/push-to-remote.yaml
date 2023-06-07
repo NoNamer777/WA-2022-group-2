@@ -1,5 +1,4 @@
-on:
-  push:
+on: push
 env:
   USERNAME: NoNamer777
   TOKEN: ${{ secrets.PAT }}
