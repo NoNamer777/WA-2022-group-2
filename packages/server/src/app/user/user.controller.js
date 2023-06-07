@@ -61,13 +61,11 @@ class UserController {
     };
   }
 
-  /** @return {Promise<{badges: Array}>} */
+  /** @return {Promise<EarnedBadgeEntity[]>} */
   async getBadgesForUser(userId) {
     console.info(`UserController - Getting badges for User with ID: '${userId}'`);
 
-    return {
-      earnedBadges: await EarnedBadgeService.instance().getForUser(userId)
-    };
+    return await EarnedBadgeService.instance().getForUser(userId);
   }
 }
 

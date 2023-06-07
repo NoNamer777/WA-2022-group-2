@@ -18,7 +18,7 @@ export const useBadgeStore = defineStore('badges', () => {
       await BadgeService.instance()
         .getBadges(userId)
         .then((data) => {
-          earnedBadges.value = data.earnedBadges;
+          earnedBadges.value = data;
         });
     } catch (error) {
       console.error(error);
