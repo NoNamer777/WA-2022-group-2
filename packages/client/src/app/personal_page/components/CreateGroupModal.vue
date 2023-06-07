@@ -1,9 +1,54 @@
+<script setup>
+import { CustomFormKit } from '../../shared/components';
+import { ref } from 'vue';
+import { usePersonalPageStore } from '../stores/personal_page.store.js';
+
+/** @type {import('vue').Ref<string>} */
+let name = ref('');
+
+/** @type {import('vue').Ref<Object>} */
+let group = ref({});
+
+/** @type {import('vue').Ref<Object>} */
+const modal = ref(null);
+/** @return {Promise<void>} */
+async function createGroupRequest() {
+  const { createGroup } = usePersonalPageStore();
+  group.value = createGroup(name);
+}
+
+const handleModalOpen = () => {
+  group.value = null;
+  name.value = null;
+};
+
+const copyToClipboard = () => {
+  navigator.clipboard
+    .writeText(group.value.code)
+    .then(function () {
+      alert('yeah!'); // success
+    })
+    .catch(function () {
+      alert('err'); // error
+    });
+};
+</script>
+
+<style></style>
+
 <template>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new-group">
+  <button
+    @click="handleModalOpen"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#new-group"
+  >
     Groep aanmaken
   </button>
   <div
     class="modal fade"
+    ref="modal"
     id="new-group"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
@@ -22,7 +67,7 @@
         </div>
         <div class="modal-body">
           <FormKit
-            v-if="!group.value"
+            v-if="!group"
             type="form"
             :actions="false"
             @submit="createGroupRequest"
@@ -43,28 +88,18 @@
               :disabled="!valid"
             ></CustomFormKit>
           </FormKit>
+          <div v-else>
+            <p>
+              <span class="text-primary">{{ group.name }}</span> is aangemaakt! Deel de onderstaande
+              code met andere!
+            </p>
+            <div class="input-group mb-3">
+              <input :value="group.code" readonly />
+              <button class="btn btn-primary" @click="copyToClipboard">Kopiëren</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import { CustomFormKit } from '../../shared/components';
-import { ref } from 'vue';
-import { usePersonalPageStore } from '../stores/personal_page.store.js';
-
-/** @type {import('vue').Ref<string>} */
-const name = ref();
-
-/** @type {import('vue').Ref<boolean>} */
-const group = ref({});
-
-/** @return {Promise<void>} */
-async function createGroupRequest() {
-  const { createGroup } = usePersonalPageStore();
-  group.value = createGroup(name);
-}
-</script>
-
-<style scoped></style>
