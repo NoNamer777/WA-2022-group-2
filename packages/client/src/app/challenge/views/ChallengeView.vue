@@ -13,6 +13,10 @@ onMounted(async () => {
   const { user } = storeToRefs(useAuthStore());
   await getChallenges(user.value.id);
 });
+
+const toChallengeProgressRoute = (id) => {
+  return { name: 'challenge_progress', params: { userId: id } };
+};
 </script>
 
 <template>
@@ -35,12 +39,14 @@ onMounted(async () => {
         >
           <Tab name="Huidige">
             <CardList
+              :to-route="toChallengeProgressRoute"
               empty-state="Je hebt geen uitdagingen momenteel open staan"
               :items="challenges.currentChallenges"
             />
           </Tab>
           <Tab name="Afgerond">
             <CardList
+              :to-route="toChallengeProgressRoute"
               empty-state="Je hebt geen uitdagingen momenteel open staan"
               :items="challenges.pastChallenges"
             />

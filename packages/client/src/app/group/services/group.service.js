@@ -15,4 +15,12 @@ export class GroupService {
   async getAllForUser(userId) {
     return await HttpRequestService.instance().getRequest('/api/user/' + userId + '/group');
   }
+
+  /** @return {Promise<Group>} */
+  async createForUser(userId, name) {
+    return await HttpRequestService.instance().postRequest('/api/group/', {
+      name: name,
+      user_id: userId
+    });
+  }
 }

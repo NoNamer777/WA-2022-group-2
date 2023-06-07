@@ -1,13 +1,22 @@
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useAuthStore } from '../../auth/index.js';
+import { GroupService } from '../../group/services/group.service.js';
+import { cardResource } from '../resources/card.resource.js';
 import { BadgeService } from '../services/index.js';
 
-export const useBadgeStore = defineStore('badges', () => {
-  /** @type {Object} */
+export const usePersonalPageStore = defineStore('personal_page', () => {
+  /** @type {Array} */
   let earnedBadges = ref({});
 
+  /** @type {Array} */
+  let groups = ref({});
+
   /** @type {import('vue').Ref<boolean>} */
-  const loading = ref(true);
+  const loadingBadges = ref(true);
+
+  /** @type {import('vue').Ref<boolean>} */
+  const loadingGroups = ref(true);
 
   /**
    * @param userId {number}
@@ -24,9 +33,59 @@ export const useBadgeStore = defineStore('badges', () => {
       console.error(error);
       earnedBadges.value = null;
     } finally {
-      loading.value = false;
+      loadingBadges.value = false;
     }
   }
 
-  return { earnedBadges, loading, getEarnedBadges };
+  /**
+   * @param userId {number}
+   * @return {void}
+   */
+  async function getGroups(userId) {
+    try {
+      await GroupService.instance()
+        .getAllForUser(userId)
+        .then((data) => {
+          groups.value = cardResource(data);
+        });
+    } catch (error) {
+      console.error(error);
+      earnedBadges.value = null;
+    } finally {
+      loadingGroups.value = false;
+    }
+  }
+
+  /**
+   * @param name {String}
+   * @return {Object}
+   */
+  async function createGroup(name) {
+    const { user } = storeToRefs(useAuthStore());
+    let group = null;
+
+    try {
+      await GroupService.instance()
+        .createForUser(user.id, name)
+        .then((data) => {
+          group = data;
+          loadingGroups.value = true;
+          getGroups(user.id);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+
+    return group;
+  }
+
+  return {
+    earnedBadges,
+    groups,
+    loadingBadges,
+    loadingGroups,
+    getEarnedBadges,
+    getGroups,
+    createGroup
+  };
 });
