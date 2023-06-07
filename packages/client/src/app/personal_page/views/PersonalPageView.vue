@@ -22,7 +22,7 @@ onMounted(async () => {
   <main>
     <section class="d-flex align-items-center justify-content-between">
       <h1 class="mb-4">Mijn wasted</h1>
-      <router-link class="btn btn-primary" :to="{ name: 'home' }"> Aanmaken </router-link>
+      <CreateGroupModal />
     </section>
     <section>
       <div>
