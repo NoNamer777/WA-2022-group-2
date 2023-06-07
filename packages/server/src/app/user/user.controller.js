@@ -1,5 +1,6 @@
 import { EarnedBadgeService } from '../badge/services/earned_badge.service.js';
 import { ChallengeService } from '../challenge/services/challenge.service.js';
+import { GroupService } from '../group/services/group.service.js';
 import { UserService } from './services/user.service.js';
 
 class UserController {
@@ -66,6 +67,11 @@ class UserController {
     console.info(`UserController - Getting badges for User with ID: '${userId}'`);
 
     return await EarnedBadgeService.instance().getForUser(userId);
+  }
+
+  /** @return {Promise<GroupEntity[]>} */
+  async getGroupsForUser(userId) {
+    return await GroupService.instance().getForUser(userId);
   }
 }
 
