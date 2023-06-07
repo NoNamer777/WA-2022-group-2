@@ -34,16 +34,15 @@ const animals = [
 ];
 let badges = [];
 
-for (const animal of animals) {
-  badges.push({
-    name: animal,
-    image_path: `/assets/images/badges/${animal}.png`
-  });
-}
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
+    for (const animal of animals) {
+      badges.push({
+        name: animal,
+        image_path: `/assets/images/badges/${animal}.png`
+      });
+    }
     return queryInterface.bulkInsert('badge', badges);
   },
 
