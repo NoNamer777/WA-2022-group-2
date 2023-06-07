@@ -1,4 +1,5 @@
-import { groupRepository } from '../group.repository.js';
+import { NotFoundException } from '../../core/models/index.js';
+import { groupRepository } from '../repositories/group.repository.js';
 
 export class GroupService {
   /** @return {GroupService} */
@@ -11,6 +12,62 @@ export class GroupService {
 
   /** @type {GroupService} */
   static #instance;
+
+  /** @return {Promise<GroupEntity[]>} */
+  async getAll() {
+    return await groupRepository.findAll();
+  }
+
+  /**
+   * @param groupId {number}
+   * @param throwsError {boolean}
+   * @return {Promise<GroupEntity>}
+   */
+  async getById(groupId, throwsError = true) {
+    const groupById = await groupRepository.findOneBy({ id: groupId });
+
+    if (!groupById && throwsError) {
+      throw new NotFoundException(`Er is geen group gevonden met het ID: '${groupId}'.`);
+    }
+    return groupById;
+  }
+
+  /**
+   * @param groupData {GroupEntity}
+   * @return {Promise<GroupEntity>}
+   */
+  async update(groupData) {
+    const groupId = groupData.id;
+
+    if (!(await this.getById(groupId, false))) {
+      throw new NotFoundException(
+        `Het wijzigen van group met ID: '${groupId}' was niet succesvol omdat de group niet bestaat.`
+      );
+    }
+    await groupRepository.update(groupData);
+    return await this.getById(groupId);
+  }
+
+  /**
+   * @param groupData {Omit<GroupEntity, 'id'>}
+   * @return {Promise<GroupEntity>}
+   */
+  async create(groupData) {
+    return groupRepository.create(groupData);
+  }
+
+  /**
+   * @param groupId {number}
+   * @return {Promise<void>}
+   */
+  async deleteById(groupId) {
+    if (!(await this.getById(groupId, false))) {
+      throw new NotFoundException(
+        `Het verwijderen van Group met ID: '${groupId}' is mislukt omdat het niet bestaat.`
+      );
+    }
+    await groupRepository.deleteById(groupId);
+  }
 
   /** @return {Promise<GroupEntity[]>} */
   async getForUser(userId) {

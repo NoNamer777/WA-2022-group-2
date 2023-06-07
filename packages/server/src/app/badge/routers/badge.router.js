@@ -1,7 +1,6 @@
 import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
-import { badgeRouter } from '../../badge/routers/badge.router.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
 import { badgeController } from '../controllers/badge.controller.js';
 import { badgeSchema, newBadgeSchema } from '../validators/badge.validator.js';
