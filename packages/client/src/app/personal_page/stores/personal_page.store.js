@@ -24,7 +24,7 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
    */
   async function getEarnedBadges(userId) {
     try {
-      await BadgeService.instance()
+      earnedBadges.value = await BadgeService.instance().getBadges(userId);
         .getBadges(userId)
         .then((data) => {
           earnedBadges.value = data;
