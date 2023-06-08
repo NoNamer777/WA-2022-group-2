@@ -3,6 +3,7 @@ import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
 import { earnedBadgeController } from '../controllers/earned_badge.controller.js';
+import { earnedBadgeSchema, newEarnedBadgeSchema } from '../validators/earned_badge.validator.js';
 
 export const earnedBadgeRouter = express.Router();
 
