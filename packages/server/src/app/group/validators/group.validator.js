@@ -32,3 +32,22 @@ export const groupSchema = {
     escape: true
   }
 };
+
+export const joinGroupSchema = {
+  code: {
+    notEmpty: { bail: true, errorMessage: 'Een groepscode is verplicht.' },
+    escape: true
+  },
+  user_id: {
+    exists: {
+      bail: true,
+      options: { values: 'falsy' },
+      errorMessage: 'Een gebruikers-id is verplicht.'
+    },
+    isInt: {
+      options: { min: 1 },
+      optional: { values: null }
+    },
+    escape: true
+  }
+};

@@ -1,4 +1,5 @@
 import { generateRandomCode } from '../../core/helpers/code-generator.helper.js';
+import { BadRequestException } from '../../core/models/index.js';
 import { UserService } from '../../user/index.js';
 import { GroupService } from '../services/group.service.js';
 
@@ -55,6 +56,29 @@ class GroupController {
     console.info(`GroupController - Removing Group resource with ID: '${groupIdParam}'`);
 
     await GroupService.instance().deleteById(parseInt(groupIdParam));
+  }
+
+  /**
+   * @param groupData {Omit<GroupEntity, 'id'>}
+   * @return {Promise<GroupEntity>}
+   */
+  async joinByCode(groupData) {
+    console.info('GroupController - Joining a Group');
+
+    const group = await GroupService.instance().getByCode(groupData.code);
+    const user = await UserService.instance().getById(parseInt(groupData.user_id));
+
+    // Check if the user is already connected to the group
+    const userHasGroup = await user.hasGroup(group);
+
+    // If the connection already exists, throw an error
+    if (userHasGroup) {
+      throw new BadRequestException('Je bent al lid van groep' + group.name);
+    }
+
+    await user.addGroup(group);
+
+    return group;
   }
 }
 

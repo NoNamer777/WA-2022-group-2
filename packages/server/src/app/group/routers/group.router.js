@@ -3,7 +3,7 @@ import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
 import { groupController } from '../controllers/group.controller.js';
-import { groupSchema, newGroupSchema } from '../validators/group.validator.js';
+import { groupSchema, joinGroupSchema, newGroupSchema } from '../validators/group.validator.js';
 
 export const groupRouter = express.Router();
 
@@ -63,6 +63,22 @@ groupRouter.post(
   }
 );
 
+groupRouter.post(
+  '/join',
+  jwtAuthHeaderValidator(),
+  checkSchema(joinGroupSchema, ['body']),
+  async (request, response, next) => {
+    const groupData = matchedData(request);
+
+    try {
+      const group = await groupController.joinByCode(groupData);
+
+      response.status(200).send(group);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 groupRouter.delete(
   '/:groupId',
   jwtAuthHeaderValidator(),

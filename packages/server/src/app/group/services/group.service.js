@@ -73,4 +73,18 @@ export class GroupService {
   async getForUser(userId) {
     return await groupRepository.findAll(userId);
   }
+
+  /**
+   * @param code {string}
+   * @param throwsError {boolean}
+   * @return {Promise<GroupEntity>}
+   */
+  async getByCode(code, throwsError = true) {
+    const groupByCode = await groupRepository.findOneBy({ code: code });
+
+    if (!groupByCode && throwsError) {
+      throw new NotFoundException(`Er is geen groep gevonden met de code: '${code}'.`);
+    }
+    return groupByCode;
+  }
 }
