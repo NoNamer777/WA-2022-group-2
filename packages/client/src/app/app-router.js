@@ -88,7 +88,8 @@ export const router = createRouter({
       name: 'my-wasted',
       component: PersonalPageView,
       meta: {
-        title: 'Mijn Wasted'
+        title: 'Mijn Wasted',
+        requiresAuth: true
       }
     }
   ]
@@ -137,7 +138,7 @@ async function guardAuthenticatedRoutes(routeTo) {
   if (['register', 'login'].includes(routeTo.name) && authenticationStore.isAuthenticated) {
     return { name: 'home' };
   }
-  // TODO: Add redirect routers
+  // TODO: Add redirect routes
   if (routeTo.meta.requiresAuth && !authenticationStore.isAuthenticated) {
     return { name: 'login' };
   }
