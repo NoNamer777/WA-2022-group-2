@@ -1,5 +1,5 @@
 export const newEarnedBadgeSchema = {
-  user_id: {
+  userId: {
     exists: {
       bail: true,
       options: { values: 'falsy' },
@@ -11,7 +11,7 @@ export const newEarnedBadgeSchema = {
     },
     escape: true
   },
-  badge_id: {
+  badgeId: {
     exists: {
       bail: true,
       options: { values: 'falsy' },
@@ -23,11 +23,11 @@ export const newEarnedBadgeSchema = {
     },
     escape: true
   },
-  user_challenge_id: {
+  userChallengeId: {
     exists: {
       bail: true,
       options: { values: 'falsy' },
-      errorMessage: 'Een user_challenge_id  is verplicht.'
+      errorMessage: 'Een gebruikerschallenge-id  is verplicht.'
     },
     isInt: {
       options: { min: 1 },

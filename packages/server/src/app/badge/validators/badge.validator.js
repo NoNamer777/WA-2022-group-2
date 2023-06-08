@@ -7,7 +7,7 @@ export const newBadgeSchema = {
     },
     escape: true
   },
-  image_path: {
+  imagePath: {
     notEmpty: { bail: true, errorMessage: 'Een afbeelding locatie is verplicht.' },
     isLength: {
       options: { min: 3, max: 255 },

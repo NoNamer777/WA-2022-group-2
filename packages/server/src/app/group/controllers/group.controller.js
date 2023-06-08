@@ -73,7 +73,7 @@ class GroupController {
 
     // If the connection already exists, throw an error
     if (userHasGroup) {
-      throw new BadRequestException('Je bent al lid van groep' + group.name);
+      throw new BadRequestException('Je bent al lid van groep ' + group.name);
     }
 
     await user.addGroup(group);
