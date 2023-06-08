@@ -25,19 +25,7 @@ export const useAuthStore = defineStore('auth', () => {
    * @return {Promise<void>}
    */
   async function register(userData) {
-    try {
-      await AuthService.instance().register(userData);
-
-      notify({
-        type: 'success',
-        title: 'Gelukt',
-        text: 'Je hebt successvol een account geregistreerd!'
-      });
-
-      await router.push({ name: 'login' });
-    } catch (error) {
-      console.error(error);
-    }
+    await AuthService.instance().register(userData);
   }
 
   /**
