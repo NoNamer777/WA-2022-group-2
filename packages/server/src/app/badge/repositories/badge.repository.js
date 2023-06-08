@@ -11,7 +11,7 @@ class BadgeRepository {
    * @param includeClause
    * @return {Promise<BadgeEntity | null>}
    */
-  async findOneBy(whereClaus, includeClause) {
+  async findOneBy(whereClaus, includeClause = {}) {
     return await BadgeEntity.findOne({
       include: includeClause,
       where: { ...whereClaus },
