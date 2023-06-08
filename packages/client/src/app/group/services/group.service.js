@@ -20,7 +20,7 @@ export class GroupService {
   async createForUser(userId, name) {
     return await HttpRequestService.instance().postRequest('/api/group/', {
       name: name,
-      user_id: userId
+      userId: userId
     });
   }
 
@@ -28,7 +28,7 @@ export class GroupService {
   async join(userId, code) {
     return await HttpRequestService.instance().postRequest('/api/group/join', {
       code: code,
-      user_id: userId
+      userId: userId
     });
   }
 }

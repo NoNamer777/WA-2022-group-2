@@ -7,7 +7,7 @@ export const newGroupSchema = {
     },
     escape: true
   },
-  user_id: {
+  userId: {
     exists: {
       bail: true,
       options: { values: 'falsy' },
@@ -38,7 +38,7 @@ export const joinGroupSchema = {
     notEmpty: { bail: true, errorMessage: 'Een groepscode is verplicht.' },
     escape: true
   },
-  user_id: {
+  userId: {
     exists: {
       bail: true,
       options: { values: 'falsy' },

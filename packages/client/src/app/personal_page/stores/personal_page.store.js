@@ -25,10 +25,6 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
   async function getEarnedBadges(userId) {
     try {
       earnedBadges.value = await BadgeService.instance().getBadges(userId);
-        .getBadges(userId)
-        .then((data) => {
-          earnedBadges.value = data;
-        });
     } catch (error) {
       console.error(error);
       earnedBadges.value = null;
@@ -44,10 +40,6 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
   async function getGroups(userId) {
     try {
       groups.value = cardResource(await GroupService.instance().getAllForUser(userId));
-        .getAllForUser(userId)
-        .then((data) => {
-          groups.value = cardResource(data);
-        });
     } catch (error) {
       console.error(error);
       earnedBadges.value = null;
@@ -66,15 +58,9 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
 
     try {
       group = await GroupService.instance().createForUser(user.value.id, name);
-      
+
       loadingGroups.value = true;
       getGroups(user.value.id);
-        .createForUser(user.value.id, name)
-        .then((data) => {
-          group = data;
-          loadingGroups.value = true;
-          getGroups(user.value.id);
-        });
     } catch (error) {
       console.error(error);
     }
@@ -91,12 +77,6 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
 
       loadingGroups.value = true;
       getGroups(user.value.id);
-        .join(user.value.id, code)
-        .then((data) => {
-          group = data;
-          loadingGroups.value = true;
-          getGroups(user.value.id);
-        });
     } catch (error) {
       console.error(error);
     }

@@ -41,7 +41,7 @@ class GroupController {
     groupData.code = generateRandomCode(14);
 
     const group = await GroupService.instance().create(groupData);
-    const user = await UserService.instance().getById(parseInt(groupData.user_id));
+    const user = await UserService.instance().getById(parseInt(groupData.userId));
 
     await user.addGroup(group);
 
@@ -66,7 +66,7 @@ class GroupController {
     console.info('GroupController - Joining a Group');
 
     const group = await GroupService.instance().getByCode(groupData.code);
-    const user = await UserService.instance().getById(parseInt(groupData.user_id));
+    const user = await UserService.instance().getById(parseInt(groupData.userId));
 
     // Check if the user is already connected to the group
     const userHasGroup = await user.hasGroup(group);
