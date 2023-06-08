@@ -43,7 +43,7 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
    */
   async function getGroups(userId) {
     try {
-      await GroupService.instance()
+      groups.value = cardResource(await GroupService.instance().getAllForUser(userId));
         .getAllForUser(userId)
         .then((data) => {
           groups.value = cardResource(data);
