@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '../../core/models/index.js';
-import { MailService } from '../../core/services/mail.service.js';
+import { MailService } from '../../core/services/index.js';
 import { UserService } from '../../user/index.js';
 import { UnauthorizedException } from '../models/errors/unauthorized-exception.js';
 import { JwtService } from './jwt.service.js';
@@ -78,5 +78,18 @@ export class AuthService {
       }
       throw error;
     }
+  }
+
+  /**
+   * @param userId {number}
+   * @param newPassword {string}
+   * @return {Promise<void>}
+   */
+  async resetPassword(userId, newPassword) {
+    const user = await UserService.instance().getById(userId);
+
+    user.password = newPassword;
+
+    await UserService.instance().update(user);
   }
 }

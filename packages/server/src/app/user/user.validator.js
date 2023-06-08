@@ -1,3 +1,18 @@
+export const passwordValidator = {
+  notEmpty: { bail: true, errorMessage: 'Een wachtwoord is verplicht.' },
+  isStrongPassword: {
+    bail: true,
+    options: { minLength: 8, minLowercase: 1, minNumbers: 1, minSymbols: 1, minUppercase: 1 },
+    errorMessage:
+      'Een wachtwoord moet minimaal een combinatie van 1 hoofdletter, 1 kleine letter, 1 symbool, 1 cijfer, en in totaal minimaal 8 tekens bevatten.'
+  },
+  isLength: {
+    options: { max: 40 },
+    errorMessage: 'Het wachtwoord is te lang. Gebruik maximaal 40 tekens.'
+  },
+  escape: true
+};
+
 export const newUserSchema = {
   username: {
     notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
@@ -7,20 +22,7 @@ export const newUserSchema = {
     },
     escape: true
   },
-  password: {
-    notEmpty: { bail: true, errorMessage: 'Een wachtwoord is verplicht.' },
-    isStrongPassword: {
-      bail: true,
-      options: { minLength: 8, minLowercase: 1, minNumbers: 1, minSymbols: 1, minUppercase: 1 },
-      errorMessage:
-        'We raden aan om een combinatie te gebruiken van minimaal 1 hoofdletters, 1 kleine letters, 1 symbool, 1 cijfer en een minimaal lengte van 8 tekens.'
-    },
-    isLength: {
-      options: { max: 40 },
-      errorMessage: 'Het wachtwoord is te lang. Gebruik maximaal 40 tekens.'
-    },
-    escape: true
-  },
+  password: passwordValidator,
   email: {
     notEmpty: { bail: true, errorMessage: 'Een email addres is verplicht.' },
     isLength: {
