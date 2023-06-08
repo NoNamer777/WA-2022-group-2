@@ -1,3 +1,4 @@
+name: Clone to HHS repository
 on:
   push:
     branches:
