@@ -32,14 +32,14 @@ const handleModalOpen = () => {
     type="button"
     class="btn btn-primary"
     data-bs-toggle="modal"
-    data-bs-target="#new-group"
+    data-bs-target="#join-group"
   >
     Deelnemen aan groep
   </button>
   <div
     class="modal fade"
     ref="modal"
-    id="new-group"
+    id="join-group"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
@@ -67,7 +67,7 @@ const handleModalOpen = () => {
               name="code"
               label="Groepscode"
               placeholder="Vul de groepscode in! 🎮"
-              validation="required"
+              validation="required|length:1,32"
               v-model:model-value="code"
             />
             <CustomFormKit

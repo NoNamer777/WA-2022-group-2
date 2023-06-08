@@ -77,7 +77,7 @@ const copyToClipboard = () => {
               name="name"
               label="Naam"
               placeholder="Vul je groepsnaam in! 🎮"
-              validation="required"
+              validation="required|length:3,255"
               v-model:model-value="name"
             />
             <CustomFormKit

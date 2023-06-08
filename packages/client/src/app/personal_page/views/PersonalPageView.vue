@@ -7,6 +7,7 @@ import { usePersonalPageStore } from '../stores/personal_page.store.js';
 import CreateGroupModal from '../components/groups/CreateGroupModal.vue';
 import BadgeList from '../components/badges/BadgeList.vue';
 import GroupList from '../components/groups/GroupList.vue';
+import JoinGroupModal from '../components/groups/JoinGroupModal.vue';
 
 const { loadingBadges, loadingGroups, earnedBadges, groups } = storeToRefs(usePersonalPageStore());
 const { getEarnedBadges, getGroups } = usePersonalPageStore();
@@ -20,9 +21,12 @@ onMounted(async () => {
 
 <template>
   <main>
-    <section class="d-flex align-items-center justify-content-between">
+    <section class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
       <h1 class="mb-4">Mijn wasted</h1>
-      <CreateGroupModal />
+      <div class="d-flex justify-content-end gap-2">
+        <CreateGroupModal />
+        <JoinGroupModal />
+      </div>
     </section>
     <section>
       <div>

@@ -27,7 +27,7 @@ export class GroupService {
   /** @return {Promise<Group>} */
   async join(userId, code) {
     return await HttpRequestService.instance().postRequest('/api/group/join', {
-      name: code,
+      code: code,
       user_id: userId
     });
   }
