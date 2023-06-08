@@ -1,7 +1,6 @@
 import { NotFoundException } from '../../core/models/index.js';
 import { UserEntity } from '../../user/index.js';
 import { BadgeEntity } from '../entities/badge.entity.js';
-import { EarnedBadgeEntity } from '../entities/earned_badge.entity.js';
 import { earnedBadgeRepository } from '../repositories/earned_badge.repository.js';
 
 export class EarnedBadgeService {
