@@ -34,8 +34,8 @@ const user = ref({
           <router-link class="link-primary" :to="{ name: 'register' }"> Registreer </router-link>
         </small>
         <small class="d-flex">
-          Ben je je wachtwoord of gebruikersnaam vergeten?&nbsp;
-          <router-link class="link-primary" :to="{ name: 'reset password' }">
+          Ben je je wachtwoord vergeten?&nbsp;
+          <router-link class="link-primary" :to="{ name: 'request password reset' }">
             Reset je wachtwoord hier.
           </router-link>
         </small>

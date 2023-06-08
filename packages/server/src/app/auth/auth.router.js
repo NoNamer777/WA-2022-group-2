@@ -3,8 +3,9 @@ import { rateLimit } from 'express-rate-limit';
 import { checkSchema, matchedData } from 'express-validator';
 import { newUserSchema } from '../user/index.js';
 import { authController } from './auth.controller.js';
-import { loginSchema, usernameSchema } from './auth.validator.js';
+import { loginSchema, resetPasswordSchema, usernameSchema } from './auth.validator.js';
 import { confirmPasswordValidator } from './middleware/confirm-password.validator.js';
+import { jwtAuthHeaderValidator } from './middleware/jwt-auth-header-validator.js';
 
 export const authRouter = express.Router();
 
@@ -55,6 +56,25 @@ authRouter.post(
     try {
       await authController.requestPasswordReset(request.body.username);
 
+      response.end();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+authRouter.post(
+  '/reset-password',
+  authLimiter,
+  jwtAuthHeaderValidator({ expectedTokenType: 'PasswordReset' }),
+  checkSchema(resetPasswordSchema, ['body']),
+  confirmPasswordValidator,
+  async (request, response, next) => {
+    try {
+      const userId = request.userId;
+      const password = request.body['password'];
+
+      await authController.resetPassword(userId, password);
       response.end();
     } catch (error) {
       next(error);
