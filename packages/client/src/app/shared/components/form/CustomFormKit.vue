@@ -1,12 +1,13 @@
 <template>
   <FormKit
+    v-model="innerValue"
     @input="(value) => $emit('update:modelValue', value)"
     :type="type"
     :label="label"
     :name="name"
     :placeholder="placeholder"
     :validation="validation"
-    :value="modelValue"
+    :value="innerValue"
     :validation-visibility="validationVisibility"
     :validation-messages="validationMessages"
     :list="dataListId"
@@ -101,6 +102,19 @@ export default {
   computed: {
     dataListId() {
       return this.dataList ? name + '-dataList' : '';
+    }
+  },
+  mounted() {
+    this.innerValue = this.modelValue;
+  },
+  data() {
+    return {
+      innerValue: ''
+    };
+  },
+  watch: {
+    modelValue(newVal) {
+      this.innerValue = newVal;
     }
   }
 };
