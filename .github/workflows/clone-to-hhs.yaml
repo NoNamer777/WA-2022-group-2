@@ -1,8 +1,6 @@
 name: Clone to HHS repository
 on:
   push:
-    branches:
-      - main
 env:
   USERNAME: NoNamer777
   TOKEN: ${{ secrets.PAT }}
