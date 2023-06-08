@@ -25,5 +25,3 @@ const props = defineProps({
   earnedBadges: Array
 });
 </script>
-
-<style scoped></style>

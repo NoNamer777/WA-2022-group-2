@@ -9,5 +9,3 @@ const props = defineProps({
   groups: Array
 });
 </script>
-
-<style scoped></style>
