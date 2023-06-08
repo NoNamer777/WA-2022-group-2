@@ -29,6 +29,16 @@ class AuthController {
 
     await AuthService.instance().requestPasswordReset(username);
   }
+
+  /**
+   * @param userId {number}
+   * @param password {string}
+   * @return {Promise<void>}
+   */
+  async resetPassword(userId, password) {
+    console.info(`AuthController - Resetting password for User with ID: '${userId}'`);
+    await AuthService.instance().resetPassword(userId, password);
+  }
 }
 
 export const authController = new AuthController();

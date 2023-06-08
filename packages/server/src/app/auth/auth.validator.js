@@ -1,3 +1,5 @@
+import { passwordValidator } from '../user/index.js';
+
 const usernameValidator = {
   notEmpty: { bail: true, errorMessage: 'Een gebruikersnaam is verplicht.' },
   isLength: {
@@ -21,4 +23,8 @@ export const loginSchema = {
 
 export const usernameSchema = {
   username: usernameValidator
+};
+
+export const resetPasswordSchema = {
+  password: passwordValidator
 };

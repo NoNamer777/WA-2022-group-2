@@ -22,4 +22,4 @@ jobs:
           git rm -r .github/*
           git add .
           git commit -m "Remove workflow files before cloning repo"
-          git push hhs main
+          git push --force hhs main
