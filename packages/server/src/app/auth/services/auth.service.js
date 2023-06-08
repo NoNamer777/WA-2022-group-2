@@ -17,7 +17,22 @@ export class AuthService {
   static #instance;
 
   async register(userData) {
-    return await UserService.instance().create(userData);
+    const newUser = await UserService.instance().create(userData);
+    const jwtToken = JwtService.instance().encodeToken(
+      { userId: newUser.id, tokenType: 'VerifyRegistration' },
+      30 * 60 * 1000
+    );
+
+    await MailService.instance().sendEmail({
+      to: newUser.email,
+      subject: 'Bevestig je registratie',
+      template: 'verify-registration',
+      context: {
+        username: newUser.username,
+        link: process.env.CLIENT_BASE_URL + '/verify-registration?token=' + jwtToken
+      }
+    });
+    return newUser;
   }
 
   /**
