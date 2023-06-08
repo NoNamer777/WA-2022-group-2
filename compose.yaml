@@ -14,5 +14,5 @@ services:
     ports:
       - '8080:8080/tcp'
     volumes:
-      - /Users/jennifergoudswaard/DockerContainer/mysql/config.json
+      - ./environment/config.json:/app/config.json
       - ./environment/database.json:/app/database.json
