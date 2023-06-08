@@ -74,7 +74,7 @@ const copyToClipboard = () => {
             #default="{ state: { valid } }"
           >
             <CustomFormKit
-              name="username"
+              name="name"
               label="Naam"
               placeholder="Vul je groepsnaam in! 🎮"
               validation="required"
@@ -82,7 +82,7 @@ const copyToClipboard = () => {
             />
             <CustomFormKit
               type="submit"
-              label="Stuur request"
+              label="Aanmaken"
               name="submit"
               input-class="form-btn-primary"
               :disabled="!valid"
