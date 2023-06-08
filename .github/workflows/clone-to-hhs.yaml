@@ -16,6 +16,7 @@ jobs:
           git config user.email "oscar.wellner@gmail.com"
           git config user.name "$USERNAME"
           git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+          git config core.packedGitLimit 512m
       - name: Clone to HHS
         run: |
           git remote add hhs https://$USERNAME:$TOKEN@github.com/The-Hague-University/WA-2022-group-2
