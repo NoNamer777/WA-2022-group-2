@@ -17,21 +17,20 @@ async function createGroupRequest() {
   group.value = await createGroup(name.value);
 }
 
-const handleModalOpen = () => {
+function handleModalOpen() {
   group.value = null;
   name.value = null;
-};
+}
 
-const copyToClipboard = () => {
-  navigator.clipboard
-    .writeText(group.value.code)
-    .then(function () {
-      alert('gekopieërd!'); // success
-    })
-    .catch(function () {
-      alert('Er is iets misgegaan'); // error
-    });
-};
+async function copyToClipboard() {
+  try {
+    await navigator.clipboard.writeText(group.value.code);
+    alert('gekopieërd!');
+  } catch (err) {
+    alert('Er is iets misgegaan');
+    console.error(err);
+  }
+}
 </script>
 
 <style></style>
