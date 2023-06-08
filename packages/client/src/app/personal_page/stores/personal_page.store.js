@@ -84,7 +84,10 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
     let group = null;
 
     try {
-      await GroupService.instance()
+      group = await GroupService.instance().join(user.value.id, code);
+
+      loadingGroups.value = true;
+      getGroups(user.value.id);
         .join(user.value.id, code)
         .then((data) => {
           group = data;
