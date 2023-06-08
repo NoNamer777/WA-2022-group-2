@@ -20,3 +20,6 @@ jobs:
           action: 'upload'
           app_location: '/packages/client'
           output_location: '/dist/client'
+        env:
+          RUN_BUILD_COMMAND: 'client:build'
+          VITE_JWT_SECRET: ${{ secrets.JWT_SECRET }}
