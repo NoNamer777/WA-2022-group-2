@@ -66,11 +66,11 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
 
     try {
       await GroupService.instance()
-        .createForUser(user.id, name)
+        .createForUser(user.value.id, name)
         .then((data) => {
           group = data;
           loadingGroups.value = true;
-          getGroups(user.id);
+          getGroups(user.value.id);
         });
     } catch (error) {
       console.error(error);

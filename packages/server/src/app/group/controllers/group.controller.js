@@ -42,7 +42,7 @@ class GroupController {
     const group = await GroupService.instance().create(groupData);
     const user = await UserService.instance().getById(parseInt(groupData.user_id));
 
-    await user.setGroup(group);
+    await user.addGroup(group);
 
     return group;
   }

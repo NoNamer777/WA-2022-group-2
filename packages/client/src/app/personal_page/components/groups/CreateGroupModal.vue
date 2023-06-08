@@ -1,7 +1,7 @@
 <script setup>
-import { CustomFormKit } from '../../shared/components';
+import { CustomFormKit } from '../../../shared/components/index.js';
 import { ref } from 'vue';
-import { usePersonalPageStore } from '../stores/personal_page.store.js';
+import { usePersonalPageStore } from '../../stores/personal_page.store.js';
 
 /** @type {import('vue').Ref<string>} */
 let name = ref('');
@@ -14,7 +14,7 @@ const modal = ref(null);
 /** @return {Promise<void>} */
 async function createGroupRequest() {
   const { createGroup } = usePersonalPageStore();
-  group.value = createGroup(name);
+  group.value = await createGroup(name.value);
 }
 
 const handleModalOpen = () => {
@@ -26,10 +26,10 @@ const copyToClipboard = () => {
   navigator.clipboard
     .writeText(group.value.code)
     .then(function () {
-      alert('yeah!'); // success
+      alert('gekopieërd!'); // success
     })
     .catch(function () {
-      alert('err'); // error
+      alert('Er is iets misgegaan'); // error
     });
 };
 </script>
@@ -76,7 +76,7 @@ const copyToClipboard = () => {
             <CustomFormKit
               name="username"
               label="Naam"
-              placeholder="johndoe"
+              placeholder="Vul je groepsnaam in! 🎮"
               validation="required"
               v-model:model-value="name"
             />

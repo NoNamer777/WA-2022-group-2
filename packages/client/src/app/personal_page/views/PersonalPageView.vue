@@ -4,9 +4,9 @@ import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../auth/index.js';
 import { usePersonalPageStore } from '../stores/personal_page.store.js';
-import CreateGroupModal from '../components/CreateGroupModal.vue';
-import BadgeList from '../components/BadgeList.vue';
-import GroupList from '../components/GroupList.vue';
+import CreateGroupModal from '../components/groups/CreateGroupModal.vue';
+import BadgeList from '../components/badges/BadgeList.vue';
+import GroupList from '../components/groups/GroupList.vue';
 
 const { loadingBadges, loadingGroups, earnedBadges, groups } = storeToRefs(usePersonalPageStore());
 const { getEarnedBadges, getGroups } = usePersonalPageStore();
