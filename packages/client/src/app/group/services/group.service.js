@@ -23,4 +23,12 @@ export class GroupService {
       user_id: userId
     });
   }
+
+  /** @return {Promise<Group>} */
+  async join(userId, code) {
+    return await HttpRequestService.instance().postRequest('/api/group/join', {
+      name: code,
+      user_id: userId
+    });
+  }
 }

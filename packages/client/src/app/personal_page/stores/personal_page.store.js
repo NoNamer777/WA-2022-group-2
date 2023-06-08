@@ -79,6 +79,25 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
     return group;
   }
 
+  async function joinGroup(code) {
+    const { user } = storeToRefs(useAuthStore());
+    let group = null;
+
+    try {
+      await GroupService.instance()
+        .join(user.value.id, code)
+        .then((data) => {
+          group = data;
+          loadingGroups.value = true;
+          getGroups(user.value.id);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+
+    return group;
+  }
+
   return {
     earnedBadges,
     groups,
@@ -86,6 +105,7 @@ export const usePersonalPageStore = defineStore('personal_page', () => {
     loadingGroups,
     getEarnedBadges,
     getGroups,
-    createGroup
+    createGroup,
+    joinGroup
   };
 });
