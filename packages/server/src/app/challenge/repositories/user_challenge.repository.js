@@ -44,6 +44,16 @@ class UserChallengeRepository {
   }
 
   /**
+   * @param updatedUserChallengeData {UserChallengeEntity}
+   * @return {Promise<void>}
+   */
+  async update(updatedUserChallengeData) {
+    await UserChallengeEntity.update(updatedUserChallengeData, {
+      where: { id: updatedUserChallengeData.id }
+    });
+  }
+
+  /**
    * @param userChallengeId {number}
    * @return {Promise<void>}
    */

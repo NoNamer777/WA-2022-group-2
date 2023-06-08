@@ -5,6 +5,28 @@ import { userChallengeController } from '../controllers/user_challenge.controlle
 
 export const userChallengeRouter = express.Router();
 
+userChallengeRouter.put(
+  '/:userChallengeId',
+  jwtAuthHeaderValidator(),
+  entityIdValidator('userChallengeId', 'UserChallenge'),
+  async (request, response, next) => {
+    const userChallengeId = request.params.userChallengeId;
+    const userChallengeData = request.body;
+    const userId = request.userId;
+
+    try {
+      const userChallenge = await userChallengeController.complete(
+        userChallengeId,
+        userChallengeData,
+        userId
+      );
+      response.status(200).send(userChallenge);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 userChallengeRouter.delete(
   '/:userChallengeId',
   jwtAuthHeaderValidator(),

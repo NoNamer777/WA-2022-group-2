@@ -21,6 +21,24 @@ class UserChallengeController {
 
   /**
    * @param userChallengeIdParam {string}
+   * @param userChallengeData {UserChallengeEntity}
+   * @param userId {number}
+   * @return {Promise<UserChallengeEntity>}
+   */
+  async complete(userChallengeIdParam, userChallengeData, userId) {
+    console.info(
+      `UserChallengeController - Updating User Challenge resource on path: '${userChallengeIdParam}'`
+    );
+
+    return await UserChallengeService.instance().complete(
+      parseInt(userChallengeIdParam),
+      userChallengeData,
+      userId
+    );
+  }
+
+  /**
+   * @param userChallengeIdParam {string}
    * @param userId
    * @return {Promise<void>}
    */

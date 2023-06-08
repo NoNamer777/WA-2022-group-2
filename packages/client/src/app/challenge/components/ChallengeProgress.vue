@@ -101,6 +101,7 @@ export default {
         this.numberOfEarned = this.getNumberOfEarned();
         this.earnedText = this.getEarnedText();
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
+          // TODO: set completed + set badge
           const completedModal = new Modal(document.getElementById('completedModal'));
           completedModal.toggle();
         }

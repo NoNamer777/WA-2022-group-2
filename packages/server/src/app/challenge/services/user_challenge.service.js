@@ -1,4 +1,5 @@
-import { NotFoundException } from '../../core/models/index.js';
+import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
+import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
 import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
 
@@ -24,7 +25,7 @@ export class UserChallengeService {
   /**
    * @param userChallengeId {number}
    * @param throwsError {boolean}
-   * @return {Promise<ChallengeEntity>}
+   * @return {Promise<UserChallengeEntity>}
    */
   async getById(userChallengeId, throwsError = true) {
     const userChallengeById = await userChallengeRepository.findOneBy({ id: userChallengeId });
@@ -47,6 +48,32 @@ export class UserChallengeService {
       throw new NotFoundException(`Er is geen challenge gevonden met het ID: '${challengeId}'.`);
     }
     return userChallengesById;
+  }
+
+  /**
+   * @param userChallengeIdParam {number}
+   * @param userChallengeData {UserChallengeEntity}
+   * @param userId {number}
+   * @return {Promise<UserChallengeEntity>}
+   */
+  async complete(userChallengeIdParam, userChallengeData, userId) {
+    const userChallengeId = parseInt(userChallengeData.id);
+    if (userChallengeIdParam !== userChallengeId) {
+      throw new BadRequestException(`Unable to update user challenge with requested data`);
+    }
+
+    const userChallenge = await this.getById(userChallengeId);
+
+    if (userId !== userChallenge.user_id) {
+      throw new UnauthorizedException(
+        `Failed updating user challenge with id: '${userChallengeId}'.`
+      );
+    }
+
+    userChallenge.completed = true;
+    userChallenge.save();
+
+    return userChallenge;
   }
 
   /**
