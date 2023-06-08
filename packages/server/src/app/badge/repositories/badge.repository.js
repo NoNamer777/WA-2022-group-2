@@ -8,10 +8,15 @@ class BadgeRepository {
 
   /**
    * @param whereClaus {import('sequelize').WhereOptions}
+   * @param includeClause
    * @return {Promise<BadgeEntity | null>}
    */
-  async findOneBy(whereClaus) {
-    return await BadgeEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false });
+  async findOneBy(whereClaus, includeClause) {
+    return await BadgeEntity.findOne({
+      include: includeClause,
+      where: { ...whereClaus },
+      rejectOnEmpty: false
+    });
   }
 
   /**
