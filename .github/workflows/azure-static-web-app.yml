@@ -1,0 +1,25 @@
+name: Azure Static Web App CI/CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    name: Build and Deploy Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Build And Deploy
+        id: builddeploy
+        uses: azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_WEB_CLIENT_DEPLOY_KEY }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          app_location: '/'
+          output_location: '/dist/client'
+          app_build_command: 'npm run client:build'
+        env:
+          VITE_JWT_SECRET: ${{ secrets.JWT_SECRET }}
