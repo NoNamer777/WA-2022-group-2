@@ -2,7 +2,7 @@ import { ChallengeSuggestionService } from '../services/challenge_suggestion.ser
 
 class ChallengeSuggestionController {
   /** @return {Promise<ChallengeSuggestionEntity[]>} */
-  async getAll() {
+  async getSelection() {
     return await ChallengeSuggestionService.instance().getSelection();
   }
 }

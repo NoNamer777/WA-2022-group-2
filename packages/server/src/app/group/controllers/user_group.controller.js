@@ -1,4 +1,4 @@
-import { UserGroupService } from './services/user_group.service.js';
+import { UserGroupService } from '../services/user_group.service.js';
 
 class UserGroupController {
   /**

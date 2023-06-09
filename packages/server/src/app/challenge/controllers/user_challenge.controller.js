@@ -13,7 +13,7 @@ class UserChallengeController {
    */
   async getAllById(challengeIdParam) {
     console.info(
-      `UserChallengeController - Getting data for UserChallenge with Challenge ID: '${challengeIdParam}'`
+      `UserChallengeController - Getting data for User Challenges with Challenge ID: '${challengeIdParam}'`
     );
 
     return await UserChallengeService.instance().getAllById(parseInt(challengeIdParam));

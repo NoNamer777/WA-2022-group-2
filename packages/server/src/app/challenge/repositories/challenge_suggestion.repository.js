@@ -1,12 +1,12 @@
-import { Sequelize } from 'sequelize';
 import { ChallengeSuggestionEntity } from '../entities/challenge_suggestion.entity.js';
 
 class ChallengeSuggestionRepository {
   /** @return {Promise<ChallengeSuggestionEntity[]>} */
-  async findSelection() {
+  async findSelection(order, limit) {
     return await ChallengeSuggestionEntity.findAll({
-      order: Sequelize.literal('rand()'),
-      limit: 5
+      order: order,
+      limit: limit,
+      rejectOnEmpty: false
     });
   }
 }

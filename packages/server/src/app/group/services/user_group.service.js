@@ -1,5 +1,5 @@
 import { NotFoundException } from '../../core/models/index.js';
-import { userGroupRepository } from '../user_group.repository.js';
+import { userGroupRepository } from '../repositories/user_group.repository.js';
 
 export class UserGroupService {
   /** @return {UserGroupService} */

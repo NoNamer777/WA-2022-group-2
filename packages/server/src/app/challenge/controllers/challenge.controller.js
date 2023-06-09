@@ -43,7 +43,6 @@ class ChallengeController {
   async create(challengeData) {
     console.info('ChallengeController - Creating a new Challenge resources');
 
-    // @todo implement creating challenge
     return await ChallengeService.instance().create(challengeData);
   }
 

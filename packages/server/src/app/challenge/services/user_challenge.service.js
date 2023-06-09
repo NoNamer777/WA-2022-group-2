@@ -1,8 +1,9 @@
+import { Op } from 'sequelize';
 import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
-import { EarnedBadgeEntity } from '../../badge/entities/earned_badge.entity.js';
-import { BadgeService } from '../../badge/services/badge.service.js';
-import { EarnedBadgeService } from '../../badge/services/earned_badge.service.js';
+import { BadgeService, EarnedBadgeEntity, EarnedBadgeService } from '../../badge/index.js';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
+import { UserEntity } from '../../user/index.js';
+import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
 import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
 
@@ -45,7 +46,22 @@ export class UserChallengeService {
    * @return {Promise<UserChallengeEntity[]>}
    */
   async getAllById(challengeId, throwsError = true) {
-    const userChallengesById = await userChallengeRepository.findAllBy({ id: challengeId });
+    const userChallengesById = await userChallengeRepository.findAllBy(
+      {
+        challenge_id: {
+          [Op.eq]: challengeId
+        }
+      },
+      [
+        {
+          model: ChallengeDayEntity
+        },
+        {
+          model: UserEntity,
+          attributes: ['username', 'profile_image_path']
+        }
+      ]
+    );
 
     if (!userChallengesById && throwsError) {
       throw new NotFoundException(`Er is geen challenge gevonden met het ID: '${challengeId}'.`);
@@ -111,13 +127,6 @@ export class UserChallengeService {
     const challengeId = userChallengeById.dataValues.challenge_id;
 
     const remainingUserChallenges = await this.getAllById(challengeId);
-
-    /*  TODO: check if name can be updated in challenge view after last opponent has left challenge, otherwise remove commented lines:
-      if (remainingUserChallenges.length === 1) {
-      const challenge = await challengeRepository.findOneBy(challengeId);
-      challenge.dataValues.group_id = null;
-      await challengeRepository.update(challenge);
-    }*/
 
     if (remainingUserChallenges.length === 0) {
       console.log(`Deleting orphan challenge with ID: '${userChallengeId}'.`);

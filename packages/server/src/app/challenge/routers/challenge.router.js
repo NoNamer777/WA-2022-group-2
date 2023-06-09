@@ -2,25 +2,26 @@ import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
-import { userGroupController } from '../../group/user_group.controller.js';
+import { userGroupController } from '../../group/controllers/user_group.controller.js';
 import { challengeController } from '../controllers/challenge.controller.js';
 import { challengeDayController } from '../controllers/challenge_day.controller.js';
+import { challengeSuggestionController } from '../controllers/challenge_suggestion.controller.js';
 import { userChallengeController } from '../controllers/user_challenge.controller.js';
 import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 import { challengeSchema, newChallengeSchema } from '../validators/challenge.validator.js';
-import { challengeSuggestionRouter } from './challenge_suggestion.router.js';
 
 export const challengeRouter = express.Router();
-
-challengeRouter.use('/suggestion', challengeSuggestionRouter);
 
 challengeRouter.get('/', jwtAuthHeaderValidator(), async (_, response) => {
   const allChallenges = await challengeController.getAll();
   response.send(allChallenges);
 });
 
-challengeRouter.use('/suggestion', challengeSuggestionRouter);
+challengeRouter.get('/suggestion', jwtAuthHeaderValidator(), async (_, response) => {
+  const selectedSuggestions = await challengeSuggestionController.getSelection();
+  response.send(selectedSuggestions);
+});
 
 challengeRouter.get(
   '/:challengeId',
@@ -109,12 +110,12 @@ challengeRouter.post(
       const userChallenges = [];
 
       if (challengeData.group_id) {
-        const userGroups = await userGroupController.getById(createdChallenge.dataValues.group_id);
+        const userGroups = await userGroupController.getById(createdChallenge.group_id);
         for (const userGroup of userGroups) {
           const userChallenge = await UserChallengeEntity.create({
             completed: false,
-            user_id: userGroup.dataValues.user_id,
-            challenge_id: createdChallenge.dataValues.id
+            user_id: userGroup.user_id,
+            challenge_id: createdChallenge.id
           });
           userChallenges.push(userChallenge);
         }
@@ -122,14 +123,14 @@ challengeRouter.post(
         const userChallenge = await UserChallengeEntity.create({
           completed: false,
           user_id: request.params.userId,
-          challenge_id: createdChallenge.dataValues.id
+          challenge_id: createdChallenge.id
         });
         userChallenges.push(userChallenge);
       }
 
       /* Create challenge days */
-      let startDate = new Date(createdChallenge.dataValues.start_date);
-      const endDate = new Date(createdChallenge.dataValues.end_date);
+      let startDate = new Date(createdChallenge.start_date);
+      const endDate = new Date(createdChallenge.end_date);
 
       for (const userChallenge of userChallenges) {
         while (startDate <= endDate) {
@@ -140,7 +141,7 @@ challengeRouter.post(
           });
           startDate.setDate(startDate.getDate() + 1);
         }
-        startDate = new Date(createdChallenge.dataValues.start_date);
+        startDate = new Date(createdChallenge.start_date);
       }
 
       response.status(201).send(createdChallenge);
