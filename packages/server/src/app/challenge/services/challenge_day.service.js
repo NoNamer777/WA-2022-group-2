@@ -15,6 +15,14 @@ export class ChallengeDayService {
   static #instance;
 
   /**
+   * @param challengeDayData {{date: Date, earned: boolean, user_challenge_id}}
+   * @return {Promise<ChallengeDayEntity>}
+   */
+  async create(challengeDayData) {
+    return await challengeDayRepository.create(challengeDayData);
+  }
+
+  /**
    * @param challengeDayId {number}
    * @param throwsError {boolean}
    * @return {Promise<ChallengeDayEntity>}

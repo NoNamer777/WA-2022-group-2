@@ -2,6 +2,14 @@ import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
 
 class ChallengeDayRepository {
   /**
+   * @param challengeDayData {{date: Date, earned: boolean, user_challenge_id}}
+   * @return {Promise<ChallengeDayEntity>}
+   */
+  create(challengeDayData) {
+    return ChallengeDayEntity.create(challengeDayData);
+  }
+
+  /**
    * @param whereClaus {import('sequelize').WhereOptions}
    * @return {Promise<ChallengeDayEntity | null>}
    */

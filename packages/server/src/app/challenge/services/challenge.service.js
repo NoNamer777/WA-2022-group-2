@@ -2,10 +2,13 @@ import { Op } from 'sequelize';
 import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { GroupEntity } from '../../group/entities/group.entity.js';
+import { UserGroupService } from '../../group/index.js';
 import { UserEntity } from '../../user/index.js';
 import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
 import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
+import { ChallengeDayService } from './challenge_day.service.js';
+import { UserChallengeService } from './user_challenge.service.js';
 
 export class ChallengeService {
   /** @return {ChallengeService} */
@@ -18,6 +21,14 @@ export class ChallengeService {
 
   /** @type {ChallengeService} */
   static #instance;
+
+  /**
+   * @param challengeData {Omit<UserChallengeEntity, 'id'>}
+   * @return {Promise<ChallengeEntity>}
+   */
+  async create(challengeData) {
+    return await challengeRepository.create(challengeData);
+  }
 
   /** @return {Promise<ChallengeEntity[]>} */
   async getAll() {
@@ -70,10 +81,50 @@ export class ChallengeService {
 
   /**
    * @param challengeData {Omit<ChallengeEntity, 'id'>}
+   * @param userId {number}
    * @return {Promise<ChallengeEntity>}
    */
-  async create(challengeData) {
-    return await challengeRepository.create(challengeData);
+  async createChallenge(challengeData, userId) {
+    const createdChallenge = await this.create(challengeData);
+
+    /* Fetch corresponding group data and create user challenges */
+    const userChallenges = [];
+
+    if (createdChallenge.group_id) {
+      const userGroups = await UserGroupService.instance().getAllById(createdChallenge.group_id);
+      for (const userGroup of userGroups) {
+        const userChallenge = await UserChallengeService.instance().create({
+          completed: false,
+          user_id: userGroup.user_id,
+          challenge_id: createdChallenge.id
+        });
+        userChallenges.push(userChallenge);
+      }
+    } else {
+      const userChallenge = await UserChallengeService.instance().create({
+        completed: false,
+        user_id: userId,
+        challenge_id: createdChallenge.id
+      });
+      userChallenges.push(userChallenge);
+    }
+
+    /* Create challenge days */
+    let startDate = new Date(createdChallenge.start_date);
+    const endDate = new Date(createdChallenge.end_date);
+
+    for (const userChallenge of userChallenges) {
+      while (startDate <= endDate) {
+        await ChallengeDayService.instance().create({
+          date: startDate,
+          earned: false,
+          user_challenge_id: userChallenge.id
+        });
+        startDate.setDate(startDate.getDate() + 1);
+      }
+      startDate = new Date(createdChallenge.start_date);
+    }
+    return createdChallenge;
   }
 
   /**

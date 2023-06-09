@@ -37,13 +37,14 @@ class ChallengeController {
   }
 
   /**
-   * @param challengeData {Omit<ChallengeEntity, 'id'>}
    * @return {Promise<ChallengeEntity>}
+   * @param challengeData
+   * @param userId
    */
-  async create(challengeData) {
-    console.info('ChallengeController - Creating a new Challenge resources');
+  async createChallenge(challengeData, userId) {
+    console.info('ChallengeController - Creating new Challenge resources');
 
-    return await ChallengeService.instance().create(challengeData);
+    return await ChallengeService.instance().createChallenge(challengeData, userId);
   }
 
   /**

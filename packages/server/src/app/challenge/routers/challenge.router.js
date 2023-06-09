@@ -1,14 +1,12 @@
 import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
+import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
-import { userGroupController } from '../../group/controllers/user_group.controller.js';
 import { challengeController } from '../controllers/challenge.controller.js';
 import { challengeDayController } from '../controllers/challenge_day.controller.js';
 import { challengeSuggestionController } from '../controllers/challenge_suggestion.controller.js';
 import { userChallengeController } from '../controllers/user_challenge.controller.js';
-import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
-import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
 import { challengeSchema, newChallengeSchema } from '../validators/challenge.validator.js';
 
 export const challengeRouter = express.Router();
@@ -101,49 +99,13 @@ challengeRouter.post(
   checkSchema(newChallengeSchema, ['body']),
   async (request, response, next) => {
     const challengeData = matchedData(request);
+    const userId = parseInt(request.params.userId);
+    if (request.userId !== userId) {
+      throw new UnauthorizedException();
+    }
 
     try {
-      /* Create challenge */
-      const createdChallenge = await challengeController.create(challengeData);
-
-      /* Fetch corresponding group data and create user challenges */
-      const userChallenges = [];
-
-      if (challengeData.group_id) {
-        const userGroups = await userGroupController.getById(createdChallenge.group_id);
-        for (const userGroup of userGroups) {
-          const userChallenge = await UserChallengeEntity.create({
-            completed: false,
-            user_id: userGroup.user_id,
-            challenge_id: createdChallenge.id
-          });
-          userChallenges.push(userChallenge);
-        }
-      } else {
-        const userChallenge = await UserChallengeEntity.create({
-          completed: false,
-          user_id: request.params.userId,
-          challenge_id: createdChallenge.id
-        });
-        userChallenges.push(userChallenge);
-      }
-
-      /* Create challenge days */
-      let startDate = new Date(createdChallenge.start_date);
-      const endDate = new Date(createdChallenge.end_date);
-
-      for (const userChallenge of userChallenges) {
-        while (startDate <= endDate) {
-          await ChallengeDayEntity.create({
-            date: startDate,
-            earned: false,
-            user_challenge_id: userChallenge.id
-          });
-          startDate.setDate(startDate.getDate() + 1);
-        }
-        startDate = new Date(createdChallenge.start_date);
-      }
-
+      const createdChallenge = await challengeController.createChallenge(challengeData, userId);
       response.status(201).send(createdChallenge);
     } catch (error) {
       next(error);
