@@ -47,9 +47,11 @@ export class AuthService {
     return await HttpRequestService.instance().postRequest('/auth/reset-password', form);
   }
 
-  /**
-   * @return {void}
-   */
+  async confirmRegistration() {
+    return await HttpRequestService.instance().postRequest('/auth/confirm-registration', {});
+  }
+
+  /** @return {void} */
   logout() {
     localStorage.removeItem('jwt-token');
   }
