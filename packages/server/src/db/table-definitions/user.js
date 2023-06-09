@@ -50,6 +50,16 @@ module.exports = {
     profile_image_path: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    state: {
+      type: DataTypes.ENUM('pending', 'active'),
+      allowNull: false,
+      defaultValue: 'pending',
+      validate: {
+        notNull: true,
+        notEmpty: true,
+        isIn: ['pending', 'active']
+      }
     }
   }
 };
