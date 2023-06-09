@@ -1,4 +1,7 @@
 import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
+import { EarnedBadgeEntity } from '../../badge/entities/earned_badge.entity.js';
+import { BadgeService } from '../../badge/services/badge.service.js';
+import { EarnedBadgeService } from '../../badge/services/earned_badge.service.js';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
 import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
@@ -54,26 +57,39 @@ export class UserChallengeService {
    * @param userChallengeIdParam {number}
    * @param userChallengeData {UserChallengeEntity}
    * @param userId {number}
-   * @return {Promise<UserChallengeEntity>}
+   * @return {Promise<BadgeEntity>}
    */
   async complete(userChallengeIdParam, userChallengeData, userId) {
     const userChallengeId = parseInt(userChallengeData.id);
     if (userChallengeIdParam !== userChallengeId) {
-      throw new BadRequestException(`Unable to update user challenge with requested data`);
+      throw new BadRequestException(
+        'Een challenge kan niet worden geüpdatet met de aangeboden gegevens'
+      );
     }
 
     const userChallenge = await this.getById(userChallengeId);
 
     if (userId !== userChallenge.user_id) {
-      throw new UnauthorizedException(
-        `Failed updating user challenge with id: '${userChallengeId}'.`
-      );
+      throw new UnauthorizedException();
     }
 
+    /* Complete challenge */
     userChallenge.completed = true;
-    userChallenge.save();
+    await userChallenge.save();
 
-    return userChallenge;
+    /* Search and create unique badge for user */
+    const alreadyEarnedBadges = await EarnedBadgeService.instance().getForUser(userId);
+    const alreadyEarnedBadgeIds = alreadyEarnedBadges.map((earnedBadge) => earnedBadge.badge_id);
+    const uniqueNewBadge = await BadgeService.instance().getRandomBadge(alreadyEarnedBadgeIds);
+
+    const earnedBadge = new EarnedBadgeEntity();
+    earnedBadge.date = new Date();
+    earnedBadge.user_id = userId;
+    earnedBadge.badge_id = uniqueNewBadge.id;
+    earnedBadge.user_challenge_id = userChallenge.id;
+    await earnedBadge.save();
+
+    return await BadgeService.instance().getById(earnedBadge.badge_id);
   }
 
   /**
