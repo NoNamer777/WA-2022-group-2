@@ -119,12 +119,14 @@ export class UserChallengeService {
   async deleteById(userChallengeId, userId, throwsError = true) {
     const userChallengeById = await this.getById(userChallengeId);
 
-    if (userChallengeById.dataValues.user_id !== userId && throwsError) {
-      throw new NotFoundException(`Failed deleting user challenge with ID: '${userChallengeId}'.`);
+    if (userChallengeById.user_id !== userId && throwsError) {
+      throw new NotFoundException(
+        `Het verwijderen van user challenge met ID: '${userChallengeId}' is mislukt omdat het niet bestaat.`
+      );
     }
     await userChallengeRepository.deleteById(userChallengeId);
 
-    const challengeId = userChallengeById.dataValues.challenge_id;
+    const challengeId = userChallengeById.challenge_id;
 
     const remainingUserChallenges = await this.getAllById(challengeId);
 

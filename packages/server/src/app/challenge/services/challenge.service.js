@@ -48,7 +48,9 @@ export class ChallengeService {
   async update(challengeIdParam, challengeData, userId, throwsError = true) {
     const challengeId = challengeData.id;
     if (challengeIdParam !== parseInt(challengeId)) {
-      throw new BadRequestException(`Unable to update challenge with requested data`);
+      throw new BadRequestException(
+        `Het updaten van de challenge met het ID: '${challengeId}' is niet mogelijk.`
+      );
     }
 
     const userChallengeById = await userChallengeRepository.findOneBy({
@@ -56,11 +58,11 @@ export class ChallengeService {
       challenge_id: challengeId
     });
     if (!(await this.getById(challengeId, false))) {
-      throw new NotFoundException(`Challenge with ID: '${challengeId}' not found.`);
+      throw new NotFoundException(`Challenge met het ID: '${challengeId}' is niet gevonden.`);
     }
 
     if (!userChallengeById && throwsError) {
-      throw new UnauthorizedException(`Failed updating challenge with ID: '${challengeId}'.`);
+      throw new UnauthorizedException();
     }
     await challengeRepository.update(challengeData);
     return await this.getById(challengeId);

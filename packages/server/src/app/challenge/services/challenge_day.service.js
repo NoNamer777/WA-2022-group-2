@@ -23,7 +23,9 @@ export class ChallengeDayService {
     const challengeDayById = await challengeDayRepository.findOneBy({ id: challengeDayId });
 
     if (!challengeDayById && throwsError) {
-      throw new NotFoundException(`No challenge day found for ID: '${challengeDayById}'.`);
+      throw new NotFoundException(
+        `Challenge dag met het ID: '${challengeDayId}' is niet gevonden.`
+      );
     }
     return challengeDayById;
   }
@@ -37,11 +39,15 @@ export class ChallengeDayService {
   async update(challengeDayIdParam, challengeDayData, userId) {
     const challengeDayId = challengeDayData.id;
     if (challengeDayIdParam !== parseInt(challengeDayId)) {
-      throw new BadRequestException(`Unable to update challenge day with requested data`);
+      throw new BadRequestException(
+        `Het updaten van de challenge dag met het ID '${challengeDayId}' is niet mogelijk.`
+      );
     }
 
     if (!(await this.getById(challengeDayId, false))) {
-      throw new NotFoundException(`Challenge day with ID: '${challengeDayId}' not found.`);
+      throw new NotFoundException(
+        `Challenge dag met het ID: '${challengeDayId}' is niet gevonden.`
+      );
     }
 
     console.log(challengeDayData.user_challenge_id);
@@ -49,9 +55,7 @@ export class ChallengeDayService {
       challengeDayData.user_challenge_id
     );
     if (userChallenge.user_id !== parseInt(userId)) {
-      throw new UnauthorizedException(
-        `Failed updating challenge day with ID: '${challengeDayId}'.`
-      );
+      throw new UnauthorizedException();
     }
 
     await challengeDayRepository.update(challengeDayData);
