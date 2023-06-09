@@ -77,6 +77,8 @@ export class UserChallengeService {
     userChallenge.completed = true;
     await userChallenge.save();
 
+    // TODO: prevent creating new badge for the same challenge?
+
     /* Search and create unique badge for user */
     const alreadyEarnedBadges = await EarnedBadgeService.instance().getForUser(userId);
     const alreadyEarnedBadgeIds = alreadyEarnedBadges.map((earnedBadge) => earnedBadge.badge_id);

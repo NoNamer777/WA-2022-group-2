@@ -22,6 +22,18 @@ export class UserChallengeService {
 
   /**
    * @param userChallengeId {number}
+   * @param userChallengeData
+   * @return {Promise<{pastChallenges: Array, currentChallenges: Array}>}
+   */
+  async completeUserChallenge(userChallengeId, userChallengeData) {
+    return await HttpRequestService.instance().putRequest(
+      `/api/userChallenge/${userChallengeId}`,
+      userChallengeData
+    );
+  }
+
+  /**
+   * @param userChallengeId {number}
    */
   async deleteUserChallenge(userChallengeId) {
     return await HttpRequestService.instance().deleteRequest(

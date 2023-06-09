@@ -6,6 +6,7 @@
         <CheckBox
           v-for="(challengeDay, i) in challengeDays"
           v-model:checked="challengeDay.earned"
+          v-model:isCompleted="isCompleted"
           :key="i"
           :challengeDay="challengeDay"
           :dayNumber="i + 1"
@@ -23,9 +24,10 @@
         <button class="w-100" v-if="showButton" :class="getClass" @click="check(todayNumber)">
           Vink vandaag {{ buttonText }}
         </button>
+        <p class="text-primary" v-if="isCompleted">{{ completedText }}</p>
       </div>
     </div>
-    <CompletedModal :badgeName="badgeName" :badgeImagePath="badgeImagePath"></CompletedModal>
+    <CompletedModal :badgeName="badge.name" :badgeImagePath="badge.image_path"></CompletedModal>
   </div>
 </template>
 
@@ -34,6 +36,7 @@ import CheckBox from './ChallengeCheckBox.vue';
 import Modal from 'bootstrap/js/dist/modal';
 import CompletedModal from './CompletedModal.vue';
 import { inject } from 'vue';
+import { UserChallengeService } from '../services/user_challenge.service.js';
 
 export default {
   name: 'ChallengeProgress',
@@ -48,9 +51,9 @@ export default {
       buttonText: String,
       showButton: Boolean,
       imageName: String,
-
-      badgeName: String,
-      badgeImagePath: String
+      isCompleted: Boolean,
+      completedText: String,
+      badge: Object
     };
   },
   props: {
@@ -66,10 +69,8 @@ export default {
     this.earnedText = this.getEarnedText();
     this.showButton = this.isActive && this.isOwner;
     this.imageName = this.getImageName();
-
-    // Testing badges:
-    this.badgeName = 'paard';
-    this.badgeImagePath = '/assets/images/badges/paard.png';
+    this.isCompleted = this.userChallenge.completed;
+    this.completedText = 'Goed gedaan!';
   },
   methods: {
     inject,
@@ -94,16 +95,25 @@ export default {
   },
   watch: {
     challengeDays: {
-      handler() {
+      async handler() {
         if (this.showButton) {
           this.buttonText = this.challengeDays[this.todayNumber - 1].earned ? 'uit' : 'aan';
         }
         this.numberOfEarned = this.getNumberOfEarned();
         this.earnedText = this.getEarnedText();
+        if (this.userChallenge.completed) {
+          this.showButton = false;
+          return;
+        }
         if (this.isOwner && this.numberOfEarned === this.challengeDays.length) {
-          // TODO: set completed + set badge
+          this.badge = await UserChallengeService.instance().completeUserChallenge(
+            this.userChallenge.id,
+            this.userChallenge
+          );
           const completedModal = new Modal(document.getElementById('completedModal'));
           completedModal.toggle();
+          this.showButton = false;
+          this.isCompleted = true;
         }
       },
       deep: true

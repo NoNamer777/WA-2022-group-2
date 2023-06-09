@@ -6,7 +6,7 @@
         type="checkbox"
         :checked="checked"
         @change="$emit('update:checked', $event.target.checked)"
-        :disabled="isDisabled"
+        :disabled="isCompleted || isDisabled"
       />
       <label
         :for="challengeDay.id"
@@ -46,7 +46,8 @@ export default {
     imageName: String,
     imagePath: String,
     checked: Boolean,
-    isOwner: Boolean
+    isOwner: Boolean,
+    isCompleted: Boolean
   },
   methods: {
     rotate() {
@@ -122,7 +123,6 @@ export default {
   .check input[type='checkbox'] + label {
     width: 52px;
     height: 52px;
-    /*flex-basis: 20%;*/
   }
 }
 </style>
