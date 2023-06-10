@@ -19,7 +19,8 @@ module.exports = {
         model: 'user',
         key: 'id'
       },
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      unique: 'unique_user_challenge_idx'
     },
     challenge_id: {
       type: DataTypes.INTEGER(11),
@@ -28,7 +29,8 @@ module.exports = {
         model: 'challenge',
         key: 'id'
       },
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      unique: 'unique_user_challenge_idx'
     }
   }
 };
