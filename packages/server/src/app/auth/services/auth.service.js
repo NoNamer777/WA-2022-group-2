@@ -36,6 +36,17 @@ export class AuthService {
   }
 
   /**
+   * @param userId {number}
+   * @return {Promise<void>}
+   */
+  async confirmRegistration(userId) {
+    const user = await UserService.instance().getById(userId);
+    user.state = 'active';
+
+    await UserService.instance().update(user);
+  }
+
+  /**
    * @param userData {{ username: string, password: string }}
    * @returns {Promise<UserEntity>}
    */
