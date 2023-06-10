@@ -40,7 +40,11 @@ onMounted(async () => {
 
   storeTokenInLocalStorage(token);
 
-  authService.confirmRegistration();
+  try {
+    await authService.confirmRegistration();
+
+    localStorage.removeItem('jwt-token');
+  } catch (error) {}
 });
 
 function retrieveTokenFromURL() {
