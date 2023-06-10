@@ -15,7 +15,7 @@ onMounted(async () => {
 });
 
 const toChallengeProgressRoute = (id) => {
-  return { name: 'challenge_progress', params: { userId: id } };
+  return { name: 'challenge_progress', params: { challengeId: id } };
 };
 </script>
 
