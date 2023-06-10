@@ -14,7 +14,7 @@ export class UserChallengeService {
 
   /**
    * @param challengeId {number}
-   * @return {Promise<{pastChallenges: Array, currentChallenges: Array}>}
+   * @return {Promise<UserChallenge[]>}
    */
   async getUserChallengesById(challengeId) {
     return await HttpRequestService.instance().getRequest(`/api/challenge/${challengeId}/members`);
@@ -22,8 +22,8 @@ export class UserChallengeService {
 
   /**
    * @param userChallengeId {number}
-   * @param userChallengeData
-   * @return {Promise<{pastChallenges: Array, currentChallenges: Array}>}
+   * @param userChallengeData {UserChallenge}
+   * @return {Promise<Badge>}
    */
   async completeUserChallenge(userChallengeId, userChallengeData) {
     return await HttpRequestService.instance().putRequest(
