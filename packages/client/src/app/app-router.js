@@ -3,6 +3,7 @@ import { useAuthStore } from './auth';
 import { LoginView, RegisterView, RequestPasswordResetView, ResetPasswordView } from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView, InfoView } from './core/views';
+import PageNotFound from './errors/PageNotFound.vue';
 import PersonalPageView from './personal_page/views/PersonalPageView.vue';
 
 export const router = createRouter({
@@ -81,6 +82,14 @@ export const router = createRouter({
       component: ResetPasswordView,
       meta: {
         title: 'Wachtwoord herstellen'
+      }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: PageNotFound,
+      meta: {
+        title: '404 Pagina niet gevonden'
       }
     },
     {
