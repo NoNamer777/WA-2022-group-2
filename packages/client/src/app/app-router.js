@@ -85,20 +85,20 @@ export const router = createRouter({
       }
     },
     {
-      path: '/:catchAll(.*)',
-      name: 'not-found',
-      component: PageNotFound,
-      meta: {
-        title: '404 Pagina niet gevonden'
-      }
-    },
-    {
       path: '/my-wasted',
       name: 'my-wasted',
       component: PersonalPageView,
       meta: {
         title: 'Mijn Wasted',
         requiresAuth: true
+      }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: PageNotFound,
+      meta: {
+        title: '404 Pagina niet gevonden'
       }
     }
   ]
