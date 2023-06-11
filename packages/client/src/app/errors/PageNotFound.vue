@@ -1,9 +1,3 @@
-<script setup>
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from '../auth/index.js';
-
-const { isAuthenticated } = storeToRefs(useAuthStore());
-</script>
 <template>
   <main class="container d-flex align-items-center justify-content-center">
     <div class="row justify-content-center align-items-center">
@@ -26,3 +20,10 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
     </div>
   </main>
 </template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '../auth/index.js';
+
+const { isAuthenticated } = storeToRefs(useAuthStore());
+</script>

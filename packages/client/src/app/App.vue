@@ -1,12 +1,3 @@
-<script setup>
-import { RouterView } from 'vue-router';
-import { NavigationBar } from './shared/index.js';
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from './auth/index.js';
-
-const { loading } = storeToRefs(useAuthStore());
-</script>
-
 <template>
   <div v-if="!loading" class="container h-100 d-flex flex-column g-0">
     <notifications position="bottom left" :duration="5000" />
@@ -34,3 +25,12 @@ const { loading } = storeToRefs(useAuthStore());
   }
 }
 </style>
+
+<script setup>
+import { RouterView } from 'vue-router';
+import { NavigationBar } from './shared/index.js';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from './auth/index.js';
+
+const { loading } = storeToRefs(useAuthStore());
+</script>

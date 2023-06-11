@@ -1,9 +1,3 @@
-<script setup>
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from '../../auth/index.js';
-
-const { isAuthenticated } = storeToRefs(useAuthStore());
-</script>
 <template>
   <main>
     <h1 class="mb-4">Wat is Wasted?</h1>
@@ -20,3 +14,10 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
     <img class="w-25 float-end" src="/assets/images/mascot/mascotte_happy.png" alt="mascot" />
   </main>
 </template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '../../auth/index.js';
+
+const { isAuthenticated } = storeToRefs(useAuthStore());
+</script>

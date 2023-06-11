@@ -1,21 +1,3 @@
-<script setup>
-import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
-import { Tabs, Tab } from 'vue3-tabs-component';
-import { useChallengeStore } from '../stores/challenge.store.js';
-import { useAuthStore } from '../../auth';
-import { CardList } from '../../shared/components';
-
-const { loading, challenges } = storeToRefs(useChallengeStore());
-const { getChallenges } = useChallengeStore();
-
-onMounted(async () => {
-  const { user } = storeToRefs(useAuthStore());
-
-  await getChallenges(user.value.id);
-});
-</script>
-
 <template>
   <main>
     <section class="d-flex align-items-center justify-content-between">
@@ -53,3 +35,21 @@ onMounted(async () => {
     </section>
   </main>
 </template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
+import { Tabs, Tab } from 'vue3-tabs-component';
+import { useChallengeStore } from '../stores/challenge.store.js';
+import { useAuthStore } from '../../auth';
+import { CardList } from '../../shared/components';
+
+const { loading, challenges } = storeToRefs(useChallengeStore());
+const { getChallenges } = useChallengeStore();
+
+onMounted(async () => {
+  const { user } = storeToRefs(useAuthStore());
+
+  await getChallenges(user.value.id);
+});
+</script>

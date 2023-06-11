@@ -1,14 +1,3 @@
-<script setup>
-import CardItem from './CardItem.vue';
-
-const props = defineProps({
-  title: String,
-  emptyState: String,
-  items: Array,
-  toRoute: Function
-});
-</script>
-
 <template>
   <section class="mb-4">
     <h3 class="fw-bold">{{ props.title }}</h3>
@@ -36,3 +25,14 @@ const props = defineProps({
     <small v-if="!items.length">{{ props.emptyState }}</small>
   </section>
 </template>
+
+<script setup>
+import CardItem from './CardItem.vue';
+
+const props = defineProps({
+  title: String,
+  emptyState: String,
+  items: Array,
+  toRoute: Function
+});
+</script>

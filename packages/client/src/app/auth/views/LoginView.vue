@@ -1,15 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import { CustomFormKit } from '../../shared/components/index.js';
-import { useAuthStore } from '../stores/auth.store.js';
-
-const { login } = useAuthStore();
-const user = ref({
-  username: '',
-  password: ''
-});
-</script>
-
 <template>
   <main class="container">
     <section class="row h-100 d-flex align-items-center">
@@ -46,3 +34,15 @@ const user = ref({
     </section>
   </main>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import { CustomFormKit } from '../../shared/components/index.js';
+import { useAuthStore } from '../stores/auth.store.js';
+
+const { login } = useAuthStore();
+const user = ref({
+  username: '',
+  password: ''
+});
+</script>

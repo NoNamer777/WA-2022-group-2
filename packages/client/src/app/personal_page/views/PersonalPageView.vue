@@ -1,24 +1,3 @@
-<script setup>
-import { Tab, Tabs } from 'vue3-tabs-component';
-import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
-import { useAuthStore } from '../../auth/index.js';
-import { usePersonalPageStore } from '../stores/personal_page.store.js';
-import CreateGroupModal from '../components/groups/CreateGroupModal.vue';
-import BadgeList from '../components/badges/BadgeList.vue';
-import GroupList from '../components/groups/GroupList.vue';
-import JoinGroupModal from '../components/groups/JoinGroupModal.vue';
-
-const { loadingBadges, loadingGroups, earnedBadges, groups } = storeToRefs(usePersonalPageStore());
-const { getEarnedBadges, getGroups } = usePersonalPageStore();
-
-onMounted(async () => {
-  const { user } = storeToRefs(useAuthStore());
-  await getEarnedBadges(user.value.id);
-  await getGroups(user.value.id);
-});
-</script>
-
 <template>
   <main>
     <section class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
@@ -48,3 +27,24 @@ onMounted(async () => {
     </section>
   </main>
 </template>
+
+<script setup>
+import { Tab, Tabs } from 'vue3-tabs-component';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../auth/index.js';
+import { usePersonalPageStore } from '../stores/personal_page.store.js';
+import CreateGroupModal from '../components/groups/CreateGroupModal.vue';
+import BadgeList from '../components/badges/BadgeList.vue';
+import GroupList from '../components/groups/GroupList.vue';
+import JoinGroupModal from '../components/groups/JoinGroupModal.vue';
+
+const { loadingBadges, loadingGroups, earnedBadges, groups } = storeToRefs(usePersonalPageStore());
+const { getEarnedBadges, getGroups } = usePersonalPageStore();
+
+onMounted(async () => {
+  const { user } = storeToRefs(useAuthStore());
+  await getEarnedBadges(user.value.id);
+  await getGroups(user.value.id);
+});
+</script>

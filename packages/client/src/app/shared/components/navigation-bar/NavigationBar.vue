@@ -1,11 +1,3 @@
-<script setup>
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from '../../../auth/index.js';
-
-const { logout } = useAuthStore();
-const { isAuthenticated } = storeToRefs(useAuthStore());
-</script>
-
 <template>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-xl-5 p-4">
     <div class="container-fluid">
@@ -69,3 +61,11 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
     </div>
   </nav>
 </template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '../../../auth/index.js';
+
+const { logout } = useAuthStore();
+const { isAuthenticated } = storeToRefs(useAuthStore());
+</script>

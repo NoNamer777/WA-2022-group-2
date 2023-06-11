@@ -29,6 +29,17 @@
   </div>
 </template>
 
+<style>
+.modal-header {
+  border-width: 0 !important;
+}
+
+.modal-footer {
+  justify-content: center !important;
+  border-width: 0 !important;
+}
+</style>
+
 <script>
 import { inject } from 'vue';
 
@@ -41,13 +52,3 @@ export default {
   }
 };
 </script>
-<style>
-.modal-header {
-  border-width: 0 !important;
-}
-
-.modal-footer {
-  justify-content: center !important;
-  border-width: 0 !important;
-}
-</style>
