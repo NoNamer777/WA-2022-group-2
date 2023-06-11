@@ -1,4 +1,3 @@
-import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
 import { UserChallengeService } from '../services/user-challenge.service.js';
 
 class UserChallengeController {
@@ -11,21 +10,10 @@ class UserChallengeController {
     console.info(
       `UserChallengeController - Getting data for User Challenges with Challenge ID: '${challengeIdParam}'`
     );
-    const userChallengesByChallengeId = await UserChallengeService.instance().getAllOfChallenge(
-      parseInt(challengeIdParam)
+    return await UserChallengeService.instance().getAllOfChallenge(
+      parseInt(challengeIdParam),
+      userId
     );
-    let authorized = false;
-
-    for (const userChallenge of userChallengesByChallengeId) {
-      if (userChallenge.user.id !== userId) continue;
-      if (authorized) break;
-
-      authorized = true;
-    }
-    if (!authorized) {
-      throw new UnauthorizedException('Sorry, je hebt geen rechten om deze challenge te bekijken.');
-    }
-    return userChallengesByChallengeId;
   }
 
   /**

@@ -71,10 +71,11 @@ export class UserChallengeService {
 
   /**
    * @param challengeId {number}
+   * @param userId {number | null}
    * @param throwsError {boolean}
    * @return {Promise<UserChallengeEntity[]>}
    */
-  async getAllOfChallenge(challengeId, throwsError = true) {
+  async getAllOfChallenge(challengeId, userId = null, throwsError = true) {
     const userChallengesById = await userChallengeRepository.findAllBy(
       {
         challengeId: {
@@ -89,7 +90,8 @@ export class UserChallengeService {
         {
           as: 'user',
           model: UserEntity,
-          attributes: ['id', 'username', 'profileImagePath']
+          attributes: ['id', 'username', 'profileImagePath'],
+          ...this.#includeOnlyFromUser(userId)
         },
         {
           as: 'userChallenges',
@@ -102,6 +104,14 @@ export class UserChallengeService {
       throw new NotFoundException(`Er is geen challenge gevonden met het ID: '${challengeId}'.`);
     }
     return userChallengesById;
+  }
+
+  /**
+   * @param userId {number | null}
+   * @return { {} | { where: { id: number } } }
+   */
+  #includeOnlyFromUser(userId) {
+    return !userId ? {} : { where: { id: userId } };
   }
 
   /**

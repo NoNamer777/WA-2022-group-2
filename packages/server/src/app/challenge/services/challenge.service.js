@@ -55,12 +55,12 @@ export class ChallengeService {
    */
   async update(challengeIdParam, challengeData, userId, throwsError = true) {
     const challengeId = challengeData.id;
+
     if (challengeIdParam !== parseInt(challengeId)) {
       throw new BadRequestException(
         `Het updaten van de challenge met het ID: '${challengeId}' is niet mogelijk.`
       );
     }
-
     const userChallengeById = await userChallengeRepository.findOneBy({
       userId: userId,
       challengeId: challengeId
