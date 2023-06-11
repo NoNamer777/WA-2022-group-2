@@ -1,4 +1,4 @@
-import { EarnedBadgeService } from '../badge/services/earned_badge.service.js';
+import { EarnedBadgeService } from '../badge/index.js';
 import { ChallengeService } from '../challenge/services/challenge.service.js';
 import { GroupService } from '../group/services/group.service.js';
 import { UserService } from './services/user.service.js';

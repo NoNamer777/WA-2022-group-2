@@ -16,10 +16,16 @@ class UserRepository {
 
   /**
    * @param updatedUserData {UserEntity}
+   * @param includePassword {boolean}
    * @return {Promise<void>}
    */
-  async update(updatedUserData) {
-    await UserEntity.update(updatedUserData.dataValues, { where: { id: updatedUserData.id } });
+  async update(updatedUserData, includePassword = false) {
+    const values = updatedUserData.dataValues;
+
+    if (!includePassword) {
+      delete values.password;
+    }
+    await UserEntity.update(values, { where: { id: updatedUserData.id } });
   }
 
   /**
