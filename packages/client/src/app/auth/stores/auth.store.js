@@ -81,6 +81,10 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (error) {
       console.error(error);
       user.value = null;
+
+      if (error.status === 401) {
+        localStorage.removeItem('jwt-token');
+      }
     } finally {
       loading.value = false;
     }
