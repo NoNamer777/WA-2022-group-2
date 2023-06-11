@@ -1,6 +1,5 @@
 import { Op } from 'sequelize';
 import { NotFoundException } from '../../core/models/index.js';
-import { GroupEntity } from '../entities/group.entity.js';
 import { UserGroupEntity } from '../entities/user-group.entity.js';
 import { groupRepository } from '../repositories/group.repository.js';
 
