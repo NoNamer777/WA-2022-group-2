@@ -35,43 +35,6 @@ userRouter.post(
 );
 
 userRouter.get(
-  '/:userId/group',
-  jwtAuthHeaderValidator(),
-  entityIdValidator('userId', 'User'),
-  async (request, response, next) => {
-    try {
-      const groups = await userController.getGroupsForUser(request.params.userId);
-      response.send(groups);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, response) => {
-  const userId = parseInt(request.params.userId);
-
-  if (request.userId !== userId) {
-    throw new UnauthorizedException();
-  }
-
-  const challenges = await userController.getChallengesForUser(userId);
-
-  response.send(challenges);
-});
-userRouter.get('/:userId/badges', jwtAuthHeaderValidator(), async (request, response) => {
-  const userId = parseInt(request.params.userId);
-
-  if (request.userId !== userId) {
-    throw new UnauthorizedException();
-  }
-
-  const badges = await userController.getBadgesForUser(userId);
-
-  response.send(badges);
-});
-
-userRouter.get(
   '/:userId',
   jwtAuthHeaderValidator(),
   entityIdValidator('userId', 'User'),
@@ -121,18 +84,55 @@ userRouter.delete(
 );
 
 userRouter.get(
-  '/:userId/groups',
+  '/:userId/group',
   jwtAuthHeaderValidator(),
-  entityIdValidator('userId', 'User'),
+  checkSchema(newUserSchema, ['body']),
   async (request, response, next) => {
     try {
-      console.log(request.params.userId);
-      response.send(await groupController.getForUser(request.params.userId));
+      const groups = await userController.getGroupsForUser(request.params.userId);
+      response.send(groups);
     } catch (error) {
       next(error);
     }
   }
 );
+
+userRouter.get(
+  '/:userId/groups',
+  jwtAuthHeaderValidator(),
+  entityIdValidator('userId', 'User'),
+  async (request, response, next) => {
+    try {
+      response.send(await groupController.getAll(request.params.userId));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, response) => {
+  const userId = parseInt(request.params.userId);
+
+  if (request.userId !== userId) {
+    throw new UnauthorizedException();
+  }
+
+  const challenges = await userController.getChallengesForUser(userId);
+
+  response.send(challenges);
+});
+
+userRouter.get('/:userId/badges', jwtAuthHeaderValidator(), async (request, response) => {
+  const userId = parseInt(request.params.userId);
+
+  if (request.userId !== userId) {
+    throw new UnauthorizedException();
+  }
+
+  const badges = await userController.getBadgesForUser(userId);
+
+  response.send(badges);
+});
 
 userRouter.post(
   '/:userId/challenge',
