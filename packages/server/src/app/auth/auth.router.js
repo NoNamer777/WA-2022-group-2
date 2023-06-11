@@ -34,7 +34,7 @@ authRouter.post(
 );
 
 authRouter.post(
-  '/auth/confirm-registration',
+  '/confirm-registration',
   jwtAuthHeaderValidator({ expectedTokenType: 'VerifyRegistration' }),
   async (request, response, next) => {
     try {
