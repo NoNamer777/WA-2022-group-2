@@ -18,7 +18,6 @@
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { AuthService } from '../services/index.js';
-import { notify } from '@kyvg/vue3-notification';
 
 /** @type {import('vue-router').Router} */
 const router = useRouter();
@@ -45,12 +44,6 @@ onMounted(async () => {
     localStorage.removeItem('jwt-token');
   } catch (error) {
     console.error(error);
-
-    notify({
-      status: 'error',
-      title: error.error,
-      message: error.message
-    });
   }
 });
 
