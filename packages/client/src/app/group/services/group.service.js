@@ -11,8 +11,11 @@ export class GroupService {
   /** @type {GroupService} */
   static #instance;
 
-  /** @return {Promise<Group[]>} */
+  /**
+   * @param userId {number}
+   * @return {Promise<Group[]>}
+   */
   async getAllForUser(userId) {
-    return await HttpRequestService.instance().getRequest('/api/user/' + userId + '/group');
+    return await HttpRequestService.instance().getRequest('/api/user/' + userId + '/groups');
   }
 }

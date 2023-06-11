@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
-import { GroupEntity } from './entities/group.entity.js';
-import { UserGroupEntity } from './entities/user_group.entity.js';
+import { GroupEntity } from '../entities/group.entity.js';
+import { UserGroupEntity } from '../entities/user-group.entity.js';
 
 class GroupRepository {
   /**
@@ -11,11 +11,10 @@ class GroupRepository {
       include: {
         model: UserGroupEntity,
         where: {
-          user_id: {
+          userId: {
             [Op.eq]: userId
           }
-        },
-        attributes: []
+        }
       }
     });
   }

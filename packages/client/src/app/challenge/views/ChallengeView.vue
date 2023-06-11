@@ -1,20 +1,3 @@
-<script setup>
-import { Tabs, Tab } from 'vue3-tabs-component';
-import { CardList } from '../../shared/components/index.js';
-import { useChallengeStore } from '../stores/challenge.store.js';
-import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
-import { useAuthStore } from '../../auth/index.js';
-
-const { loading, challenges } = storeToRefs(useChallengeStore());
-const { getChallenges } = useChallengeStore();
-
-onMounted(async () => {
-  const { user } = storeToRefs(useAuthStore());
-  await getChallenges(user.value.id);
-});
-</script>
-
 <template>
   <main>
     <section class="d-flex align-items-center justify-content-between">
@@ -36,13 +19,13 @@ onMounted(async () => {
           <Tab name="Huidige">
             <CardList
               empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="challenges.currentChallenges"
+              :items="challenges.activeChallenges"
             />
           </Tab>
           <Tab name="Afgerond">
             <CardList
               empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="challenges.pastChallenges"
+              :items="challenges.concludedChallenges"
             />
           </Tab>
         </Tabs>
@@ -50,3 +33,21 @@ onMounted(async () => {
     </section>
   </main>
 </template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
+import { Tabs, Tab } from 'vue3-tabs-component';
+import { useChallengeStore } from '../stores/challenge.store.js';
+import { useAuthStore } from '../../auth';
+import { CardList } from '../../shared/components';
+
+const { loading, challenges } = storeToRefs(useChallengeStore());
+const { getChallenges } = useChallengeStore();
+
+onMounted(async () => {
+  const { user } = storeToRefs(useAuthStore());
+
+  await getChallenges(user.value.id);
+});
+</script>

@@ -1,4 +1,4 @@
-import { groupRepository } from '../group.repository.js';
+import { groupRepository } from '../repositories/group.repository.js';
 
 export class GroupService {
   /** @return {GroupService} */

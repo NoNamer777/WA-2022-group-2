@@ -26,7 +26,7 @@ export const router = createRouter({
       }
     },
     {
-      path: '/challenge/:userId/progress',
+      path: '/challenge/:challengeId/progress',
       name: 'challenge_progress',
       component: ChallengeProgressView,
       meta: {

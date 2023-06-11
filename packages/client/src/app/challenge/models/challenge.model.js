@@ -6,11 +6,11 @@ export class Challenge {
   name;
 
   /** @type {string} */
-  start_date;
+  startDate;
 
   /** @type {string} */
-  end_date;
+  endDate;
 
   /** @type {string} */
-  group_id;
+  groupId;
 }

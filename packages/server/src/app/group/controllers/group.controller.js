@@ -1,4 +1,4 @@
-import { GroupService } from './services/group.service.js';
+import { GroupService } from '../services/group.service.js';
 
 class GroupController {
   /** @return {Promise<GroupEntity[]>} */

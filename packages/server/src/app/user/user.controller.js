@@ -50,13 +50,15 @@ class UserController {
     await UserService.instance().deleteById(parseInt(userIdParam));
   }
 
-  /** @return {Promise<{pastChallenges: Array, currentChallenges: Array}>} */
-  async getForUser(userId) {
+  /**
+   * @param userId {number}
+   * @return {Promise<{activeChallenges: Array<ChallengeEntity>, concludedChallenges: Array<ChallengeEntity>}>} */
+  async getChallengesForUser(userId) {
     console.info(`UserController - Getting challenges for User with ID: '${userId}'`);
 
     return {
-      currentChallenges: await ChallengeService.instance().getForUser(userId),
-      pastChallenges: await ChallengeService.instance().getForUser(userId, true)
+      activeChallenges: await ChallengeService.instance().getForUser(userId),
+      concludedChallenges: await ChallengeService.instance().getForUser(userId, 'concluded')
     };
   }
 }

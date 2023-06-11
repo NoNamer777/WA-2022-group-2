@@ -7,11 +7,11 @@ class ChallengeRepository {
   }
 
   /**
-   * @param whereClaus {import('sequelize').WhereOptions}
+   * @param challengeId {number}
    * @return {Promise<ChallengeEntity | null>}
    */
-  async findOneBy(whereClaus) {
-    return await ChallengeEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false });
+  async findOneBy(challengeId) {
+    return await ChallengeEntity.findOne({ where: { id: challengeId }, rejectOnEmpty: false });
   }
 
   /**
@@ -39,8 +39,8 @@ class ChallengeRepository {
   }
 
   /**
-   * @param whereClaus {{start_date: {}}|{end_date: {}}}
-   * @param includeClause {{model: ChallengeEntity, where: ({start_date: {}}|{start_date: {}})}}
+   * @param whereClaus {{ startDate: {} }|{ endDate: {} }}
+   * @param includeClause {{ model: ChallengeEntity, where: ({ startDate: {} } | { endDate: {} }) }}
    * @return {Promise<ChallengeEntity[]>}
    */
   async findAllBy(whereClaus, includeClause) {

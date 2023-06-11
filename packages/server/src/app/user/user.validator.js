@@ -33,7 +33,7 @@ export const newUserSchema = {
     isEmail: { errorMessage: 'Het formaat van de opgegeven email addres is onjuist.' },
     escape: true
   },
-  profile_image_path: {
+  profileImagePath: {
     notEmpty: { bail: true, errorMessage: 'Een profielafbeelding is verplicht.' },
     escape: true
   }
