@@ -5,6 +5,7 @@ import { authRouter } from './auth/index.js';
 import { JwtService } from './auth/services/jwt.service.js';
 import { badgeRouter } from './badge/routers/badge.router.js';
 import { challengeRouter } from './challenge/routers/challenge.router.js';
+import { userChallengeRouter } from './challenge/routers/user-challenge.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { DatabaseService, MailService } from './core/services/index.js';
 import { groupRouter } from './group/routers/group.router.js';
@@ -20,7 +21,7 @@ class App {
    */
   #limiter = rateLimit({
     windowMs: 60 * 1000,
-    max: 50,
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false
   });
@@ -46,6 +47,7 @@ class App {
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
+    this.app.use('/api/user-challenge', userChallengeRouter);
     this.app.use('/api/group', groupRouter);
     this.app.use('/api/badge', badgeRouter);
     this.app.use('/auth', authRouter);

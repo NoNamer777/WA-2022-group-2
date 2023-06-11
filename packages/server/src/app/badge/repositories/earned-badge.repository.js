@@ -1,4 +1,4 @@
-import { EarnedBadgeEntity } from '../entities/earned_badge.entity.js';
+import { EarnedBadgeEntity } from '../entities/earned-badge.entity.js';
 
 class EarnedBadgeRepository {
   /** @return {Promise<EarnedBadgeEntity[]>} */
@@ -45,10 +45,10 @@ class EarnedBadgeRepository {
    * @param includeClause
    * @return {Promise<EarnedBadgeEntity[]>}
    */
-  async findAllBy(whereClaus, includeClause) {
+  async findAllBy(whereClaus, includeClause = {}) {
     return await EarnedBadgeEntity.findAll({
+      where: whereClaus,
       include: includeClause,
-      where: { ...whereClaus },
       rejectOnEmpty: false
     });
   }

@@ -2,7 +2,8 @@ const { DataTypes } = require('sequelize');
 
 module.exports = {
   userGroupTableDefinition: {
-    user_id: {
+    userId: {
+      field: 'user_id',
       type: DataTypes.INTEGER(11),
       primaryKey: true,
       references: {
@@ -12,7 +13,8 @@ module.exports = {
       onDelete: 'CASCADE',
       allowNull: false
     },
-    group_id: {
+    groupId: {
+      field: 'group_id',
       type: DataTypes.INTEGER(11),
       primaryKey: true,
       references: {

@@ -6,9 +6,12 @@ import { GroupService } from '../services/group.service.js';
 class GroupController {
   /** @return {Promise<GroupEntity[]>} */
   async getAll() {
-    console.info('GroupController - Getting all Groups data');
-
     return await GroupService.instance().getAll();
+  }
+
+  /** @return {Promise<GroupEntity[]>} */
+  async getForUser(userId) {
+    return await GroupService.instance().getForUser(userId);
   }
 
   /**
@@ -66,6 +69,7 @@ class GroupController {
     console.info('GroupController - Joining a Group');
 
     const group = await GroupService.instance().getByCode(groupData.code);
+
     const user = await UserService.instance().getById(parseInt(groupData.userId));
 
     // Check if the user is already connected to the group

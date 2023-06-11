@@ -1,22 +1,19 @@
 <script setup>
-import { Tabs, Tab } from 'vue3-tabs-component';
-import { CardList } from '../../shared/components/index.js';
-import { useChallengeStore } from '../stores/challenge.store.js';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
-import { useAuthStore } from '../../auth/index.js';
+import { Tabs, Tab } from 'vue3-tabs-component';
+import { useChallengeStore } from '../stores/challenge.store.js';
+import { useAuthStore } from '../../auth';
+import { CardList } from '../../shared/components';
 
 const { loading, challenges } = storeToRefs(useChallengeStore());
 const { getChallenges } = useChallengeStore();
 
 onMounted(async () => {
   const { user } = storeToRefs(useAuthStore());
+
   await getChallenges(user.value.id);
 });
-
-const toChallengeProgressRoute = (id) => {
-  return { name: 'challenge_progress', params: { challengeId: id } };
-};
 </script>
 
 <template>
@@ -41,14 +38,14 @@ const toChallengeProgressRoute = (id) => {
             <CardList
               :to-route="toChallengeProgressRoute"
               empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="challenges.currentChallenges"
+              :items="challenges.activeChallenges"
             />
           </Tab>
           <Tab name="Afgerond">
             <CardList
               :to-route="toChallengeProgressRoute"
               empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="challenges.pastChallenges"
+              :items="challenges.concludedChallenges"
             />
           </Tab>
         </Tabs>

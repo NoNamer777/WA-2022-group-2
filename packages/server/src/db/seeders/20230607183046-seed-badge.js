@@ -47,6 +47,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    return queryInterface.bulkDelete('badge', null, {});
+    return queryInterface.bulkDelete('badge', null);
   }
 };

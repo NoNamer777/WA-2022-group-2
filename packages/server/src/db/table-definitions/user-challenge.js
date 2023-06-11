@@ -10,25 +10,30 @@ module.exports = {
     },
     completed: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: false
     },
-    user_id: {
+    userId: {
+      field: 'user_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
         model: 'user',
         key: 'id'
       },
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      unique: 'unique_user_challenge_idx'
     },
-    challenge_id: {
+    challengeId: {
+      field: 'challenge_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
         model: 'challenge',
         key: 'id'
       },
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      unique: 'unique_user_challenge_idx'
     }
   }
 };

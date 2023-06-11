@@ -4,29 +4,33 @@ import { cardResource } from '../resources/card.resource.js';
 import { ChallengeService } from '../services/index.js';
 
 export const useChallengeStore = defineStore('challenge', () => {
-  /** @type {Object} */
-  let challenges = ref({});
+  /** @type {import('vue').Ref<{ activeChallenges: Array<{ id: number, title: string, text: string }>, concludedChallenges: Array<{ id: number, title: string, text: string }>}>} */
+  let challenges = ref({
+    activeChallenges: [],
+    concludedChallenges: []
+  });
 
   /** @type {import('vue').Ref<boolean>} */
   const loading = ref(true);
 
   /**
    * @param userId {number}
-   * @return {void}
+   * @return {Promise<void>}
    */
   async function getChallenges(userId) {
     try {
-      await ChallengeService.instance()
-        .getChallenges(userId)
-        .then((data) => {
-          challenges.value = {
-            currentChallenges: cardResource(data.currentChallenges),
-            pastChallenges: cardResource(data.pastChallenges)
-          };
-        });
+      const data = await ChallengeService.instance().getAllForUser(userId);
+
+      challenges.value = {
+        activeChallenges: cardResource(data.activeChallenges),
+        concludedChallenges: cardResource(data.concludedChallenges)
+      };
     } catch (error) {
       console.error(error);
-      challenges.value = null;
+      challenges.value = {
+        activeChallenges: [],
+        concludedChallenges: []
+      };
     } finally {
       loading.value = false;
     }

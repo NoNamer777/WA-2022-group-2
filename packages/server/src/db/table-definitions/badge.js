@@ -11,7 +11,8 @@ module.exports = {
     name: {
       type: DataTypes.STRING(255)
     },
-    image_path: {
+    imagePath: {
+      field: 'image_path',
       type: DataTypes.STRING(255)
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2">
-    <template v-if="earnedBadges && earnedBadges.length">
+    <template v-if="props.earnedBadges && props.earnedBadges.length">
       <div
         class="col-xl-3 align-items-center d-flex flex-column justify-content-center"
         v-for="(earnedBadge, key) in props.earnedBadges"
@@ -8,7 +8,7 @@
       >
         <img
           class="mb-4"
-          :src="inject('serverBaseUrl') + earnedBadge.badge.image_path"
+          :src="inject('serverBaseUrl') + earnedBadge.badge.imagePath"
           :alt="earnedBadge.badge.name"
         />
         <div class="fw-bold text-center">

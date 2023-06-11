@@ -12,15 +12,18 @@ module.exports = {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    start_date: {
+    startDate: {
+      field: 'start_date',
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    end_date: {
+    endDate: {
+      field: 'end_date',
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    group_id: {
+    groupId: {
+      field: 'group_id',
       type: DataTypes.INTEGER(11),
       allowNull: true,
       references: {

@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     dataListId() {
-      return this.dataList ? name + '-dataList' : '';
+      return this.dataList ? this.name + '-dataList' : '';
     }
   },
   mounted() {

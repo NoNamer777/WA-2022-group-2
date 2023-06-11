@@ -1,3 +1,4 @@
+import { Op, Sequelize } from 'sequelize';
 import { NotFoundException } from '../../core/models/index.js';
 import { badgeRepository } from '../repositories/badge.repository.js';
 
@@ -13,18 +14,14 @@ export class BadgeService {
   /** @type {BadgeService} */
   static #instance;
 
-  /** @return {Promise<BadgeEntity[]>} */
-  async getAll() {
-    return await badgeRepository.findAll();
-  }
-
   /**
    * @param badgeId {number}
    * @param throwsError {boolean}
    * @return {Promise<BadgeEntity>}
    */
   async getById(badgeId, throwsError = true) {
-    const badgeById = await badgeRepository.findOneBy({ id: badgeId });
+    // TODO: change to findOneBy?
+    const badgeById = await badgeRepository.findOneWithOrder({ id: badgeId }, '');
 
     if (!badgeById && throwsError) {
       throw new NotFoundException(`Er is geen badge gevonden met het ID: '${badgeId}'.`);
@@ -33,39 +30,15 @@ export class BadgeService {
   }
 
   /**
-   * @param badgeData {BadgeEntity}
-   * @return {Promise<BadgeEntity>}
+   * @param claimedBadgeIds {number[]}
+   * @return {Promise<BadgeEntity | null>}
    */
-  async update(badgeData) {
-    const badgeId = badgeData.id;
-
-    if (!(await this.getById(badgeId, false))) {
-      throw new NotFoundException(
-        `Het wijzigen van badge met ID: '${badgeId}' was niet succesvol omdat de badge niet bestaat.`
-      );
-    }
-    await badgeRepository.update(badgeData);
-    return await this.getById(badgeId);
-  }
-
-  /**
-   * @param badgeData {Omit<BadgeEntity, 'id'>}
-   * @return {Promise<BadgeEntity>}
-   */
-  async create(badgeData) {
-    return badgeRepository.create(badgeData);
-  }
-
-  /**
-   * @param badgeId {number}
-   * @return {Promise<void>}
-   */
-  async deleteById(badgeId) {
-    if (!(await this.getById(badgeId, false))) {
-      throw new NotFoundException(
-        `Het verwijderen van Badge met ID: '${badgeId}' is mislukt omdat het niet bestaat.`
-      );
-    }
-    await badgeRepository.deleteById(badgeId);
+  async getRandomBadge(claimedBadgeIds) {
+    return badgeRepository.findOneWithOrder(
+      {
+        id: { [Op.notIn]: claimedBadgeIds }
+      },
+      Sequelize.literal('rand()')
+    );
   }
 }

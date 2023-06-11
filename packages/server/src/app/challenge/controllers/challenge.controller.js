@@ -21,26 +21,19 @@ class ChallengeController {
   /**
    * @param challengeIdParam {string}
    * @param challengeData {ChallengeEntity}
+   * @param userId {number}
    * @return {Promise<ChallengeEntity>}
    */
-  async update(challengeIdParam, challengeData) {
+  async update(challengeIdParam, challengeData, userId) {
     console.info(
       `ChallengeController - Updating Challenge resource on path: '${challengeIdParam}'`
     );
 
-    // @todo implement updating challenge
-    return await ChallengeService.instance().update(challengeData);
-  }
-
-  /**
-   * @param challengeData {Omit<ChallengeEntity, 'id'>}
-   * @return {Promise<ChallengeEntity>}
-   */
-  async create(challengeData) {
-    console.info('ChallengeController - Creating a new Challenge resources');
-
-    // @todo implement creating challenge
-    return await ChallengeService.instance().create(challengeData);
+    return await ChallengeService.instance().update(
+      parseInt(challengeIdParam),
+      challengeData,
+      userId
+    );
   }
 
   /**

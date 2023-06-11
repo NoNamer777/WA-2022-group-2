@@ -1,4 +1,4 @@
-import { challengeSuggestionRepository } from '../../challenge/repositories/challenge_suggestion.repository.js';
+import { HttpRequestService } from '../../core/index.js';
 
 export class ChallengeSuggestionService {
   /** @return {ChallengeSuggestionService} */
@@ -8,12 +8,11 @@ export class ChallengeSuggestionService {
     ChallengeSuggestionService.#instance = new ChallengeSuggestionService();
     return ChallengeSuggestionService.#instance;
   }
-
   /** @type {ChallengeSuggestionService} */
   static #instance;
 
-  /** @return {Promise<ChallengeSuggestionEntity[]>} */
-  async getSelection() {
-    return await challengeSuggestionRepository.findSelection();
+  /** @return {Promise<ChallengeSuggestionModel[]>} */
+  async getSuggestions() {
+    return await HttpRequestService.instance().getRequest('/api/challenge/suggestion');
   }
 }

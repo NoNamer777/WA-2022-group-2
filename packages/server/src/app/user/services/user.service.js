@@ -1,10 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { readdir } from 'fs/promises';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { userRepository } from '../user.repository.js';
 
-// TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 export class UserService {
   /** @return {UserService} */
   static instance() {
@@ -86,8 +83,8 @@ export class UserService {
       );
     }
 
-    if (!userData.profile_image_path) {
-      userData.profile_image_path = await this.getRandomProfilePicture();
+    if (!userData.profileImagePath) {
+      userData.profileImagePath = await this.getRandomProfilePicture();
     }
 
     return await userRepository.create(userData);
@@ -107,18 +104,15 @@ export class UserService {
   }
 
   async getRandomProfilePicture() {
-    const currentFilePath = fileURLToPath(import.meta.url);
-    const currentDir = path.dirname(currentFilePath);
-
-    const imagesPath = path.join(currentDir, '../../../public/assets/images/profile_pictures');
+    const rootServerPath = process.env.ROOT_SERVER_PATH || 'packages/server/src/public/';
+    const imagesPath = rootServerPath + 'assets/images/profile-pictures';
 
     // Read the directory contents
-    const imageFiles = await fs.promises.readdir(imagesPath);
+    const imageFiles = await readdir(imagesPath);
 
     // Select a random image file
     const randomImage = imageFiles[Math.floor(Math.random() * imageFiles.length)];
 
-    // Set the profile image path
-    return path.join('/assets', 'images', 'profile_pictures', randomImage);
+    return `/assets/images/profile-pictures/${randomImage}`;
   }
 }
