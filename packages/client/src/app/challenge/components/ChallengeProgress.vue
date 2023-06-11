@@ -30,9 +30,7 @@
         <p class="text-primary" v-if="userChallenge.completed">Goed gedaan!</p>
       </div>
     </div>
-    <template v-if="badge">
-      <CompletedModal :badgeName="badge.name" :badgeImagePath="badge.imagePath"></CompletedModal>
-    </template>
+    <CompletedModal :badgeName="badge?.name" :badgeImagePath="badge?.imagePath" />
   </div>
 </template>
 
@@ -111,12 +109,12 @@ watch(
       badge.value = await UserChallengeService.instance().completeUserChallenge(
         props.userChallenge
       );
+      isCompleted.value = true;
 
       nextTick(() => {
         const completedModal = new Modal(document.getElementById('completedModal'));
         completedModal.toggle();
         showToggleButton.value = false;
-        isCompleted.value = true;
       });
     }
   },

@@ -17,9 +17,23 @@
           ></button>
         </div>
         <div class="modal-body w-100 text-center">
-          <img class="mb-4" :src="`${inject('serverBaseUrl')}${badgeImagePath}`" :alt="badgeName" />
-          <h4 id="modalLabel">Goed gedaan!</h4>
-          <h5>Je hebt een {{ badgeName }} verdiend!</h5>
+          <template v-if="badgeName && badgeImagePath">
+            <img
+              class="mb-4"
+              :src="`${inject('serverBaseUrl')}${badgeImagePath}`"
+              :alt="badgeName"
+            />
+            <h4 id="modalLabel">Goed gedaan!</h4>
+            <h5>Je hebt een {{ badgeName }} verdiend!</h5>
+          </template>
+          <template v-else>
+            <img class="w-25" src="/assets/images/mascot/mascotte_disappointed.png" alt="Mascot" />
+            <h4 id="modalLabel">Goed gedaan!</h4>
+            <p>
+              Geweldig gedaan! Je hebt alle badges al behaald. Binnenkort voegen we nieuwe badges
+              toe om je uitdagingen te blijven bieden!
+            </p>
+          </template>
         </div>
         <div class="modal-footer w-100 text-center">
           <button type="button" class="btn btn-tertiary" data-bs-dismiss="modal">OK!</button>

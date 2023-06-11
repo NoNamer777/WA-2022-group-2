@@ -29,7 +29,7 @@ class UserChallengeController {
    * @param userChallengeIdParam {string}
    * @param userChallengeData {UserChallengeEntity}
    * @param userId {number}
-   * @return {Promise<BadgeEntity>}
+   * @return {Promise<BadgeEntity | null>}
    */
   async complete(userChallengeIdParam, userChallengeData, userId) {
     console.info(
