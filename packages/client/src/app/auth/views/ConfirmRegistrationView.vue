@@ -52,7 +52,7 @@ function retrieveTokenFromURL() {
 }
 
 function storeTokenInLocalStorage(token) {
-  if (token) return;
+  if (!token) return;
 
   localStorage.setItem('jwt-token', token);
 }
