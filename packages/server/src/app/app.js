@@ -3,10 +3,12 @@ import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
 import { JwtService } from './auth/services/jwt.service.js';
+import { badgeRouter } from './badge/routers/badge.router.js';
 import { challengeRouter } from './challenge/routers/challenge.router.js';
 import { userChallengeRouter } from './challenge/routers/user-challenge.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { DatabaseService, MailService } from './core/services/index.js';
+import { groupRouter } from './group/routers/group.router.js';
 import { userRouter } from './user/index.js';
 
 class App {
@@ -14,7 +16,7 @@ class App {
   app = express();
 
   /**
-   * On all routes, allow maximum 50 requests per minute
+   * On all routers, allow maximum 50 requests per minute
    * @type {import('express-rate-limit').RateLimitRequestHandler}
    */
   #limiter = rateLimit({
@@ -46,6 +48,8 @@ class App {
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
     this.app.use('/api/user-challenge', userChallengeRouter);
+    this.app.use('/api/group', groupRouter);
+    this.app.use('/api/badge', badgeRouter);
     this.app.use('/auth', authRouter);
 
     // Needs to be defined last in order to catch, log, and format all errors properly

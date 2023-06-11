@@ -8,7 +8,8 @@ module.exports = {
       primaryKey: true
     },
     name: {
-      type: DataTypes.STRING(255)
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
     code: {
       type: DataTypes.STRING(32),

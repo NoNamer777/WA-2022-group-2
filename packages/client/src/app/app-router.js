@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from './auth';
 import { LoginView, RegisterView, RequestPasswordResetView, ResetPasswordView } from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
-import { HomeView, InfoView } from './core/views';
+import { HomeView } from './core/views';
 import PageNotFound from './errors/PageNotFound.vue';
+import PersonalPageView from './personal_page/views/PersonalPageView.vue';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -60,14 +61,6 @@ export const router = createRouter({
       }
     },
     {
-      path: '/info',
-      name: 'info',
-      component: InfoView,
-      meta: {
-        title: 'Informatie'
-      }
-    },
-    {
       path: '/reset-password/step-1',
       name: 'request password reset',
       component: RequestPasswordResetView,
@@ -81,6 +74,15 @@ export const router = createRouter({
       component: ResetPasswordView,
       meta: {
         title: 'Wachtwoord herstellen'
+      }
+    },
+    {
+      path: '/my-wasted',
+      name: 'my-wasted',
+      component: PersonalPageView,
+      meta: {
+        title: 'Mijn Wasted',
+        requiresAuth: true
       }
     },
     {
