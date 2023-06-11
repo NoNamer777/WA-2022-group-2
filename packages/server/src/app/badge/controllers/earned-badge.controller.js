@@ -1,4 +1,4 @@
-import { EarnedBadgeService } from '../services/earned_badge.service.js';
+import { EarnedBadgeService } from '../services/earned-badge.service.js';
 
 class EarnedBadgeController {
   /** @return {Promise<EarnedBadgeEntity[]>} */
