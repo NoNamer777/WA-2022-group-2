@@ -118,7 +118,7 @@ export class UserChallengeService {
    * @param userChallengeIdParam {number}
    * @param userChallengeData {UserChallengeEntity}
    * @param userId {number}
-   * @return {Promise<BadgeEntity>}
+   * @return {Promise<BadgeEntity | null>}
    */
   async complete(userChallengeIdParam, userChallengeData, userId) {
     const userChallengeId = parseInt(userChallengeData.id);
@@ -146,14 +146,18 @@ export class UserChallengeService {
 
     const newBadge = await BadgeService.instance().getRandomBadge(claimedBadgeIds);
 
-    const earnedBadge = new EarnedBadgeEntity();
-    earnedBadge.date = new Date();
-    earnedBadge.userId = userId;
-    earnedBadge.badgeId = newBadge.id;
-    earnedBadge.userChallengeId = userChallenge.id;
-    await earnedBadge.save();
+    if (newBadge) {
+      const earnedBadge = new EarnedBadgeEntity();
+      earnedBadge.date = new Date();
+      earnedBadge.userId = userId;
+      earnedBadge.badgeId = newBadge.id;
+      earnedBadge.userChallengeId = userChallenge.id;
+      await earnedBadge.save();
 
-    return await BadgeService.instance().getById(earnedBadge.badgeId);
+      return await BadgeService.instance().getById(earnedBadge.badgeId);
+    }
+
+    return Promise.resolve(null);
   }
 
   /**

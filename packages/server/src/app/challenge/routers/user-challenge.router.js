@@ -15,12 +15,12 @@ userChallengeRouter.put(
     const userId = request.userId;
 
     try {
-      const userChallenge = await userChallengeController.complete(
+      const badge = await userChallengeController.complete(
         userChallengeId,
         userChallengeData,
         userId
       );
-      response.status(200).send(userChallenge);
+      response.status(200).send(badge);
     } catch (error) {
       next(error);
     }

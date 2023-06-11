@@ -1,24 +1,12 @@
-import { Op } from 'sequelize';
 import { UserEntity } from '../../user/index.js';
 import { GroupEntity } from '../entities/group.entity.js';
-import { UserGroupEntity } from '../entities/user-group.entity.js';
 
 class GroupRepository {
   /**
    * @return {Promise<GroupEntity[]>}
    */
-  async findAll(userId) {
-    return await GroupEntity.findAll({
-      include: {
-        model: UserGroupEntity,
-        where: {
-          user_id: {
-            [Op.eq]: userId
-          }
-        },
-        attributes: []
-      }
-    });
+  async findAll() {
+    return await GroupEntity.findAll();
   }
 
   /**
@@ -51,6 +39,19 @@ class GroupRepository {
    */
   async deleteById(groupId) {
     await GroupEntity.destroy({ where: { id: groupId } });
+  }
+
+  /**
+   * @param whereClaus
+   * @param includeClause
+   * @return {Promise<GroupEntity[]>}
+   */
+  async findAllBy(whereClaus, includeClause) {
+    return await GroupEntity.findAll({
+      include: includeClause,
+      where: { ...whereClaus },
+      rejectOnEmpty: false
+    });
   }
 }
 

@@ -1,4 +1,6 @@
+import { Op } from 'sequelize';
 import { NotFoundException } from '../../core/models/index.js';
+import { UserGroupEntity } from '../entities/user-group.entity.js';
 import { groupRepository } from '../repositories/group.repository.js';
 
 export class GroupService {
@@ -71,7 +73,18 @@ export class GroupService {
 
   /** @return {Promise<GroupEntity[]>} */
   async getForUser(userId) {
-    return await groupRepository.findAll(userId);
+    return await groupRepository.findAllBy(
+      {},
+      {
+        model: UserGroupEntity,
+        where: {
+          user_id: {
+            [Op.eq]: userId
+          }
+        },
+        attributes: []
+      }
+    );
   }
 
   /**
