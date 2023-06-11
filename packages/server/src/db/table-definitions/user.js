@@ -47,7 +47,8 @@ module.exports = {
         this.setDataValue('password', bcrypt.hashSync(password, bcrypt.genSaltSync(15)));
       }
     },
-    profile_image_path: {
+    profileImagePath: {
+      field: 'profile_image_path',
       type: DataTypes.STRING(255),
       allowNull: false
     },

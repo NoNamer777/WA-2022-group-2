@@ -9,6 +9,7 @@ import {
 } from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView, InfoView } from './core/views';
+import PageNotFound from './errors/PageNotFound.vue';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -31,7 +32,7 @@ export const router = createRouter({
       }
     },
     {
-      path: '/challenge/:userId/progress',
+      path: '/challenge/:challengeId/progress',
       name: 'challenge_progress',
       component: ChallengeProgressView,
       meta: {
@@ -94,6 +95,14 @@ export const router = createRouter({
       component: ConfirmRegistrationView,
       meta: {
         title: 'Registratie bevestigen'
+      }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: PageNotFound,
+      meta: {
+        title: '404 Pagina niet gevonden'
       }
     }
   ]

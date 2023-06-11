@@ -7,17 +7,17 @@ export const newChallengeSchema = {
     },
     escape: true
   },
-  start_date: {
+  startDate: {
     notEmpty: { bail: true, errorMessage: 'Een startdatum is verplicht.' },
     isDate: { bail: true, errorMessage: 'Een startdatum moet een geldige datum zijn' },
     escape: true
   },
-  end_date: {
+  endDate: {
     notEmpty: { bail: true, errorMessage: 'Een einddatum is verplicht.' },
     isDate: { bail: true, errorMessage: 'Een einddatum moet een geldige datum zijn' },
     escape: true
   },
-  groups: {
+  groupId: {
     notEmpty: { bail: true, errorMessage: 'Een groep is verplicht.' },
     escape: true
   }
