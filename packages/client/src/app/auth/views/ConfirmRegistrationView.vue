@@ -14,8 +14,6 @@
   </main>
 </template>
 
-<style scoped></style>
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
