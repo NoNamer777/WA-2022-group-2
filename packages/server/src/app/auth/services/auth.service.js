@@ -119,6 +119,6 @@ export class AuthService {
 
     user.password = newPassword;
 
-    await UserService.instance().update(user);
+    await UserService.instance().update(user, true);
   }
 }

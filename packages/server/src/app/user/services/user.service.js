@@ -51,9 +51,10 @@ export class UserService {
 
   /**
    * @param userData {UserEntity}
+   * @param includePassword {boolean}
    * @return {Promise<UserEntity>}
    */
-  async update(userData) {
+  async update(userData, includePassword = false) {
     const userId = userData.id;
 
     if (!(await this.getById(userId, false))) {
@@ -68,7 +69,7 @@ export class UserService {
         `Het wijzigen van gegevens voor gebruiker met ID: '${userId}' was niet succesvol. De gebruikersnaam '${userData.username}' is niet beschikbaar.`
       );
     }
-    await userRepository.update(userData);
+    await userRepository.update(userData, includePassword);
     return await this.getById(userId);
   }
 
