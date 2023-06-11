@@ -48,8 +48,13 @@ export class AuthService {
   }
 
   /**
-   * @return {void}
+   * @return {Promise<void>}
    */
+  async confirmRegistration() {
+    await HttpRequestService.instance().postRequest('/auth/confirm-registration', {});
+  }
+
+  /** @return {void} */
   logout() {
     localStorage.removeItem('jwt-token');
   }

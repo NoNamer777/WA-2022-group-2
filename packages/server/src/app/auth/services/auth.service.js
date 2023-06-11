@@ -17,7 +17,33 @@ export class AuthService {
   static #instance;
 
   async register(userData) {
-    return await UserService.instance().create(userData);
+    const newUser = await UserService.instance().create(userData);
+    const jwtToken = JwtService.instance().encodeToken(
+      { userId: newUser.id, tokenType: 'VerifyRegistration' },
+      30 * 60 * 1000
+    );
+
+    await MailService.instance().sendEmail({
+      to: newUser.email,
+      subject: 'Bevestig je registratie',
+      template: 'verify-registration',
+      context: {
+        username: newUser.username,
+        link: process.env.CLIENT_BASE_URL + '/verify-registration?token=' + jwtToken
+      }
+    });
+    return newUser;
+  }
+
+  /**
+   * @param userId {number}
+   * @return {Promise<void>}
+   */
+  async confirmRegistration(userId) {
+    const user = await UserService.instance().getById(userId);
+    user.state = 'active';
+
+    await UserService.instance().update(user);
   }
 
   /**
@@ -39,6 +65,9 @@ export class AuthService {
     }
     if (!(await user.validatePassword(userData.password))) {
       throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.');
+    }
+    if (user.state === 'pending') {
+      throw new UnauthorizedException('Je account is nog niet geactiveerd.');
     }
     return user;
   }

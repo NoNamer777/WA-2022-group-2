@@ -8,6 +8,15 @@ class AuthController {
   }
 
   /**
+   * @param userId {number}
+   * @return {Promise<void>}
+   */
+  async confirmRegistration(userId) {
+    console.info(`AuthController - confirming registration for User with ID: '${userId}'`);
+    await AuthService.instance().confirmRegistration(userId);
+  }
+
+  /**
    * @param userData {{ username: string, password: string }}
    * @return {Promise<string>}
    */

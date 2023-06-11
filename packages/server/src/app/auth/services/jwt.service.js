@@ -5,7 +5,7 @@ import { UnauthorizedException } from '../models/errors/unauthorized-exception.j
 /** Token expiration time in ms. (8 hours currently). */
 const TOKEN_VALID_DURATION = 8 * 60 * 60 * 1_000;
 
-export const TOKEN_TYPES = ['Full', 'PasswordReset'];
+export const TOKEN_TYPES = ['Full', 'PasswordReset', 'VerifyRegistration'];
 
 export class JwtService {
   /** @return {JwtService} */
@@ -30,7 +30,7 @@ export class JwtService {
   }
 
   /**
-   * @param payload {{ userId: number, tokenType: 'Full' | 'PasswordReset' }}
+   * @param payload {{ userId: number, tokenType: 'Full' | 'PasswordReset' | 'VerifyRegistration' }}
    * @param expirationTime {number}
    * @returns {string}
    */
@@ -56,7 +56,7 @@ export class JwtService {
 
   /**
    * @param token {string}
-   * @returns {{ sub: number, iat: number, exp: number, tokenType: 'Full' | 'PasswordReset' }}
+   * @returns {{ sub: number, iat: number, exp: number, tokenType: 'Full' | 'PasswordReset' | 'VerifyRegistration' }}
    */
   decodeToken(token) {
     const decodedToken = jwt.verify(token, this.#jwtSecret);

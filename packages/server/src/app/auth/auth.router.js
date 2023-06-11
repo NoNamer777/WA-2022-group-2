@@ -34,6 +34,20 @@ authRouter.post(
 );
 
 authRouter.post(
+  '/confirm-registration',
+  jwtAuthHeaderValidator({ expectedTokenType: 'VerifyRegistration' }),
+  async (request, response, next) => {
+    try {
+      await authController.confirmRegistration(request.userId);
+
+      response.end();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+authRouter.post(
   '/login',
   authLimiter,
   checkSchema(loginSchema, ['body']),

@@ -17,6 +17,8 @@ RUN npm run server:build
 
 COPY /packages/server/src/db /server-app/dist/server/db
 
+COPY /packages/server/src/public/assets /server-app/dist/server/assets
+
 COPY /packages/server/start.sh package*.json /server-app/dist/server/
 
 RUN npm ci --omit dev

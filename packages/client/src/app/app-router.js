@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from './auth';
-import { LoginView, RegisterView, RequestPasswordResetView, ResetPasswordView } from './auth/views';
+import {
+  ConfirmRegistrationView,
+  LoginView,
+  RegisterView,
+  RequestPasswordResetView,
+  ResetPasswordView
+} from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView } from './core/views';
 import PageNotFound from './errors/PageNotFound.vue';
@@ -74,6 +80,14 @@ export const router = createRouter({
       component: ResetPasswordView,
       meta: {
         title: 'Wachtwoord herstellen'
+      }
+    },
+    {
+      path: '/verify-registration',
+      name: 'verify registration',
+      component: ConfirmRegistrationView,
+      meta: {
+        title: 'Registratie bevestigen'
       }
     },
     {

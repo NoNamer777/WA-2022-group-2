@@ -3,7 +3,7 @@ import { UnauthorizedException } from '../models/errors/unauthorized-exception.j
 import { JwtService } from '../services/jwt.service.js';
 
 /**
- * @param options {{ expectedTokenType: 'Full' | 'PasswordReset' }}
+ * @param options {{ expectedTokenType: 'Full' | 'PasswordReset' | 'VerifyRegistration' }}
  * @return {(request: *, response: *, next: *) => Promise<void>}
  */
 export function jwtAuthHeaderValidator(options = { expectedTokenType: 'Full' }) {

@@ -19,7 +19,7 @@ class UserRepository {
    * @return {Promise<void>}
    */
   async update(updatedUserData) {
-    await UserEntity.update(updatedUserData, { where: { id: updatedUserData.id } });
+    await UserEntity.update(updatedUserData.dataValues, { where: { id: updatedUserData.id } });
   }
 
   /**
