@@ -84,26 +84,12 @@ userRouter.delete(
 );
 
 userRouter.get(
-  '/:userId/group',
-  jwtAuthHeaderValidator(),
-  checkSchema(newUserSchema, ['body']),
-  async (request, response, next) => {
-    try {
-      const groups = await userController.getGroupsForUser(request.params.userId);
-      response.send(groups);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-userRouter.get(
   '/:userId/groups',
   jwtAuthHeaderValidator(),
   entityIdValidator('userId', 'User'),
   async (request, response, next) => {
     try {
-      response.send(await groupController.getAll(request.params.userId));
+      response.send(await groupController.getForUser(request.params.userId));
     } catch (error) {
       next(error);
     }
@@ -158,16 +144,3 @@ userRouter.post(
     }
   }
 );
-
-userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, response, next) => {
-  const userId = parseInt(request.params.userId);
-
-  try {
-    if (request.userId !== userId) {
-      throw new UnauthorizedException();
-    }
-    response.send(await userController.getChallengesForUser(userId));
-  } catch (error) {
-    next(error);
-  }
-});
