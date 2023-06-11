@@ -58,7 +58,7 @@ module.exports = {
       validate: {
         notNull: true,
         notEmpty: true,
-        isIn: ['pending', 'active']
+        isIn: [['pending', 'active']]
       }
     }
   }
