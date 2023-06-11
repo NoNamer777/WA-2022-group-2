@@ -1,6 +1,6 @@
 <template>
   <main>
-    <section class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
+    <section class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
       <h1 class="mb-4">Mijn wasted</h1>
       <div class="d-flex justify-content-end gap-2">
         <CreateGroupModal />
