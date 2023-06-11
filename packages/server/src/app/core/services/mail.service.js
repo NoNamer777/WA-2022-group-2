@@ -22,7 +22,7 @@ export class MailService {
     const mailServerEmailAddress = process.env.MAIL_SERVER_EMAIL_ADDRESS;
     const mailServerPassword = process.env.MAIL_SERVER_PASSWORD;
     const emailTemplatesPath =
-      process.env.EMAIL_TEMPLATES_PATH || './packages/server/src/assets/email-templates';
+      process.env.EMAIL_TEMPLATES_PATH || './packages/server/src/public/assets/email-templates';
 
     if (!mailServerPassword || !mailServerEmailAddress) {
       throw Error(
