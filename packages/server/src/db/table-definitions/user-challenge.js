@@ -12,7 +12,8 @@ module.exports = {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    user_id: {
+    userId: {
+      field: 'user_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
@@ -22,7 +23,8 @@ module.exports = {
       onDelete: 'CASCADE',
       unique: 'unique_user_challenge_idx'
     },
-    challenge_id: {
+    challengeId: {
+      field: 'challenge_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {

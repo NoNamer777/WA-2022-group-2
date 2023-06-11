@@ -16,7 +16,8 @@ module.exports = {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    user_challenge_id: {
+    userChallengeId: {
+      field: 'user_challenge_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {

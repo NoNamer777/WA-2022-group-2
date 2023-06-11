@@ -49,19 +49,22 @@ export class UserChallengeService {
   async getAllById(challengeId, throwsError = true) {
     const userChallengesById = await userChallengeRepository.findAllBy(
       {
-        challenge_id: {
+        challengeId: {
           [Op.eq]: challengeId
         }
       },
       [
         {
+          as: 'challengeDays',
           model: ChallengeDayEntity
         },
         {
+          as: 'user',
           model: UserEntity,
-          attributes: ['username', 'profile_image_path']
+          attributes: ['id', 'username', 'profileImagePath']
         },
         {
+          as: 'userChallenges',
           model: ChallengeEntity
         }
       ]
@@ -81,15 +84,15 @@ export class UserChallengeService {
    */
   async complete(userChallengeIdParam, userChallengeData, userId) {
     const userChallengeId = parseInt(userChallengeData.id);
+
     if (userChallengeIdParam !== userChallengeId) {
       throw new BadRequestException(
         'Een challenge kan niet worden geüpdatet met de aangeboden gegevens'
       );
     }
-
     const userChallenge = await this.getById(userChallengeId);
 
-    if (userId !== userChallenge.user_id) {
+    if (userId !== userChallenge.user.id) {
       throw new UnauthorizedException();
     }
 
@@ -97,7 +100,6 @@ export class UserChallengeService {
     userChallenge.completed = true;
     await userChallenge.save();
 
-    // TODO: prevent creating new badge for the same challenge?
 
     /* Search and create unique badge for user */
     const alreadyEarnedBadges = await EarnedBadgeService.instance().getForUser(userId);
@@ -106,12 +108,12 @@ export class UserChallengeService {
 
     const earnedBadge = new EarnedBadgeEntity();
     earnedBadge.date = new Date();
-    earnedBadge.user_id = userId;
-    earnedBadge.badge_id = uniqueNewBadge.id;
-    earnedBadge.user_challenge_id = userChallenge.id;
+    earnedBadge.userId = userId;
+    earnedBadge.badgeId = newBadge.id;
+    earnedBadge.userChallengeId = userChallenge.id;
     await earnedBadge.save();
 
-    return await BadgeService.instance().getById(earnedBadge.badge_id);
+    return await BadgeService.instance().getById(earnedBadge.badgeId);
   }
 
   /**
@@ -123,16 +125,15 @@ export class UserChallengeService {
   async deleteById(userChallengeId, userId, throwsError = true) {
     const userChallengeById = await this.getById(userChallengeId);
 
-    if (userChallengeById.user_id !== userId && throwsError) {
+    if (userChallengeById.userId !== userId && throwsError) {
       throw new NotFoundException(
         `Het verwijderen van user challenge met ID: '${userChallengeId}' is mislukt omdat het niet bestaat.`
       );
     }
     await userChallengeRepository.deleteById(userChallengeId);
 
-    const challengeId = userChallengeById.challenge_id;
-
-    const remainingUserChallenges = await this.getAllById(challengeId);
+    const challengeId = userChallengeById.challengeId;
+    const remainingUserChallenges = await this.getAllOfChallenge(challengeId);
 
     if (remainingUserChallenges.length === 0) {
       console.log(`Deleting orphan challenge with ID: '${userChallengeId}'.`);

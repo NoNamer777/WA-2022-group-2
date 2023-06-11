@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { userRepository } from '../user.repository.js';
 
-// TODO: Only allow Users managing their own access or allow access to the User data to Admins.
 export class UserService {
   /** @return {UserService} */
   static instance() {
@@ -86,8 +85,8 @@ export class UserService {
       );
     }
 
-    if (!userData.profile_image_path) {
-      userData.profile_image_path = await this.getRandomProfilePicture();
+    if (!userData.profileImagePath) {
+      userData.profileImagePath = await this.getRandomProfilePicture();
     }
 
     return await userRepository.create(userData);

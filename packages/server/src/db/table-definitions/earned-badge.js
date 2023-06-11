@@ -11,7 +11,8 @@ module.exports = {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    user_id: {
+    userId: {
+      field: 'user_id',
       type: DataTypes.INTEGER(11),
       references: {
         model: 'user',
@@ -21,7 +22,8 @@ module.exports = {
       allowNull: false,
       unique: 'unique_earned_badge_idx'
     },
-    badge_id: {
+    badgeId: {
+      field: 'badge_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
@@ -31,7 +33,8 @@ module.exports = {
       onDelete: 'CASCADE',
       unique: 'unique_earned_badge_idx'
     },
-    user_challenge_id: {
+    userChallengeId: {
+      field: 'user_challenge_id',
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {

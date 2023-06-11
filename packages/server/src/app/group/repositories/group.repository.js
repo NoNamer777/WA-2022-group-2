@@ -11,7 +11,7 @@ class GroupRepository {
       include: {
         model: UserGroupEntity,
         where: {
-          user_id: {
+          userId: {
             [Op.eq]: userId
           }
         }

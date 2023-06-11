@@ -6,8 +6,6 @@ import { UserGroupService } from '../../group/index.js';
 import { UserEntity } from '../../user/index.js';
 import { UserChallengeEntity } from '../entities/user-challenge.entity.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
-import { ChallengeDayService } from './challenge_day.service.js';
-import { UserChallengeService } from './user_challenge.service.js';
 import { userChallengeRepository } from '../repositories/user-challenge.repository.js';
 
 export class ChallengeService {
@@ -65,8 +63,8 @@ export class ChallengeService {
     }
 
     const userChallengeById = await userChallengeRepository.findOneBy({
-      user_id: userId,
-      challenge_id: challengeId
+      userId: userId,
+      challengeId: challengeId
     });
     if (!(await this.getById(challengeId, false))) {
       throw new NotFoundException(`Challenge met het ID: '${challengeId}' is niet gevonden.`);
@@ -143,15 +141,20 @@ export class ChallengeService {
   /** @return {Promise<ChallengeEntity[]>} */
   async getForUser(userId, retrievePast = false) {
     const currentDate = new Date();
-    const whereClause = retrievePast
-      ? { end_date: { [Op.lt]: currentDate } }
-      : { end_date: { [Op.gte]: currentDate } };
+    const whereClause =
+      challengeState === 'active'
+        ? { endDate: { [Op.gte]: currentDate } }
+        : { endDate: { [Op.lt]: currentDate } };
 
     return await challengeRepository.findAllBy(whereClause, [
       {
         model: UserChallengeEntity,
-        where: { user_id: userId },
-        include: { model: UserEntity }
+        where: { userId: userId },
+        as: 'userChallenges',
+        include: {
+          model: UserEntity,
+          attributes: ['id', 'username']
+        }
       },
       {
         model: GroupEntity
