@@ -20,14 +20,14 @@
             <CardList
               :to-route="toChallengeProgressRoute"
               empty-state="Je hebt helaas nog geen challenges open staan. Start je eerste door op aanmaken te drukken!"
-              :items="challenges.currentChallenges"
+              :items="challenges.activeChallenges"
             />
           </Tab>
           <Tab name="Afgerond">
             <CardList
               :to-route="toChallengeProgressRoute"
               empty-state="Je hebt helaas nog geen challenges afgerond. Start je eerste door op aanmaken te drukken!"
-              :items="challenges.pastChallenges"
+              :items="challenges.concludedChallenges"
             />
           </Tab>
         </Tabs>
@@ -52,4 +52,8 @@ onMounted(async () => {
 
   await getChallenges(user.value.id);
 });
+
+const toChallengeProgressRoute = (id) => {
+  return { name: 'challenge_progress', params: { challengeId: id } };
+};
 </script>

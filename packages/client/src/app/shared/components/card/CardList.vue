@@ -22,12 +22,13 @@
         </div>
       </template>
     </div>
-    <EmptyState v-if="!items.length" :empty-state="props.emptyState" />
+    <EmptyState v-if="!props.items || !props.items.length" :empty-state="props.emptyState" />
   </section>
 </template>
 
 <script setup>
 import CardItem from './CardItem.vue';
+import EmptyState from '../EmptyState.vue';
 
 const props = defineProps({
   title: String,
