@@ -66,6 +66,9 @@ export class AuthService {
     if (!(await user.validatePassword(userData.password))) {
       throw new UnauthorizedException('De combinatie van gebruikersnaam en wachtwoord is onjuist.');
     }
+    if (user.state === 'pending') {
+      throw new UnauthorizedException('Je account is nog niet geactiveerd.');
+    }
     return user;
   }
 
