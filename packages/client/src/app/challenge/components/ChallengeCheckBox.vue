@@ -69,7 +69,7 @@
 </style>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { ChallengeDayService } from '../services';
 
 const emit = defineEmits(['checked']);
