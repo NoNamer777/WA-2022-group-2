@@ -45,7 +45,7 @@ class App {
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
-    this.app.use('/api/userchallenge', userChallengeRouter);
+    this.app.use('/api/user-challenge', userChallengeRouter);
     this.app.use('/auth', authRouter);
 
     // Needs to be defined last in order to catch, log, and format all errors properly
