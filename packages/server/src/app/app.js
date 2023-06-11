@@ -39,7 +39,7 @@ class App {
 
     this.app.use(corsMiddleware());
 
-    this.app.use(express.static('packages/server/src/public'));
+    this.app.use(express.static(process.env.ROOT_SERVER_PATH || 'packages/server/src/public'));
 
     await DatabaseService.instance().initialize();
     MailService.instance().initialize();
