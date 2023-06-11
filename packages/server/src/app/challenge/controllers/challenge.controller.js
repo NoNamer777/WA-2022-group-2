@@ -37,17 +37,6 @@ class ChallengeController {
   }
 
   /**
-   * @return {Promise<ChallengeEntity>}
-   * @param challengeData
-   * @param userId
-   */
-  async createChallenge(challengeData, userId) {
-    console.info('ChallengeController - Creating new Challenge resources');
-
-    return await ChallengeService.instance().createChallenge(challengeData, userId);
-  }
-
-  /**
    * @param challengeIdParam {string}
    * @return {Promise<void>}
    */

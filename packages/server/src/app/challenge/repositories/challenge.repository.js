@@ -7,11 +7,11 @@ class ChallengeRepository {
   }
 
   /**
-   * @param whereClaus {import('sequelize').WhereOptions}
+   * @param challengeId {number}
    * @return {Promise<ChallengeEntity | null>}
    */
-  async findOneBy(whereClaus) {
-    return await ChallengeEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false });
+  async findOneBy(challengeId) {
+    return await ChallengeEntity.findOne({ where: { id: challengeId }, rejectOnEmpty: false });
   }
 
   /**

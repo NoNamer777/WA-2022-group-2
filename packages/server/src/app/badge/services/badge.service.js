@@ -29,10 +29,14 @@ export class BadgeService {
     return badgeById;
   }
 
-  async getRandomBadge(userBadgeIds) {
+  /**
+   * @param claimedBadgeIds {number[]}
+   * @return {Promise<BadgeEntity | null>}
+   */
+  async getRandomBadge(claimedBadgeIds) {
     return badgeRepository.findOneWithOrder(
       {
-        id: { [Op.notIn]: userBadgeIds }
+        id: { [Op.notIn]: claimedBadgeIds }
       },
       Sequelize.literal('rand()')
     );

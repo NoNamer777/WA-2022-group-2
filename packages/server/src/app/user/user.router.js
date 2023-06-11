@@ -2,7 +2,8 @@ import express from 'express';
 import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../auth/index.js';
 import { UnauthorizedException } from '../auth/models/errors/unauthorized-exception.js';
-import { challengeRouter } from '../challenge/routers/challenge.router.js';
+import { userChallengeController } from '../challenge/controllers/user-challenge.controller.js';
+import { newChallengeSchema } from '../challenge/validators/challenge.validator.js';
 import { entityIdValidator } from '../core/middleware/index.js';
 import { groupController } from '../group/controllers/group.controller.js';
 import { userController } from './user.controller.js';
@@ -16,31 +17,22 @@ userRouter.get('/', jwtAuthHeaderValidator(), async (_, response) => {
   response.send(allUsers);
 });
 
-userRouter.get(
-  '/:userId/group',
+userRouter.post(
+  '/',
   jwtAuthHeaderValidator(),
-  entityIdValidator('userId', 'User'),
+  checkSchema(newUserSchema, ['body']),
   async (request, response, next) => {
+    const userData = matchedData(request);
+
     try {
-      const groups = await groupController.getAll(request.params.userId);
-      response.send(groups);
+      const createdUser = await userController.create(userData);
+
+      response.status(201).send(createdUser);
     } catch (error) {
       next(error);
     }
   }
 );
-
-userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, response) => {
-  const userId = parseInt(request.params.userId);
-
-  if (request.userId !== userId) {
-    throw new UnauthorizedException();
-  }
-
-  const challenges = await userController.getForUser(userId);
-
-  response.send(challenges);
-});
 
 userRouter.get(
   '/:userId',
@@ -75,23 +67,6 @@ userRouter.put(
   }
 );
 
-userRouter.post(
-  '/',
-  jwtAuthHeaderValidator(),
-  checkSchema(newUserSchema, ['body']),
-  async (request, response, next) => {
-    const userData = matchedData(request);
-
-    try {
-      const createdUser = await userController.create(userData);
-
-      response.status(201).send(createdUser);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 userRouter.delete(
   '/:userId',
   jwtAuthHeaderValidator(),
@@ -108,4 +83,54 @@ userRouter.delete(
   }
 );
 
-userRouter.use('/', challengeRouter);
+userRouter.get(
+  '/:userId/groups',
+  jwtAuthHeaderValidator(),
+  entityIdValidator('userId', 'User'),
+  async (request, response, next) => {
+    try {
+      console.log(request.params.userId);
+      response.send(await groupController.getAll(request.params.userId));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userRouter.post(
+  '/:userId/challenge',
+  jwtAuthHeaderValidator(),
+  checkSchema(newChallengeSchema, ['body']),
+  async (request, response, next) => {
+    /** @type {ChallengeEntity} */
+    const challengeData = matchedData(request);
+    const userId = parseInt(request.params.userId);
+
+    // Verify that the authenticated User can access this route.
+    if (request.userId !== userId) {
+      throw new UnauthorizedException();
+    }
+    try {
+      const createdChallenge = await userChallengeController.createChallenges(
+        challengeData,
+        userId
+      );
+      response.status(201).send(createdChallenge);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userRouter.get('/:userId/challenges', jwtAuthHeaderValidator(), async (request, response, next) => {
+  const userId = parseInt(request.params.userId);
+
+  try {
+    if (request.userId !== userId) {
+      throw new UnauthorizedException();
+    }
+    response.send(await userController.getChallengesForUser(userId));
+  } catch (error) {
+    next(error);
+  }
+});
