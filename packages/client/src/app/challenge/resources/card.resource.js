@@ -1,10 +1,10 @@
 /**
- * @param challenges {Array}
- * @returns {Array}
+ * @param challenges {Challenge[]}
+ * @returns {Array<{ id: number, title: string, text: string }>}
  */
 export function cardResource(challenges) {
   return challenges.map((challenge) => {
-    const text = challenge?.group?.name || challenge.user_challenges[0].user.username;
+    const text = challenge?.group?.name || challenge.userChallenges[0].user.username;
 
     return {
       id: challenge.id,

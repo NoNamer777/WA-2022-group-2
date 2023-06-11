@@ -13,11 +13,11 @@ export class ChallengeDayService {
   static #instance;
 
   /**
-   * @param challengeDayId {number}
+   * @param challengeDayData {ChallengeDay}
    */
-  async updateChallengeDay(challengeDayId, challengeDayData) {
+  async updateChallengeDay(challengeDayData) {
     return await HttpRequestService.instance().putRequest(
-      `/api/challenge/day/${challengeDayId}`,
+      `/api/challenge/day/${challengeDayData.id}`,
       challengeDayData
     );
   }

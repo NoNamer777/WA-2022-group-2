@@ -2,93 +2,34 @@
   <div class="d-flex justify-content-center">
     <div class="check position-relative w-100">
       <input
-        :id="challengeDay.id"
         type="checkbox"
+        :id="'challenge-day-' + challengeDay.id"
         :checked="checked"
-        @change="$emit('update:checked', $event.target.checked)"
         :disabled="isCompleted || isDisabled"
+        @change="() => onToggleCheck('checked')"
       />
       <label
-        :for="challengeDay.id"
-        :aria-label="`${imageName}, dag ${dayNumber}`"
         class="transition"
+        :for="'challenge-day-' + challengeDay.id"
+        :aria-label="`${imageName}, dag ${dayNumber}`"
         :style="{
-          transform: `rotateY(${this.deg}deg)`
+          transform: `rotateY(${deg}deg)`
         }"
       />
-      <p class="position-absolute top-50" :class="getButtonClass" :aria-hidden="true">
-        {{ getCheckmarks }}
+      <p class="position-absolute top-50" :class="buttonClass" :aria-hidden="!checked">
+        {{ checkmark }}
       </p>
-      <div class="d-flex justify-content-center" :class="getDayClass">Dag {{ dayNumber }}</div>
+      <div class="d-flex justify-content-center" :class="dayClass">Dag {{ dayNumber }}</div>
     </div>
   </div>
 </template>
 
-<script>
-import { ChallengeDayService } from '../services/challenge_day.service.js';
-
-export default {
-  name: 'CheckBox',
-  data() {
-    return {
-      deg: Number,
-      isDisabled: Boolean
-    };
-  },
-  created() {
-    this.deg = 0;
-    this.isDisabled = this.getIsDisabled();
-  },
-  props: {
-    challengeDay: Object,
-    dayNumber: Number,
-    todayNumber: Number,
-    imageName: String,
-    imagePath: String,
-    checked: Boolean,
-    isOwner: Boolean,
-    isCompleted: Boolean
-  },
-  methods: {
-    rotate() {
-      this.deg += 180;
-    },
-    getIsDisabled() {
-      return this.isOwner
-        ? this.dayNumber > this.todayNumber || this.dayNumber < this.todayNumber - 1
-        : true;
-    }
-  },
-  watch: {
-    async checked() {
-      this.rotate();
-      await ChallengeDayService.instance().updateChallengeDay(
-        this.challengeDay.id,
-        this.challengeDay
-      );
-    }
-  },
-  computed: {
-    getButtonClass() {
-      return this.checked ? 'text-tertiary' : 'text-secondary';
-    },
-    getCheckmarks() {
-      return this.checked ? '✔' : this.dayNumber < this.todayNumber ? '✘' : ' ';
-    },
-    getDayClass() {
-      return this.dayNumber === this.todayNumber ? 'fw-bold text-primary' : '';
-    }
-  }
-};
-</script>
-
 <style scoped>
-.check input[type='checkbox'] {
-  position: absolute;
-  left: -100vw;
+.check input {
+  display: none;
 }
 
-.check input[type='checkbox'] + label {
+.check input + label {
   width: 75px;
   height: 75px;
   background-image: v-bind('imagePath');
@@ -97,21 +38,21 @@ export default {
   background-repeat: no-repeat;
   margin: 5px;
   filter: grayscale(1);
-  opacity: 50%;
+  opacity: 0.5;
 }
 
-.check input[type='checkbox']:checked + label {
+.check input:checked + label {
   filter: none;
-  opacity: 100%;
+  opacity: 1;
 }
 
-.check input[type='checkbox']:focus-visible + label {
+.check input:focus-visible + label {
   outline: auto;
-  opacity: 100%;
+  opacity: 1;
 }
 
-.check input[type='checkbox']:hover + label {
-  opacity: 100%;
+.check input:hover + label {
+  opacity: 1;
 }
 
 .transition {
@@ -120,9 +61,61 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .check input[type='checkbox'] + label {
+  .check input + label {
     width: 52px;
     height: 52px;
   }
 }
 </style>
+
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue';
+import { ChallengeDayService } from '../services';
+
+const emit = defineEmits(['checked']);
+
+const props = defineProps({
+  challengeDay: Object,
+  dayNumber: Number,
+  todayNumber: Number,
+  imageName: String,
+  imagePath: String,
+  checked: Boolean,
+  isOwner: Boolean,
+  isCompleted: Boolean
+});
+
+const deg = ref(0);
+
+const isDisabled = computed(() =>
+  !props.isOwner
+    ? true
+    : props.dayNumber > props.todayNumber || props.dayNumber < props.todayNumber - 1
+);
+
+const buttonClass = computed(() => (props.checked ? 'text-tertiary' : 'text-secondary'));
+
+const checkmark = computed(() =>
+  props.checked ? '✔' : props.dayNumber < props.todayNumber ? '✘' : ' '
+);
+
+const dayClass = computed(() =>
+  props.dayNumber === props.todayNumber ? 'fw-bold text-primary' : ''
+);
+
+function onToggleCheck() {
+  if (props.isCompleted) return;
+  emit('checked');
+}
+
+async function updateChallengeDay() {
+  deg.value += 180;
+
+  await ChallengeDayService.instance().updateChallengeDay(props.challengeDay);
+}
+
+watch(
+  () => props.checked,
+  async () => await updateChallengeDay()
+);
+</script>

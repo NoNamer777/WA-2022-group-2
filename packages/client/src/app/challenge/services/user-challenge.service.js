@@ -21,13 +21,12 @@ export class UserChallengeService {
   }
 
   /**
-   * @param userChallengeId {number}
    * @param userChallengeData {UserChallenge}
    * @return {Promise<Badge>}
    */
-  async completeUserChallenge(userChallengeId, userChallengeData) {
+  async completeUserChallenge(userChallengeData) {
     return await HttpRequestService.instance().putRequest(
-      `/api/userChallenge/${userChallengeId}`,
+      `/api/user-challenge/${userChallengeData.id}`,
       userChallengeData
     );
   }
@@ -37,7 +36,7 @@ export class UserChallengeService {
    */
   async deleteUserChallenge(userChallengeId) {
     return await HttpRequestService.instance().deleteRequest(
-      `/api/userchallenge/${userChallengeId}`
+      `/api/user-challenge/${userChallengeId}`
     );
   }
 }

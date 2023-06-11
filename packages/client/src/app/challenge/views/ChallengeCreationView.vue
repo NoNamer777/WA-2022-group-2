@@ -7,13 +7,13 @@
           <CustomFormKit
             v-model="challenge.name"
             label="Wat wil je doen?"
-            name="name"
+            name="challenge-name"
             placeholder="Fruit naar school in plaats van voorverpakte snacks"
             validation="required|length:5,80"
             :dataList="suggestions"
           />
           <CustomFormKit
-            v-model="challenge.start_date"
+            v-model="challenge.startDate"
             type="date"
             label="Startdatum"
             name="startDate"
@@ -24,16 +24,16 @@
           />
           <!-- TODO: Remove challenge for one and two days (for dev purposes) -->
           <CustomFormKit
-            v-model="challenge.amount_of_days"
+            v-model="challenge.numberOfDays"
             type="select"
             label="Selecteer het aantal dagen"
             placeholder="Selecteer het aantal dagen"
-            name="amountOfDays"
+            name="numberOfDays"
             :options="[1, 2, 5, 7, 10]"
             validation="required"
           />
           <CustomFormKit
-            v-model="challenge.group_id"
+            v-model="challenge.groupId"
             type="select"
             label="Selecteer groep"
             placeholder="Selecteer groep"
@@ -49,100 +49,92 @@
   </main>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script setup>
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { CustomFormKit } from '../../shared/index.js';
-import { ChallengeSuggestionService } from '../services/challenge.suggestion.service.js';
-import { useAuthStore } from '../../auth/index.js';
-import { GroupService } from '../../group/services/group.service.js';
-import { ChallengeService } from '../services/index.js';
+import { ChallengeSuggestionService, ChallengeService } from '../services';
+import { useAuthStore } from '../../auth';
+import { GroupService } from '../../group';
+import { CustomFormKit } from '../../shared';
+import { storeToRefs } from 'pinia';
 
-export default {
-  name: 'ChallengeCreationView',
-  components: { CustomFormKit },
-  setup() {
-    const authStore = useAuthStore();
-    const user = authStore.user;
-    const router = useRouter();
-    const suggestions = ref([]);
-    const yesterday = ref();
-    const groups = ref([{ label: 'Alleen ik', value: null }]);
+const { user: authenticatedUser } = storeToRefs(useAuthStore());
+const router = useRouter();
 
-    const populateSuggestions = async () => {
-      try {
-        const suggestionData = await ChallengeSuggestionService.instance().getSelection();
-        suggestionData.forEach((suggestion) => suggestions.value.push(suggestion.name));
-      } catch (error) {
-        console.error(error);
-      }
-    };
+/** @type {import('vue').Ref<string[]>} */
+const suggestions = ref([]);
 
-    const getDate = (days) => {
-      let date = new Date();
-      date.setDate(date.getDate() - days);
-      return date;
-    };
+/** @type {import('vue').Ref<Date>} */
+const yesterday = ref();
 
-    const populateGroups = async () => {
-      try {
-        const groupData = await GroupService.instance().getAllForUser(user.id);
-        groupData.forEach(
-          (group) =>
-            (groups.value = [...groups.value, { label: group.name, value: group.id.toString() }])
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
+/** @type {import('vue').Ref<[{ label: string, value: string | null }]>} */
+const groups = ref([{ label: 'Alleen ik', value: null }]);
 
-    const challenge = ref({
-      name: '',
-      start_date: '',
-      end_date: '',
-      amount_of_days: '',
-      group_id: ''
-    });
+/** @type {import('vue').Ref<Challenge>} */
+const challenge = ref({
+  name: '',
+  startDate: '',
+  endDate: '',
+  numberOfDays: '1',
+  groupId: null
+});
 
-    const createChallenge = async () => {
-      /* output submit object */
-      const start = new Date(challenge.value.start_date);
-      const end = new Date(
-        start.setDate(start.getDate() + parseInt(challenge.value.amount_of_days) - 1)
-      );
-      challenge.value.end_date = end.toISOString().split('T')[0];
-      delete challenge.value.amount_of_days;
+onMounted(async () => {
+  yesterday.value = getDate(2);
+  await populateSuggestions();
+  await populateGroups();
+});
 
-      try {
-        const challengeResponse = await ChallengeService.instance().postChallenge(
-          user.id,
-          challenge.value
-        );
-        await router.push({
-          name: 'challenge_progress',
-          params: { challengeId: challengeResponse.id }
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
+/** @return {Promise<void>} */
+async function populateSuggestions() {
+  try {
+    const results = await ChallengeSuggestionService.instance().getSuggestions();
 
-    return {
-      suggestions,
-      populateSuggestions,
-      yesterday,
-      getDate,
-      groups,
-      populateGroups,
-      challenge,
-      createChallenge
-    };
-  },
-
-  mounted() {
-    this.yesterday = this.getDate(2);
-    this.populateSuggestions();
-    this.populateGroups();
+    results.forEach((suggestion) => (suggestions.value = [...suggestions.value, suggestion.name]));
+  } catch (error) {
+    console.error(error);
   }
-};
+}
+
+/** @return {Promise<void>} */
+async function populateGroups() {
+  try {
+    const groupData = await GroupService.instance().getAllForUser(authenticatedUser.value.id);
+    groupData.forEach(
+      (group) =>
+        (groups.value = [...groups.value, { label: group.name, value: group.id.toString() }])
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/** @return {Promise<void>} */
+async function createChallenge() {
+  const start = new Date(challenge.value.startDate);
+  const end = new Date(start.setDate(start.getDate() + parseInt(challenge.value.numberOfDays)) - 1);
+
+  challenge.value.endDate = end.toISOString().split('T')[0];
+
+  try {
+    const challengeResponse = await ChallengeService.instance().create(
+      authenticatedUser.value.id,
+      challenge.value
+    );
+    await router.push({
+      name: 'challenge_progress',
+      params: { challengeId: challengeResponse.id }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/** @return {Date} */
+function getDate(days) {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+
+  return date;
+}
 </script>

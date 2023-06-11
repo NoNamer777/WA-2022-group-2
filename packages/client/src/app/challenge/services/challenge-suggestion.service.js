@@ -11,8 +11,8 @@ export class ChallengeSuggestionService {
   /** @type {ChallengeSuggestionService} */
   static #instance;
 
-  /** @return {Promise<ChallengeSuggestion[]>} */
-  async getSelection() {
+  /** @return {Promise<ChallengeSuggestionModel[]>} */
+  async getSuggestions() {
     return await HttpRequestService.instance().getRequest('/api/challenge/suggestion');
   }
 }

@@ -3,8 +3,11 @@
     <div class="d-flex flex-row flex-wrap justify-content-between">
       <div>
         <div class="mb-1 w-100">
-          <div class="d-flex flex-row flex-wrap w-100 mr-auto justify-content-between">
-            <div v-if="isEditing" tabindex="-1" ref="input">
+          <div
+            class="d-flex flex-row flex-wrap w-100 mr-auto justify-content-between"
+            v-if="challenge"
+          >
+            <div v-if="isEditing">
               <FormKit type="form" @submit="saveText" :actions="false" :incomplete-message="false">
                 <CustomFormKit
                   v-model="challenge.name"
@@ -61,33 +64,7 @@
             </li>
           </ul>
         </div>
-        <div class="btn-group">
-          <button
-            type="button"
-            class="btn btn-sm btn-tertiary text-dark dropdown-toggle my-2 ms-1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Wissel challenge
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a class="dropdown-item small" role="menuitem" :href="'/challenge/create'">
-                Maak nieuwe challenge aan
-              </a>
-            </li>
-            <li class="dropdown-divider" />
-            <li v-for="challenge in currentChallenges" :key="challenge.id">
-              <a
-                class="dropdown-item small"
-                role="menuitem"
-                :href="`/challenge/${challenge.id}/progress`"
-              >
-                {{ challenge.name }}
-              </a>
-            </li>
-          </ul>
-        </div>
+        <SelectChallengeButton />
       </div>
     </div>
 
@@ -98,160 +75,178 @@
         :userChallenge="userChallenge"
         :todayNumber="todayNumber"
         :isActive="isActive"
-        :isOwner="getIsOwner(userChallenge)"
-        :class="getClass(userChallenge)"
+        :isOwner="isOwner(userChallenge)"
+        :class="challengeProgressClass(userChallenge)"
       />
     </div>
     <AlertModal
-      :key="user.id"
-      :title="alertTitle"
-      :content="alertBody"
-      :cancellation="cancellation"
-      :confirmation="confirmation"
+      :key="authenticatedUser.id"
+      title="Challenge verlaten"
+      content="Weet je zeker dat je deze challenge wilt verlaten?"
+      cancellation="Nee, breng me terug!"
+      confirmation="Ja, ik weet het zeker"
       @confirm="leaveChallenge"
     ></AlertModal>
   </main>
 </template>
 
-<script>
-import { ChallengeProgress } from '../components/index.js';
-import { useAuthStore } from '../../auth/index.js';
-import CustomFormKit from '../../shared/components/form/CustomFormKit.vue';
-import { nextTick, ref } from 'vue';
-import { ChallengeService } from '../services/index.js';
-import { UserChallengeService } from '../services/user_challenge.service.js';
+<script setup>
+import { computed, nextTick, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { ChallengeProgress, SelectChallengeButton } from '../components';
+import { ChallengeService, UserChallengeService } from '../services';
 import { router } from '../../app-router.js';
-import AlertModal from '../../shared/components/modal/AlertModal.vue';
+import { useAuthStore } from '../../auth';
+import { AlertModal, CustomFormKit } from '../../shared/components';
+import { storeToRefs } from 'pinia';
 
-export default {
-  name: 'ChallengeProgressView',
-  components: { AlertModal, CustomFormKit, ChallengeProgress },
-  setup() {
-    const authStore = useAuthStore();
-    const user = authStore.user;
-    const route = useRoute();
-    const challenge = ref('');
-    const currentChallenges = ref([]);
-    const userChallenges = ref([]);
-    const startDate = ref();
-    const today = ref(1);
-    const todayNumber = ref(1);
-    const isActive = ref(true);
-    const dayTitle = ref('');
-    const isEditing = ref(false);
+const { user: authenticatedUser } = storeToRefs(useAuthStore());
 
-    const alertTitle = 'Challenge verlaten';
-    const alertBody = 'Weet je zeker dat je deze challenge wilt verlaten?';
-    const cancellation = 'Nee, breng me terug!';
-    const confirmation = 'Ja, ik weet het zeker';
+const route = useRoute();
 
-    const getChallenge = async () => {
-      try {
-        challenge.value = await ChallengeService.instance().getChallengeById(
-          route.params.challengeId
-        );
-        startDate.value = getDateString(challenge.value.start_date);
-        todayNumber.value = getTodaysDayNumber(challenge.value.start_date);
-        isActive.value = getIsActive(challenge.value.start_date, challenge.value.end_date);
-        dayTitle.value = getTodayTitle();
-      } catch (error) {
-        console.error(error);
-      }
-    };
+/** @type {import('vue').Ref<Challenge | null>} */
+const challenge = ref(null);
 
-    const getAllChallenges = async () => {
-      try {
-        const challenges = await ChallengeService.instance().getChallenges(user.id);
-        currentChallenges.value = challenges.currentChallenges;
-      } catch (error) {
-        console.error(error);
-      }
-    };
+/** @type {import('vue').Ref<UserChallenge | null>} */
+const userChallenge = ref(null);
 
-    const getUserChallenges = async () => {
-      // TODO: sort userchallenges in backend?
-      userChallenges.value = await UserChallengeService.instance().getUserChallengesById(
-        route.params.challengeId
-      );
-      userChallenges.value = getAndSortUserChallenges(userChallenges.value);
-    };
+/** @type {import('vue').Ref<number | null>} */
+const challengeIdFromRoute = ref(null);
 
-    const getAndSortUserChallenges = (challenges) => {
-      const sorted = challenges.sort((a, b) => a.username < b.username);
-      return sorted.sort((a, b) => (b.user_id === user.id) - (a.user_id === user.id));
-    };
+/** @type {import('vue').Ref<UserChallenge[]>} */
+const userChallenges = ref([]);
 
-    const getDateString = (date) => {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString('nl-NL', options);
-    };
-    const getTodaysDayNumber = (date) => {
-      const todayDiff = new Date().getTime() - new Date(date).getTime();
-      return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
-    };
-    const getIsActive = (startDate, endDate) => {
-      const start = new Date(startDate).getTime();
-      let end = new Date(endDate).setHours(23, 59, 59);
-      end = new Date(end).getTime();
-      const today = new Date().getTime();
-      return end >= today && start <= today;
-    };
-    const getTodayTitle = () => {
-      today.value = getDateString(new Date());
-      return isActive.value ? `Dag ${todayNumber.value}, ${today.value}` : `${today.value}`;
-    };
+/** @type {import('vue').Ref<string | null>} */
+const startDate = ref(null);
 
-    return {
-      user,
-      challenge,
-      getChallenge,
-      currentChallenges,
-      getAllChallenges,
-      userChallenges,
-      getUserChallenges,
-      startDate,
-      getDateString,
-      todayNumber,
-      today,
-      dayTitle,
-      isActive,
-      isEditing,
-      alertTitle,
-      alertBody,
-      cancellation,
-      confirmation
-    };
-  },
-  mounted() {
-    this.getChallenge();
-    this.getAllChallenges();
-    this.getUserChallenges();
-  },
-  methods: {
-    getIsOwner(userChallenge) {
-      return this.user.id === userChallenge.user_id;
-    },
-    getClass(userChallenge) {
-      return this.getIsOwner(userChallenge) ? 'bg-white' : 'bg-opponent';
-    },
-    adjustText() {
-      this.isEditing = true;
-      nextTick(() => {
-        this.$refs.input.focus();
-      });
-    },
-    async saveText() {
-      await ChallengeService.instance().updateChallenge(this.challenge.id, this.challenge);
-      this.isEditing = false;
-      nextTick(() => {
-        this.$refs.editButton.focus();
-      });
-    },
-    async leaveChallenge() {
-      await UserChallengeService.instance().deleteUserChallenge(this.userChallenges[0].id);
-      await router.push({ name: 'challenge' });
-    }
+/** @type {import('vue').Ref<string | null>} */
+const today = ref(null);
+
+/** @type {import('vue').Ref<boolean>} */
+const isActive = ref(true);
+
+/** @type {import('vue').Ref<string>} */
+const dayTitle = ref('');
+
+/** @type {import('vue').Ref<boolean>} */
+const isEditing = ref(false);
+
+const editButton = ref(null);
+
+/** @type {import('vue').ComputedRef<number>} */
+const todayNumber = computed(() => {
+  if (!challenge.value?.startDate) {
+    return 1;
   }
-};
+  const todayDiff = new Date().getTime() - new Date(challenge.value.startDate).getTime();
+  return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
+});
+
+onMounted(async () => {
+  getChallengeIdFromRoute();
+
+  await getUserChallenges();
+
+  setChallenge();
+});
+
+function getChallengeIdFromRoute() {
+  challengeIdFromRoute.value = parseInt(route.params['challengeId']);
+}
+
+function setChallenge() {
+  for (const entry of userChallenges.value) {
+    if (entry.userChallenges.id !== challengeIdFromRoute.value) continue;
+    if (challenge.value !== null) break;
+
+    userChallenge.value = entry;
+    challenge.value = entry.userChallenges;
+
+    startDate.value = getDateString(challenge.value.startDate);
+    isActive.value = checkIsActive(challenge.value.startDate, challenge.value.endDate);
+    dayTitle.value = getTodayTitle();
+  }
+}
+
+/** @return {Promise<void>} */
+async function getUserChallenges() {
+  // TODO: sort UserChallenges in backend?
+  const results = await UserChallengeService.instance().getUserChallengesById(
+    challengeIdFromRoute.value
+  );
+
+  userChallenges.value = sortUserChallenges(results);
+}
+
+/** @return {Promise<void>} */
+async function leaveChallenge() {
+  await UserChallengeService.instance().deleteUserChallenge(userChallenges.value[0].id);
+  await router.push({ name: 'challenge' });
+}
+
+/** @return {Promise<void>} */
+async function saveText() {
+  await ChallengeService.instance().update(challenge.value);
+  isEditing.value = false;
+
+  await nextTick(() => editButton.value.focus());
+}
+
+function adjustText() {
+  isEditing.value = true;
+
+  nextTick(() => {
+    document.querySelector(`[name='name']`).focus();
+  });
+}
+
+function challengeProgressClass(userChallenge) {
+  return isOwner(userChallenge) ? 'bg-white' : 'bg-opponent';
+}
+
+function checkIsActive(startDate, endDate) {
+  const start = new Date(startDate).getTime();
+  let end = new Date(endDate).setHours(23, 59, 59);
+  end = new Date(end).getTime();
+
+  const today = new Date().getTime();
+
+  return end >= today && start <= today;
+}
+
+/**
+ * Returns a formatted date string.
+ * @param date {string | Date}
+ * @return {string}
+ */
+function getDateString(date) {
+  return new Date(date).toLocaleDateString('nl-NL', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+function getTodayTitle() {
+  today.value = getDateString(new Date());
+  return isActive.value ? `Dag ${todayNumber.value}, ${today.value}` : `${today.value}`;
+}
+
+function isOwner(userChallenge) {
+  return authenticatedUser.value.id === userChallenge.user.id;
+}
+
+/**
+ * Sort the Challenges by username alphabetically, and put the authenticated user on top.
+ * @param challenges {UserChallenge[]}
+ * @return {UserChallenge[]}
+ */
+function sortUserChallenges(challenges) {
+  return challenges
+    .sort((a, b) => a.user.username.localeCompare(b.user.username))
+    .sort(
+      (a, b) =>
+        (b.user.id === authenticatedUser.value.id) - (a.user.id === authenticatedUser.value.id)
+    );
+}
 </script>

@@ -10,4 +10,7 @@ export class UserChallenge {
 
   /** @type {Challenge} */
   challenge;
+
+  /** @type {ChallengeDay[]} */
+  days;
 }

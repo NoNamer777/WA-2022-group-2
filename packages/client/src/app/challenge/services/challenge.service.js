@@ -14,25 +14,26 @@ export class ChallengeService {
 
   /**
    * @param userId {number}
-   * @return {Promise<{pastChallenges: Array, currentChallenges: Array}>}
+   * @return {Promise<{concludedChallenges: Array<Challenge>, activeChallenges: Array<Challenge>}>}
    */
-  async getChallenges(userId) {
+  async getAllForUser(userId) {
     return await HttpRequestService.instance().getRequest(`/api/user/${userId}/challenges`);
   }
 
   /**
-   * @param challengeId {string | RouteParamValue[]}
+   * @param challengeId {number}
    * @return {Promise<{Challenge}>}
    */
-  async getChallengeById(challengeId) {
+  async getById(challengeId) {
     return await HttpRequestService.instance().getRequest(`/api/challenge/${challengeId}`);
   }
 
   /**
    * @param userId {number}
-   * @param challengeData
+   * @param challengeData {Challenge}
+   * @return {Challenge}
    */
-  async postChallenge(userId, challengeData) {
+  async create(userId, challengeData) {
     return await HttpRequestService.instance().postRequest(
       `/api/user/${userId}/challenge`,
       challengeData
@@ -40,12 +41,12 @@ export class ChallengeService {
   }
 
   /**
-   * @param challengeId {number}
-   * @param challengeData
+   * @param challengeData {Challenge}
+   * @param challengeData {Challenge}
    */
-  async updateChallenge(challengeId, challengeData) {
+  async update(challengeData) {
     return await HttpRequestService.instance().putRequest(
-      `/api/challenge/${challengeId}`,
+      `/api/challenge/${challengeData.id}`,
       challengeData
     );
   }
