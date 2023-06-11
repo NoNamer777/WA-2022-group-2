@@ -1,5 +1,8 @@
 <template>
-  <CardList empty-state="Je hebt geen groepen" :items="props.groups" />
+  <CardList
+    empty-state="Je zit helaas nog niet in een groep. Nodig iemand uit en maak een groep aan!"
+    :items="props.groups"
+  />
 </template>
 
 <script setup>

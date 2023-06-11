@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from './auth';
 import { LoginView, RegisterView, RequestPasswordResetView, ResetPasswordView } from './auth/views';
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
-import { HomeView, InfoView } from './core/views';
+import { HomeView } from './core/views';
 import PageNotFound from './errors/PageNotFound.vue';
 import PersonalPageView from './personal_page/views/PersonalPageView.vue';
 
@@ -58,14 +58,6 @@ export const router = createRouter({
       component: RegisterView,
       meta: {
         title: 'Registreer'
-      }
-    },
-    {
-      path: '/info',
-      name: 'info',
-      component: InfoView,
-      meta: {
-        title: 'Informatie'
       }
     },
     {

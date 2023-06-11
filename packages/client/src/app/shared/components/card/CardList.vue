@@ -22,7 +22,7 @@
         </div>
       </template>
     </div>
-    <small v-if="!items.length">{{ props.emptyState }}</small>
+    <EmptyState v-if="!items.length" :empty-state="props.emptyState" />
   </section>
 </template>
 

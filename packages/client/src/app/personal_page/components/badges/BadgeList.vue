@@ -18,13 +18,17 @@
       </div>
     </template>
     <template v-else>
-      <small class="m-0">Je hebt nog geen badges behaald</small>
+      <EmptyState
+        class="m-0 w-100"
+        :empty-state="'Je hebt helaas nog geen badges behaald. Start een nieuwe challenge!'"
+      />
     </template>
   </div>
 </template>
 
 <script setup>
 import { inject } from 'vue';
+import EmptyState from '../../../shared/components/EmptyState.vue';
 
 const props = defineProps({
   earnedBadges: Array

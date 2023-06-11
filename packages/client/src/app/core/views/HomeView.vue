@@ -1,17 +1,18 @@
 <template>
-  <main>
-    <h1 class="mb-4">Wat is Wasted?</h1>
-    <p class="mb-4">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est explicabo nulla perferendis!
-      Eius ex illo illum optio quaerat! Expedita facere hic impedit in iste quia ratione sint
-      suscipit. Aliquam architecto corporis cum deleniti doloribus fugiat perspiciatis, qui quis
-      ratione repellendus! Cum eaque est provident rerum tempore! Beatae maiores pariatur placeat?
-    </p>
-    <router-link v-if="!isAuthenticated" class="btn btn-primary me-3" :to="{ name: 'register' }">
-      Registreer
-    </router-link>
-    <router-link class="btn btn-primary" :to="{ name: 'info' }"> Plastic Afval! </router-link>
-    <img class="w-25 float-end" src="/assets/images/mascot/mascotte_happy.png" alt="mascot" />
+  <main class="d-flex flex-column flex-md-row gap-5 align-items-center">
+    <section>
+      <h1 class="mb-4">Wat is Wasted?</h1>
+      <p class="mb-4 lead">
+        Welkom op de website!<br /><br />
+        Misschien heb je er nooit bij stilgestaan, maar de aarde is al 4,6 miljard jaar oud! Op dit
+        moment worden er veel plastic flessen weggegooid. Wil jij ons meehelpen de wereld een dagje
+        langer mee te laten draaien? <br /><br />📝✍️🌐 + 🤝🎮🕹️📲
+      </p>
+      <router-link v-if="!isAuthenticated" class="btn btn-primary me-3" :to="{ name: 'register' }">
+        Registreer
+      </router-link>
+    </section>
+    <img class="w-50 h-50" src="/assets/images/mascot/mascotte_happy.png" alt="mascot" />
   </main>
 </template>
 

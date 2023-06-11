@@ -19,15 +19,15 @@
           <Tab name="Huidige">
             <CardList
               :to-route="toChallengeProgressRoute"
-              empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="challenges.activeChallenges"
+              empty-state="Je hebt helaas nog geen challenges open staan. Start je eerste door op aanmaken te drukken!"
+              :items="challenges.currentChallenges"
             />
           </Tab>
           <Tab name="Afgerond">
             <CardList
               :to-route="toChallengeProgressRoute"
-              empty-state="Je hebt geen uitdagingen momenteel open staan"
-              :items="challenges.concludedChallenges"
+              empty-state="Je hebt helaas nog geen challenges afgerond. Start je eerste door op aanmaken te drukken!"
+              :items="challenges.pastChallenges"
             />
           </Tab>
         </Tabs>
