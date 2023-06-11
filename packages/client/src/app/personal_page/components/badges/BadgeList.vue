@@ -13,7 +13,7 @@
         />
         <div class="fw-bold text-center">
           <p class="h3 text-primary">{{ earnedBadge.badge.name }}</p>
-          <p>{{ earnedBadge.date }}</p>
+          <p>{{ formatDate(earnedBadge.date) }}</p>
         </div>
       </div>
     </template>
@@ -33,4 +33,12 @@ import EmptyState from '../../../shared/components/EmptyState.vue';
 const props = defineProps({
   earnedBadges: Array
 });
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString('nl-NL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+}
 </script>
