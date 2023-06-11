@@ -9,7 +9,7 @@ export const FormKitOptions = defaultConfig({
     nl: {
       validation: {
         password() {
-          return 'We raden aan een combinatie te maken van hoofdletters, kleine letters, cijfers en speciale tekens.';
+          return 'Een wachtwoord moet minimaal 8 tekens bevatten waarvan ten minste 1 kleine letter, 1 hoofd letter, 1 cijfer, en 1 symbool.';
         }
       }
     }
