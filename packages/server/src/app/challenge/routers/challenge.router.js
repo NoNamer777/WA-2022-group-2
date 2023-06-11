@@ -3,11 +3,11 @@ import { checkSchema, matchedData } from 'express-validator';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
+import { challengeDayController } from '../controllers/challenge-day.controller.js';
+import { challengeSuggestionController } from '../controllers/challenge-suggestion.controller.js';
 import { challengeController } from '../controllers/challenge.controller.js';
-import { challengeDayController } from '../controllers/challenge_day.controller.js';
-import { challengeSuggestionController } from '../controllers/challenge_suggestion.controller.js';
-import { userChallengeController } from '../controllers/user_challenge.controller.js';
 import { challengeSchema, newChallengeSchema } from '../validators/challenge.validator.js';
+import { userChallengeController } from '../controllers/user-challenge.controller.js';
 
 export const challengeRouter = express.Router();
 

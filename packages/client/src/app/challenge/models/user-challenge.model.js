@@ -5,9 +5,9 @@ export class UserChallenge {
   /** @type {boolean} */
   completed;
 
-  /** @type {number} */
-  user_id;
+  /** @type {User} */
+  user;
 
-  /** @type {number} */
-  challenge_id;
+  /** @type {Challenge} */
+  challenge;
 }

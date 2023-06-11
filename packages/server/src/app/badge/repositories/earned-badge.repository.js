@@ -1,4 +1,4 @@
-import { EarnedBadgeEntity } from '../entities/earned_badge.entity.js';
+import { EarnedBadgeEntity } from '../entities/earned-badge.entity.js';
 
 class EarnedBadgeRepository {
   /**

@@ -1,4 +1,4 @@
-import { UserGroupService } from '../services/user_group.service.js';
+import { UserGroupService } from '../services/user-group.service.js';
 
 class UserGroupController {
   /**
@@ -8,7 +8,7 @@ class UserGroupController {
   async getById(groupIdParam) {
     console.info(`GroupController - Getting data for Group with ID: '${groupIdParam}'`);
 
-    return await UserGroupService.instance().getAllById(parseInt(groupIdParam));
+    return await UserGroupService.instance().getAllUsersOfGroup(parseInt(groupIdParam));
   }
 }
 

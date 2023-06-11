@@ -4,7 +4,7 @@ import { rateLimit } from 'express-rate-limit';
 import { authRouter } from './auth/index.js';
 import { JwtService } from './auth/services/jwt.service.js';
 import { challengeRouter } from './challenge/routers/challenge.router.js';
-import { userChallengeRouter } from './challenge/routers/user_challenge.router.js';
+import { userChallengeRouter } from './challenge/routers/user-challenge.router.js';
 import { corsMiddleware, errorHandler } from './core/middleware/index.js';
 import { DatabaseService, MailService } from './core/services/index.js';
 import { userRouter } from './user/index.js';

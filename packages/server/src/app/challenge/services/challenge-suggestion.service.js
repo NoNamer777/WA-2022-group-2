@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { challengeSuggestionRepository } from '../repositories/challenge_suggestion.repository.js';
+import { challengeSuggestionRepository } from '../repositories/challenge-suggestion.repository.js';
 
 export class ChallengeSuggestionService {
   /** @return {ChallengeSuggestionService} */
@@ -14,7 +14,7 @@ export class ChallengeSuggestionService {
   static #instance;
 
   /** @return {Promise<ChallengeSuggestionEntity[]>} */
-  async getSelection() {
-    return await challengeSuggestionRepository.findSelection(Sequelize.literal('rand()'), 5);
+  async getRandom() {
+    return await challengeSuggestionRepository.findRandom(Sequelize.literal('rand()'), 5);
   }
 }

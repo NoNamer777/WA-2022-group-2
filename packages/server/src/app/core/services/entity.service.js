@@ -1,26 +1,27 @@
-import { BadgeEntity, initializeBadgeEntity } from '../../badge/entities/badge.entity.js';
 import {
+  BadgeEntity,
   EarnedBadgeEntity,
+  initializeBadgeEntity,
   initializeEarnedBadgeEntity
-} from '../../badge/entities/earned_badge.entity.js';
+} from '../../badge/index.js';
+import {
+  ChallengeDayEntity,
+  initializeChallengeDayEntity
+} from '../../challenge/entities/challenge-day.entity.js';
+import { initializeChallengeSuggestionEntity } from '../../challenge/entities/challenge-suggestion.entity.js';
 import {
   ChallengeEntity,
   initializeChallengeEntity
 } from '../../challenge/entities/challenge.entity.js';
 import {
-  ChallengeDayEntity,
-  initializeChallengeDayEntity
-} from '../../challenge/entities/challenge_day.entity.js';
-import { initializeChallengeSuggestionEntity } from '../../challenge/entities/challenge_suggestion.entity.js';
-import {
   UserChallengeEntity,
   initializeUserChallengeEntity
-} from '../../challenge/entities/user_challenge.entity.js';
+} from '../../challenge/entities/user-challenge.entity.js';
 import { GroupEntity, initializeGroupEntity } from '../../group/entities/group.entity.js';
 import {
   UserGroupEntity,
   initializeUserGroupEntity
-} from '../../group/entities/user_group.entity.js';
+} from '../../group/entities/user-group.entity.js';
 import { UserEntity, initializeUserEntity } from '../../user/index.js';
 
 export class EntityService {

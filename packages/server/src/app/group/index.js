@@ -1,1 +1,1 @@
-export * from './services/user_group.service.js';
+export * from './services/user-group.service.js';

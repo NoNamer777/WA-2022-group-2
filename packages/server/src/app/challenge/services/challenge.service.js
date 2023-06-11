@@ -4,11 +4,11 @@ import { BadRequestException, NotFoundException } from '../../core/models/index.
 import { GroupEntity } from '../../group/entities/group.entity.js';
 import { UserGroupService } from '../../group/index.js';
 import { UserEntity } from '../../user/index.js';
-import { UserChallengeEntity } from '../entities/user_challenge.entity.js';
+import { UserChallengeEntity } from '../entities/user-challenge.entity.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
-import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
 import { ChallengeDayService } from './challenge_day.service.js';
 import { UserChallengeService } from './user_challenge.service.js';
+import { userChallengeRepository } from '../repositories/user-challenge.repository.js';
 
 export class ChallengeService {
   /** @return {ChallengeService} */

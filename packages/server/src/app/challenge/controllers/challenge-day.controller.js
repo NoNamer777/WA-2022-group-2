@@ -1,4 +1,4 @@
-import { ChallengeDayService } from '../services/challenge_day.service.js';
+import { ChallengeDayService } from '../services/challenge-day.service.js';
 
 class ChallengeDayController {
   /**

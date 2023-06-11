@@ -1,6 +1,6 @@
 import { UserEntity } from '../../user/index.js';
 import { BadgeEntity } from '../entities/badge.entity.js';
-import { earnedBadgeRepository } from '../repositories/earned_badge.repository.js';
+import { earnedBadgeRepository } from '../repositories/earned-badge.repository.js';
 
 export class EarnedBadgeService {
   /** @return {EarnedBadgeService} */

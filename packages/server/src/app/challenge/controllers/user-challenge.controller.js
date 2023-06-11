@@ -1,16 +1,40 @@
-import { UserChallengeService } from '../services/user_challenge.service.js';
+import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
+import { UserChallengeService } from '../services/user-challenge.service.js';
 
 class UserChallengeController {
   /**
    * @param challengeIdParam {string}
+   * @param userId {number}
    * @return {Promise<UserChallengeEntity[]>}
    */
-  async getAllById(challengeIdParam) {
+  async getAllById(challengeIdParam, userId) {
     console.info(
       `UserChallengeController - Getting data for User Challenges with Challenge ID: '${challengeIdParam}'`
     );
+    const userChallengesByChallengeId = await UserChallengeService.instance().getAllOfChallenge(
+      parseInt(challengeIdParam)
+    );
+    let authorized = false;
 
-    return await UserChallengeService.instance().getAllById(parseInt(challengeIdParam));
+    for (const userChallenge of userChallengesByChallengeId) {
+      if (userChallenge.user.id !== userId) continue;
+      if (authorized) break;
+
+      authorized = true;
+    }
+    if (!authorized) {
+      throw new UnauthorizedException('Sorry, je hebt geen rechten om deze challenge te bekijken.');
+    }
+    return userChallengesByChallengeId;
+  }
+
+  /**
+   * @param challengeData {ChallengeEntity}
+   * @param userId {number}
+   * @return {Promise<ChallengeEntity>}
+   */
+  async createChallenges(challengeData, userId) {
+    return await UserChallengeService.instance().startChallenge(challengeData, userId);
   }
 
   /**

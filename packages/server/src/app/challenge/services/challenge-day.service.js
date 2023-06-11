@@ -1,7 +1,7 @@
 import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
-import { challengeDayRepository } from '../repositories/challenge_day.repository.js';
-import { UserChallengeService } from './user_challenge.service.js';
+import { challengeDayRepository } from '../repositories/challenge-day.repository.js';
+import { UserChallengeService } from './user-challenge.service.js';
 
 export class ChallengeDayService {
   /** @return {ChallengeDayService} */
@@ -15,7 +15,7 @@ export class ChallengeDayService {
   static #instance;
 
   /**
-   * @param challengeDayData {{date: Date, earned: boolean, user_challenge_id}}
+   * @param challengeDayData {{date: Date, userChallengeId: number }}
    * @return {Promise<ChallengeDayEntity>}
    */
   async create(challengeDayData) {
@@ -28,7 +28,7 @@ export class ChallengeDayService {
    * @return {Promise<ChallengeDayEntity>}
    */
   async getById(challengeDayId, throwsError = true) {
-    const challengeDayById = await challengeDayRepository.findOneBy({ id: challengeDayId });
+    const challengeDayById = await challengeDayRepository.findOneById(challengeDayId);
 
     if (!challengeDayById && throwsError) {
       throw new NotFoundException(
@@ -58,11 +58,10 @@ export class ChallengeDayService {
       );
     }
 
-    console.log(challengeDayData.user_challenge_id);
     const userChallenge = await UserChallengeService.instance().getById(
-      challengeDayData.user_challenge_id
+      challengeDayData.userChallengeId
     );
-    if (userChallenge.user_id !== parseInt(userId)) {
+    if (userChallenge.userId !== parseInt(userId)) {
       throw new UnauthorizedException();
     }
 

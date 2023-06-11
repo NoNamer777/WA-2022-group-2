@@ -3,9 +3,10 @@ import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exc
 import { BadgeService, EarnedBadgeEntity, EarnedBadgeService } from '../../badge/index.js';
 import { BadRequestException, NotFoundException } from '../../core/models/index.js';
 import { UserEntity } from '../../user/index.js';
-import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
+import { ChallengeDayEntity } from '../entities/challenge-day.entity.js';
+import { ChallengeEntity } from '../entities/challenge.entity.js';
 import { challengeRepository } from '../repositories/challenge.repository.js';
-import { userChallengeRepository } from '../repositories/user_challenge.repository.js';
+import { userChallengeRepository } from '../repositories/user-challenge.repository.js';
 
 export class UserChallengeService {
   /** @return {UserChallengeService} */
@@ -59,6 +60,9 @@ export class UserChallengeService {
         {
           model: UserEntity,
           attributes: ['username', 'profile_image_path']
+        },
+        {
+          model: ChallengeEntity
         }
       ]
     );

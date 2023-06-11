@@ -1,8 +1,8 @@
-import { ChallengeSuggestionEntity } from '../entities/challenge_suggestion.entity.js';
+import { ChallengeSuggestionEntity } from '../entities/challenge-suggestion.entity.js';
 
 class ChallengeSuggestionRepository {
   /** @return {Promise<ChallengeSuggestionEntity[]>} */
-  async findSelection(order, limit) {
+  async findRandom(order, limit) {
     return await ChallengeSuggestionEntity.findAll({
       order: order,
       limit: limit,

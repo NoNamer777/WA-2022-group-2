@@ -1,8 +1,8 @@
-import { ChallengeDayEntity } from '../entities/challenge_day.entity.js';
+import { ChallengeDayEntity } from '../entities/challenge-day.entity.js';
 
 class ChallengeDayRepository {
   /**
-   * @param challengeDayData {{date: Date, earned: boolean, user_challenge_id}}
+   * @param challengeDayData {{date: Date, userChallengeId: number }}
    * @return {Promise<ChallengeDayEntity>}
    */
   create(challengeDayData) {
@@ -10,11 +10,14 @@ class ChallengeDayRepository {
   }
 
   /**
-   * @param whereClaus {import('sequelize').WhereOptions}
+   * @param challengeDayId {number}
    * @return {Promise<ChallengeDayEntity | null>}
    */
-  async findOneBy(whereClaus) {
-    return await ChallengeDayEntity.findOne({ where: { ...whereClaus }, rejectOnEmpty: false });
+  async findOneById(challengeDayId) {
+    return await ChallengeDayEntity.findOne({
+      where: { id: challengeDayId },
+      rejectOnEmpty: false
+    });
   }
   /**
    * @param updatedChallengeDayData {ChallengeDayEntity}

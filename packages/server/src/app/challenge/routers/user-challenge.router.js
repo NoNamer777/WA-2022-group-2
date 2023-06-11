@@ -1,7 +1,7 @@
 import express from 'express';
 import { jwtAuthHeaderValidator } from '../../auth/index.js';
 import { entityIdValidator } from '../../core/middleware/index.js';
-import { userChallengeController } from '../controllers/user_challenge.controller.js';
+import { userChallengeController } from '../controllers/user-challenge.controller.js';
 
 export const userChallengeRouter = express.Router();
 
