@@ -14,6 +14,7 @@ module.exports = {
     },
     earned: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: false
     },
     userChallengeId: {

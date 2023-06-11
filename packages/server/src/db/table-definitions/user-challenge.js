@@ -10,6 +10,7 @@ module.exports = {
     },
     completed: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: false
     },
     userId: {
