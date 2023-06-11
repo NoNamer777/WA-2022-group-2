@@ -1,11 +1,3 @@
-<script setup>
-const props = defineProps({
-  clickable: Boolean,
-  title: String,
-  text: String
-});
-</script>
-
 <template>
   <div class="card border shadow h-100" :class="{ 'card-clickable': props.clickable }">
     <div class="card-body">
@@ -21,3 +13,11 @@ const props = defineProps({
   cursor: pointer;
 }
 </style>
+
+<script setup>
+const props = defineProps({
+  clickable: Boolean,
+  title: String,
+  text: String
+});
+</script>

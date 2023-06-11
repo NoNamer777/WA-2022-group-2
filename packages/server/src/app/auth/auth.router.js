@@ -9,7 +9,7 @@ import { jwtAuthHeaderValidator } from './middleware/jwt-auth-header-validator.j
 
 export const authRouter = express.Router();
 
-// On the login and register routes, allow maximum 10 requests per 5 minutes
+// On the login and register routers, allow maximum 10 requests per 5 minutes
 const authLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 10,
