@@ -200,13 +200,8 @@ export class UserChallengeService {
     const endDate = new Date(createdChallenge.endDate);
     let startDate = new Date(createdChallenge.startDate);
 
-    console.log('startDate', startDate);
-    console.log('endDate', endDate);
-
     for (const userChallenge of userChallenges) {
-      console.log('needs creating challenge day?', startDate <= endDate);
       while (startDate <= endDate) {
-        console.log('creating challenge day');
         await ChallengeDayService.instance().create({
           date: startDate,
           userChallengeId: userChallenge.id
