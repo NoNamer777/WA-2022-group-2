@@ -1,11 +1,15 @@
 <template>
   <main class="container d-flex justify-content-center">
-    <section class="col-12 col-sm-10 col-lg-7">
+    <section
+      class="col-12 col-sm-10 col-lg-7 justify-content-center align-content-center"
+      :class="{ 'd-flex': !done }"
+    >
       <template v-if="done">
         <h1>Gelukt</h1>
         <p>
           Jou account is nog volledig geregistreed en je bent klaar om de uitdaging aan te gaan.
         </p>
+        <p>Klik <RouterLink :to="{ name: 'login' }">hier</RouterLink> om direct in te loggen.</p>
       </template>
       <template v-else>
         <div class="spinner-border"></div>
@@ -42,6 +46,8 @@ onMounted(async () => {
     await authService.confirmRegistration();
 
     localStorage.removeItem('jwt-token');
+
+    done.value = true;
   } catch (error) {
     console.error(error);
   }
