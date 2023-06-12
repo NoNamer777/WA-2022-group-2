@@ -7,7 +7,7 @@
           v-for="(challengeDay, index) in challengeDays"
           :key="index"
           :checked="challengeDay.earned"
-          :isCompleted="isCompleted"
+          :isCompleted="userChallenge.completed"
           :challengeDay="challengeDay"
           :dayNumber="index + 1"
           :todayNumber="todayNumber"
@@ -49,8 +49,6 @@ const props = defineProps({
 });
 
 const challengeDays = ref([]);
-
-const isCompleted = ref(false);
 
 const buttonText = ref('');
 
@@ -108,14 +106,12 @@ watch(
     }
     if (props.userChallenge.completed) {
       showToggleButton.value = false;
-      isCompleted.value = true;
       return;
     }
     if (props.isOwner && numberOfCompletedDays.value === challengeDays.value.length) {
       badge.value = await UserChallengeService.instance().completeUserChallenge(
         props.userChallenge
       );
-      isCompleted.value = true;
 
       nextTick(() => {
         const completedModal = new Modal(document.getElementById('completedModal'));
