@@ -6,7 +6,9 @@
         Welkom op de website!<br /><br />
         Misschien heb je er nooit bij stilgestaan, maar de aarde is al 4,6 miljard jaar oud! Op dit
         moment worden er veel plastic flessen weggegooid. Wil jij ons meehelpen de wereld een dagje
-        langer mee te laten draaien? <br /><br /><span aria-hidden="true">📝✍️🌐 + 🤝🎮🕹️📲</span>
+        langer mee te laten draaien? <br /><br /><span aria-label="emoticons"
+          >📝✍️🌐 + 🤝🎮🕹️📲</span
+        >
       </p>
       <router-link v-if="!isAuthenticated" class="btn btn-primary me-3" :to="{ name: 'register' }">
         Registreer
