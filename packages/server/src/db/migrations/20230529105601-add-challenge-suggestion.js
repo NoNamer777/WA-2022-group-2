@@ -32,6 +32,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    return queryInterface.bulkDelete('challenge_suggestion', null, {});
+    return queryInterface.bulkDelete('challenge_suggestion', null);
   }
 };

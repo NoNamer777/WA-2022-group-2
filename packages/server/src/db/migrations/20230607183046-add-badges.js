@@ -1,6 +1,6 @@
 'use strict';
 
-const animals = [
+let badges = [
   'aap',
   'beer',
   'buffel',
@@ -32,17 +32,15 @@ const animals = [
   'walvis',
   'zebra'
 ];
-let badges = [];
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    for (const animal of animals) {
-      badges.push({
-        name: animal,
-        image_path: `/assets/images/badges/${animal}.png`
-      });
-    }
+    badges = badges.map((animal) => ({
+      name: animal,
+      image_path: `/assets/images/badges/${animal}.png`
+    }));
+
     return queryInterface.bulkInsert('badge', badges);
   },
 
