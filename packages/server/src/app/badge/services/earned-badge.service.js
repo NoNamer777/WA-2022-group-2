@@ -78,7 +78,7 @@ export class EarnedBadgeService {
     return await earnedBadgeRepository.findAllBy({ user_id: userId }, [
       {
         model: BadgeEntity,
-        include: { model: UserEntity }
+        include: { model: UserEntity, attributes: ['id', 'username', 'profileImagePath'] }
       }
     ]);
   }
