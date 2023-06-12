@@ -19,8 +19,6 @@ paths:
       tags:
         - Auth
       summary: Registers a user.
-      servers:
-        - url: http://localhost:8080
       security: []
       requestBody:
           required: true
@@ -59,7 +57,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /user/{userId}/challenge:
+  /api/user/{userId}/challenge:
     parameters:
       - in: path
         name: userId
@@ -117,7 +115,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 
-  /challenge/{challengeId}:
+  /api/challenge/{challengeId}:
     parameters:
       - in: path
         name: challengeId
@@ -154,7 +152,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /user-challenge/{userChallengeId}:
+  /api/user-challenge/{userChallengeId}:
     parameters:
       - in: path
         name: userChallengeId
@@ -179,7 +177,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /challenge/day/{dayId}:
+  /api/challenge/day/{dayId}:
     parameters:
       - in: path
         name: dayId
@@ -216,7 +214,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
           
-  /user/{userId}/groups:
+  /api/user/{userId}/groups:
     parameters:
       - in: path
         name: userId
@@ -248,7 +246,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
        
-  /group:
+  /api/group:
     post:
       tags:
         - Group
@@ -287,7 +285,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
           
-  /group/join:
+  /api/group/join:
      post:
       tags:
         - Group
@@ -326,7 +324,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
     
-  /user-challenge/{userChallengeId}/:
+  /api/user-challenge/{userChallengeId}/:
     parameters:
       - in: path
         name: userChallengeId
@@ -363,7 +361,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-  /user/{userId}/badges:
+  /api/user/{userId}/badges:
     parameters:
       - in: path
         name: userId
@@ -395,7 +393,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
   
-  /challenge/suggestion:
+  /api/challenge/suggestion:
     get:
       tags:
         - Challenge Suggestion
