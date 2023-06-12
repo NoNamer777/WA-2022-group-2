@@ -7,7 +7,7 @@
           v-for="(challengeDay, index) in challengeDays"
           :key="index"
           :checked="challengeDay.earned"
-          :isCompleted="isCompleted"
+          :isCompleted="userChallenge.completed"
           :challengeDay="challengeDay"
           :dayNumber="index + 1"
           :todayNumber="todayNumber"
@@ -50,11 +50,7 @@ const props = defineProps({
 
 const challengeDays = ref([]);
 
-const isCompleted = ref(false);
-
 const buttonText = ref('');
-
-const showToggleButton = ref(false);
 
 const badge = ref(null);
 
@@ -71,7 +67,8 @@ const numberOfCompletedText = computed(
 );
 
 const buttonClass = computed(() => {
-  if (challengeDays.value.length === 0) return '';
+  if (challengeDays.value.length === 0 || !props.isActive) return '';
+
   return challengeDays.value[props.todayNumber - 1].earned
     ? 'btn btn-secondary'
     : 'btn btn-primary';
@@ -83,9 +80,12 @@ const imageName = computed(() => {
   return image.substring(0, image.lastIndexOf('.'));
 });
 
+const showToggleButton = computed(
+  () => props.isActive && props.isOwner && !props.userChallenge.completed
+);
+
 onMounted(() => {
   challengeDays.value = props.userChallenge.challengeDays;
-  showToggleButton.value = props.isActive && props.isOwner;
 });
 
 function check(dayNumber) {
@@ -101,15 +101,12 @@ watch(
       buttonText.value = challengeDays.value[props.todayNumber - 1].earned ? 'uit' : 'aan';
     }
     if (props.userChallenge.completed) {
-      showToggleButton.value = false;
-      isCompleted.value = true;
       return;
     }
     if (props.isOwner && numberOfCompletedDays.value === challengeDays.value.length) {
       badge.value = await UserChallengeService.instance().completeUserChallenge(
         props.userChallenge
       );
-      isCompleted.value = true;
 
       nextTick(() => {
         const completedModal = new Modal(document.getElementById('completedModal'));

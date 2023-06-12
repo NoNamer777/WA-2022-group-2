@@ -138,7 +138,11 @@ const todayNumber = computed(() => {
   if (!challenge.value?.startDate) {
     return 1;
   }
-  const todayDiff = new Date().getTime() - new Date(challenge.value.startDate).getTime();
+  const timeZoneOffsetInMilliSeconds = new Date().getTimezoneOffset() * 1000 * 60;
+  const todayDiff =
+    new Date().getTime() -
+    new Date(challenge.value.startDate).getTime() -
+    2 * timeZoneOffsetInMilliSeconds;
   return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
 });
 
@@ -206,9 +210,7 @@ function challengeProgressClass(userChallenge) {
 
 function checkIsActive(startDate, endDate) {
   const start = new Date(startDate).getTime();
-  let end = new Date(endDate).setHours(23, 59, 59);
-  end = new Date(end).getTime();
-
+  const end = new Date(endDate).setHours(23, 59, 59);
   const today = new Date().getTime();
 
   return end >= today && start <= today;
