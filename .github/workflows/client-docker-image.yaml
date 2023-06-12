@@ -1,4 +1,4 @@
-name: Dnd-Mapp client Docker image
+name: Wasted client Docker image
 on:
     workflow_call:
       inputs:
