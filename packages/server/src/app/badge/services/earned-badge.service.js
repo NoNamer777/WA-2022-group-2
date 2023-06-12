@@ -1,3 +1,4 @@
+import { UserChallengeEntity } from '../../challenge/entities/user-challenge.entity.js';
 import { NotFoundException } from '../../core/models/index.js';
 import { UserEntity } from '../../user/index.js';
 import { BadgeEntity } from '../entities/badge.entity.js';
@@ -78,7 +79,11 @@ export class EarnedBadgeService {
     return await earnedBadgeRepository.findAllBy({ user_id: userId }, [
       {
         model: BadgeEntity,
-        include: { model: UserEntity }
+        include: { model: UserEntity, attributes: ['id', 'username', 'profileImagePath'] }
+      },
+      {
+        as: 'userChallengeBadge',
+        model: UserChallengeEntity
       }
     ]);
   }

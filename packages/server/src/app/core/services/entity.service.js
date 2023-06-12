@@ -86,9 +86,11 @@ export class EntityService {
     });
 
     UserChallengeEntity.hasMany(EarnedBadgeEntity, {
+      as: 'userChallengeBadge',
       foreignKey: { name: 'userChallengeId', field: 'user_challenge_id' }
     });
     EarnedBadgeEntity.belongsTo(UserChallengeEntity, {
+      as: 'userChallengeBadge',
       foreignKey: { name: 'userChallengeId', field: 'user_challenge_id' }
     });
 
