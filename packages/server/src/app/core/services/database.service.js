@@ -32,9 +32,7 @@ export class DatabaseService {
       EntityService.instance().initializeEntities();
       EntityService.instance().initializeEntityRelations();
 
-      console.info(
-        `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`
-      );
+      console.info(this.#getSuccessMessage(config));
     } catch (error) {
       console.error('Something went wrong while establishing a connection with the database');
       throw error;
@@ -60,5 +58,14 @@ export class DatabaseService {
         storage: './data.db'
       };
     }
+  }
+
+  #getSuccessMessage(config) {
+    if (config.dialect === 'mysql') {
+      return `A database connection with a ${config.dialect} database on http://${config.host}:${config.port}/${config.database}/ has been set up`;
+    } else if (config.dialect === 'sqlite') {
+      return `A database connection with a ${config.dialect} database has been set. Storing the data in: '${config.storage}'`;
+    }
+    return '';
   }
 }
