@@ -71,7 +71,8 @@ const numberOfCompletedText = computed(
 );
 
 const buttonClass = computed(() => {
-  if (challengeDays.value.length === 0) return '';
+  if (challengeDays.value.length === 0 || !props.isActive) return '';
+
   return challengeDays.value[props.todayNumber - 1].earned
     ? 'btn btn-secondary'
     : 'btn btn-primary';
