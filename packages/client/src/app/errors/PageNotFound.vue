@@ -6,7 +6,11 @@
         <img class="w-25" src="/assets/images/mascot/mascotte_disappointed.png" alt="Rimuru" />
         <p class="lead my-4">Oei! Het lijkt erop dat de pagina die je zoekt, niet bestaat.</p>
 
-        <router-link v-if="isAuthenticated" class="btn btn-primary btn-lg" :to="{ name: 'home' }">
+        <router-link
+          v-if="isAuthenticated"
+          class="btn btn-primary btn-lg"
+          :to="{ name: 'my-wasted' }"
+        >
           Ga naar mijn wasted
         </router-link>
         <router-link v-else class="btn btn-primary btn-lg" :to="{ name: 'login' }">
