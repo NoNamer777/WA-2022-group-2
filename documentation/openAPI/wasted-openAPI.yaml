@@ -1,0 +1,626 @@
+openapi: 3.0.3
+info:
+  title: Wasted API - OpenAPI 3.0
+  description: API specification document of the Wasted API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+    description: Local development back-end application
+  - url: https://server.wasted.nl.eu.org/
+    description: Back-end application (self-hosted)
+  - url: https://wasted-back-end-app.azurewebsites.net
+    description: Back-end application (hosted via Azure)
+security:
+  - bearerAuth: [] 
+
+paths:
+  /auth/register:
+    post:  
+      tags:
+        - Auth
+      summary: Registers a user.
+      security: []
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /auth/login:
+    post:  
+      tags:
+        - Auth
+      summary: Logs in a user.
+      security: []
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /api/user/{userId}/challenge:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - User
+        - Challenge
+      summary: Returns a list of user's challenges.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Challenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - User
+        - Challenge
+      summary: Creates a challenge for the user and selected participants.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/challenge/{challengeId}:
+    parameters:
+      - in: path
+        name: challengeId
+        description: Challenge ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    put: 
+      tags:
+        - Challenge
+      summary: Modifies an existing challenge based on challenge ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Challenge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /api/user-challenge/{userChallengeId}:
+    parameters:
+      - in: path
+        name: userChallengeId
+        description: userChallengeId ID
+        required: true
+        schema:
+          type: integer
+          example: 1
+    delete:
+      tags:
+        - Challenge
+      summary: Removes a user from a challenge based on userchallenge ID.
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /api/challenge/day/{dayId}:
+    parameters:
+      - in: path
+        name: dayId
+        description: Day ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    put:
+      tags:
+        - Challenge Progress
+      summary: Modifies the progress status of a challenge day.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeDay'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChallengeDay'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+          
+  /api/user/{userId}/groups:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    get:
+      tags:
+        - User
+        - Group
+      summary: Returns a list of user's groups.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+       
+  /api/group:
+    post:
+      tags:
+        - Group
+      summary: Creates a group for the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: 
+                  type: string
+                  example: my awesome family group
+                userId:
+                  type: integer
+                  example: 1
+              required:
+                - name
+                - userId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+          
+  /api/group/join:
+     post:
+      tags:
+        - Group
+      summary: Adds a member to a group.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                code: 
+                  type: string
+                  example: X1779Y&_9/2
+              required:
+                - userId
+                - code
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    
+  /api/user-challenge/{userChallengeId}/:
+    parameters:
+      - in: path
+        name: userChallengeId
+        description: User challenge ID
+        required: true
+        schema:
+          type: integer
+          example: 1    
+    put:
+      tags:
+        - Challenge Progress
+        - Badge
+      summary: Marks a challenge complete and creates a badge for the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserChallenge'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /api/user/{userId}/badges:
+    parameters:
+      - in: path
+        name: userId
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          example: 1     
+    get:
+      tags:
+        - User
+        - Badge
+      summary: Returns a list of user's earned badges.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EarnedBadge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+  /api/challenge/suggestion:
+    get:
+      tags:
+        - Challenge Suggestion
+      summary: Returns a list of suggestions for challenges.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Suggestion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  
+components:
+  securitySchemes:
+    bearerAuth:           
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
+  schemas:
+    User:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        username:
+          type: string
+          example: wasteduser
+        email:
+          type: string
+          format: email
+          writeOnly: true
+          example: wasteduser@email.com
+        password:
+          type: string
+          format: password
+          writeOnly: true
+          example: superSecretPassword1@#
+        profileImagePath:
+          type: string
+          readOnly: true
+          example: zebra
+      required: 
+        - id
+        - username
+        - email
+        - password
+        - profileImagePath
+    Login:
+      properties:
+        username:
+          type: string
+          example: wasteduser
+        password:
+          type: string
+          format: password
+          example: superSecretPassword1@#
+    Challenge:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        name:
+          type: string
+          example: Zelfgemaakte lunch naar school
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        groupId:
+          type: integer
+          example: 2
+      required:
+        - id
+        - name
+        - startDate
+        - endDate
+    UserChallenge:
+      properties:
+        id: 
+          type: integer
+          example: 1
+        completed: 
+          type: boolean
+          example: true
+        userId: 
+          type: integer
+          example: 1
+        challengeId:
+          type: integer
+          example: 1
+      required:
+        - id
+        - completed
+        - userId
+        - challengeId
+    ChallengeDay:
+      properties:
+        id: 
+          type: integer
+          example: 1
+        date:
+          type: string
+          format: date
+          example: 2023-06-12
+        earned:
+          type: boolean
+          example: true
+        userChallengeId:
+          type: integer
+          example: 1
+      required:
+        - id
+        - date
+        - earned
+        - userChallengeId
+    Group:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        name: 
+          type: string
+          example: my awesome family group
+        code:
+          type: string
+          readOnly: true
+          example: X1779Y&_9/2
+    Badge:
+        properties:
+          id: 
+            type: integer
+            readOnly: true
+            example: 1
+          name:
+            type: string
+            example: aap
+          imagePath:
+            type: string
+            example: /assets/images/badges/aap.png
+        required:
+          - id
+          - name
+          - imagePath
+    EarnedBadge:
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        date: 
+          type: string
+          format: date
+        userId: 
+          type: integer
+          example: 1
+        badgeId: 
+          type: integer
+          example: 1
+        challengeId:
+          type: integer
+          example: 1
+        userChallengeId:
+          type: integer
+          example: 1
+      required:
+        - id
+        - date
+        - userId
+        - challengeId
+        - badgeId
+        - userChallengeId
+    Suggestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name: 
+          type: string
+          example: Geen plastic koffiebekertjes naar werk
+    Error:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          example: Status code to return
+        error:
+          type: string
+          example: Error description
+        message:
+          type: string
+          example: Additional information on the error
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
