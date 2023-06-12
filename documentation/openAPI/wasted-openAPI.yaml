@@ -38,8 +38,6 @@ paths:
       tags:
         - Auth
       summary: Logs in a user.
-      servers:
-        - url: http://localhost:8080
       security: []
       requestBody:
           required: true
