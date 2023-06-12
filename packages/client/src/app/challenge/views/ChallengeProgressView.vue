@@ -77,6 +77,7 @@
         :isActive="isActive"
         :isOwner="isOwner(userChallenge)"
         :class="challengeProgressClass(userChallenge)"
+        @completed="getUserChallenges"
       />
     </div>
     <AlertModal
@@ -150,8 +151,6 @@ onMounted(async () => {
   getChallengeIdFromRoute();
 
   await getUserChallenges();
-
-  setChallenge();
 });
 
 function getChallengeIdFromRoute() {
@@ -180,6 +179,8 @@ async function getUserChallenges() {
   );
 
   userChallenges.value = sortUserChallenges(results);
+
+  setChallenge();
 }
 
 /** @return {Promise<void>} */
