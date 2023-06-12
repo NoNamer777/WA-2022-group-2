@@ -14,6 +14,7 @@
           :imageName="imageName"
           :imagePath="`url(${inject('serverBaseUrl')}${props.userChallenge.user.profileImagePath})`"
           :isOwner="isOwner"
+          :aria-hidden="!isOwner"
           @checked="() => check(index + 1)"
         />
       </div>
