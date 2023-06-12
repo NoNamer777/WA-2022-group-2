@@ -52,8 +52,6 @@ const challengeDays = ref([]);
 
 const buttonText = ref('');
 
-const showToggleButton = ref(false);
-
 const badge = ref(null);
 
 const title = computed(() =>
@@ -82,6 +80,10 @@ const imageName = computed(() => {
   return image.substring(0, image.lastIndexOf('.'));
 });
 
+const showToggleButton = computed(
+  () => props.isActive && props.isOwner && !props.userChallenge.completed
+);
+
 onMounted(() => {
   challengeDays.value = props.userChallenge.challengeDays;
 });
@@ -91,12 +93,6 @@ function check(dayNumber) {
   challengeDays.value[dayNumber - 1].earned = !challengeDays.value[dayNumber - 1].earned;
 }
 
-// Update whether the toggle button is shown whenever isActive updates from the parent
-watch(
-  () => props.isActive,
-  () => (showToggleButton.value = props.isActive && props.isOwner)
-);
-
 watch(
   () => challengeDays.value,
   async () => {
@@ -105,7 +101,6 @@ watch(
       buttonText.value = challengeDays.value[props.todayNumber - 1].earned ? 'uit' : 'aan';
     }
     if (props.userChallenge.completed) {
-      showToggleButton.value = false;
       return;
     }
     if (props.isOwner && numberOfCompletedDays.value === challengeDays.value.length) {
