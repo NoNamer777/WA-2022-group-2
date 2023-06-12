@@ -210,9 +210,7 @@ function challengeProgressClass(userChallenge) {
 
 function checkIsActive(startDate, endDate) {
   const start = new Date(startDate).getTime();
-  let end = new Date(endDate).setHours(23, 59, 59);
-  end = new Date(end).getTime();
-
+  const end = new Date(endDate).setHours(23, 59, 59);
   const today = new Date().getTime();
 
   return end >= today && start <= today;
