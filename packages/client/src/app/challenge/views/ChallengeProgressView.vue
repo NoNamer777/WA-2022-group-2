@@ -135,7 +135,6 @@ const editButton = ref(null);
 
 /** @type {import('vue').ComputedRef<number>} */
 const todayNumber = computed(() => {
-  // TODO: When a challenge is in the past but not completed, the day remains as day 1 due to the if-clause:
   if (!challenge.value?.startDate) {
     return 1;
   }
