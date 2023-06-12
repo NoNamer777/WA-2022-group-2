@@ -1,6 +1,8 @@
 name: Wasted Docker images
 on:
   push:
+    branches:
+      - main
 permissions:
   contents: read
   packages: write
