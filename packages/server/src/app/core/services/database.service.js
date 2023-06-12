@@ -57,7 +57,7 @@ export class DatabaseService {
 
       return {
         dialect: 'sqlite',
-        storage: ':memory:'
+        storage: './data.db'
       };
     }
   }
