@@ -135,10 +135,15 @@ const editButton = ref(null);
 
 /** @type {import('vue').ComputedRef<number>} */
 const todayNumber = computed(() => {
+  // TODO: When a challenge is in the past but not completed, the day remains as day 1 due to the if-clause:
   if (!challenge.value?.startDate) {
     return 1;
   }
-  const todayDiff = new Date().getTime() - new Date(challenge.value.startDate).getTime();
+  const timeZoneOffsetInMilliSeconds = new Date().getTimezoneOffset() * 1000 * 60;
+  const todayDiff =
+    new Date().getTime() -
+    new Date(challenge.value.startDate).getTime() -
+    2 * timeZoneOffsetInMilliSeconds;
   return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
 });
 
