@@ -1,8 +1,6 @@
 name: Azure Static Web App CI/CD
 on:
   push:
-    branches:
-      - main
 jobs:
   build-and-deploy:
     name: Build and Deploy Job
