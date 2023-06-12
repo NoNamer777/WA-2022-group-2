@@ -2,7 +2,11 @@
   <main>
     <section class="d-flex align-items-center justify-content-between">
       <h1 class="mb-4">Uitdagingen</h1>
-      <router-link class="btn btn-primary" :to="{ name: 'challenge_create' }">
+      <router-link
+        class="btn btn-primary"
+        aria-label="challenge aanmaken"
+        :to="{ name: 'challenge_create' }"
+      >
         Aanmaken
       </router-link>
     </section>

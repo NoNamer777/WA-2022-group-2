@@ -16,7 +16,7 @@
           transform: `rotateY(${deg}deg)`
         }"
       />
-      <p class="position-absolute top-50" :class="buttonClass" :aria-hidden="!checked">
+      <p class="position-absolute top-50" :class="buttonClass" :aria-hidden="true">
         {{ checkmark }}
       </p>
       <div class="d-flex justify-content-center" :class="dayClass">Dag {{ dayNumber }}</div>
@@ -25,8 +25,10 @@
 </template>
 
 <style scoped>
+/* Input not  visible but accessible for screen readers: */
 .check input {
-  display: none;
+  position: absolute;
+  left: -100vw;
 }
 
 .check input + label {
