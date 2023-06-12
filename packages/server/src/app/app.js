@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
 import { authRouter } from './auth/index.js';
 import { JwtService } from './auth/services/jwt.service.js';
 import { badgeRouter } from './badge/routers/badge.router.js';
@@ -44,6 +45,10 @@ class App {
     await DatabaseService.instance().initialize();
     MailService.instance().initialize();
     JwtService.instance().initialize();
+
+    // API documentation with SwaggerUI
+    this.app.use('/', swaggerUi.serve);
+    this.app.get('/', swaggerUi.setup('documentation/openAPI/wasted-openAPI.json'));
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
