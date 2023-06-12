@@ -23,4 +23,4 @@ jobs:
           app_build_command: 'npm run client:build'
         env:
           VITE_JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          VITE_SERVER_BASE_URL: https://wasted-server-app.azurewebsites.net
+          VITE_SERVER_BASE_URL: https://wasted-back-end-app.azurewebsites.net
