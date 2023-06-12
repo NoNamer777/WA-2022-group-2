@@ -49,6 +49,8 @@ const props = defineProps({
   isOwner: Boolean
 });
 
+const emit = defineEmits(['completed']);
+
 const challengeDays = ref([]);
 
 const buttonText = ref('');
@@ -108,6 +110,7 @@ watch(
       badge.value = await UserChallengeService.instance().completeUserChallenge(
         props.userChallenge
       );
+      emit('completed');
 
       nextTick(() => {
         const completedModal = new Modal(document.getElementById('completedModal'));

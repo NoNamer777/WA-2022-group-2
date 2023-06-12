@@ -99,12 +99,13 @@ export class ChallengeService {
     const whereClause =
       challengeState === 'active'
         ? { endDate: { [Op.gte]: currentDate } }
-        : { endDate: { [Op.lt]: currentDate } };
+        : { endDate: { [Op.lte]: currentDate } };
 
     return await challengeRepository.findAllBy(whereClause, [
       {
         model: UserChallengeEntity,
-        where: { userId: userId },
+        where:
+          challengeState === 'active' ? { userId: userId, completed: false } : { userId: userId },
         as: 'userChallenges',
         include: {
           model: UserEntity,
