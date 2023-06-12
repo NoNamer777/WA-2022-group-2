@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '../../auth/models/errors/unauthorized-exception.js';
 import { UserChallengeService } from '../services/user-challenge.service.js';
 
 class UserChallengeController {
@@ -10,10 +11,22 @@ class UserChallengeController {
     console.info(
       `UserChallengeController - Getting data for User Challenges with Challenge ID: '${challengeIdParam}'`
     );
-    return await UserChallengeService.instance().getAllOfChallenge(
-      parseInt(challengeIdParam),
-      userId
+
+    const userChallenges = await UserChallengeService.instance().getAllOfChallenge(
+      parseInt(challengeIdParam)
     );
+    let isParticipant = false;
+
+    for (const userChallenge of userChallenges) {
+      if (userChallenge.user.id !== userId) continue;
+      if (isParticipant) break;
+
+      isParticipant = true;
+    }
+    if (!isParticipant) {
+      throw new UnauthorizedException('Oops, jij hebt helaas geen toegang tot deze data.');
+    }
+    return userChallenges;
   }
 
   /**
