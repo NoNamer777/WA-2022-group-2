@@ -56,3 +56,19 @@ jobs:
           platforms: ${{ steps.docker-buildx.outputs.platforms }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+  deploy:
+    name: Deploy Wasted back-end to Azure
+    runs-on: ubuntu-latest
+    needs: build-docker-image-back-end
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-azure.outputs.webapp-url }}
+    steps:
+      - name: Deploy to Azure
+        id: deploy-to-azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: wasted-back-end-app
+          slot-name: production
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_de61043acc2c4396936aad90967ffc5e }}
+          images: ghcr.io/nonamer777/wasted-express-server:next
