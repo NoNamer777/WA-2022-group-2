@@ -22,10 +22,8 @@ export class DatabaseService {
     const config = await this.#readConfig();
 
     try {
-      this.sequelizeInstance = new Sequelize(config.database, config.username, config.password, {
-        dialect: config.dialect,
-        host: config.host,
-        port: config.port,
+      this.sequelizeInstance = new Sequelize({
+        ...config,
         logging: false
       });
 
@@ -56,7 +54,11 @@ export class DatabaseService {
       return JSON.parse(databaseConfigFile)[process.env.NODE_ENV || 'development'];
     } catch (error) {
       console.error('Something went wrong while trying to read the database configuration');
-      throw error;
+
+      return {
+        dialect: 'sqlite',
+        storage: ':memory:'
+      };
     }
   }
 }
