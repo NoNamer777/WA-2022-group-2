@@ -1,4 +1,4 @@
-name: Dnd-Mapp server Docker image
+name: Wasted back-end Docker image
 on:
     workflow_call:
       inputs:
@@ -10,48 +10,65 @@ env:
     REGISTRY: ghcr.io
     IMAGE_NAME: nonamer777/wasted-express-server
 jobs:
-    build-server-docker-image:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v2
-              with:
-                platforms: arm,arm64
-            - name: Set up Docker Buildx
-              id: docker-buildx
-              uses: docker/setup-buildx-action@v2
-              with:
-                platforms: ${{ inputs.platforms }}
-            - name: Log in to the Container registry
-              uses: docker/login-action@v2
-              with:
-                  registry: ${{ env.REGISTRY }}
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-            - name: Extract metadata (tags, labels) for Docker
-              id: meta
-              uses: docker/metadata-action@v4
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                  tags: |
-                      type=schedule,enable=false,pattern=nightly
-                      type=edge,enable=true,branch=$repo.default_branch
-                      type=ref,enable=false,event=branch
-                      type=ref,enable=false,event=pr
-                      type=raw,enable=true,value=next
-            - name: Build and push Docker image
-              uses: docker/build-push-action@v4
-              with:
-                  context: .
-                  file: packages/server/Dockerfile
-                  push: true
-                  labels: ${{ steps.meta.outputs.labels }}
-                  tags: ${{ steps.meta.outputs.tags }}
-                  platforms: ${{ steps.docker-buildx.outputs.platforms }}
-                  cache-from: type=gha
-                  cache-to: type=gha,mode=max
+  build-docker-image-back-end:
+    name: Build docker image back-end
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm,arm64
+      - name: Set up Docker Buildx
+        id: docker-buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          platforms: ${{ inputs.platforms }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=schedule,enable=false,pattern=nightly
+            type=edge,enable=true,branch=$repo.default_branch
+            type=ref,enable=false,event=branch
+            type=ref,enable=false,event=pr
+            type=raw,enable=true,value=next
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: packages/server/Dockerfile
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: ${{ steps.docker-buildx.outputs.platforms }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  deploy:
+    name: Deploy Wasted back-end to Azure
+    runs-on: ubuntu-latest
+    needs: build-docker-image-back-end
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-azure.outputs.webapp-url }}
+    steps:
+      - name: Deploy to Azure
+        id: deploy-to-azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: wasted-back-end-app
+          slot-name: production
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_de61043acc2c4396936aad90967ffc5e }}
+          images: ghcr.io/nonamer777/wasted-express-server:next

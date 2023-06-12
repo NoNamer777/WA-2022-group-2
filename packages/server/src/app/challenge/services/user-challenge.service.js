@@ -133,18 +133,21 @@ export class UserChallengeService {
     if (userId !== userChallenge.user.id) {
       throw new UnauthorizedException();
     }
-
-    /* Complete challenge */
     userChallenge.completed = true;
     await userChallenge.save();
 
     /* Search and create unique badge for user */
-    /** @type {number[]} */
-    const claimedBadgeIds = (await EarnedBadgeService.instance().getForUser(userId)).map(
-      (earnedBadge) => earnedBadge.badgeId
+    const claimedBadges = await EarnedBadgeService.instance().getForUser(userId);
+    const claimedBadgeForUserChallenge = claimedBadges.find(
+      (claimedBadge) => claimedBadge.userChallengeBadge.id === userChallenge.id
     );
 
-    const newBadge = await BadgeService.instance().getRandomBadge(claimedBadgeIds);
+    if (claimedBadgeForUserChallenge) {
+      return Promise.resolve(claimedBadgeForUserChallenge.badge);
+    }
+    const newBadge = await BadgeService.instance().getRandomBadge(
+      claimedBadges.map((earnedBadge) => earnedBadge.badgeId)
+    );
 
     if (newBadge) {
       const earnedBadge = new EarnedBadgeEntity();
