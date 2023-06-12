@@ -86,13 +86,18 @@ const imageName = computed(() => {
 
 onMounted(() => {
   challengeDays.value = props.userChallenge.challengeDays;
-  showToggleButton.value = props.isActive && props.isOwner;
 });
 
 function check(dayNumber) {
   if (props.userChallenge.completed) return;
   challengeDays.value[dayNumber - 1].earned = !challengeDays.value[dayNumber - 1].earned;
 }
+
+// Update whether the toggle button is shown whenever isActive updates from the parent
+watch(
+  () => props.isActive,
+  () => (showToggleButton.value = props.isActive && props.isOwner)
+);
 
 watch(
   () => challengeDays.value,
