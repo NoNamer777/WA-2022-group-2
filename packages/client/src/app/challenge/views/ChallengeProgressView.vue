@@ -139,11 +139,7 @@ const todayNumber = computed(() => {
   if (!challenge.value?.startDate) {
     return 1;
   }
-  const timeZoneOffsetInMilliSeconds = new Date().getTimezoneOffset() * 1000 * 60;
-  const todayDiff =
-    new Date().getTime() -
-    new Date(challenge.value.startDate).getTime() -
-    2 * timeZoneOffsetInMilliSeconds;
+  const todayDiff = new Date().getTime() - new Date(challenge.value.startDate).getTime();
   return Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
 });
 
