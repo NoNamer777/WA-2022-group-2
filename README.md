@@ -8,7 +8,7 @@ Express with Sequalize, and it is maintained by the following members:
 | Oscar Wellner       | 21144192    |
 | Ahmed Benhajar      | 21024154    |
 | Marjo Salo          | 21146942    |
-| Jeniffer Goudswaard | 21155496    |
+| Jennifer Goudswaard | 21155496    |
 
 This project is maintained from the source repository (https://github.com/nonamer777/wa-2022-group-2)
 and for documentation purposes cloned towards to repository owned by our school
