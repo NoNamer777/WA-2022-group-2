@@ -24,8 +24,8 @@ export const router = createRouter({
       }
     },
     {
-      path: '/challenge',
-      name: 'challenge',
+      path: '/challenges',
+      name: 'challenges',
       component: ChallengeView,
       meta: {
         title: 'Challenge overzicht',
@@ -33,7 +33,7 @@ export const router = createRouter({
       }
     },
     {
-      path: '/challenge/:challengeId/progress',
+      path: '/challenges/:challengeId/progress',
       name: 'challenge_progress',
       component: ChallengeProgressView,
       meta: {
@@ -42,7 +42,7 @@ export const router = createRouter({
       }
     },
     {
-      path: '/challenge/create',
+      path: '/challenges/create',
       name: 'challenge_create',
       component: ChallengeCreationView,
       meta: {

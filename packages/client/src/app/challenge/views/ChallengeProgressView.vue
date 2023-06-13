@@ -182,7 +182,7 @@ async function getUserChallenges() {
 /** @return {Promise<void>} */
 async function leaveChallenge() {
   await UserChallengeService.instance().deleteUserChallenge(userChallenges.value[0].id);
-  await router.push({ name: 'challenge' });
+  await router.push({ name: 'challenges' });
 }
 
 /** @return {Promise<void>} */

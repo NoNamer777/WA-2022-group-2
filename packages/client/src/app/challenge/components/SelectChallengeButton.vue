@@ -10,7 +10,7 @@
     </button>
     <ul class="dropdown-menu" role="menu">
       <li>
-        <a class="dropdown-item small" role="menuitem" :href="'/challenge/create'">
+        <a class="dropdown-item small" role="menuitem" :href="'/challenges/create'">
           Maak nieuwe challenge aan
         </a>
       </li>
@@ -19,7 +19,7 @@
         <a
           class="dropdown-item small"
           role="menuitem"
-          :href="`/challenge/${challenge.id}/progress`"
+          :href="`/challenges/${challenge.id}/progress`"
         >
           {{ challenge.name }}
         </a>

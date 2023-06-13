@@ -2,7 +2,7 @@
   <main class="container">
     <section class="row h-100 d-flex align-items-center">
       <div class="col-xl-6 col-sm-12 mb-5">
-        <h1 class="mb-5">Daag je gezinsleden uit voor een challenge!</h1>
+        <h1 class="mb-5">Daag je groepsleden uit voor een challenge!</h1>
         <FormKit type="form" @submit="createChallenge" :actions="false" :incomplete-message="false">
           <CustomFormKit
             v-model="challenge.name"

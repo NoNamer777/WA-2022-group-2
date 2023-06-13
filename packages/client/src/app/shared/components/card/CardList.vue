@@ -18,7 +18,7 @@
           class="col-xl-4 text-black text-decoration-none"
           :key="index"
         >
-          <CardItem :title="item.title" :text="item.text" :clickable="true" />
+          <CardItem :title="item.title" :text="item.text" />
         </div>
       </template>
     </div>
