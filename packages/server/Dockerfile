@@ -21,6 +21,8 @@ COPY /packages/server/src/public/assets /server-app/dist/server/assets
 
 COPY /packages/server/start.sh package*.json /server-app/dist/server/
 
+COPY /documentation/open-api/wasted-open-api-spec.yaml /server-app/dist/server/assets/open-api/
+
 RUN npm ci --omit dev
 
 FROM node:18-alpine
