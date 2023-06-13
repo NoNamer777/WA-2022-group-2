@@ -19,5 +19,6 @@ environment
 .prettierrc.json
 
 # Miscelaneous
-documentation
+documentation/*
+!documentation/open-api
 .github
