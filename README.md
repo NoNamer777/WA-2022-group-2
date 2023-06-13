@@ -19,6 +19,23 @@ These are stripped while cloning the source repository over to the HHS owned rep
 prevent the workflows from activating twice, while the HHS owned repository does not contain the
 repository secrets to make some workflows run correctly.
 
+## Deployments
+
+We have two deployments currently available:
+
+- Self-hosted: https://wasted.nl.eu.org/  
+  This is a solution which works with Docker, NGINX Reverse Proxy Manager, Let's Encrypt, Node, and our
+  back- and front end applications, which all runs on a Raspberry Pi 4. Oscar (who owns the RPi4 machine)
+  needs to manually update the used docker images. This could be done automatically but he prefers to
+  do it manually so that he is in control of that deployment process and should anything go wrong it
+  would be easier to fix this way.
+- Azure: https://lemon-bay-04c12da03.3.azurestaticapps.net/  
+  This is a solution which uses Azure deployment workflows to deploy a build of the front-end to Azure
+  and uses the Docker image of the back-end, which also gets deployed to Azure. This solution is fully
+  automatic.  
+  Unfortunately, something is wrong with the database configuration on this deployment, thus making
+  this live environment unusable atm.
+
 ## Developing
 
 Before you start developing, you should install the project dependencies by running the following command in a terminal
