@@ -1,7 +1,9 @@
 import { config } from 'dotenv';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
+import { readFile } from 'fs/promises';
 import swaggerUi from 'swagger-ui-express';
+import { parse } from 'yaml';
 import { authRouter } from './auth/index.js';
 import { JwtService } from './auth/services/jwt.service.js';
 import { badgeRouter } from './badge/routers/badge.router.js';
@@ -46,9 +48,14 @@ class App {
     MailService.instance().initialize();
     JwtService.instance().initialize();
 
-    // API documentation with SwaggerUI
     this.app.use('/', swaggerUi.serve);
-    this.app.get('/', swaggerUi.setup('documentation/openAPI/wasted-openAPI.json'));
+
+    const specFile = await readFile(
+      (process.env.OPEN_API_DIR || './documentation/open-api/') + 'wasted-open-api-spec.yaml',
+      { encoding: 'utf8' }
+    );
+
+    this.app.get('/', swaggerUi.setup(parse(specFile)));
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
