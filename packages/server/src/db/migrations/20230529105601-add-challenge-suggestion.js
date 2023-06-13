@@ -11,7 +11,7 @@ module.exports = {
         name: 'Eigen drinkfles meenemen'
       },
       {
-        name: 'Fruit naar school in plaats van voorverpackte snacks'
+        name: 'Fruit naar school in plaats van voorverpakte snacks'
       },
       {
         name: 'Plasticvrij snacken onderweg'

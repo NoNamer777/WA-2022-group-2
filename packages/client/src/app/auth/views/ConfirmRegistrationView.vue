@@ -7,7 +7,7 @@
       <template v-if="done">
         <h1>Gelukt</h1>
         <p>
-          Jou account is nog volledig geregistreed en je bent klaar om de uitdaging aan te gaan.
+          Jouw account is nu volledig geregistreed en je bent klaar om de uitdaging aan te gaan.
         </p>
         <p>Klik <RouterLink :to="{ name: 'login' }">hier</RouterLink> om direct in te loggen.</p>
       </template>
