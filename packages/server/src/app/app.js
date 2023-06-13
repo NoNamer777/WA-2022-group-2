@@ -48,14 +48,21 @@ class App {
     MailService.instance().initialize();
     JwtService.instance().initialize();
 
-    this.app.use('/', swaggerUi.serve);
-
     const specFile = await readFile(
       (process.env.OPEN_API_DIR || './documentation/open-api/') + 'wasted-open-api-spec.yaml',
       { encoding: 'utf8' }
     );
+    const apiSpecRouter = express.Router();
 
-    this.app.get('/', swaggerUi.setup(parse(specFile)));
+    apiSpecRouter.use('/', swaggerUi.serve);
+
+    // Only serve the resources for showing the open API document in production environments
+    if (process.env.NODE_ENV === 'production') {
+      apiSpecRouter.use(express.static(process.env.OPEN_API_DIR));
+    }
+    apiSpecRouter.get('/', swaggerUi.setup(parse(specFile)));
+
+    this.app.use('/api-spec', apiSpecRouter);
 
     this.app.use('/api/user', userRouter);
     this.app.use('/api/challenge', challengeRouter);
