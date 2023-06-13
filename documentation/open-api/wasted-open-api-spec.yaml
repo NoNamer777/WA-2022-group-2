@@ -11,8 +11,7 @@ servers:
   - url: https://wasted-back-end-app.azurewebsites.net
     description: Back-end application (hosted via Azure)
 security:
-  - bearerAuth: [] 
-
+  - bearerAuth: []
 paths:
   /auth/register:
     post:  
@@ -54,7 +53,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/ServerError'
-  
   /api/user/{userId}/challenge:
     parameters:
       - in: path
@@ -112,7 +110,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-
   /api/challenge/{challengeId}:
     parameters:
       - in: path
@@ -149,7 +146,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-  
   /api/user-challenge/{userChallengeId}:
     parameters:
       - in: path
@@ -174,7 +170,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-  
   /api/challenge/day/{dayId}:
     parameters:
       - in: path
@@ -211,7 +206,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-          
   /api/user/{userId}/groups:
     parameters:
       - in: path
@@ -243,7 +237,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-       
   /api/group:
     post:
       tags:
@@ -282,7 +275,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-          
   /api/group/join:
      post:
       tags:
@@ -321,7 +313,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-    
   /api/user-challenge/{userChallengeId}/:
     parameters:
       - in: path
@@ -390,7 +381,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
-  
   /api/challenge/suggestion:
     get:
       tags:
@@ -409,7 +399,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/ServerError'
-  
 components:
   securitySchemes:
     bearerAuth:           
@@ -598,7 +587,6 @@ components:
         message:
           type: string
           example: Additional information on the error
-
   responses:
     BadRequest:
       description: Bad request
