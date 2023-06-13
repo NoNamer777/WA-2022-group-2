@@ -21,7 +21,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-white fw-bolder" :to="{ name: 'challenge' }">
+            <router-link class="nav-link text-white fw-bolder" :to="{ name: 'challenges' }">
               Challenges
             </router-link>
           </li>
