@@ -19,12 +19,12 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-xl-4">
           <li class="nav-item">
             <router-link class="nav-link text-white fw-bolder" :to="{ name: 'challenges' }">
-              Challenges
+              Challenge
             </router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link text-white fw-bolder" :to="{ name: 'groups' }">
-              Groupen
+              Groep
             </router-link>
           </li>
         </ul>
