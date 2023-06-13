@@ -28,7 +28,7 @@
 
 <script setup>
 import { inject } from 'vue';
-import EmptyState from '../../../shared/components/EmptyState.vue';
+import EmptyState from '../../shared/components/EmptyState.vue';
 
 const props = defineProps({
   earnedBadges: Array

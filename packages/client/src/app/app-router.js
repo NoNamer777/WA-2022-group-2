@@ -10,6 +10,7 @@ import {
 import { ChallengeCreationView, ChallengeProgressView, ChallengeView } from './challenge/views';
 import { HomeView } from './core/views';
 import PageNotFound from './errors/PageNotFound.vue';
+import GroupView from './group/views/GroupView.vue';
 import PersonalPageView from './personal_page/views/PersonalPageView.vue';
 
 export const router = createRouter({
@@ -96,6 +97,15 @@ export const router = createRouter({
       component: PersonalPageView,
       meta: {
         title: 'Mijn Wasted',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/groups',
+      name: 'groups',
+      component: GroupView,
+      meta: {
+        title: 'Groepen',
         requiresAuth: true
       }
     },

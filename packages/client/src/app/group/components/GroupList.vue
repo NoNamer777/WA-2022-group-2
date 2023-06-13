@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import CardList from '../../../shared/components/card/CardList.vue';
+import CardList from '../../shared/components/card/CardList.vue';
 
 const props = defineProps({
   groups: Array
