@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-xl-5 p-4">
     <div class="container-fluid">
-      <a class="navbar-brand text-white fw-bolder pe-5">Wasted</a>
+      <RouterLink :to="{ name: 'home' }" class="navbar-brand text-white fw-bolder pe-5"
+        >Wasted</RouterLink
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -15,11 +17,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-xl-4">
-          <li class="nav-item">
-            <router-link class="nav-link text-white fw-bolder" :to="{ name: 'home' }">
-              Hoofdpagina
-            </router-link>
-          </li>
           <li class="nav-item">
             <router-link class="nav-link text-white fw-bolder" :to="{ name: 'challenges' }">
               Challenges
