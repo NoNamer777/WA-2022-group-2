@@ -8,7 +8,33 @@ Express with Sequalize, and it is maintained by the following members:
 | Oscar Wellner       | 21144192    |
 | Ahmed Benhajar      | 21024154    |
 | Marjo Salo          | 21146942    |
-| Jeniffer Goudswaard | 21155496    |
+| Jennifer Goudswaard | 21155496    |
+
+This project is maintained from the source repository (https://github.com/nonamer777/wa-2022-group-2)
+and for documentation purposes cloned towards to repository owned by our school
+(https://github.com/The-Hague-University/WA-2022-group-2).
+
+For the actual workflows (CI/CD, build/test/linting), we recommend inspecting the original repository.
+These are stripped while cloning the source repository over to the HHS owned repository in order to
+prevent the workflows from activating twice, while the HHS owned repository does not contain the
+repository secrets to make some workflows run correctly.
+
+## Deployments
+
+We have two deployments currently available:
+
+- Self-hosted: https://wasted.nl.eu.org/  
+  This is a solution which works with Docker, NGINX Reverse Proxy Manager, Let's Encrypt, Node, and our
+  back- and front end applications, which all runs on a Raspberry Pi 4. Oscar (who owns the RPi4 machine)
+  needs to manually update the used docker images. This could be done automatically but he prefers to
+  do it manually so that he is in control of that deployment process and should anything go wrong it
+  would be easier to fix this way.
+- Azure: https://lemon-bay-04c12da03.3.azurestaticapps.net/  
+  This is a solution which uses Azure deployment workflows to deploy a build of the front-end to Azure
+  and uses the Docker image of the back-end, which also gets deployed to Azure. This solution is fully
+  automatic.  
+  Unfortunately, something is wrong with the database configuration on this deployment, thus making
+  this live environment unusable atm.
 
 ## Developing
 
