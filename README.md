@@ -10,6 +10,15 @@ Express with Sequalize, and it is maintained by the following members:
 | Marjo Salo          | 21146942    |
 | Jeniffer Goudswaard | 21155496    |
 
+This project is maintained from the source repository (https://github.com/nonamer777/wa-2022-group-2)
+and for documentation purposes cloned towards to repository owned by our school
+(https://github.com/The-Hague-University/WA-2022-group-2).
+
+For the actual workflows (CI/CD, build/test/linting), we recommend inspecting the original repository.
+These are stripped while cloning the source repository over to the HHS owned repository in order to
+prevent the workflows from activating twice, while the HHS owned repository does not contain the
+repository secrets to make some workflows run correctly.
+
 ## Developing
 
 Before you start developing, you should install the project dependencies by running the following command in a terminal
