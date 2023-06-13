@@ -15,13 +15,21 @@ COPY . .
 
 RUN npm run server:build
 
+# Copy over database related files
 COPY /packages/server/src/db /server-app/dist/server/db
 
+# Copy over some assets
 COPY /packages/server/src/public/assets /server-app/dist/server/assets
 
-COPY /packages/server/start.sh package*.json /server-app/dist/server/
-
 COPY /documentation/open-api/wasted-open-api-spec.yaml /server-app/dist/server/assets/open-api/
+
+RUN cp node_modules/swagger-ui-dist/swagger-ui-bundle.js* \
+    node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js* \
+    node_modules/swagger-ui-dist/swagger-ui.css* \
+    /server-app/dist/server/assets/open-api/
+
+# Copy over the start script and project configurations
+COPY /packages/server/start.sh package*.json /server-app/dist/server/
 
 RUN npm ci --omit dev
 
