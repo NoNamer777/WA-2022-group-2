@@ -1,45 +1,8 @@
-<script setup>
-import { CustomFormKit } from '../../../shared/components/index.js';
-import { ref } from 'vue';
-import { usePersonalPageStore } from '../../stores/personal_page.store.js';
-
-/** @type {import('vue').Ref<string>} */
-let name = ref('');
-
-/** @type {import('vue').Ref<Object>} */
-let group = ref({});
-
-/** @type {import('vue').Ref<Object>} */
-const modal = ref(null);
-/** @return {Promise<void>} */
-async function createGroupRequest() {
-  const { createGroup } = usePersonalPageStore();
-  group.value = await createGroup(name.value);
-}
-
-function handleModalOpen() {
-  group.value = null;
-  name.value = null;
-}
-
-async function copyToClipboard() {
-  try {
-    await navigator.clipboard.writeText(group.value.code);
-    alert('gekopieërd!');
-  } catch (err) {
-    alert('Er is iets misgegaan');
-    console.error(err);
-  }
-}
-</script>
-
-<style></style>
-
 <template>
   <button
     @click="handleModalOpen"
     type="button"
-    class="btn btn-primary"
+    class="btn btn-primary h-100"
     data-bs-toggle="modal"
     data-bs-target="#new-group"
   >
@@ -102,3 +65,40 @@ async function copyToClipboard() {
     </div>
   </div>
 </template>
+
+<style></style>
+
+<script setup>
+import { CustomFormKit } from '../../shared/components/index.js';
+import { ref } from 'vue';
+import { useGroupStore } from '../stores/group.store.js';
+
+/** @type {import('vue').Ref<string>} */
+let name = ref('');
+
+/** @type {import('vue').Ref<Object>} */
+let group = ref({});
+
+/** @type {import('vue').Ref<Object>} */
+const modal = ref(null);
+/** @return {Promise<void>} */
+async function createGroupRequest() {
+  const { createGroup } = useGroupStore();
+  group.value = await createGroup(name.value);
+}
+
+function handleModalOpen() {
+  group.value = null;
+  name.value = null;
+}
+
+async function copyToClipboard() {
+  try {
+    await navigator.clipboard.writeText(group.value.code);
+    alert('gekopieërd!');
+  } catch (err) {
+    alert('Er is iets misgegaan');
+    console.error(err);
+  }
+}
+</script>

@@ -1,36 +1,8 @@
-<script setup>
-import { CustomFormKit } from '../../../shared/components/index.js';
-import { ref } from 'vue';
-import { usePersonalPageStore } from '../../stores/personal_page.store.js';
-
-const { joinGroup } = usePersonalPageStore();
-
-/** @type {import('vue').Ref<string>} */
-let code = ref('');
-
-/** @type {import('vue').Ref<Object>} */
-let group = ref({});
-
-/** @type {import('vue').Ref<Object>} */
-const modal = ref(null);
-/** @return {Promise<void>} */
-async function joinGroupRequest() {
-  group.value = await joinGroup(code.value);
-}
-
-const handleModalOpen = () => {
-  group.value = null;
-  code.value = null;
-};
-</script>
-
-<style></style>
-
 <template>
   <button
     @click="handleModalOpen"
     type="button"
-    class="btn btn-primary"
+    class="btn btn-primary h-100"
     data-bs-toggle="modal"
     data-bs-target="#join-group"
   >
@@ -88,3 +60,31 @@ const handleModalOpen = () => {
     </div>
   </div>
 </template>
+
+<style></style>
+
+<script setup>
+import { CustomFormKit } from '../../shared/components/index.js';
+import { ref } from 'vue';
+import { useGroupStore } from '../stores/group.store.js';
+
+const { joinGroup } = useGroupStore();
+
+/** @type {import('vue').Ref<string>} */
+let code = ref('');
+
+/** @type {import('vue').Ref<Object>} */
+let group = ref({});
+
+/** @type {import('vue').Ref<Object>} */
+const modal = ref(null);
+/** @return {Promise<void>} */
+async function joinGroupRequest() {
+  group.value = await joinGroup(code.value);
+}
+
+const handleModalOpen = () => {
+  group.value = null;
+  code.value = null;
+};
+</script>

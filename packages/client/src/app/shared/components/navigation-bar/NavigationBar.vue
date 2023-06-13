@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary mt-xl-5 p-4">
-    <div class="container-fluid">
-      <RouterLink :to="{ name: 'home' }" class="navbar-brand text-white fw-bolder pe-5"
-        >Wasted</RouterLink
-      >
+    <div class="container-fluid d-flex align-items-center">
+      <RouterLink :to="{ name: 'home' }" class="navbar-brand text-white fw-bolder pe-5">
+        Wasted
+      </RouterLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,7 +19,12 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-xl-4">
           <li class="nav-item">
             <router-link class="nav-link text-white fw-bolder" :to="{ name: 'challenges' }">
-              Challenges
+              Challenge
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link text-white fw-bolder" :to="{ name: 'groups' }">
+              Groep
             </router-link>
           </li>
         </ul>
@@ -61,6 +66,8 @@
 <style scoped>
 .navbar-brand {
   font-size: 23px;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link {
